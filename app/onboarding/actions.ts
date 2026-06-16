@@ -41,7 +41,10 @@ export async function saveOnboardingProgress(
     .update(profileUpdate)
     .eq("id", user.id)
 
-  if (profileError) throw profileError
+  if (profileError) {
+    console.error("profileError:", profileError)
+    throw new Error("Failed to update profile: " + profileError.message)
+  }
 
   // Update profile_details
   if (Object.keys(detailsUpdate).length > 0) {
@@ -50,7 +53,10 @@ export async function saveOnboardingProgress(
       .update(detailsUpdate)
       .eq("profile_id", user.id)
 
-    if (detailsError) throw detailsError
+    if (detailsError) {
+      console.error("detailsError:", detailsError)
+      throw new Error("Failed to update profile details: " + detailsError.message)
+    }
   }
 
   // Handle verification doc separately if provided

@@ -122,7 +122,10 @@ export default function OnboardingWizard() {
       .from(bucket)
       .upload(filePath, file)
 
-    if (!uploadError) {
+    if (uploadError) {
+      console.error("Upload error details:", uploadError)
+      alert("Image upload failed: " + uploadError.message)
+    } else {
       const { data: { publicUrl } } = supabase.storage.from(bucket).getPublicUrl(filePath)
       form.setValue(field, publicUrl)
     }
