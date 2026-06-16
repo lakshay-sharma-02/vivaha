@@ -1,15 +1,16 @@
 import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
 
-export default async function Index() {
+export async function POST() {
   const supabase = await createClient()
 
+  // Check if a user's logged in
   const {
     data: { user },
   } = await supabase.auth.getUser()
 
   if (user) {
-    redirect("/dashboard")
+    await supabase.auth.signOut()
   }
 
   redirect("/login")
