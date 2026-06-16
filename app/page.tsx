@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
+import { LandingHero, TrustSection, SampleProfilesSection } from "@/components/landing"
 
 export default async function Index() {
   const supabase = await createClient()
@@ -12,5 +13,11 @@ export default async function Index() {
     redirect("/dashboard")
   }
 
-  redirect("/login")
+  return (
+    <div className="min-h-screen flex flex-col">
+      <LandingHero />
+      <TrustSection />
+      <SampleProfilesSection />
+    </div>
+  )
 }

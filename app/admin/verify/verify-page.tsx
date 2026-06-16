@@ -3,8 +3,9 @@
 import { useState, useEffect } from "react"
 import { getPendingProfiles, adminUpdateProfileStatus } from "../actions"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
+import { motion, AnimatePresence } from "framer-motion"
+import { CheckCircle2, XCircle, FileText, User } from "lucide-react"
 
 export default function AdminVerificationPage() {
   const [profiles, setProfiles] = useState<any[]>([])
@@ -39,70 +40,139 @@ export default function AdminVerificationPage() {
     }
   }
 
-  if (loading) return <div>Loading pending profiles...</div>
+  if (loading) return (
+    <div className="flex min-h-screen items-center justify-center relative overflow-hidden">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl -z-10" />
+      <div className="text-xl font-medium animate-pulse">Loading queue...</div>
+    </div>
+  )
 
   return (
-    <div className="container mx-auto p-8">
-      <h1 className="mb-8 text-3xl font-bold">Pending Verifications</h1>
-      {profiles.length === 0 ? (
-        <p>No pending profiles to verify.</p>
-      ) : (
-        <div className="grid gap-6">
-          {profiles.map((profile) => (
-            <Card key={profile.id}>
-              <CardHeader>
-                <CardTitle>{profile.full_name}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-sm text-gray-500">Gender: {profile.gender}</p>
-                    <p className="text-sm text-gray-500">DOB: {profile.date_of_birth}</p>
-                    <p className="mt-2 font-medium">Bio:</p>
-                    <p className="text-sm">{profile.profile_details?.bio}</p>
-                  </div>
-                  <div>
-                    <p className="font-medium">Verification Docs:</p>
-                    {profile.verification_docs?.map((doc: any) => (
-                      <a 
-                        key={doc.id} 
-                        href={doc.doc_url} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="block text-sm text-blue-600 hover:underline"
-                      >
-                        View {doc.doc_type}
-                      </a>
-                    ))}
-                    <div className="mt-4 space-y-2">
-                      <Input 
-                        placeholder="Rejection reason (required for reject)" 
-                        value={rejectionReason[profile.id] || ""}
-                        onChange={(e) => setRejectionReason({...rejectionReason, [profile.id]: e.target.value})}
-                      />
-                      <div className="flex gap-2">
-                        <Button 
-                          onClick={() => handleUpdate(profile.id, 'approved')}
-                          className="bg-green-600 hover:bg-green-700"
-                        >
-                          Approve
-                        </Button>
-                        <Button 
-                          onClick={() => handleUpdate(profile.id, 'rejected')}
-                          variant="destructive"
-                          disabled={!rejectionReason[profile.id]}
-                        >
-                          Reject
-                        </Button>
+    <div className="min-h-screen relative py-12 px-4 sm:px-6 lg:px-8">
+      {/* Background accents */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl -z-10" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-secondary/10 rounded-full blur-3xl -z-10" />
+
+      <div className="max-w-6xl mx-auto space-y-8">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <h1 className="text-4xl font-bold">Verification Queue</h1>
+          <div className="px-4 py-2 bg-background/50 border border-border rounded-full text-sm font-medium">
+            {profiles.length} profiles pending
+          </div>
+        </div>
+
+        {profiles.length === 0 ? (
+          <div className="glass-panel p-12 text-center rounded-3xl">
+            <CheckCircle2 className="w-16 h-16 text-green-500 mx-auto mb-4" />
+            <h2 className="text-2xl font-bold mb-2">All caught up!</h2>
+            <p className="text-muted-foreground">There are no pending profiles to verify right now.</p>
+          </div>
+        ) : (
+          <motion.div className="grid gap-8" layout>
+            <AnimatePresence>
+              {profiles.map((profile) => (
+                <motion.div 
+                  key={profile.id}
+                  layout
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.3 }}
+                  className="glass-panel rounded-3xl overflow-hidden"
+                >
+                  <div className="flex flex-col lg:flex-row">
+                    {/* Left side: Profile Summary */}
+                    <div className="w-full lg:w-1/3 p-8 bg-muted/30 border-r border-border/50">
+                      <div className="flex items-center gap-4 mb-6">
+                        <div className="h-16 w-16 rounded-full overflow-hidden bg-background border-2 border-primary/20 shrink-0">
+                          {profile.avatar_url ? (
+                            <img src={profile.avatar_url} alt="" className="w-full h-full object-cover" />
+                          ) : (
+                            <User className="w-full h-full p-3 text-muted-foreground" />
+                          )}
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-bold">{profile.full_name}</h3>
+                          <p className="text-sm text-muted-foreground">{profile.profile_details?.city} • {profile.date_of_birth}</p>
+                        </div>
+                      </div>
+
+                      <div className="space-y-4">
+                        <div>
+                          <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Aadhaar</p>
+                          <p className="font-mono bg-background/50 px-3 py-2 rounded-lg border border-border/50">
+                            xxxx xxxx {profile.profile_details?.aadhaar_last_four || "----"}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Bio</p>
+                          <p className="text-sm bg-background/50 p-3 rounded-lg border border-border/50 line-clamp-4">
+                            {profile.profile_details?.bio || "No bio"}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Right side: Verification Document & Actions */}
+                    <div className="w-full lg:w-2/3 p-8 flex flex-col justify-between">
+                      <div>
+                        <h4 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                          <FileText className="w-5 h-5 text-primary" /> Submitted Document
+                        </h4>
+                        <div className="bg-background/50 rounded-2xl border border-border/50 p-4 aspect-video relative overflow-hidden flex items-center justify-center group cursor-pointer"
+                             onClick={() => window.open(profile.verification_doc_url, '_blank')}>
+                          {profile.verification_doc_url ? (
+                            <img 
+                              src={profile.verification_doc_url} 
+                              alt="Aadhaar Document" 
+                              className="max-h-full object-contain"
+                            />
+                          ) : (
+                            <p className="text-muted-foreground">No document uploaded</p>
+                          )}
+                          <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <span className="text-white font-medium bg-black/50 px-4 py-2 rounded-full backdrop-blur-sm">Click to view full size</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="mt-8 pt-6 border-t border-border/50">
+                        <div className="flex flex-col sm:flex-row items-end gap-4">
+                          <div className="flex-1 w-full space-y-2">
+                            <label className="text-sm font-medium">Rejection Reason <span className="text-muted-foreground font-normal">(required if rejecting)</span></label>
+                            <Input 
+                              placeholder="e.g. Document is blurry, name mismatch..." 
+                              value={rejectionReason[profile.id] || ""}
+                              onChange={(e) => setRejectionReason({...rejectionReason, [profile.id]: e.target.value})}
+                              className="bg-background/50 h-11"
+                            />
+                          </div>
+                          <div className="flex gap-3 shrink-0 w-full sm:w-auto">
+                            <Button 
+                              variant="outline"
+                              onClick={() => handleUpdate(profile.id, 'rejected')}
+                              disabled={!rejectionReason[profile.id]}
+                              className="flex-1 sm:flex-none border-destructive text-destructive hover:bg-destructive hover:text-white h-11"
+                            >
+                              <XCircle className="w-4 h-4 mr-2" /> Reject
+                            </Button>
+                            <Button 
+                              onClick={() => handleUpdate(profile.id, 'approved')}
+                              className="flex-1 sm:flex-none bg-green-600 hover:bg-green-700 text-white h-11"
+                            >
+                              <CheckCircle2 className="w-4 h-4 mr-2" /> Approve
+                            </Button>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      )}
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
+        )}
+      </div>
     </div>
   )
 }

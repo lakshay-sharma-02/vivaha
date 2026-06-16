@@ -6,7 +6,8 @@ import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import Link from "next/link"
+import { motion, AnimatePresence } from "framer-motion"
+import { ArrowLeft, Mail, KeyRound } from "lucide-react"
 
 export default function LoginPage() {
   const [email, setEmail] = useState("")
@@ -14,7 +15,6 @@ export default function LoginPage() {
   const [step, setStep] = useState<"email" | "otp">("email")
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [message, setMessage] = useState<string | null>(null)
   const router = useRouter()
   const supabase = createClient()
 
@@ -22,21 +22,18 @@ export default function LoginPage() {
     e.preventDefault()
     setLoading(true)
     setError(null)
-    setMessage(null)
 
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        shouldCreateUser: false,
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
-      },
+        shouldCreateUser: true,
+      }
     })
 
     if (error) {
       setError(error.message)
     } else {
       setStep("otp")
-      setMessage("Check your email for the verification code.")
     }
     setLoading(false)
   }
@@ -49,7 +46,7 @@ export default function LoginPage() {
     const { error } = await supabase.auth.verifyOtp({
       email,
       token: otp,
-      type: "email",
+      type: 'email'
     })
 
     if (error) {
@@ -62,87 +59,111 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
-      <div className="w-full max-w-md space-y-8 rounded-xl bg-white p-8 shadow-lg">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            {step === "email" ? "Sign in to your account" : "Enter verification code"}
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            {step === "email" ? (
-              <>
-                Or{" "}
-                <Link href="/register" className="font-medium text-indigo-600 hover:text-indigo-500">
-                  create a new account
-                </Link>
-              </>
-            ) : (
-              `We've sent a code to ${email}`
-            )}
-          </p>
-        </div>
+    <div className="flex min-h-screen items-center justify-center relative overflow-hidden py-12 px-4 sm:px-6 lg:px-8">
+      {/* Decorative background */}
+      <div className="absolute top-0 left-0 w-full h-full bg-background -z-20" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-3xl -z-10" />
 
-        {error && (
-          <div className="rounded-md bg-red-50 p-4 text-sm text-red-700">
-            {error}
-          </div>
-        )}
-
-        {message && (
-          <div className="rounded-md bg-green-50 p-4 text-sm text-green-700">
-            {message}
-          </div>
-        )}
-
-        <form className="mt-8 space-y-6" onSubmit={step === "email" ? handleSendOtp : handleVerifyOtp}>
+      <motion.div 
+        className="w-full max-w-md glass-panel p-8 sm:p-10 rounded-3xl"
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <AnimatePresence mode="wait">
           {step === "email" ? (
-            <div className="space-y-1">
-              <Label htmlFor="email">Email address</Label>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-              />
-            </div>
+            <motion.div
+              key="email"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="text-center mb-8">
+                <h2 className="text-3xl font-bold mb-2">Welcome</h2>
+                <p className="text-muted-foreground">Sign in or create an account with your email</p>
+              </div>
+
+              {error && (
+                <div className="mb-6 rounded-xl bg-destructive/10 p-4 text-sm text-destructive text-center">
+                  {error}
+                </div>
+              )}
+
+              <form className="space-y-6" onSubmit={handleSendOtp}>
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="ml-1">Email Address</Label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                    <Input
+                      id="email"
+                      type="email"
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Enter your email"
+                      className="pl-10 h-12 rounded-xl bg-background/50 border-white/20 focus:border-primary"
+                    />
+                  </div>
+                </div>
+
+                <Button type="submit" className="w-full h-12 rounded-xl text-base font-medium shadow-md shadow-primary/20" disabled={loading}>
+                  {loading ? "Sending Code..." : "Send Verification Code"}
+                </Button>
+              </form>
+            </motion.div>
           ) : (
-            <div className="space-y-1">
-              <Label htmlFor="otp">Verification Code</Label>
-              <Input
-                id="otp"
-                name="otp"
-                type="text"
-                required
-                value={otp}
-                onChange={(e) => setOtp(e.target.value)}
-                placeholder="123456"
-              />
-            </div>
-          )}
-
-          <div>
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Processing..." : step === "email" ? "Send Magic Link / OTP" : "Verify Code"}
-            </Button>
-          </div>
-
-          {step === "otp" && (
-            <div className="text-center">
-              <button
-                type="button"
+            <motion.div
+              key="otp"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <button 
                 onClick={() => setStep("email")}
-                className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+                className="mb-6 flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
-                Back to email
+                <ArrowLeft className="w-4 h-4 mr-1" /> Back
               </button>
-            </div>
+
+              <div className="text-center mb-8">
+                <h2 className="text-3xl font-bold mb-2">Enter Code</h2>
+                <p className="text-muted-foreground">We sent a verification code to <br/><span className="font-medium text-foreground">{email}</span></p>
+              </div>
+
+              {error && (
+                <div className="mb-6 rounded-xl bg-destructive/10 p-4 text-sm text-destructive text-center">
+                  {error}
+                </div>
+              )}
+
+              <form className="space-y-6" onSubmit={handleVerifyOtp}>
+                <div className="space-y-2">
+                  <Label htmlFor="otp" className="ml-1">Verification Code</Label>
+                  <div className="relative">
+                    <KeyRound className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                    <Input
+                      id="otp"
+                      type="text"
+                      required
+                      value={otp}
+                      onChange={(e) => setOtp(e.target.value)}
+                      placeholder="Enter the 6-digit code"
+                      className="pl-10 h-12 rounded-xl bg-background/50 border-white/20 focus:border-primary tracking-widest text-lg"
+                      maxLength={6}
+                    />
+                  </div>
+                </div>
+
+                <Button type="submit" className="w-full h-12 rounded-xl text-base font-medium shadow-md shadow-primary/20" disabled={loading}>
+                  {loading ? "Verifying..." : "Verify & Sign In"}
+                </Button>
+              </form>
+            </motion.div>
           )}
-        </form>
-      </div>
+        </AnimatePresence>
+      </motion.div>
     </div>
   )
 }

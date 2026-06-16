@@ -10,12 +10,12 @@ import Link from "next/link"
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
   const [fullName, setFullName] = useState("")
   const [gender, setGender] = useState("other")
   const [dob, setDob] = useState("")
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [message, setMessage] = useState<string | null>(null)
   const router = useRouter()
   const supabase = createClient()
 
@@ -23,13 +23,11 @@ export default function RegisterPage() {
     e.preventDefault()
     setLoading(true)
     setError(null)
-    setMessage(null)
 
-    const { error } = await supabase.auth.signInWithOtp({
+    const { error } = await supabase.auth.signUp({
       email,
+      password,
       options: {
-        shouldCreateUser: true,
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
         data: {
           full_name: fullName,
           gender: gender,
@@ -41,7 +39,9 @@ export default function RegisterPage() {
     if (error) {
       setError(error.message)
     } else {
-      setMessage("Check your email for the verification link to complete your registration.")
+      // With password auth, we can often log in immediately if confirm email is off
+      router.push("/onboarding")
+      router.refresh()
     }
     setLoading(false)
   }
@@ -67,12 +67,6 @@ export default function RegisterPage() {
           </div>
         )}
 
-        {message && (
-          <div className="rounded-md bg-green-50 p-4 text-sm text-green-700">
-            {message}
-          </div>
-        )}
-
         <form className="mt-8 space-y-4" onSubmit={handleRegister}>
           <div className="space-y-1">
             <Label htmlFor="fullName">Full Name</Label>
@@ -95,6 +89,19 @@ export default function RegisterPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
+            />
+          </div>
+
+          <div className="space-y-1">
+            <Label htmlFor="password">Password</Label>
+            <Input
+              id="password"
+              type="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              minLength={6}
             />
           </div>
 
@@ -126,7 +133,7 @@ export default function RegisterPage() {
 
           <div className="pt-2">
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Processing..." : "Sign Up with Email OTP"}
+              {loading ? "Creating account..." : "Sign Up"}
             </Button>
           </div>
         </form>
