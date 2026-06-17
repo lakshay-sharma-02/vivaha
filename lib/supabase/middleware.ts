@@ -50,10 +50,10 @@ export async function updateSession(request: NextRequest) {
   }
 
   if (user) {
-    // Check onboarding status
+    // Check onboarding status by verifying status is not DRAFT
     const { data: profile } = await supabase
       .from('profiles')
-      .select('onboarding_completed, status')
+      .select('status')
       .eq('id', user.id)
       .single()
 
@@ -61,17 +61,19 @@ export async function updateSession(request: NextRequest) {
     const isBrowse = request.nextUrl.pathname.startsWith('/browse')
     const isAuthPage = request.nextUrl.pathname.startsWith('/login') || request.nextUrl.pathname.startsWith('/register')
 
-    if (!profile?.onboarding_completed && !isOnboarding && !request.nextUrl.pathname.startsWith('/auth')) {
+    const isOnboardingCompleted = profile?.status && profile.status !== 'DRAFT'
+
+    if (!isOnboardingCompleted && !isOnboarding && !request.nextUrl.pathname.startsWith('/auth')) {
       url.pathname = '/onboarding'
       return NextResponse.redirect(url)
     }
 
-    if (profile?.onboarding_completed && isOnboarding) {
+    if (isOnboardingCompleted && isOnboarding) {
       url.pathname = '/dashboard'
       return NextResponse.redirect(url)
     }
 
-    if (isBrowse && profile?.status !== 'approved') {
+    if (isBrowse && profile?.status !== 'VERIFIED') {
       url.pathname = '/dashboard'
       return NextResponse.redirect(url)
     }
