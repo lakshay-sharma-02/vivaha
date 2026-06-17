@@ -22,23 +22,23 @@ export async function saveOnboardingProgress(
   }
 
   // Map Step 1
-  if (data.full_name !== undefined) profileUpdate.full_name = data.full_name;
-  if (data.date_of_birth !== undefined) profileUpdate.date_of_birth = data.date_of_birth;
-  if (data.gender !== undefined && (data.gender === 'male' || data.gender === 'female')) profileUpdate.gender = data.gender;
-  if (data.height_cm !== undefined) profileUpdate.height_cm = data.height_cm;
-  if (data.avatar_url !== undefined) profileUpdate.profile_photo_path = data.avatar_url;
+  if (data.full_name) profileUpdate.full_name = data.full_name;
+  if (data.date_of_birth) profileUpdate.date_of_birth = data.date_of_birth;
+  if (data.gender === 'male' || data.gender === 'female') profileUpdate.gender = data.gender;
+  if (data.height_cm) profileUpdate.height_cm = data.height_cm;
+  if (data.avatar_url) profileUpdate.profile_photo_path = data.avatar_url;
 
   // Map Step 2
-  if (data.city !== undefined) profileUpdate.town = data.city;
-  if (data.religion !== undefined) profileUpdate.religion = data.religion;
-  if (data.caste !== undefined) profileUpdate.caste = data.caste;
-  if (data.sub_caste !== undefined) profileUpdate.sub_caste = data.sub_caste;
+  if (data.city) profileUpdate.town = data.city;
+  if (data.religion) profileUpdate.religion = data.religion;
+  if (data.caste) profileUpdate.caste = data.caste;
+  if (data.sub_caste) profileUpdate.sub_caste = data.sub_caste;
 
   // Map Step 3
-  if (data.education !== undefined) profileUpdate.education = data.education;
-  if (data.occupation !== undefined) profileUpdate.profession = data.occupation;
+  if (data.education) profileUpdate.education = data.education;
+  if (data.occupation) profileUpdate.profession = data.occupation;
   // Income range mapping (Frontend sends a number, DB expects a bucket enum)
-  if (data.income_annual !== undefined) {
+  if (typeof data.income_annual === 'number') {
     const inc = data.income_annual;
     if (inc < 300000) profileUpdate.income_range = '<3L';
     else if (inc < 600000) profileUpdate.income_range = '3-6L';
@@ -46,23 +46,28 @@ export async function saveOnboardingProgress(
     else if (inc < 2000000) profileUpdate.income_range = '10-20L';
     else profileUpdate.income_range = '20L+';
   }
-  if (data.bio !== undefined) profileUpdate.about_me = data.bio;
+  if (data.bio) profileUpdate.about_me = data.bio;
 
   // Map Step 4
-  if (data.family_type !== undefined) profileUpdate.family_type = data.family_type;
-  if (data.father_occupation !== undefined) profileUpdate.father_occupation = data.father_occupation;
-  if (data.siblings !== undefined) profileUpdate.siblings_count = parseInt(data.siblings) || 0; // Quick fix for frontend returning string
+  if (data.family_type === 'nuclear' || data.family_type === 'joint') {
+    profileUpdate.family_type = data.family_type;
+  }
+  if (data.father_occupation) profileUpdate.father_occupation = data.father_occupation;
+  if (data.siblings) profileUpdate.siblings_count = parseInt(data.siblings) || 0;
 
   // Map Step 5
-  if (data.manglik !== undefined) profileUpdate.manglik_status = data.manglik;
-  if (data.horoscope_details !== undefined) profileUpdate.horoscope_details = data.horoscope_details;
+  if (data.manglik === 'yes') profileUpdate.manglik_status = 'manglik';
+  else if (data.manglik === 'no') profileUpdate.manglik_status = 'non_manglik';
+  else if (data.manglik === 'dont_know') profileUpdate.manglik_status = 'unknown';
+  
+  if (data.horoscope_details) profileUpdate.horoscope_details = data.horoscope_details;
 
   // Map Step 6
-  if (data.partner_age_min !== undefined) profileUpdate.preferred_age_min = data.partner_age_min;
-  if (data.partner_age_max !== undefined) profileUpdate.preferred_age_max = data.partner_age_max;
-  if (data.partner_location !== undefined) profileUpdate.preferred_town = data.partner_location;
-  if (data.partner_religion !== undefined) profileUpdate.preferred_religion = data.partner_religion;
-  if (data.partner_caste !== undefined) profileUpdate.preferred_caste = data.partner_caste;
+  if (data.partner_age_min) profileUpdate.preferred_age_min = data.partner_age_min;
+  if (data.partner_age_max) profileUpdate.preferred_age_max = data.partner_age_max;
+  if (data.partner_location) profileUpdate.preferred_town = data.partner_location;
+  if (data.partner_religion) profileUpdate.preferred_religion = data.partner_religion;
+  if (data.partner_caste) profileUpdate.preferred_caste = data.partner_caste;
 
   // Update profiles table
   const { error: profileError } = await supabase
