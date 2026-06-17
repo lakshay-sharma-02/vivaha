@@ -26,19 +26,28 @@ export default async function DashboardPage() {
     redirect("/onboarding")
   }
 
-  // Fetch unlocked profiles
+  // Check if user is an admin
+  const { data: adminCheck } = await supabase
+    .from('admins')
+    .select('id')
+    .eq('id', user.id)
+    .single()
+  
+  const isAdmin = !!adminCheck
+
+  // Fetch unlocked profiles using the correct "unlocks" table and relations
   const { data: unlocks } = await supabase
-    .from('profile_unlocks')
+    .from('unlocks')
     .select(`
       created_at,
-      unlocked_profile:profiles!unlocked_id (
+      unlocked_profile:profiles!unlocked_profile_id (
         id,
         full_name,
-        avatar_url,
+        profile_photo_path,
         gender
       )
     `)
-    .eq('unlocker_id', user.id)
+    .eq('unlocker_profile_id', user.id)
     .order('created_at', { ascending: false })
 
   return (
@@ -51,7 +60,7 @@ export default async function DashboardPage() {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <h1 className="text-4xl font-bold">Your Dashboard</h1>
           <div className="flex items-center gap-2">
-            {profile.role === 'admin' && (
+            {isAdmin && (
               <Link 
                 href="/admin/verify"
                 className={cn(buttonVariants({ variant: "outline" }), "rounded-full gap-2 border-primary/20 bg-primary/5 text-primary hover:bg-primary/10")}
@@ -76,20 +85,20 @@ export default async function DashboardPage() {
             
             <div className={cn(
               "flex items-center gap-2 px-4 py-2 rounded-full border shadow-sm font-medium",
-              profile.status === 'approved' ? "bg-green-500/10 border-green-500/20 text-green-700 dark:text-green-400" :
-              profile.status === 'pending' ? "bg-yellow-500/10 border-yellow-500/20 text-yellow-700 dark:text-yellow-400" :
-              profile.status === 'rejected' ? "bg-destructive/10 border-destructive/20 text-destructive" :
+              profile.status === 'VERIFIED' ? "bg-green-500/10 border-green-500/20 text-green-700 dark:text-green-400" :
+              profile.status === 'PENDING_VERIFICATION' ? "bg-yellow-500/10 border-yellow-500/20 text-yellow-700 dark:text-yellow-400" :
+              profile.status === 'REJECTED' ? "bg-destructive/10 border-destructive/20 text-destructive" :
               "bg-muted border-border"
             )}>
-              {profile.status === 'approved' && <CheckCircle className="w-5 h-5" />}
-              {profile.status === 'pending' && <Clock className="w-5 h-5" />}
-              {profile.status === 'rejected' && <AlertCircle className="w-5 h-5" />}
-              Profile Status: {profile.status.charAt(0).toUpperCase() + profile.status.slice(1)}
+              {profile.status === 'VERIFIED' && <CheckCircle className="w-5 h-5" />}
+              {profile.status === 'PENDING_VERIFICATION' && <Clock className="w-5 h-5" />}
+              {profile.status === 'REJECTED' && <AlertCircle className="w-5 h-5" />}
+              Profile Status: {profile.status.replace('_', ' ')}
             </div>
           </div>
 
           <div className="bg-background/50 rounded-2xl p-6 border border-border/50">
-            {profile.status === 'pending' && (
+            {profile.status === 'PENDING_VERIFICATION' && (
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-yellow-500/10 rounded-full text-yellow-600 dark:text-yellow-400 mt-1">
                   <Clock className="w-6 h-6" />
@@ -103,7 +112,7 @@ export default async function DashboardPage() {
               </div>
             )}
 
-            {profile.status === 'rejected' && (
+            {profile.status === 'REJECTED' && (
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-destructive/10 rounded-full text-destructive mt-1">
                   <AlertCircle className="w-6 h-6" />
@@ -123,7 +132,7 @@ export default async function DashboardPage() {
               </div>
             )}
 
-            {profile.status === 'approved' && (
+            {profile.status === 'VERIFIED' && (
               <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
                 <div className="flex items-start gap-4">
                   <div className="p-3 bg-green-500/10 rounded-full text-green-600 dark:text-green-400 mt-1">
@@ -148,7 +157,7 @@ export default async function DashboardPage() {
         </div>
 
         {/* My Unlocks Section */}
-        {profile.status === 'approved' && (
+        {profile.status === 'VERIFIED' && (
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <h2 className="text-2xl font-bold flex items-center gap-2">
@@ -170,9 +179,9 @@ export default async function DashboardPage() {
                     <div className="glass-panel p-4 rounded-2xl hover:border-primary/50 transition-all hover:shadow-lg hover:-translate-y-1">
                       <div className="flex items-center gap-4">
                         <div className="w-16 h-16 rounded-xl bg-muted overflow-hidden flex-shrink-0">
-                          {unlock.unlocked_profile.avatar_url ? (
+                          {unlock.unlocked_profile.profile_photo_path ? (
                             <img 
-                              src={unlock.unlocked_profile.avatar_url} 
+                              src={unlock.unlocked_profile.profile_photo_path} 
                               alt={unlock.unlocked_profile.full_name}
                               className="w-full h-full object-cover"
                             />
