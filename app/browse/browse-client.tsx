@@ -17,12 +17,11 @@ export default function BrowseClient({ initialProfiles }: { initialProfiles: Pro
   const [cityFilter, setCityFilter] = useState("")
 
   const filteredProfiles = initialProfiles.filter(profile => {
-    const details = profile.profile_details || {}
     const matchesSearch = profile.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                          details.bio?.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesReligion = religionFilter === "" || details.religion?.toLowerCase().includes(religionFilter.toLowerCase())
-    const matchesCaste = casteFilter === "" || details.caste?.toLowerCase().includes(casteFilter.toLowerCase())
-    const matchesCity = cityFilter === "" || details.city?.toLowerCase().includes(cityFilter.toLowerCase())
+                          profile.about_me?.toLowerCase().includes(searchTerm.toLowerCase())
+    const matchesReligion = religionFilter === "" || profile.religion?.toLowerCase().includes(religionFilter.toLowerCase())
+    const matchesCaste = casteFilter === "" || profile.caste?.toLowerCase().includes(casteFilter.toLowerCase())
+    const matchesCity = cityFilter === "" || profile.town?.toLowerCase().includes(cityFilter.toLowerCase())
 
     return matchesSearch && matchesReligion && matchesCaste && matchesCity
   })
@@ -80,7 +79,6 @@ export default function BrowseClient({ initialProfiles }: { initialProfiles: Pro
         >
           <AnimatePresence>
             {filteredProfiles.map((profile, i) => {
-              const details = profile.profile_details || {}
               const age = new Date().getFullYear() - new Date(profile.date_of_birth).getFullYear()
               
               return (
@@ -94,9 +92,9 @@ export default function BrowseClient({ initialProfiles }: { initialProfiles: Pro
                   className="glass-panel rounded-2xl overflow-hidden group hover:shadow-2xl transition-all"
                 >
                   <div className="aspect-[4/5] bg-muted relative overflow-hidden">
-                    {profile.avatar_url ? (
+                    {profile.profile_photo_path ? (
                       <img 
-                        src={profile.avatar_url} 
+                        src={profile.profile_photo_path} 
                         alt={profile.full_name} 
                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
@@ -109,34 +107,34 @@ export default function BrowseClient({ initialProfiles }: { initialProfiles: Pro
                     <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
                       <h3 className="text-2xl font-bold">{profile.full_name}, {age}</h3>
                       <div className="flex items-center gap-2 text-sm text-white/80 mt-1">
-                        <MapPin className="w-4 h-4" /> {details.city || "Unknown"}
+                        <MapPin className="w-4 h-4" /> {profile.town || "Unknown"}
                       </div>
                     </div>
                   </div>
                   
                   <div className="p-5">
                     <div className="space-y-2 mb-6">
-                      {details.occupation && (
+                      {profile.occupation && (
                         <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                          <Briefcase className="w-4 h-4 text-primary" /> {details.occupation}
+                          <Briefcase className="w-4 h-4 text-primary" /> {profile.occupation}
                         </div>
                       )}
-                      {details.education && (
+                      {profile.education && (
                         <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                          <GraduationCap className="w-4 h-4 text-primary" /> {details.education}
+                          <GraduationCap className="w-4 h-4 text-primary" /> {profile.education}
                         </div>
                       )}
                     </div>
                     
                     <div className="flex flex-wrap gap-2 mb-6">
-                      {details.religion && (
+                      {profile.religion && (
                         <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-                          {details.religion}
+                          {profile.religion}
                         </span>
                       )}
-                      {details.caste && (
+                      {profile.caste && (
                         <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-                          {details.caste}
+                          {profile.caste}
                         </span>
                       )}
                     </div>

@@ -9,8 +9,8 @@ export default async function BrowsePage() {
 
   const { data: profiles, error } = await supabase
     .from('profiles')
-    .select('*, profile_details(*)')
-    .eq('status', 'approved')
+    .select('*')
+    .eq('status', 'VERIFIED')
 
   if (error) {
     return (
