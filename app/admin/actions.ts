@@ -4,9 +4,8 @@ import { createClient } from "@/lib/supabase/client"
 
 export async function adminUpdateProfileStatus(
   profileId: string,
-  status: 'approved' | 'rejected',
-  reason?: string,
-  notes?: string
+  status: 'VERIFIED' | 'REJECTED',
+  reason?: string
 ) {
   const supabase = createClient()
 
@@ -14,17 +13,16 @@ export async function adminUpdateProfileStatus(
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error("Unauthorized")
 
-  const { data: adminProfile } = await supabase
-    .from('profiles')
-    .select('role')
+  const { data: adminCheck } = await supabase
+    .from('admins')
+    .select('id')
     .eq('id', user.id)
     .single()
 
-  if (adminProfile?.role !== 'admin') throw new Error("Forbidden")
+  if (!adminCheck) throw new Error("Forbidden")
 
   const update: any = { status }
-  if (reason) update.rejection_reason = reason
-  if (notes) update.admin_notes = notes
+  if (reason && status === 'REJECTED') update.rejection_reason = reason
 
   const { error } = await supabase
     .from('profiles')
@@ -33,6 +31,13 @@ export async function adminUpdateProfileStatus(
 
   if (error) throw error
 
+  // Add an audit log entry
+  await supabase.from('verification_audit_log').insert({
+    admin_id: user.id,
+    profile_id: profileId,
+    action: status === 'VERIFIED' ? 'approved' : 'rejected'
+  })
+
   return { success: true }
 }
 
@@ -40,8 +45,9 @@ export async function getPendingProfiles() {
   const supabase = createClient()
   const { data, error } = await supabase
     .from('profiles')
-    .select('*, profile_details(*), verification_docs(*)')
-    .eq('status', 'pending')
+    .select('*, verification_documents(*)')
+    .eq('status', 'PENDING_VERIFICATION')
+    .order('updated_at', { ascending: true })
 
   if (error) throw error
   return data

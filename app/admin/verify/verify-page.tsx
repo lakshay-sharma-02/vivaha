@@ -27,12 +27,12 @@ export default function AdminVerificationPage() {
     }
   }
 
-  async function handleUpdate(profileId: string, status: 'approved' | 'rejected') {
+  async function handleUpdate(profileId: string, status: 'VERIFIED' | 'REJECTED') {
     try {
       await adminUpdateProfileStatus(
         profileId, 
         status, 
-        status === 'rejected' ? rejectionReason[profileId] : undefined
+        status === 'REJECTED' ? rejectionReason[profileId] : undefined
       )
       await loadProfiles()
     } catch (err) {
@@ -70,7 +70,9 @@ export default function AdminVerificationPage() {
         ) : (
           <motion.div className="grid gap-8" layout>
             <AnimatePresence>
-              {profiles.map((profile) => (
+              {profiles.map((profile) => {
+                const doc = profile.verification_documents?.[0]
+                return (
                 <motion.div 
                   key={profile.id}
                   layout
@@ -85,15 +87,15 @@ export default function AdminVerificationPage() {
                     <div className="w-full lg:w-1/3 p-8 bg-muted/30 border-r border-border/50">
                       <div className="flex items-center gap-4 mb-6">
                         <div className="h-16 w-16 rounded-full overflow-hidden bg-background border-2 border-primary/20 shrink-0">
-                          {profile.avatar_url ? (
-                            <img src={profile.avatar_url} alt="" className="w-full h-full object-cover" />
+                          {profile.profile_photo_path ? (
+                            <img src={profile.profile_photo_path} alt="" className="w-full h-full object-cover" />
                           ) : (
                             <User className="w-full h-full p-3 text-muted-foreground" />
                           )}
                         </div>
                         <div>
                           <h3 className="text-xl font-bold">{profile.full_name}</h3>
-                          <p className="text-sm text-muted-foreground">{profile.profile_details?.city} • {profile.date_of_birth}</p>
+                          <p className="text-sm text-muted-foreground">{profile.town} • {profile.date_of_birth}</p>
                         </div>
                       </div>
 
@@ -101,13 +103,13 @@ export default function AdminVerificationPage() {
                         <div>
                           <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Aadhaar</p>
                           <p className="font-mono bg-background/50 px-3 py-2 rounded-lg border border-border/50">
-                            xxxx xxxx {profile.profile_details?.aadhaar_last_four || "----"}
+                            xxxx xxxx {doc?.aadhaar_last4 || "----"}
                           </p>
                         </div>
                         <div>
                           <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Bio</p>
                           <p className="text-sm bg-background/50 p-3 rounded-lg border border-border/50 line-clamp-4">
-                            {profile.profile_details?.bio || "No bio"}
+                            {profile.about_me || "No bio"}
                           </p>
                         </div>
                       </div>
@@ -120,10 +122,10 @@ export default function AdminVerificationPage() {
                           <FileText className="w-5 h-5 text-primary" /> Submitted Document
                         </h4>
                         <div className="bg-background/50 rounded-2xl border border-border/50 p-4 aspect-video relative overflow-hidden flex items-center justify-center group cursor-pointer"
-                             onClick={() => window.open(profile.verification_doc_url, '_blank')}>
-                          {profile.verification_doc_url ? (
+                             onClick={() => window.open(doc?.aadhaar_photo_path, '_blank')}>
+                          {doc?.aadhaar_photo_path ? (
                             <img 
-                              src={profile.verification_doc_url} 
+                              src={doc.aadhaar_photo_path} 
                               alt="Aadhaar Document" 
                               className="max-h-full object-contain"
                             />
@@ -150,14 +152,14 @@ export default function AdminVerificationPage() {
                           <div className="flex gap-3 shrink-0 w-full sm:w-auto">
                             <Button 
                               variant="outline"
-                              onClick={() => handleUpdate(profile.id, 'rejected')}
+                              onClick={() => handleUpdate(profile.id, 'REJECTED')}
                               disabled={!rejectionReason[profile.id]}
                               className="flex-1 sm:flex-none border-destructive text-destructive hover:bg-destructive hover:text-white h-11"
                             >
                               <XCircle className="w-4 h-4 mr-2" /> Reject
                             </Button>
                             <Button 
-                              onClick={() => handleUpdate(profile.id, 'approved')}
+                              onClick={() => handleUpdate(profile.id, 'VERIFIED')}
                               className="flex-1 sm:flex-none bg-green-600 hover:bg-green-700 text-white h-11"
                             >
                               <CheckCircle2 className="w-4 h-4 mr-2" /> Approve
@@ -168,7 +170,7 @@ export default function AdminVerificationPage() {
                     </div>
                   </div>
                 </motion.div>
-              ))}
+              )})}
             </AnimatePresence>
           </motion.div>
         )}

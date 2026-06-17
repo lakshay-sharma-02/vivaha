@@ -8,13 +8,14 @@ export default async function AdminPage() {
 
   if (!user) redirect("/login")
 
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('role')
+  // Check if user exists in the admins table
+  const { data: adminCheck } = await supabase
+    .from('admins')
+    .select('id')
     .eq('id', user.id)
     .single()
 
-  if (profile?.role !== 'admin') redirect("/dashboard")
+  if (!adminCheck) redirect("/dashboard")
 
   return <AdminVerificationPage />
 }
