@@ -13,29 +13,58 @@ export async function saveOnboardingProgress(
 
   if (!user) throw new Error("Unauthorized")
 
-  // Split data between profiles and profile_details
-  const profileFields = ["full_name", "date_of_birth", "gender", "avatar_url"]
-  
   const profileUpdate: any = {
     onboarding_step: step,
-    onboarding_completed: isCompleted,
   }
 
   if (isCompleted) {
-    profileUpdate.status = 'pending'
+    profileUpdate.status = 'PENDING_VERIFICATION'
   }
 
-  const detailsUpdate: any = {}
+  // Map Step 1
+  if (data.full_name !== undefined) profileUpdate.full_name = data.full_name;
+  if (data.date_of_birth !== undefined) profileUpdate.date_of_birth = data.date_of_birth;
+  if (data.gender !== undefined && (data.gender === 'male' || data.gender === 'female')) profileUpdate.gender = data.gender;
+  if (data.height_cm !== undefined) profileUpdate.height_cm = data.height_cm;
+  if (data.avatar_url !== undefined) profileUpdate.profile_photo_path = data.avatar_url;
 
-  Object.entries(data).forEach(([key, value]) => {
-    if (profileFields.includes(key)) {
-      profileUpdate[key] = value
-    } else if (key !== "verification_doc_url") {
-      detailsUpdate[key] = value
-    }
-  })
+  // Map Step 2
+  if (data.city !== undefined) profileUpdate.town = data.city;
+  if (data.religion !== undefined) profileUpdate.religion = data.religion;
+  if (data.caste !== undefined) profileUpdate.caste = data.caste;
+  if (data.sub_caste !== undefined) profileUpdate.sub_caste = data.sub_caste;
 
-  // Update profiles
+  // Map Step 3
+  if (data.education !== undefined) profileUpdate.education = data.education;
+  if (data.occupation !== undefined) profileUpdate.profession = data.occupation;
+  // Income range mapping (Frontend sends a number, DB expects a bucket enum)
+  if (data.income_annual !== undefined) {
+    const inc = data.income_annual;
+    if (inc < 300000) profileUpdate.income_range = '<3L';
+    else if (inc < 600000) profileUpdate.income_range = '3-6L';
+    else if (inc < 1000000) profileUpdate.income_range = '6-10L';
+    else if (inc < 2000000) profileUpdate.income_range = '10-20L';
+    else profileUpdate.income_range = '20L+';
+  }
+  if (data.bio !== undefined) profileUpdate.about_me = data.bio;
+
+  // Map Step 4
+  if (data.family_type !== undefined) profileUpdate.family_type = data.family_type;
+  if (data.father_occupation !== undefined) profileUpdate.father_occupation = data.father_occupation;
+  if (data.siblings !== undefined) profileUpdate.siblings_count = parseInt(data.siblings) || 0; // Quick fix for frontend returning string
+
+  // Map Step 5
+  if (data.manglik !== undefined) profileUpdate.manglik_status = data.manglik;
+  if (data.horoscope_details !== undefined) profileUpdate.horoscope_details = data.horoscope_details;
+
+  // Map Step 6
+  if (data.partner_age_min !== undefined) profileUpdate.preferred_age_min = data.partner_age_min;
+  if (data.partner_age_max !== undefined) profileUpdate.preferred_age_max = data.partner_age_max;
+  if (data.partner_location !== undefined) profileUpdate.preferred_town = data.partner_location;
+  if (data.partner_religion !== undefined) profileUpdate.preferred_religion = data.partner_religion;
+  if (data.partner_caste !== undefined) profileUpdate.preferred_caste = data.partner_caste;
+
+  // Update profiles table
   const { error: profileError } = await supabase
     .from("profiles")
     .update(profileUpdate)
@@ -46,31 +75,20 @@ export async function saveOnboardingProgress(
     throw new Error("Failed to update profile: " + profileError.message)
   }
 
-  // Update profile_details
-  if (Object.keys(detailsUpdate).length > 0) {
-    const { error: detailsError } = await supabase
-      .from("profile_details")
-      .update(detailsUpdate)
-      .eq("profile_id", user.id)
-
-    if (detailsError) {
-      console.error("detailsError:", detailsError)
-      throw new Error("Failed to update profile details: " + detailsError.message)
-    }
-  }
-
-  // Handle verification doc separately if provided
-  if (data.verification_doc_url) {
+  // Handle verification doc separately if provided (Step 7)
+  if (data.verification_doc_url && data.aadhaar_last_four) {
     const { error: docError } = await supabase
-      .from("verification_docs")
+      .from("verification_documents")
       .insert({
         profile_id: user.id,
-        doc_type: "aadhaar",
-        doc_url: data.verification_doc_url,
-        status: "pending"
+        aadhaar_photo_path: data.verification_doc_url,
+        aadhaar_last4: data.aadhaar_last_four
       })
     
-    if (docError) throw docError
+    if (docError) {
+      console.error("docError:", docError)
+      throw new Error("Failed to upload verification document: " + docError.message)
+    }
   }
 
   return { success: true }
@@ -84,11 +102,27 @@ export async function getOnboardingProgress() {
 
   const { data: profile, error: profileError } = await supabase
     .from("profiles")
-    .select("*, profile_details(*)")
+    .select("*")
     .eq("id", user.id)
     .single()
 
-  if (profileError) return null
+  if (profileError || !profile) return null
 
-  return profile
+  // Map backend Spec.md schema back to frontend OnboardingData schema
+  return {
+    ...profile,
+    avatar_url: profile.profile_photo_path || "",
+    city: profile.town || "",
+    occupation: profile.profession || "",
+    bio: profile.about_me || "",
+    siblings: profile.siblings_count?.toString() || "0",
+    manglik: profile.manglik_status || "",
+    partner_age_min: profile.preferred_age_min || 18,
+    partner_age_max: profile.preferred_age_max || 40,
+    partner_location: profile.preferred_town || "",
+    partner_religion: profile.preferred_religion || "",
+    partner_caste: profile.preferred_caste || "",
+    // Income reverse mapping is hard, setting default 0 for UI purposes
+    income_annual: 0,
+  }
 }

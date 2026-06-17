@@ -44,13 +44,18 @@ export default async function ProfilePage({ params }: { params: { id: string } }
     )
   }
 
+  // Check if current user has unlocked this profile
+  const { data: unlockRecord } = await supabase
+    .from('profile_unlocks')
+    .select('*')
+    .eq('unlocker_id', user.id)
+    .eq('unlocked_id', params.id)
+    .single()
+
+  const isUnlocked = !!unlockRecord;
+
   const details = profile.profile_details || {}
   const age = new Date().getFullYear() - new Date(profile.date_of_birth).getFullYear()
-
-  // For this redesign, we'll simulate an unlocked state. 
-  // In a real app, you would check a `purchases` or `unlocked_profiles` table.
-  // We'll set it to false to show the blurred premium state and CTA.
-  const isUnlocked = false;
 
   return (
     <div className="min-h-screen bg-background relative py-12 px-4 sm:px-6 lg:px-8">

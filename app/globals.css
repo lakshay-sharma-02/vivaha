@@ -124,3 +124,9 @@
     @apply bg-card/80 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-xl;
   }
 }
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}

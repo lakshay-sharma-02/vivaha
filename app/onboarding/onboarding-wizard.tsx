@@ -114,7 +114,7 @@ export default function OnboardingWizard() {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return
 
-    const bucket = field === "avatar_url" ? "avatars" : "verification"
+    const bucket = field === "avatar_url" ? "profile-photos" : "verification-docs"
     const fileExt = file.name.split(".").pop()
     const filePath = `${user.id}/${Math.random()}.${fileExt}`
 

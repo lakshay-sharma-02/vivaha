@@ -3,7 +3,7 @@ import { redirect } from "next/navigation"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
-import { Clock, CheckCircle, AlertCircle, Search, LogOut } from "lucide-react"
+import { Clock, CheckCircle, AlertCircle, Search, LogOut, ShieldCheck, Lock, ExternalLink } from "lucide-react"
 
 export default async function DashboardPage() {
   const supabase = await createClient()
@@ -26,6 +26,21 @@ export default async function DashboardPage() {
     redirect("/onboarding")
   }
 
+  // Fetch unlocked profiles
+  const { data: unlocks } = await supabase
+    .from('profile_unlocks')
+    .select(`
+      created_at,
+      unlocked_profile:profiles!unlocked_id (
+        id,
+        full_name,
+        avatar_url,
+        gender
+      )
+    `)
+    .eq('unlocker_id', user.id)
+    .order('created_at', { ascending: false })
+
   return (
     <div className="min-h-screen bg-background relative overflow-hidden py-12 px-4 sm:px-6">
       {/* Background accents */}
@@ -35,11 +50,21 @@ export default async function DashboardPage() {
       <div className="max-w-4xl mx-auto space-y-8">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <h1 className="text-4xl font-bold">Your Dashboard</h1>
-          <form action="/auth/signout" method="post">
-            <Button variant="outline" type="submit" className="rounded-full gap-2">
-              <LogOut className="w-4 h-4" /> Sign Out
-            </Button>
-          </form>
+          <div className="flex items-center gap-2">
+            {profile.role === 'admin' && (
+              <Link 
+                href="/admin/verify"
+                className={cn(buttonVariants({ variant: "outline" }), "rounded-full gap-2 border-primary/20 bg-primary/5 text-primary hover:bg-primary/10")}
+              >
+                <ShieldCheck className="w-4 h-4" /> Admin Panel
+              </Link>
+            )}
+            <form action="/auth/signout" method="post">
+              <Button variant="outline" type="submit" className="rounded-full gap-2">
+                <LogOut className="w-4 h-4" /> Sign Out
+              </Button>
+            </form>
+          </div>
         </div>
 
         <div className="glass-panel p-8 rounded-3xl relative overflow-hidden">
@@ -121,6 +146,81 @@ export default async function DashboardPage() {
             )}
           </div>
         </div>
+
+        {/* My Unlocks Section */}
+        {profile.status === 'approved' && (
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl font-bold flex items-center gap-2">
+                <Lock className="w-6 h-6 text-primary" /> My Unlocked Profiles
+              </h2>
+              <span className="text-sm text-muted-foreground bg-muted px-3 py-1 rounded-full font-medium">
+                {unlocks?.length || 0} Unlocks
+              </span>
+            </div>
+
+            {unlocks && unlocks.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {unlocks.map((unlock: any) => (
+                  <Link 
+                    key={unlock.unlocked_profile.id}
+                    href={`/profile/${unlock.unlocked_profile.id}`}
+                    className="group"
+                  >
+                    <div className="glass-panel p-4 rounded-2xl hover:border-primary/50 transition-all hover:shadow-lg hover:-translate-y-1">
+                      <div className="flex items-center gap-4">
+                        <div className="w-16 h-16 rounded-xl bg-muted overflow-hidden flex-shrink-0">
+                          {unlock.unlocked_profile.avatar_url ? (
+                            <img 
+                              src={unlock.unlocked_profile.avatar_url} 
+                              alt={unlock.unlocked_profile.full_name}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center bg-primary/5">
+                              <Search className="w-6 h-6 text-primary/20" />
+                            </div>
+                          )}
+                        </div>
+                        <div className="min-w-0">
+                          <h3 className="font-bold truncate group-hover:text-primary transition-colors">
+                            {unlock.unlocked_profile.full_name}
+                          </h3>
+                          <p className="text-xs text-muted-foreground capitalize">
+                            {unlock.unlocked_profile.gender}
+                          </p>
+                          <div className="flex items-center gap-1 text-[10px] text-muted-foreground mt-1">
+                            <Clock className="w-3 h-3" />
+                            {new Date(unlock.created_at).toLocaleDateString()}
+                          </div>
+                        </div>
+                        <div className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
+                          <ExternalLink className="w-4 h-4 text-primary" />
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <div className="glass-panel p-12 rounded-3xl text-center border-dashed border-2">
+                <div className="bg-primary/5 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Lock className="w-8 h-8 text-primary/40" />
+                </div>
+                <h3 className="text-lg font-semibold mb-2">No profiles unlocked yet</h3>
+                <p className="text-muted-foreground max-w-xs mx-auto mb-6">
+                  Browse matches and unlock their full profiles to see family details and contact info.
+                </p>
+                <Link 
+                  href="/browse"
+                  className={cn(buttonVariants({ variant: "outline" }), "rounded-full")}
+                >
+                  Start Browsing
+                </Link>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   )
