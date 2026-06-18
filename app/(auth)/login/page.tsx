@@ -6,49 +6,26 @@ import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { motion, AnimatePresence } from "framer-motion"
-import { ArrowLeft, Mail, KeyRound, MailOpen } from "lucide-react"
+import { motion } from "framer-motion"
+import { Mail, Lock } from "lucide-react"
+import Link from "next/link"
 
 export default function LoginPage() {
   const [email, setEmail] = useState("")
-  const [otp, setOtp] = useState("")
-  const [step, setStep] = useState<"email" | "sent">("email")
+  const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [useOtp, setUseOtp] = useState(false)
   const router = useRouter()
   const supabase = createClient()
 
-  async function handleSendOtp(e: React.FormEvent) {
+  async function handleLogin(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true)
     setError(null)
 
-    const { error } = await supabase.auth.signInWithOtp({
+    const { error } = await supabase.auth.signInWithPassword({
       email,
-      options: {
-        shouldCreateUser: true,
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
-      }
-    })
-
-    if (error) {
-      setError(error.message)
-    } else {
-      setStep("sent")
-    }
-    setLoading(false)
-  }
-
-  async function handleVerifyOtp(e: React.FormEvent) {
-    e.preventDefault()
-    setLoading(true)
-    setError(null)
-
-    const { error } = await supabase.auth.verifyOtp({
-      email,
-      token: otp,
-      type: 'email'
+      password,
     })
 
     if (error) {
@@ -72,128 +49,62 @@ export default function LoginPage() {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <AnimatePresence mode="wait">
-          {step === "email" ? (
-            <motion.div
-              key="email"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.3 }}
-            >
-              <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold mb-2">Welcome</h2>
-                <p className="text-muted-foreground">Sign in or create an account with your email</p>
-              </div>
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold mb-2">Welcome Back</h2>
+          <p className="text-muted-foreground">Sign in to your account</p>
+        </div>
 
-              {error && (
-                <div className="mb-6 rounded-xl bg-destructive/10 p-4 text-sm text-destructive text-center">
-                  {error}
-                </div>
-              )}
+        {error && (
+          <div className="mb-6 rounded-xl bg-destructive/10 p-4 text-sm text-destructive text-center">
+            {error}
+          </div>
+        )}
 
-              <form className="space-y-6" onSubmit={handleSendOtp}>
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="ml-1">Email Address</Label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                    <Input
-                      id="email"
-                      type="email"
-                      required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="Enter your email"
-                      className="pl-10 h-12 rounded-xl bg-background/50 border-white/20 focus:border-primary"
-                    />
-                  </div>
-                </div>
+        <form className="space-y-6" onSubmit={handleLogin}>
+          <div className="space-y-2">
+            <Label htmlFor="email" className="ml-1">Email Address</Label>
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+              <Input
+                id="email"
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                className="pl-10 h-12 rounded-xl bg-background/50 border-white/20 focus:border-primary"
+              />
+            </div>
+          </div>
 
-                <Button type="submit" className="w-full h-12 rounded-xl text-base font-medium shadow-md shadow-primary/20" disabled={loading}>
-                  {loading ? "Sending..." : "Continue with Email"}
-                </Button>
-              </form>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="sent"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ duration: 0.3 }}
-            >
-              <button 
-                onClick={() => { setStep("email"); setUseOtp(false); setError(null); }}
-                className="mb-6 flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <ArrowLeft className="w-4 h-4 mr-1" /> Back
-              </button>
+          <div className="space-y-2">
+            <Label htmlFor="password" className="ml-1">Password</Label>
+            <div className="relative">
+              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+              <Input
+                id="password"
+                type="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                className="pl-10 h-12 rounded-xl bg-background/50 border-white/20 focus:border-primary"
+              />
+            </div>
+          </div>
 
-              {!useOtp ? (
-                // Magic link state
-                <div className="text-center">
-                  <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
-                    <MailOpen className="w-10 h-10 text-primary" />
-                  </div>
-                  <h2 className="text-3xl font-bold mb-3">Check your inbox</h2>
-                  <p className="text-muted-foreground mb-2">
-                    We sent a sign-in link to
-                  </p>
-                  <p className="font-semibold text-foreground mb-6">{email}</p>
-                  <p className="text-sm text-muted-foreground mb-8 bg-muted/50 rounded-xl p-4">
-                    Click the <strong>"Sign in"</strong> button in the email to be automatically signed in.
-                  </p>
+          <Button type="submit" className="w-full h-12 rounded-xl text-base font-medium shadow-md shadow-primary/20" disabled={loading}>
+            {loading ? "Signing in..." : "Sign In"}
+          </Button>
+        </form>
 
-                  <div className="border-t border-border/50 pt-6">
-                    <p className="text-sm text-muted-foreground mb-3">Received a 6-digit code instead?</p>
-                    <Button variant="outline" className="rounded-full" onClick={() => setUseOtp(true)}>
-                      <KeyRound className="w-4 h-4 mr-2" /> Enter code manually
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                // OTP code entry state
-                <div>
-                  <div className="text-center mb-8">
-                    <h2 className="text-3xl font-bold mb-2">Enter Code</h2>
-                    <p className="text-muted-foreground">Enter the 6-digit code sent to <br/><span className="font-medium text-foreground">{email}</span></p>
-                  </div>
-
-                  {error && (
-                    <div className="mb-6 rounded-xl bg-destructive/10 p-4 text-sm text-destructive text-center">
-                      {error}
-                    </div>
-                  )}
-
-                  <form className="space-y-6" onSubmit={handleVerifyOtp}>
-                    <div className="space-y-2">
-                      <Label htmlFor="otp" className="ml-1">Verification Code</Label>
-                      <div className="relative">
-                        <KeyRound className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                        <Input
-                          id="otp"
-                          type="text"
-                          required
-                          value={otp}
-                          onChange={(e) => setOtp(e.target.value)}
-                          placeholder="000000"
-                          className="pl-10 h-12 rounded-xl bg-background/50 border-white/20 focus:border-primary tracking-widest text-lg text-center"
-                          maxLength={6}
-                        />
-                      </div>
-                    </div>
-
-                    <Button type="submit" className="w-full h-12 rounded-xl text-base font-medium shadow-md shadow-primary/20" disabled={loading}>
-                      {loading ? "Verifying..." : "Verify & Sign In"}
-                    </Button>
-                  </form>
-                </div>
-              )}
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <div className="mt-6 text-center text-sm text-muted-foreground">
+          Don't have an account?{" "}
+          <Link href="/register" className="font-medium text-primary hover:text-primary/80 transition-colors">
+            Sign up
+          </Link>
+        </div>
       </motion.div>
     </div>
   )
 }
-
