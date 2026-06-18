@@ -1,13 +1,21 @@
-"use client"
+"use server"
 
-import { createClient } from "@/lib/supabase/client"
+import { createClient } from "@/lib/supabase/server"
+import { createClient as createSupabaseClient } from "@supabase/supabase-js"
+
+function getAdminClient() {
+  return createSupabaseClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+}
 
 export async function adminUpdateProfileStatus(
   profileId: string,
   status: 'VERIFIED' | 'REJECTED',
   reason?: string
 ) {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   // First verify if current user is admin
   const { data: { user } } = await supabase.auth.getUser()
@@ -21,10 +29,12 @@ export async function adminUpdateProfileStatus(
 
   if (!adminCheck) throw new Error("Forbidden")
 
+  const adminSupabase = getAdminClient()
+
   const update: any = { status }
   if (reason && status === 'REJECTED') update.rejection_reason = reason
 
-  const { error } = await supabase
+  const { error } = await adminSupabase
     .from('profiles')
     .update(update)
     .eq('id', profileId)
@@ -32,7 +42,7 @@ export async function adminUpdateProfileStatus(
   if (error) throw error
 
   // Add an audit log entry
-  await supabase.from('verification_audit_log').insert({
+  await adminSupabase.from('verification_audit_log').insert({
     admin_id: user.id,
     profile_id: profileId,
     action: status === 'VERIFIED' ? 'approved' : 'rejected'
@@ -42,8 +52,23 @@ export async function adminUpdateProfileStatus(
 }
 
 export async function getPendingProfiles() {
-  const supabase = createClient()
-  const { data, error } = await supabase
+  const supabase = await createClient()
+  
+  // First verify if current user is admin
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error("Unauthorized")
+
+  const { data: adminCheck } = await supabase
+    .from('admins')
+    .select('id')
+    .eq('id', user.id)
+    .single()
+
+  if (!adminCheck) throw new Error("Forbidden")
+
+  const adminSupabase = getAdminClient()
+  
+  const { data, error } = await adminSupabase
     .from('profiles')
     .select('*, verification_documents(*)')
     .eq('status', 'PENDING_VERIFICATION')
@@ -66,7 +91,7 @@ export async function getPendingProfiles() {
 
         // Generate a signed URL valid for 1 hour (3600 seconds)
         if (filePath) {
-          const { data: signedData } = await supabase.storage
+          const { data: signedData } = await adminSupabase.storage
             .from('verification-docs')
             .createSignedUrl(filePath, 3600)
             
