@@ -20,7 +20,7 @@ export default async function ProfilePage({ params }: { params: { id: string } }
     .eq('id', user.id)
     .single()
 
-  if (currentUserProfile?.status !== 'approved') {
+  if (currentUserProfile?.status !== 'VERIFIED') {
     redirect("/dashboard")
   }
 
@@ -31,7 +31,7 @@ export default async function ProfilePage({ params }: { params: { id: string } }
     .eq('id', params.id)
     .single()
 
-  if (error || !profile || profile.status !== 'approved') {
+  if (error || !profile || profile.status !== 'VERIFIED') {
     return (
       <div className="flex h-screen items-center justify-center">
         <div className="text-center">
