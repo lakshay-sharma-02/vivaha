@@ -62,6 +62,17 @@ export async function saveOnboardingProgress(
   else if (data.manglik === 'dont_know') profileUpdate.manglik_status = 'unknown';
   
   if (data.horoscope_details) profileUpdate.horoscope_details = data.horoscope_details;
+  if (data.diet) profileUpdate.diet = data.diet;
+  if (data.smoking) profileUpdate.smoking = data.smoking;
+  if (data.drinking) profileUpdate.drinking = data.drinking;
+  if (data.hobbies) profileUpdate.hobbies = data.hobbies;
+
+  // Compile photos array
+  const photos = [];
+  if (data.avatar_url) photos.push(data.avatar_url);
+  if (data.photo_2) photos.push(data.photo_2);
+  if (data.photo_3) photos.push(data.photo_3);
+  if (photos.length > 0) profileUpdate.photos = photos;
 
   // Map Step 6
   if (data.partner_age_min) profileUpdate.preferred_age_min = data.partner_age_min;
@@ -121,12 +132,18 @@ export async function getOnboardingProgress() {
   return {
     ...profile,
     phone_number: profile.phone_number || "",
-    avatar_url: profile.profile_photo_path || "",
+    avatar_url: profile.profile_photo_path || (profile.photos?.[0] || ""),
+    photo_2: profile.photos?.[1] || "",
+    photo_3: profile.photos?.[2] || "",
     city: profile.town || "",
     occupation: profile.profession || "",
     bio: profile.about_me || "",
     siblings: profile.siblings_count?.toString() || "0",
     manglik: profile.manglik_status || "",
+    diet: profile.diet || "",
+    smoking: profile.smoking || "",
+    drinking: profile.drinking || "",
+    hobbies: profile.hobbies || "",
     partner_age_min: profile.preferred_age_min || 18,
     partner_age_max: profile.preferred_age_max || 40,
     partner_location: profile.preferred_town || "",

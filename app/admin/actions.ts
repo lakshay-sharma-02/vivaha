@@ -105,3 +105,55 @@ export async function getPendingProfiles() {
 
   return data
 }
+
+export async function adminDeleteProfile(profileId: string) {
+  const supabase = await createClient()
+  
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error("Unauthorized")
+
+  const { data: adminCheck } = await supabase
+    .from('admins')
+    .select('id')
+    .eq('id', user.id)
+    .single()
+
+  if (!adminCheck) throw new Error("Forbidden")
+
+  const adminSupabase = getAdminClient()
+
+  const { error } = await adminSupabase
+    .from('profiles')
+    .delete()
+    .eq('id', profileId)
+
+  if (error) throw error
+  return { success: true }
+}
+
+export async function adminSearchProfiles(searchTerm: string) {
+  const supabase = await createClient()
+  
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error("Unauthorized")
+
+  const { data: adminCheck } = await supabase
+    .from('admins')
+    .select('id')
+    .eq('id', user.id)
+    .single()
+
+  if (!adminCheck) throw new Error("Forbidden")
+
+  const adminSupabase = getAdminClient()
+
+  // Use ILIKE on full_name or phone_number
+  const { data, error } = await adminSupabase
+    .from('profiles')
+    .select('id, full_name, phone_number, status, town, date_of_birth, created_at')
+    .or(`full_name.ilike.%${searchTerm}%,phone_number.ilike.%${searchTerm}%`)
+    .limit(50)
+
+  if (error) throw error
+  return data
+}

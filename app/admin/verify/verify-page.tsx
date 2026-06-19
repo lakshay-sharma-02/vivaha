@@ -1,16 +1,22 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { getPendingProfiles, adminUpdateProfileStatus } from "../actions"
+import { getPendingProfiles, adminUpdateProfileStatus, adminSearchProfiles, adminDeleteProfile } from "../actions"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { motion, AnimatePresence } from "framer-motion"
-import { CheckCircle2, XCircle, FileText, User } from "lucide-react"
+import { CheckCircle2, XCircle, FileText, User, Search, Trash2 } from "lucide-react"
 
 export default function AdminVerificationPage() {
   const [profiles, setProfiles] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [rejectionReason, setRejectionReason] = useState<{ [key: string]: string }>({})
+  const [activeTab, setActiveTab] = useState<"queue" | "search">("queue")
+
+  // Search state
+  const [searchTerm, setSearchTerm] = useState("")
+  const [searchResults, setSearchResults] = useState<any[]>([])
+  const [isSearching, setIsSearching] = useState(false)
 
   useEffect(() => {
     loadProfiles()
@@ -40,10 +46,37 @@ export default function AdminVerificationPage() {
     }
   }
 
+  async function handleSearch(e?: React.FormEvent) {
+    if (e) e.preventDefault()
+    if (!searchTerm.trim()) return
+
+    setIsSearching(true)
+    try {
+      const results = await adminSearchProfiles(searchTerm)
+      setSearchResults(results)
+    } catch (err) {
+      alert("Error searching profiles")
+    } finally {
+      setIsSearching(false)
+    }
+  }
+
+  async function handleDelete(profileId: string) {
+    if (!confirm("Are you sure you want to completely delete this profile? This cannot be undone.")) return
+
+    try {
+      await adminDeleteProfile(profileId)
+      setSearchResults(prev => prev.filter(p => p.id !== profileId))
+      alert("Profile deleted successfully")
+    } catch (err) {
+      alert("Error deleting profile")
+    }
+  }
+
   if (loading) return (
     <div className="flex min-h-screen items-center justify-center relative overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl -z-10" />
-      <div className="text-xl font-medium animate-pulse">Loading queue...</div>
+      <div className="text-xl font-medium animate-pulse">Loading...</div>
     </div>
   )
 
@@ -55,13 +88,26 @@ export default function AdminVerificationPage() {
 
       <div className="max-w-6xl mx-auto space-y-8">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <h1 className="text-4xl font-bold">Verification Queue</h1>
-          <div className="px-4 py-2 bg-background/50 border border-border rounded-full text-sm font-medium">
-            {profiles.length} profiles pending
+          <h1 className="text-4xl font-bold">Admin Panel</h1>
+          <div className="flex bg-background/50 border border-border rounded-full p-1">
+            <button 
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${activeTab === 'queue' ? 'bg-primary text-primary-foreground shadow' : 'hover:bg-muted'}`}
+              onClick={() => setActiveTab("queue")}
+            >
+              Verification Queue ({profiles.length})
+            </button>
+            <button 
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${activeTab === 'search' ? 'bg-primary text-primary-foreground shadow' : 'hover:bg-muted'}`}
+              onClick={() => setActiveTab("search")}
+            >
+              Search & Manage
+            </button>
           </div>
         </div>
 
-        {profiles.length === 0 ? (
+        {activeTab === "queue" && (
+          <>
+            {profiles.length === 0 ? (
           <div className="glass-panel p-12 text-center rounded-3xl">
             <CheckCircle2 className="w-16 h-16 text-green-500 mx-auto mb-4" />
             <h2 className="text-2xl font-bold mb-2">All caught up!</h2>
@@ -173,6 +219,79 @@ export default function AdminVerificationPage() {
               )})}
             </AnimatePresence>
           </motion.div>
+        )}
+          </>
+        )}
+
+        {activeTab === "search" && (
+          <div className="glass-panel p-8 rounded-3xl space-y-6">
+            <h2 className="text-2xl font-bold">Search & Manage Profiles</h2>
+            <form onSubmit={handleSearch} className="flex gap-4">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <Input 
+                  placeholder="Search by name or phone number..." 
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 h-12 bg-background/50 text-lg"
+                />
+              </div>
+              <Button type="submit" disabled={isSearching || !searchTerm.trim()} className="h-12 px-8">
+                {isSearching ? "Searching..." : "Search"}
+              </Button>
+            </form>
+
+            {searchResults.length > 0 && (
+              <div className="mt-8 border border-border/50 rounded-2xl overflow-hidden bg-background/50">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="border-b border-border/50 bg-muted/30">
+                      <th className="p-4 font-medium">Name</th>
+                      <th className="p-4 font-medium">Phone Number</th>
+                      <th className="p-4 font-medium">Status</th>
+                      <th className="p-4 font-medium">Joined</th>
+                      <th className="p-4 font-medium text-right">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-border/50">
+                    {searchResults.map((p) => (
+                      <tr key={p.id} className="hover:bg-muted/10 transition-colors">
+                        <td className="p-4 font-medium">{p.full_name || "Unknown"}</td>
+                        <td className="p-4 font-mono">{p.phone_number || "N/A"}</td>
+                        <td className="p-4">
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                            p.status === 'VERIFIED' ? 'bg-green-500/20 text-green-500' :
+                            p.status === 'PENDING_VERIFICATION' ? 'bg-yellow-500/20 text-yellow-500' :
+                            p.status === 'REJECTED' ? 'bg-red-500/20 text-red-500' :
+                            'bg-muted text-muted-foreground'
+                          }`}>
+                            {p.status}
+                          </span>
+                        </td>
+                        <td className="p-4 text-muted-foreground">{new Date(p.created_at).toLocaleDateString()}</td>
+                        <td className="p-4 text-right">
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            onClick={() => handleDelete(p.id)}
+                            className="border-destructive text-destructive hover:bg-destructive hover:text-white"
+                          >
+                            <Trash2 className="w-4 h-4 mr-2" /> Delete
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+            
+            {searchResults.length === 0 && searchTerm && !isSearching && (
+              <div className="text-center py-12 text-muted-foreground">
+                No profiles found matching "{searchTerm}"
+              </div>
+            )}
+          </div>
         )}
       </div>
     </div>

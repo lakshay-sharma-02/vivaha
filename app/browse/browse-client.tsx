@@ -11,25 +11,51 @@ import { getProfilesPage } from "./actions"
 
 type Profile = any; // We'll type this better later or let it infer
 
-export default function BrowseClient({ initialProfiles }: { initialProfiles: Profile[] }) {
+export default function BrowseClient({ initialProfiles, isSubscribed }: { initialProfiles: Profile[], isSubscribed: boolean }) {
   const [profiles, setProfiles] = useState<Profile[]>(initialProfiles)
   const [page, setPage] = useState(1)
   const [hasMore, setHasMore] = useState(initialProfiles.length === 20)
   const [loadingMore, setLoadingMore] = useState(false)
+  const [showAdvanced, setShowAdvanced] = useState(false)
 
+  // Basic Filters
   const [searchTerm, setSearchTerm] = useState("")
   const [religionFilter, setReligionFilter] = useState("")
   const [casteFilter, setCasteFilter] = useState("")
   const [cityFilter, setCityFilter] = useState("")
 
+  // Advanced Filters
+  const [ageMin, setAgeMin] = useState<string>("")
+  const [ageMax, setAgeMax] = useState<string>("")
+  const [educationFilter, setEducationFilter] = useState("")
+  const [professionFilter, setProfessionFilter] = useState("")
+  const [incomeFilter, setIncomeFilter] = useState("")
+  const [dietFilter, setDietFilter] = useState("")
+  const [smokingFilter, setSmokingFilter] = useState("")
+  const [drinkingFilter, setDrinkingFilter] = useState("")
+
   const filteredProfiles = profiles.filter(profile => {
+    const age = new Date().getFullYear() - new Date(profile.date_of_birth).getFullYear()
+
     const matchesSearch = profile.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) || 
                           profile.about_me?.toLowerCase().includes(searchTerm.toLowerCase())
     const matchesReligion = religionFilter === "" || profile.religion?.toLowerCase().includes(religionFilter.toLowerCase())
     const matchesCaste = casteFilter === "" || profile.caste?.toLowerCase().includes(casteFilter.toLowerCase())
     const matchesCity = cityFilter === "" || profile.town?.toLowerCase().includes(cityFilter.toLowerCase())
+    
+    // Advanced Matches
+    const matchesAgeMin = ageMin === "" || age >= parseInt(ageMin)
+    const matchesAgeMax = ageMax === "" || age <= parseInt(ageMax)
+    const matchesEducation = educationFilter === "" || profile.education?.toLowerCase().includes(educationFilter.toLowerCase())
+    const matchesProfession = professionFilter === "" || profile.profession?.toLowerCase().includes(professionFilter.toLowerCase())
+    const matchesIncome = incomeFilter === "" || profile.income_range === incomeFilter
+    const matchesDiet = dietFilter === "" || profile.diet === dietFilter
+    const matchesSmoking = smokingFilter === "" || profile.smoking === smokingFilter
+    const matchesDrinking = drinkingFilter === "" || profile.drinking === drinkingFilter
 
-    return matchesSearch && matchesReligion && matchesCaste && matchesCity
+    return matchesSearch && matchesReligion && matchesCaste && matchesCity && 
+           matchesAgeMin && matchesAgeMax && matchesEducation && matchesProfession && 
+           matchesIncome && matchesDiet && matchesSmoking && matchesDrinking
   })
 
   async function loadMore() {
@@ -54,11 +80,17 @@ export default function BrowseClient({ initialProfiles }: { initialProfiles: Pro
     }
   }
 
+  function clearFilters() {
+    setSearchTerm(""); setReligionFilter(""); setCasteFilter(""); setCityFilter("");
+    setAgeMin(""); setAgeMax(""); setEducationFilter(""); setProfessionFilter("");
+    setIncomeFilter(""); setDietFilter(""); setSmokingFilter(""); setDrinkingFilter("");
+  }
+
   return (
     <div className="space-y-8">
       {/* Filters */}
-      <div className="glass-panel p-6 rounded-2xl">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="glass-panel p-6 rounded-2xl relative overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input 
@@ -87,6 +119,66 @@ export default function BrowseClient({ initialProfiles }: { initialProfiles: Pro
             onChange={(e) => setCityFilter(e.target.value)}
           />
         </div>
+
+        <div className="flex justify-between items-center border-t border-white/10 pt-4">
+          <Button variant="ghost" size="sm" onClick={() => setShowAdvanced(!showAdvanced)}>
+            {showAdvanced ? "Hide Advanced Filters" : "Show Advanced Filters"}
+          </Button>
+          <Button variant="link" size="sm" onClick={clearFilters}>Clear All</Button>
+        </div>
+
+        <AnimatePresence>
+          {showAdvanced && (
+            <motion.div 
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="overflow-hidden"
+            >
+              <div className={cn("grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 relative", !isSubscribed && "blur-sm select-none opacity-50")}>
+                <Input placeholder="Min Age" type="number" className="bg-background/50" value={ageMin} onChange={(e) => setAgeMin(e.target.value)} disabled={!isSubscribed} />
+                <Input placeholder="Max Age" type="number" className="bg-background/50" value={ageMax} onChange={(e) => setAgeMax(e.target.value)} disabled={!isSubscribed} />
+                <Input placeholder="Education" className="bg-background/50" value={educationFilter} onChange={(e) => setEducationFilter(e.target.value)} disabled={!isSubscribed} />
+                <Input placeholder="Profession" className="bg-background/50" value={professionFilter} onChange={(e) => setProfessionFilter(e.target.value)} disabled={!isSubscribed} />
+                
+                <select className="flex h-10 w-full rounded-md border border-white/20 bg-background/50 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring focus:border-transparent" value={incomeFilter} onChange={(e) => setIncomeFilter(e.target.value)} disabled={!isSubscribed}>
+                  <option value="">Any Income</option>
+                  <option value="<3L">Below 3L</option>
+                  <option value="3-6L">3L - 6L</option>
+                  <option value="6-10L">6L - 10L</option>
+                  <option value="10-20L">10L - 20L</option>
+                  <option value="20L+">20L+</option>
+                </select>
+                <select className="flex h-10 w-full rounded-md border border-white/20 bg-background/50 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring focus:border-transparent" value={dietFilter} onChange={(e) => setDietFilter(e.target.value)} disabled={!isSubscribed}>
+                  <option value="">Any Diet</option>
+                  <option value="vegetarian">Vegetarian</option>
+                  <option value="non_vegetarian">Non-Vegetarian</option>
+                  <option value="eggetarian">Eggetarian</option>
+                  <option value="vegan">Vegan</option>
+                </select>
+                <select className="flex h-10 w-full rounded-md border border-white/20 bg-background/50 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring focus:border-transparent" value={smokingFilter} onChange={(e) => setSmokingFilter(e.target.value)} disabled={!isSubscribed}>
+                  <option value="">Smoking</option>
+                  <option value="no">No</option>
+                  <option value="yes">Yes</option>
+                  <option value="occasionally">Occasionally</option>
+                </select>
+                <select className="flex h-10 w-full rounded-md border border-white/20 bg-background/50 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring focus:border-transparent" value={drinkingFilter} onChange={(e) => setDrinkingFilter(e.target.value)} disabled={!isSubscribed}>
+                  <option value="">Drinking</option>
+                  <option value="no">No</option>
+                  <option value="yes">Yes</option>
+                  <option value="socially">Socially</option>
+                </select>
+              </div>
+              {!isSubscribed && (
+                <div className="absolute inset-0 z-10 flex items-center justify-center pt-8">
+                  <span className="bg-background/90 px-4 py-2 rounded-full text-sm font-semibold shadow-sm border border-border/50">
+                    Premium Feature
+                  </span>
+                </div>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Results */}

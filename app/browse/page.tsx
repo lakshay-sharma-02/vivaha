@@ -15,7 +15,7 @@ export default async function BrowsePage() {
 
   const { data: currentUserProfile } = await supabase
     .from('profiles')
-    .select('status')
+    .select('status, subscription_ends_at')
     .eq('id', user.id)
     .single()
 
@@ -23,9 +23,17 @@ export default async function BrowsePage() {
     redirect("/dashboard")
   }
 
+  // Check if current user has an active subscription
+  const isSubscribed = currentUserProfile?.subscription_ends_at 
+    ? new Date(currentUserProfile.subscription_ends_at) > new Date() 
+    : false;
+
+  const baseFields = 'id, full_name, profile_photo_path, date_of_birth, town, religion, caste, education, profession, about_me'
+  const premiumFields = ', income_range, diet, smoking, drinking, hobbies'
+  
   const { data: profiles, error } = await supabase
     .from('profiles')
-    .select('id, full_name, profile_photo_path, date_of_birth, town, religion, caste, education, profession, about_me')
+    .select(isSubscribed ? baseFields + premiumFields : baseFields)
     .eq('status', 'VERIFIED')
     .order('created_at', { ascending: false })
     .range(0, 19)
@@ -58,7 +66,7 @@ export default async function BrowsePage() {
           </Link>
         </div>
 
-        <BrowseClient initialProfiles={profiles || []} />
+        <BrowseClient initialProfiles={profiles || []} isSubscribed={isSubscribed} />
       </div>
     </div>
   )

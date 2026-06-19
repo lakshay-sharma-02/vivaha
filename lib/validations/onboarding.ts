@@ -26,10 +26,14 @@ export const onboardingSchema = z.object({
   father_occupation: z.string().min(1, "Father's occupation is required"),
   siblings: z.string().min(1, "Siblings info is required"),
 
-  // Step 5: Horoscope
+  // Step 5: Horoscope & Lifestyle
   manglik: z.string().min(1, "Manglik status is required"),
   horoscope_details: z.string().optional().or(z.literal("")),
-
+  diet: z.string().optional().or(z.literal("")),
+  smoking: z.string().optional().or(z.literal("")),
+  drinking: z.string().optional().or(z.literal("")),
+  hobbies: z.string().optional().or(z.literal("")),
+  
   // Step 6: Preferences
   partner_age_min: z.preprocess((val) => Number(val), z.number().min(18).max(100)),
   partner_age_max: z.preprocess((val) => Number(val), z.number().min(18).max(100)),
@@ -37,9 +41,11 @@ export const onboardingSchema = z.object({
   partner_religion: z.string().min(1, "Religion preference is required"),
   partner_caste: z.string().min(1, "Caste preference is required"),
 
-  // Step 7: Verification
+  // Step 7: Verification & Photos
   aadhaar_last_four: z.string().length(4, "Exactly 4 digits required"),
   verification_doc_url: z.string().optional().or(z.literal("")),
+  photo_2: z.string().optional().or(z.literal("")),
+  photo_3: z.string().optional().or(z.literal("")),
 })
 
 export type OnboardingData = z.infer<typeof onboardingSchema>

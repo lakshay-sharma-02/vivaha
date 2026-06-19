@@ -67,6 +67,10 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
     delete profile.income_range;
     delete profile.manglik_status;
     delete profile.horoscope_details;
+    delete profile.diet;
+    delete profile.smoking;
+    delete profile.drinking;
+    delete profile.hobbies;
   }
   // Always strip phone number from the profile page
   delete profile.phone_number;
@@ -125,7 +129,69 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
           </div>
 
           <div className="p-8 sm:p-12 relative">
+            
+            {/* Additional Photos */}
+            {profile.photos && profile.photos.length > 1 && (
+              <div className="mb-12">
+                <h3 className="text-xl font-semibold mb-4">Photo Gallery</h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {profile.photos.slice(1, 4).map((photo: string, idx: number) => (
+                    <div key={idx} className="aspect-square rounded-2xl overflow-hidden bg-muted relative shadow-md">
+                      <img src={photo} alt={`${profile.full_name} photo ${idx + 2}`} className="w-full h-full object-cover transition-transform hover:scale-105" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div className={cn("space-y-12", !isSubscribed && "blur-md select-none opacity-40")}>
+            {/* Lifestyle & Hobbies */}
+            <section className="mt-12">
+              <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+                Lifestyle & Hobbies
+                {!isSubscribed && <Lock className="w-5 h-5 text-muted-foreground ml-2" />}
+              </h2>
+              <div className="bg-background/50 p-6 rounded-2xl border border-border/50 relative overflow-hidden">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 relative z-10">
+                  <div>
+                    <p className="text-sm text-muted-foreground mb-1">Diet</p>
+                    <p className="font-medium capitalize">{profile.diet?.replace('_', ' ') || "Not specified"}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground mb-1">Smoking</p>
+                    <p className="font-medium capitalize">{profile.smoking || "Not specified"}</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground mb-1">Drinking</p>
+                    <p className="font-medium capitalize">{profile.drinking || "Not specified"}</p>
+                  </div>
+                </div>
+
+                <div className="mt-6 relative z-10">
+                  <p className="text-sm text-muted-foreground mb-2">Hobbies & Interests</p>
+                  {profile.hobbies ? (
+                    <div className="flex flex-wrap gap-2">
+                      {profile.hobbies.split(',').map((hobby: string, i: number) => (
+                        <span key={i} className="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">
+                          {hobby.trim()}
+                        </span>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="font-medium">Not specified</p>
+                  )}
+                </div>
+
+                {!isSubscribed && (
+                  <div className="absolute inset-0 bg-background/40 backdrop-blur-[2px] z-20 flex items-center justify-center">
+                    <span className="text-sm font-semibold bg-white/80 dark:bg-black/80 px-4 py-2 rounded-full text-muted-foreground shadow-sm">
+                      Premium
+                    </span>
+                  </div>
+                )}
+              </div>
+            </section>
+
             {/* Public Information */}
             <section>
               <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">

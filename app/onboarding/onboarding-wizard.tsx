@@ -58,7 +58,13 @@ export default function OnboardingWizard() {
       partner_religion: "",
       partner_caste: "",
       aadhaar_last_four: "",
-      verification_doc_url: ""
+      verification_doc_url: "",
+      photo_2: "",
+      photo_3: "",
+      diet: "",
+      smoking: "",
+      drinking: "",
+      hobbies: ""
     }
   })
 
@@ -73,33 +79,39 @@ export default function OnboardingWizard() {
         
         setStep(progress.onboarding_step || 1)
         
-        // Populate form
-        const details = progress.profile_details
+        // Populate form (Progress is already mapped to frontend schema by actions.ts)
         form.reset({
           full_name: progress.full_name || "",
           date_of_birth: progress.date_of_birth || "",
           height_cm: progress.height_cm || 160,
           phone_number: progress.phone_number || "",
+          gender: progress.gender || "male",
           avatar_url: progress.avatar_url || "",
-          city: details?.city || "",
-          religion: details?.religion || "",
-          caste: details?.caste || "",
-          sub_caste: details?.sub_caste || "",
-          education: details?.education || "",
-          occupation: details?.occupation || "",
-          income_annual: details?.income_annual || 0,
-          bio: details?.bio || "",
-          family_type: details?.family_type || "",
-          father_occupation: details?.father_occupation || "",
-          siblings: details?.siblings || "",
-          manglik: details?.manglik || "no",
-          horoscope_details: details?.horoscope_details || "",
-          partner_age_min: details?.partner_age_min || 18,
-          partner_age_max: details?.partner_age_max || 50,
-          partner_location: details?.partner_location || "",
-          partner_religion: details?.partner_religion || "",
-          partner_caste: details?.partner_caste || "",
-          aadhaar_last_four: details?.aadhaar_last_four || ""
+          photo_2: progress.photo_2 || "",
+          photo_3: progress.photo_3 || "",
+          city: progress.city || "",
+          religion: progress.religion || "",
+          caste: progress.caste || "",
+          sub_caste: progress.sub_caste || "",
+          education: progress.education || "",
+          occupation: progress.occupation || "",
+          income_annual: progress.income_annual || 0,
+          bio: progress.bio || "",
+          family_type: progress.family_type || "",
+          father_occupation: progress.father_occupation || "",
+          siblings: progress.siblings || "",
+          manglik: progress.manglik || "no",
+          diet: progress.diet || "",
+          smoking: progress.smoking || "",
+          drinking: progress.drinking || "",
+          hobbies: progress.hobbies || "",
+          horoscope_details: progress.horoscope_details || "",
+          partner_age_min: progress.partner_age_min || 18,
+          partner_age_max: progress.partner_age_max || 50,
+          partner_location: progress.partner_location || "",
+          partner_religion: progress.partner_religion || "",
+          partner_caste: progress.partner_caste || "",
+          aadhaar_last_four: progress.aadhaar_last_four || ""
         })
       }
       setLoading(false)
@@ -107,7 +119,7 @@ export default function OnboardingWizard() {
     loadProgress()
   }, [form, router])
 
-  async function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>, field: "avatar_url" | "verification_doc_url") {
+  async function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>, field: "avatar_url" | "photo_2" | "photo_3" | "verification_doc_url") {
     const file = e.target.files?.[0]
     if (!file) return
 
@@ -115,7 +127,7 @@ export default function OnboardingWizard() {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return
 
-    const bucket = field === "avatar_url" ? "profile-photos" : "verification-docs"
+    const bucket = field === "verification_doc_url" ? "verification-docs" : "profile-photos"
     const fileExt = file.name.split(".").pop()
     const filePath = `${user.id}/${Math.random()}.${fileExt}`
 
@@ -136,11 +148,11 @@ export default function OnboardingWizard() {
   async function onNext() {
     const fieldsByStep: (keyof OnboardingData)[][] = [
       [], // placeholder for step 0
-      ["full_name", "date_of_birth", "gender", "phone_number", "height_cm", "avatar_url"],
+      ["full_name", "date_of_birth", "gender", "phone_number", "height_cm", "avatar_url", "photo_2", "photo_3"],
       ["city", "religion", "caste", "sub_caste"],
       ["education", "occupation", "income_annual", "bio"],
       ["family_type", "father_occupation", "siblings"],
-      ["manglik", "horoscope_details"],
+      ["manglik", "horoscope_details", "diet", "smoking", "drinking", "hobbies"],
       ["partner_age_min", "partner_age_max", "partner_location", "partner_religion", "partner_caste"],
       ["aadhaar_last_four", "verification_doc_url"]
     ]
@@ -256,15 +268,39 @@ export default function OnboardingWizard() {
                       <Label>Height (cm)</Label>
                       <Input type="number" {...form.register("height_cm")} className="h-12 bg-background/50" />
                     </div>
-                    <div className="space-y-2">
-                      <Label>Profile Photo</Label>
-                      <div className="flex items-center gap-4">
-                        <Input type="file" accept="image/*" onChange={(e) => handleFileUpload(e, "avatar_url")} className="flex-1 bg-background/50" />
-                        {form.watch("avatar_url") && (
-                          <div className="h-12 w-12 rounded-full overflow-hidden shrink-0 border-2 border-primary">
-                            <img src={form.watch("avatar_url")} alt="Preview" className="h-full w-full object-cover" />
-                          </div>
-                        )}
+                    <div className="space-y-4">
+                      <Label>Profile Photos (Up to 3)</Label>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {/* Photo 1 (Main) */}
+                        <div className="flex flex-col items-center gap-4 p-4 border rounded-xl bg-background/30">
+                          <span className="text-sm font-medium">Main Photo</span>
+                          <Input type="file" accept="image/*" onChange={(e) => handleFileUpload(e, "avatar_url")} />
+                          {form.watch("avatar_url") && (
+                            <div className="h-24 w-24 rounded-full overflow-hidden shrink-0 border-2 border-primary">
+                              <img src={form.watch("avatar_url")} alt="Preview" className="h-full w-full object-cover" />
+                            </div>
+                          )}
+                        </div>
+                        {/* Photo 2 */}
+                        <div className="flex flex-col items-center gap-4 p-4 border rounded-xl bg-background/30">
+                          <span className="text-sm font-medium text-muted-foreground">Photo 2 (Optional)</span>
+                          <Input type="file" accept="image/*" onChange={(e) => handleFileUpload(e, "photo_2")} />
+                          {form.watch("photo_2") && (
+                            <div className="h-24 w-24 rounded-xl overflow-hidden shrink-0 border-2 border-muted">
+                              <img src={form.watch("photo_2")} alt="Preview" className="h-full w-full object-cover" />
+                            </div>
+                          )}
+                        </div>
+                        {/* Photo 3 */}
+                        <div className="flex flex-col items-center gap-4 p-4 border rounded-xl bg-background/30">
+                          <span className="text-sm font-medium text-muted-foreground">Photo 3 (Optional)</span>
+                          <Input type="file" accept="image/*" onChange={(e) => handleFileUpload(e, "photo_3")} />
+                          {form.watch("photo_3") && (
+                            <div className="h-24 w-24 rounded-xl overflow-hidden shrink-0 border-2 border-muted">
+                              <img src={form.watch("photo_3")} alt="Preview" className="h-full w-full object-cover" />
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -337,13 +373,47 @@ export default function OnboardingWizard() {
 
                 {step === 5 && (
                   <div className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <Label>Manglik</Label>
+                        <select className="flex h-12 w-full rounded-md border border-input bg-background/50 px-3 py-1 text-sm outline-none focus:ring-2 focus:ring-ring focus:border-transparent" {...form.register("manglik")}>
+                          <option value="no">No</option>
+                          <option value="yes">Yes</option>
+                          <option value="dont_know">Don't Know</option>
+                        </select>
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Diet (Optional)</Label>
+                        <select className="flex h-12 w-full rounded-md border border-input bg-background/50 px-3 py-1 text-sm outline-none focus:ring-2 focus:ring-ring focus:border-transparent" {...form.register("diet")}>
+                          <option value="">Select...</option>
+                          <option value="vegetarian">Vegetarian</option>
+                          <option value="non_vegetarian">Non-Vegetarian</option>
+                          <option value="eggetarian">Eggetarian</option>
+                          <option value="vegan">Vegan</option>
+                        </select>
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Smoking (Optional)</Label>
+                        <select className="flex h-12 w-full rounded-md border border-input bg-background/50 px-3 py-1 text-sm outline-none focus:ring-2 focus:ring-ring focus:border-transparent" {...form.register("smoking")}>
+                          <option value="">Select...</option>
+                          <option value="no">No</option>
+                          <option value="yes">Yes</option>
+                          <option value="occasionally">Occasionally</option>
+                        </select>
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Drinking (Optional)</Label>
+                        <select className="flex h-12 w-full rounded-md border border-input bg-background/50 px-3 py-1 text-sm outline-none focus:ring-2 focus:ring-ring focus:border-transparent" {...form.register("drinking")}>
+                          <option value="">Select...</option>
+                          <option value="no">No</option>
+                          <option value="yes">Yes</option>
+                          <option value="socially">Socially</option>
+                        </select>
+                      </div>
+                    </div>
                     <div className="space-y-2">
-                      <Label>Manglik</Label>
-                      <select className="flex h-12 w-full rounded-md border border-input bg-background/50 px-3 py-1 text-sm outline-none focus:ring-2 focus:ring-ring focus:border-transparent" {...form.register("manglik")}>
-                        <option value="no">No</option>
-                        <option value="yes">Yes</option>
-                        <option value="dont_know">Don't Know</option>
-                      </select>
+                      <Label>Hobbies & Interests (Optional)</Label>
+                      <Input {...form.register("hobbies")} placeholder="e.g. Reading, Traveling, Cooking, Photography..." className="h-12 bg-background/50" />
                     </div>
                     <div className="space-y-2">
                       <Label>Horoscope Details (Optional)</Label>
