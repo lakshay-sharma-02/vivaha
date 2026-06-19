@@ -51,6 +51,9 @@ export default function OnboardingWizard({ editMode = false }: { editMode?: bool
       family_type: "",
       father_occupation: "",
       siblings: "",
+      gotra: "",
+      mothers_gotra: "",
+      grandmothers_gotra: "",
       manglik: "no",
       horoscope_details: "",
       partner_age_min: 18,
@@ -101,6 +104,9 @@ export default function OnboardingWizard({ editMode = false }: { editMode?: bool
           family_type: progress.family_type || "",
           father_occupation: progress.father_occupation || "",
           siblings: progress.siblings || "",
+          gotra: progress.gotra || "",
+          mothers_gotra: progress.mothers_gotra || "",
+          grandmothers_gotra: progress.grandmothers_gotra || "",
           manglik: progress.manglik || "no",
           diet: progress.diet || "",
           smoking: progress.smoking || "",
@@ -152,7 +158,7 @@ export default function OnboardingWizard({ editMode = false }: { editMode?: bool
       ["full_name", "date_of_birth", "gender", "phone_number", "height_cm", "avatar_url", "photo_2", "photo_3"],
       ["city", "religion", "caste", "sub_caste"],
       ["education", "occupation", "income_annual", "bio"],
-      ["family_type", "father_occupation", "siblings"],
+      ["family_type", "father_occupation", "siblings", "gotra", "mothers_gotra", "grandmothers_gotra"],
       ["manglik", "horoscope_details", "diet", "smoking", "drinking", "hobbies"],
       ["partner_age_min", "partner_age_max", "partner_location", "partner_religion", "partner_caste"],
       ["aadhaar_last_four", "verification_doc_url"]
@@ -368,6 +374,23 @@ export default function OnboardingWizard({ editMode = false }: { editMode?: bool
                     <div className="space-y-2">
                       <Label>Siblings</Label>
                       <Input {...form.register("siblings")} placeholder="e.g. 1 Brother, 2 Sisters" className="h-12 bg-background/50" />
+                    </div>
+                    <div className="border-t border-border/50 pt-4">
+                      <p className="text-sm text-muted-foreground mb-4">Gotra information helps with compatibility matching.</p>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="space-y-2">
+                          <Label>Gotra <span className="text-xs text-muted-foreground">(Optional)</span></Label>
+                          <Input {...form.register("gotra")} placeholder="Your Gotra" className="h-12 bg-background/50" />
+                        </div>
+                        <div className="space-y-2">
+                          <Label>Mother's Gotra <span className="text-xs text-primary">(Ma)</span></Label>
+                          <Input {...form.register("mothers_gotra")} placeholder="Mother's Gotra" className="h-12 bg-background/50" />
+                        </div>
+                        <div className="space-y-2">
+                          <Label>Grandmother's Gotra <span className="text-xs text-primary">(Dadi)</span></Label>
+                          <Input {...form.register("grandmothers_gotra")} placeholder="Dadi's Gotra" className="h-12 bg-background/50" />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}

@@ -25,6 +25,9 @@ export const onboardingSchema = z.object({
   family_type: z.string().min(1, "Family type is required"),
   father_occupation: z.string().min(1, "Father's occupation is required"),
   siblings: z.string().min(1, "Siblings info is required"),
+  gotra: z.string().optional().or(z.literal("")),
+  mothers_gotra: z.string().optional().or(z.literal("")),
+  grandmothers_gotra: z.string().optional().or(z.literal("")),
 
   // Step 5: Horoscope & Lifestyle
   manglik: z.string().min(1, "Manglik status is required"),

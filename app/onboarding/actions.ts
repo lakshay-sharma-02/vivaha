@@ -55,6 +55,9 @@ export async function saveOnboardingProgress(
   }
   if (data.father_occupation) profileUpdate.father_occupation = data.father_occupation;
   if (data.siblings) profileUpdate.siblings_count = parseInt(data.siblings) || 0;
+  if (data.gotra) profileUpdate.gotra = data.gotra;
+  if (data.mothers_gotra) profileUpdate.mothers_gotra = data.mothers_gotra;
+  if (data.grandmothers_gotra) profileUpdate.grandmothers_gotra = data.grandmothers_gotra;
 
   // Map Step 5
   if (data.manglik === 'yes') profileUpdate.manglik_status = 'manglik';
