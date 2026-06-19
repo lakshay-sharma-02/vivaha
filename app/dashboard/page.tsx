@@ -247,7 +247,7 @@ export default async function DashboardPage() {
                       )}
                     </div>
                   </div>
-                ))}
+                )})}
               </div>
             ) : (
               <div className="glass-panel p-8 rounded-3xl text-center border-dashed border-2">
@@ -315,7 +315,7 @@ export default async function DashboardPage() {
                       </div>
                     )}
                   </div>
-                ))}
+                )})}
               </div>
             ) : null}
           </div>
