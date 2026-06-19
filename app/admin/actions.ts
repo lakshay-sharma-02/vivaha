@@ -147,11 +147,16 @@ export async function adminSearchProfiles(searchTerm: string) {
 
   const adminSupabase = getAdminClient()
 
-  // Use ILIKE on full_name or phone_number
-  const { data, error } = await adminSupabase
+  let query = adminSupabase
     .from('profiles')
     .select('id, full_name, phone_number, status, town, date_of_birth, created_at')
-    .or(`full_name.ilike.%${searchTerm}%,phone_number.ilike.%${searchTerm}%`)
+
+  if (searchTerm.trim()) {
+    query = query.or(`full_name.ilike.%${searchTerm}%,phone_number.ilike.%${searchTerm}%`)
+  }
+
+  const { data, error } = await query
+    .order('created_at', { ascending: false })
     .limit(50)
 
   if (error) throw error

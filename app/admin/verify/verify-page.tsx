@@ -46,9 +46,14 @@ export default function AdminVerificationPage() {
     }
   }
 
+  useEffect(() => {
+    if (activeTab === 'search') {
+      handleSearch()
+    }
+  }, [activeTab])
+
   async function handleSearch(e?: React.FormEvent) {
     if (e) e.preventDefault()
-    if (!searchTerm.trim()) return
 
     setIsSearching(true)
     try {
@@ -236,7 +241,7 @@ export default function AdminVerificationPage() {
                   className="pl-10 h-12 bg-background/50 text-lg"
                 />
               </div>
-              <Button type="submit" disabled={isSearching || !searchTerm.trim()} className="h-12 px-8">
+              <Button type="submit" disabled={isSearching} className="h-12 px-8">
                 {isSearching ? "Searching..." : "Search"}
               </Button>
             </form>
