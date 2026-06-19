@@ -59,6 +59,18 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
     ? new Date(currentUserProfile.subscription_ends_at) > new Date() 
     : false;
 
+  // SECURITY: Strip premium data if not subscribed
+  if (!isSubscribed) {
+    delete profile.family_type;
+    delete profile.father_occupation;
+    delete profile.siblings_count;
+    delete profile.income_range;
+    delete profile.manglik_status;
+    delete profile.horoscope_details;
+  }
+  // Always strip phone number from the profile page
+  delete profile.phone_number;
+
   const dob = new Date(profile.date_of_birth)
   const ageDifMs = Date.now() - dob.getTime()
   const ageDate = new Date(ageDifMs)
