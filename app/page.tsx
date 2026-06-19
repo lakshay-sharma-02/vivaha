@@ -1,6 +1,16 @@
 import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
-import { LandingHero, TrustSection, SampleProfilesSection } from "@/components/landing"
+import { 
+  LandingHero, 
+  TrustBar, 
+  HowItWorks, 
+  WhySahacharDifferent, 
+  FeaturedProfiles, 
+  SuccessStories, 
+  SafetyPrivacy, 
+  FinalCTA, 
+  Footer 
+} from "@/components/landing"
 
 export default async function Index() {
   const supabase = await createClient()
@@ -14,10 +24,16 @@ export default async function Index() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-background text-foreground overflow-x-hidden">
       <LandingHero />
-      <TrustSection />
-      <SampleProfilesSection />
+      <TrustBar />
+      <HowItWorks />
+      <WhySahacharDifferent />
+      <FeaturedProfiles />
+      <SuccessStories />
+      <SafetyPrivacy />
+      <FinalCTA />
+      <Footer />
     </div>
   )
 }
