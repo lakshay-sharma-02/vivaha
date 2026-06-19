@@ -106,17 +106,25 @@ export default async function DashboardPage() {
               <p className="text-muted-foreground">Manage your profile and find your perfect match.</p>
             </div>
             
-            <div className={cn(
-              "flex items-center gap-2 px-4 py-2 rounded-full border shadow-sm font-medium",
-              profile.status === 'VERIFIED' ? "bg-green-500/10 border-green-500/20 text-green-700 dark:text-green-400" :
-              profile.status === 'PENDING_VERIFICATION' ? "bg-yellow-500/10 border-yellow-500/20 text-yellow-700 dark:text-yellow-400" :
-              profile.status === 'REJECTED' ? "bg-destructive/10 border-destructive/20 text-destructive" :
-              "bg-muted border-border"
-            )}>
-              {profile.status === 'VERIFIED' && <CheckCircle className="w-5 h-5" />}
-              {profile.status === 'PENDING_VERIFICATION' && <Clock className="w-5 h-5" />}
-              {profile.status === 'REJECTED' && <AlertCircle className="w-5 h-5" />}
-              Profile Status: {profile.status.replace('_', ' ')}
+            <div className="flex items-center gap-4">
+              <div className={cn(
+                "flex items-center gap-2 px-4 py-2 rounded-full border shadow-sm font-medium",
+                profile.status === 'VERIFIED' ? "bg-green-500/10 border-green-500/20 text-green-700 dark:text-green-400" :
+                profile.status === 'PENDING_VERIFICATION' ? "bg-yellow-500/10 border-yellow-500/20 text-yellow-700 dark:text-yellow-400" :
+                profile.status === 'REJECTED' ? "bg-destructive/10 border-destructive/20 text-destructive" :
+                "bg-muted border-border"
+              )}>
+                {profile.status === 'VERIFIED' && <CheckCircle className="w-5 h-5" />}
+                {profile.status === 'PENDING_VERIFICATION' && <Clock className="w-5 h-5" />}
+                {profile.status === 'REJECTED' && <AlertCircle className="w-5 h-5" />}
+                Profile Status: {profile.status.replace('_', ' ')}
+              </div>
+              <Link
+                href="/dashboard/edit-profile"
+                className={cn(buttonVariants({ variant: "outline" }), "rounded-full shadow-sm")}
+              >
+                Edit Profile
+              </Link>
             </div>
           </div>
 

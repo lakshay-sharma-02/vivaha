@@ -23,7 +23,8 @@ const STEPS = [
   "Verification"
 ]
 
-export default function OnboardingWizard() {
+export default function OnboardingWizard({ editMode = false }: { editMode?: boolean }) {
+  const visibleSteps = editMode ? STEPS.slice(0, 6) : STEPS
   const [step, setStep] = useState(1)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
@@ -72,12 +73,12 @@ export default function OnboardingWizard() {
     async function loadProgress() {
       const progress = await getOnboardingProgress()
       if (progress) {
-        if (progress.onboarding_completed) {
+        if (progress.status && progress.status !== 'DRAFT' && !editMode) {
           router.push("/dashboard")
           return
         }
         
-        setStep(progress.onboarding_step || 1)
+        setStep(editMode ? 1 : progress.onboarding_step || 1)
         
         // Populate form (Progress is already mapped to frontend schema by actions.ts)
         form.reset({
@@ -161,15 +162,15 @@ export default function OnboardingWizard() {
     const isValid = await form.trigger(stepFields as any)
 
     if (isValid) {
-      const isLastStep = step === STEPS.length
-      if (isLastStep) {
+      const isLastStep = step === visibleSteps.length
+      if (isLastStep && !editMode) {
         const confirmSubmit = window.confirm("Are you sure you want to complete your profile? Your Aadhaar details will be submitted for manual verification.");
         if (!confirmSubmit) return;
       }
       
       setSaving(true)
       try {
-        await saveOnboardingProgress(step + (isLastStep ? 0 : 1), form.getValues(), isLastStep)
+        await saveOnboardingProgress(step + (isLastStep && !editMode ? 0 : 1), form.getValues(), isLastStep && !editMode)
         if (isLastStep) {
           router.push("/dashboard")
         } else {
@@ -196,7 +197,7 @@ export default function OnboardingWizard() {
     </div>
   )
 
-  const progressValue = (step / STEPS.length) * 100
+  const progressValue = (step / visibleSteps.length) * 100
 
   return (
     <div className="min-h-screen relative overflow-hidden pt-12 pb-24 px-4 sm:px-6">
@@ -205,7 +206,7 @@ export default function OnboardingWizard() {
       <div className="mx-auto max-w-2xl relative z-10">
         <div className="mb-12">
           <div className="flex justify-between text-sm font-medium text-muted-foreground mb-4">
-            <span>Step {step} of {STEPS.length}</span>
+            <span>Step {step} of {visibleSteps.length}</span>
             <span>{Math.round(progressValue)}% Complete</span>
           </div>
           <div className="h-2 w-full bg-secondary/50 rounded-full overflow-hidden">
@@ -222,7 +223,7 @@ export default function OnboardingWizard() {
             animate={{ opacity: 1, y: 0 }}
             className="text-3xl font-bold mt-6 text-center"
           >
-            {STEPS[step - 1]}
+            {visibleSteps[step - 1]}
           </motion.h1>
         </div>
 
@@ -489,7 +490,7 @@ export default function OnboardingWizard() {
               size="lg"
               className="rounded-full px-8 shadow-md shadow-primary/20"
             >
-              {saving ? "Saving..." : step === STEPS.length ? "Complete Profile" : "Continue"}
+              {saving ? "Saving..." : step === visibleSteps.length ? (editMode ? "Save Changes" : "Complete Profile") : "Continue"}
             </Button>
           </div>
         </motion.div>
