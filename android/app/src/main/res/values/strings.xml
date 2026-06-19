@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Vivaha</string>
+    <string name="title_activity_main">Vivaha</string>
+    <string name="package_name">com.vivaha.app</string>
+    <string name="custom_url_scheme">com.vivaha.app</string>
+</resources>
