@@ -158,19 +158,19 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <p className="text-sm text-muted-foreground">Family Type</p>
-                      <p className="font-medium capitalize">{isSubscribed ? profile.family_type || "Joint Family" : "Hidden Details"}</p>
+                      <p className="font-medium capitalize">{isSubscribed ? profile.family_type || "Not provided" : "Hidden Details"}</p>
                     </div>
                     <div>
                       <p className="text-sm text-muted-foreground">Father's Occupation</p>
-                      <p className="font-medium">{isSubscribed ? profile.father_occupation || "Business Owner" : "Hidden Details"}</p>
+                      <p className="font-medium">{isSubscribed ? profile.father_occupation || "Not provided" : "Hidden Details"}</p>
                     </div>
                     <div>
                       <p className="text-sm text-muted-foreground">Siblings</p>
-                      <p className="font-medium">{isSubscribed ? (profile.siblings_count !== null ? profile.siblings_count : "1 Brother, 1 Sister") : "Hidden Details"}</p>
+                      <p className="font-medium">{isSubscribed ? (profile.siblings_count !== null ? profile.siblings_count : "Not provided") : "Hidden Details"}</p>
                     </div>
                     <div>
                       <p className="text-sm text-muted-foreground">Annual Income</p>
-                      <p className="font-medium">{isSubscribed ? profile.income_range || "15,00,000" : "Hidden Details"}</p>
+                      <p className="font-medium">{isSubscribed ? profile.income_range || "Not provided" : "Hidden Details"}</p>
                     </div>
                   </div>
                 </div>
@@ -182,11 +182,11 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <p className="text-sm text-muted-foreground">Manglik Status</p>
-                      <p className="font-medium capitalize">{isSubscribed ? profile.manglik_status || "No" : "Hidden Details"}</p>
+                      <p className="font-medium capitalize">{isSubscribed ? profile.manglik_status || "Not provided" : "Hidden Details"}</p>
                     </div>
                     <div className="sm:col-span-2">
                       <p className="text-sm text-muted-foreground mb-1">Horoscope Details</p>
-                      <p className="font-medium">{isSubscribed ? profile.horoscope_details || "Born at 10:30 AM in Mumbai. Looking for a compatible match." : "Hidden Details"}</p>
+                      <p className="font-medium">{isSubscribed ? profile.horoscope_details || "Not provided" : "Hidden Details"}</p>
                     </div>
                   </div>
                 </div>
