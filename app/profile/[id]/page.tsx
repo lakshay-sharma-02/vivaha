@@ -35,6 +35,8 @@ export default async function ProfilePage({ params }: { params: { id: string } }
       <div className="flex h-screen items-center justify-center">
         <div className="text-center">
           <p className="text-2xl font-bold mb-4">Profile not found</p>
+          <p className="text-red-500 mb-4">{error?.message || "No profile returned"}</p>
+          <p className="text-xs text-gray-500 mb-4">{JSON.stringify(error)}</p>
           <Link href="/browse">
             <Button variant="outline">Back to Browse</Button>
           </Link>
