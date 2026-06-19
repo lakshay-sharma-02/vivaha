@@ -1,7 +1,7 @@
 import OnboardingWizard from "./onboarding-wizard"
 
 export const metadata = {
-  title: "Onboarding | Vivaha",
+  title: "Onboarding | Sahachar",
   description: "Complete your profile to find your perfect match.",
 }
 

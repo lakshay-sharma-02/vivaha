@@ -1,8 +1,8 @@
 import OnboardingWizard from "@/app/onboarding/onboarding-wizard"
 
 export const metadata = {
-  title: "Edit Profile | Vivaha",
-  description: "Update your Vivaha profile details.",
+  title: "Edit Profile | Sahachar",
+  description: "Update your Sahachar profile details.",
 }
 
 export default function EditProfilePage() {

@@ -1,12 +1,11 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.vivaha.app',
-  appName: 'Vivaha',
+  appId: 'com.sahachar.app',
+  appName: 'Sahachar',
   webDir: 'public',
-  bundledWebRuntime: false,
   server: {
-    url: 'https://vivaha.vercel.app',
+    url: 'https://sahachar.vercel.app',
     cleartext: true
   }
 };

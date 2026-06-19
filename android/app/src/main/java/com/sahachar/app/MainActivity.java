@@ -1,4 +1,4 @@
-package com.vivaha.app;
+package com.sahachar.app;
 
 import com.getcapacitor.BridgeActivity;
 

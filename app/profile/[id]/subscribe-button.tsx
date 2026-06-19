@@ -45,8 +45,8 @@ export default function SubscribeButton() {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "rzp_test_stub", // Pass public key
         amount: orderData.amount,
         currency: orderData.currency,
-        name: "Vivaha Matrimony",
-        description: "30 Days Premium Subscription",
+        name: "Sahachar Matrimony",
+        description: "Unlock Profile Contact",
         order_id: orderData.orderId,
         handler: async function (response: any) {
           // 3. Verify payment

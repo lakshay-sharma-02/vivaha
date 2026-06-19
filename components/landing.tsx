@@ -84,7 +84,7 @@ export function TrustSection() {
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-card/10 to-transparent -z-10" />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold tracking-tight mb-4">Why Choose Vivaha?</h2>
+          <h2 className="text-4xl font-bold tracking-tight mb-4">Why Choose Sahachar?</h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">Built on trust and family values, ensuring a safe matching environment.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
