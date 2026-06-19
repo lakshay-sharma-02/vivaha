@@ -23,7 +23,13 @@ export default async function ProfilePage({ params }: { params: { id: string } }
     .eq('id', user.id)
     .single()
 
-  // Fetch the target profile (removing profile_details since all fields are on profiles)
+  // Validate UUID to prevent Supabase 22P02 errors
+  const isValidUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(params.id);
+  if (!isValidUUID) {
+    redirect("/browse")
+  }
+
+  // Fetch the target profile
   const { data: profile, error } = await supabase
     .from('profiles')
     .select('*')
@@ -35,8 +41,7 @@ export default async function ProfilePage({ params }: { params: { id: string } }
       <div className="flex h-screen items-center justify-center">
         <div className="text-center">
           <p className="text-2xl font-bold mb-4">Profile not found</p>
-          <p className="text-red-500 mb-4">{error?.message || "No profile returned"}</p>
-          <p className="text-xs text-gray-500 mb-4">{JSON.stringify(error)}</p>
+          <p className="text-muted-foreground mb-4">This profile may have been removed or hasn't been verified yet.</p>
           <Link href="/browse">
             <Button variant="outline">Back to Browse</Button>
           </Link>
