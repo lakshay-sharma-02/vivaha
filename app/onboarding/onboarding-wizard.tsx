@@ -36,8 +36,8 @@ export default function OnboardingWizard() {
     defaultValues: {
       full_name: "",
       date_of_birth: "",
-      gender: "other",
-      height_cm: 160,
+      gender: "male",
+      phone_number: "",
       avatar_url: "",
       city: "",
       religion: "",
@@ -78,7 +78,8 @@ export default function OnboardingWizard() {
         form.reset({
           full_name: progress.full_name || "",
           date_of_birth: progress.date_of_birth || "",
-          gender: progress.gender || "other",
+          height_cm: progress.height_cm || 160,
+          phone_number: progress.phone_number || "",
           avatar_url: progress.avatar_url || "",
           city: details?.city || "",
           religion: details?.religion || "",
@@ -135,7 +136,7 @@ export default function OnboardingWizard() {
   async function onNext() {
     const fieldsByStep: (keyof OnboardingData)[][] = [
       [], // placeholder for step 0
-      ["full_name", "date_of_birth", "gender", "height_cm", "avatar_url"],
+      ["full_name", "date_of_birth", "gender", "phone_number", "height_cm", "avatar_url"],
       ["city", "religion", "caste", "sub_caste"],
       ["education", "occupation", "income_annual", "bio"],
       ["family_type", "father_occupation", "siblings"],
@@ -148,8 +149,13 @@ export default function OnboardingWizard() {
     const isValid = await form.trigger(stepFields as any)
 
     if (isValid) {
-      setSaving(true)
       const isLastStep = step === STEPS.length
+      if (isLastStep) {
+        const confirmSubmit = window.confirm("Are you sure you want to complete your profile? Your Aadhaar details will be submitted for manual verification.");
+        if (!confirmSubmit) return;
+      }
+      
+      setSaving(true)
       try {
         await saveOnboardingProgress(step + (isLastStep ? 0 : 1), form.getValues(), isLastStep)
         if (isLastStep) {
@@ -238,9 +244,13 @@ export default function OnboardingWizard() {
                         <select className="flex h-12 w-full rounded-md border border-input bg-background/50 px-3 py-1 text-sm outline-none focus:ring-2 focus:ring-ring focus:border-transparent" {...form.register("gender")}>
                           <option value="male">Male</option>
                           <option value="female">Female</option>
-                          <option value="other">Other</option>
                         </select>
                       </div>
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Phone Number</Label>
+                      <Input type="tel" {...form.register("phone_number")} placeholder="+91 9876543210" className="h-12 bg-background/50" />
+                      {form.formState.errors.phone_number && <p className="text-sm text-destructive">{form.formState.errors.phone_number.message}</p>}
                     </div>
                     <div className="space-y-2">
                       <Label>Height (cm)</Label>

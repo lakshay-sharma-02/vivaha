@@ -25,6 +25,7 @@ export async function saveOnboardingProgress(
   if (data.full_name) profileUpdate.full_name = data.full_name;
   if (data.date_of_birth) profileUpdate.date_of_birth = data.date_of_birth;
   if (data.gender === 'male' || data.gender === 'female') profileUpdate.gender = data.gender;
+  if (data.phone_number) profileUpdate.phone_number = data.phone_number;
   if (data.height_cm) profileUpdate.height_cm = data.height_cm;
   if (data.avatar_url) profileUpdate.profile_photo_path = data.avatar_url;
 
@@ -82,6 +83,9 @@ export async function saveOnboardingProgress(
 
   // Handle verification doc separately if provided (Step 7)
   if (data.verification_doc_url && data.aadhaar_last_four) {
+    // Delete any existing documents for this user first
+    await supabase.from("verification_documents").delete().eq("profile_id", user.id)
+
     const { error: docError } = await supabase
       .from("verification_documents")
       .insert({
@@ -116,6 +120,7 @@ export async function getOnboardingProgress() {
   // Map backend Spec.md schema back to frontend OnboardingData schema
   return {
     ...profile,
+    phone_number: profile.phone_number || "",
     avatar_url: profile.profile_photo_path || "",
     city: profile.town || "",
     occupation: profile.profession || "",
@@ -127,7 +132,10 @@ export async function getOnboardingProgress() {
     partner_location: profile.preferred_town || "",
     partner_religion: profile.preferred_religion || "",
     partner_caste: profile.preferred_caste || "",
-    // Income reverse mapping is hard, setting default 0 for UI purposes
-    income_annual: 0,
+    income_annual: profile.income_range === '<3L' ? 200000 : 
+                   profile.income_range === '3-6L' ? 500000 :
+                   profile.income_range === '6-10L' ? 800000 :
+                   profile.income_range === '10-20L' ? 1500000 :
+                   profile.income_range === '20L+' ? 2500000 : 0,
   }
 }

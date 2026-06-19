@@ -4,7 +4,8 @@ export const onboardingSchema = z.object({
   // Step 1: Basic
   full_name: z.string().min(2, "Name is too short"),
   date_of_birth: z.string().min(1, "Date of birth is required"),
-  gender: z.enum(["male", "female", "other"]),
+  gender: z.enum(["male", "female"]),
+  phone_number: z.string().min(10, "Valid phone number is required"),
   height_cm: z.preprocess((val) => Number(val), z.number().min(100).max(250)),
   avatar_url: z.string().optional().or(z.literal("")),
 

@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server"
+import { redirect } from "next/navigation"
 import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
@@ -7,9 +8,24 @@ import BrowseClient from "./browse-client"
 export default async function BrowsePage() {
   const supabase = await createClient()
 
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) {
+    redirect("/login")
+  }
+
+  const { data: currentUserProfile } = await supabase
+    .from('profiles')
+    .select('status')
+    .eq('id', user.id)
+    .single()
+
+  if (currentUserProfile?.status !== 'VERIFIED') {
+    redirect("/dashboard")
+  }
+
   const { data: profiles, error } = await supabase
     .from('profiles')
-    .select('*')
+    .select('id, full_name, profile_photo_path, date_of_birth, town, religion, caste, education, occupation, about_me')
     .eq('status', 'VERIFIED')
 
   if (error) {

@@ -3,7 +3,8 @@ import { redirect } from "next/navigation"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
-import { Clock, CheckCircle, AlertCircle, Search, LogOut, ShieldCheck, Lock, ExternalLink } from "lucide-react"
+import { Clock, CheckCircle, AlertCircle, Search, LogOut, ShieldCheck, Heart, User } from "lucide-react"
+import InterestResponseButtons from "./interest-response-buttons"
 
 export default async function DashboardPage() {
   const supabase = await createClient()
@@ -35,19 +36,40 @@ export default async function DashboardPage() {
   
   const isAdmin = !!adminCheck
 
-  // Fetch unlocked profiles using the correct "unlocks" table and relations
-  const { data: unlocks } = await supabase
-    .from('unlocks')
+  // Fetch received interests
+  const { data: receivedInterests } = await supabase
+    .from('interests')
     .select(`
+      id,
+      status,
       created_at,
-      unlocked_profile:profiles!unlocked_profile_id (
+      sender:profiles!sender_profile_id (
         id,
         full_name,
         profile_photo_path,
-        gender
+        gender,
+        phone_number
       )
     `)
-    .eq('unlocker_profile_id', user.id)
+    .eq('receiver_profile_id', user.id)
+    .order('created_at', { ascending: false })
+
+  // Fetch sent interests
+  const { data: sentInterests } = await supabase
+    .from('interests')
+    .select(`
+      id,
+      status,
+      created_at,
+      receiver:profiles!receiver_profile_id (
+        id,
+        full_name,
+        profile_photo_path,
+        gender,
+        phone_number
+      )
+    `)
+    .eq('sender_profile_id', user.id)
     .order('created_at', { ascending: false })
 
   return (
@@ -156,78 +178,138 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        {/* My Unlocks Section */}
+        {/* Received Interests Section */}
         {profile.status === 'VERIFIED' && (
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <h2 className="text-2xl font-bold flex items-center gap-2">
-                <Lock className="w-6 h-6 text-primary" /> My Unlocked Profiles
+                <Heart className="w-6 h-6 text-primary" /> Received Interests
               </h2>
               <span className="text-sm text-muted-foreground bg-muted px-3 py-1 rounded-full font-medium">
-                {unlocks?.length || 0} Unlocks
+                {receivedInterests?.length || 0} Requests
               </span>
             </div>
 
-            {unlocks && unlocks.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {unlocks.map((unlock: any) => (
-                  <Link 
-                    key={unlock.unlocked_profile.id}
-                    href={`/profile/${unlock.unlocked_profile.id}`}
-                    className="group"
-                  >
-                    <div className="glass-panel p-4 rounded-2xl hover:border-primary/50 transition-all hover:shadow-lg hover:-translate-y-1">
-                      <div className="flex items-center gap-4">
-                        <div className="w-16 h-16 rounded-xl bg-muted overflow-hidden flex-shrink-0">
-                          {unlock.unlocked_profile.profile_photo_path ? (
-                            <img 
-                              src={unlock.unlocked_profile.profile_photo_path} 
-                              alt={unlock.unlocked_profile.full_name}
-                              className="w-full h-full object-cover"
-                            />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center bg-primary/5">
-                              <Search className="w-6 h-6 text-primary/20" />
-                            </div>
-                          )}
-                        </div>
-                        <div className="min-w-0">
-                          <h3 className="font-bold truncate group-hover:text-primary transition-colors">
-                            {unlock.unlocked_profile.full_name}
-                          </h3>
-                          <p className="text-xs text-muted-foreground capitalize">
-                            {unlock.unlocked_profile.gender}
-                          </p>
-                          <div className="flex items-center gap-1 text-[10px] text-muted-foreground mt-1">
-                            <Clock className="w-3 h-3" />
-                            {new Date(unlock.created_at).toLocaleDateString()}
+            {receivedInterests && receivedInterests.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {receivedInterests.map((interest: any) => (
+                  <div key={interest.id} className="glass-panel p-4 rounded-2xl flex flex-col justify-between gap-4">
+                    <Link href={`/profile/${interest.sender.id}`} className="group flex items-center gap-4">
+                      <div className="w-16 h-16 rounded-xl bg-muted overflow-hidden flex-shrink-0">
+                        {interest.sender.profile_photo_path ? (
+                          <img 
+                            src={interest.sender.profile_photo_path} 
+                            alt={interest.sender.full_name}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center bg-primary/5">
+                            <User className="w-6 h-6 text-primary/20" />
                           </div>
-                        </div>
-                        <div className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
-                          <ExternalLink className="w-4 h-4 text-primary" />
+                        )}
+                      </div>
+                      <div className="min-w-0">
+                        <h3 className="font-bold truncate group-hover:text-primary transition-colors">
+                          {interest.sender.full_name}
+                        </h3>
+                        <p className="text-xs text-muted-foreground capitalize">
+                          {interest.sender.gender}
+                        </p>
+                        <div className="flex items-center gap-1 text-[10px] text-muted-foreground mt-1">
+                          <Clock className="w-3 h-3" />
+                          {new Date(interest.created_at).toLocaleDateString()}
                         </div>
                       </div>
+                    </Link>
+                    
+                    <div className="bg-background/50 p-3 rounded-xl border border-border/50 flex flex-wrap items-center justify-between gap-2">
+                      <span className={cn(
+                        "text-xs font-medium px-2 py-1 rounded-full",
+                        interest.status === 'PENDING' ? "bg-yellow-500/10 text-yellow-600" :
+                        interest.status === 'ACCEPTED' ? "bg-green-500/10 text-green-600" :
+                        "bg-destructive/10 text-destructive"
+                      )}>
+                        {interest.status}
+                      </span>
+                      
+                      {interest.status === 'PENDING' && (
+                        <InterestResponseButtons interestId={interest.id} />
+                      )}
+                      
+                      {interest.status === 'ACCEPTED' && (
+                        <p className="text-sm font-semibold select-all text-primary">
+                          📞 {interest.sender.phone_number || "No phone provided"}
+                        </p>
+                      )}
                     </div>
-                  </Link>
+                  </div>
                 ))}
               </div>
             ) : (
-              <div className="glass-panel p-12 rounded-3xl text-center border-dashed border-2">
-                <div className="bg-primary/5 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Lock className="w-8 h-8 text-primary/40" />
-                </div>
-                <h3 className="text-lg font-semibold mb-2">No profiles unlocked yet</h3>
-                <p className="text-muted-foreground max-w-xs mx-auto mb-6">
-                  Browse matches and unlock their full profiles to see family details and contact info.
-                </p>
-                <Link 
-                  href="/browse"
-                  className={cn(buttonVariants({ variant: "outline" }), "rounded-full")}
-                >
-                  Start Browsing
-                </Link>
+              <div className="glass-panel p-8 rounded-3xl text-center border-dashed border-2">
+                <p className="text-muted-foreground">You haven't received any interests yet.</p>
               </div>
             )}
+          </div>
+        )}
+
+        {/* Sent Interests Section */}
+        {profile.status === 'VERIFIED' && (
+          <div className="space-y-6 pt-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl font-bold flex items-center gap-2">
+                <Heart className="w-6 h-6 text-muted-foreground" /> Sent Interests
+              </h2>
+              <span className="text-sm text-muted-foreground bg-muted px-3 py-1 rounded-full font-medium">
+                {sentInterests?.length || 0} Sent
+              </span>
+            </div>
+
+            {sentInterests && sentInterests.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {sentInterests.map((interest: any) => (
+                  <div key={interest.id} className="glass-panel p-4 rounded-2xl">
+                    <Link href={`/profile/${interest.receiver.id}`} className="group flex items-center gap-4 mb-4">
+                      <div className="w-12 h-12 rounded-xl bg-muted overflow-hidden flex-shrink-0">
+                        {interest.receiver.profile_photo_path ? (
+                          <img 
+                            src={interest.receiver.profile_photo_path} 
+                            alt={interest.receiver.full_name}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center bg-primary/5">
+                            <User className="w-5 h-5 text-primary/20" />
+                          </div>
+                        )}
+                      </div>
+                      <div className="min-w-0">
+                        <h3 className="font-bold text-sm truncate group-hover:text-primary transition-colors">
+                          {interest.receiver.full_name}
+                        </h3>
+                        <span className={cn(
+                          "text-[10px] font-medium px-2 py-0.5 rounded-full inline-block mt-1",
+                          interest.status === 'PENDING' ? "bg-yellow-500/10 text-yellow-600" :
+                          interest.status === 'ACCEPTED' ? "bg-green-500/10 text-green-600" :
+                          "bg-destructive/10 text-destructive"
+                        )}>
+                          {interest.status}
+                        </span>
+                      </div>
+                    </Link>
+                    
+                    {interest.status === 'ACCEPTED' && (
+                      <div className="bg-green-500/10 p-2 rounded-lg border border-green-500/20 text-center">
+                        <p className="text-xs text-green-700 font-medium mb-1">Contact Number</p>
+                        <p className="text-sm font-bold text-green-800 select-all">
+                          {interest.receiver.phone_number || "No phone provided"}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ) : null}
           </div>
         )}
       </div>
