@@ -192,14 +192,18 @@ export default async function DashboardPage() {
 
             {receivedInterests && receivedInterests.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {receivedInterests.map((interest: any) => (
+                {receivedInterests.map((interest: any) => {
+                  const sender = Array.isArray(interest.sender) ? interest.sender[0] : interest.sender;
+                  if (!sender) return null;
+                  
+                  return (
                   <div key={interest.id} className="glass-panel p-4 rounded-2xl flex flex-col justify-between gap-4">
-                    <Link href={`/profile/${interest.sender.id}`} className="group flex items-center gap-4">
+                    <Link href={sender.id ? `/profile/${sender.id}` : "#"} className="group flex items-center gap-4">
                       <div className="w-16 h-16 rounded-xl bg-muted overflow-hidden flex-shrink-0">
-                        {interest.sender.profile_photo_path ? (
+                        {sender.profile_photo_path ? (
                           <img 
-                            src={interest.sender.profile_photo_path} 
-                            alt={interest.sender.full_name}
+                            src={sender.profile_photo_path} 
+                            alt={sender.full_name || "User"}
                             className="w-full h-full object-cover"
                           />
                         ) : (
@@ -210,10 +214,10 @@ export default async function DashboardPage() {
                       </div>
                       <div className="min-w-0">
                         <h3 className="font-bold truncate group-hover:text-primary transition-colors">
-                          {interest.sender.full_name}
+                          {sender.full_name || "Unknown User"}
                         </h3>
                         <p className="text-xs text-muted-foreground capitalize">
-                          {interest.sender.gender}
+                          {sender.gender || "Unknown"}
                         </p>
                         <div className="flex items-center gap-1 text-[10px] text-muted-foreground mt-1">
                           <Clock className="w-3 h-3" />
@@ -267,14 +271,18 @@ export default async function DashboardPage() {
 
             {sentInterests && sentInterests.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {sentInterests.map((interest: any) => (
+                {sentInterests.map((interest: any) => {
+                  const receiver = Array.isArray(interest.receiver) ? interest.receiver[0] : interest.receiver;
+                  if (!receiver) return null;
+                  
+                  return (
                   <div key={interest.id} className="glass-panel p-4 rounded-2xl">
-                    <Link href={`/profile/${interest.receiver.id}`} className="group flex items-center gap-4 mb-4">
+                    <Link href={receiver.id ? `/profile/${receiver.id}` : "#"} className="group flex items-center gap-4 mb-4">
                       <div className="w-12 h-12 rounded-xl bg-muted overflow-hidden flex-shrink-0">
-                        {interest.receiver.profile_photo_path ? (
+                        {receiver.profile_photo_path ? (
                           <img 
-                            src={interest.receiver.profile_photo_path} 
-                            alt={interest.receiver.full_name}
+                            src={receiver.profile_photo_path} 
+                            alt={receiver.full_name || "User"}
                             className="w-full h-full object-cover"
                           />
                         ) : (
@@ -285,7 +293,7 @@ export default async function DashboardPage() {
                       </div>
                       <div className="min-w-0">
                         <h3 className="font-bold text-sm truncate group-hover:text-primary transition-colors">
-                          {interest.receiver.full_name}
+                          {receiver.full_name || "Unknown User"}
                         </h3>
                         <span className={cn(
                           "text-[10px] font-medium px-2 py-0.5 rounded-full inline-block mt-1",

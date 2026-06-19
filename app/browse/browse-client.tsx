@@ -140,7 +140,7 @@ export default function BrowseClient({ initialProfiles }: { initialProfiles: Pro
                     </div>
 
                     <Link 
-                      href={`/profile/${profile.id}`}
+                      href={profile.id ? `/profile/${profile.id}` : "#"}
                       className={cn(buttonVariants({ variant: "default" }), "w-full rounded-full shadow-md shadow-primary/20")}
                     >
                       View Full Profile
