@@ -25,7 +25,7 @@ export default async function BrowsePage() {
 
   const { data: profiles, error } = await supabase
     .from('profiles')
-    .select('id, full_name, profile_photo_path, date_of_birth, town, religion, caste, education, occupation, about_me')
+    .select('id, full_name, profile_photo_path, date_of_birth, town, religion, caste, education, profession, about_me')
     .eq('status', 'VERIFIED')
 
   if (error) {

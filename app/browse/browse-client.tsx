@@ -114,9 +114,9 @@ export default function BrowseClient({ initialProfiles }: { initialProfiles: Pro
                   
                   <div className="p-5">
                     <div className="space-y-2 mb-6">
-                      {profile.occupation && (
+                      {profile.profession && (
                         <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                          <Briefcase className="w-4 h-4 text-primary" /> {profile.occupation}
+                          <Briefcase className="w-4 h-4 text-primary" /> {profile.profession}
                         </div>
                       )}
                       {profile.education && (
