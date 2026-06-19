@@ -6,17 +6,23 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Input } from "@/components/ui/input"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
-import { Search, MapPin, Briefcase, GraduationCap } from "lucide-react"
+import { Search, MapPin, Briefcase, GraduationCap, Loader2 } from "lucide-react"
+import { getProfilesPage } from "./actions"
 
 type Profile = any; // We'll type this better later or let it infer
 
 export default function BrowseClient({ initialProfiles }: { initialProfiles: Profile[] }) {
+  const [profiles, setProfiles] = useState<Profile[]>(initialProfiles)
+  const [page, setPage] = useState(1)
+  const [hasMore, setHasMore] = useState(initialProfiles.length === 20)
+  const [loadingMore, setLoadingMore] = useState(false)
+
   const [searchTerm, setSearchTerm] = useState("")
   const [religionFilter, setReligionFilter] = useState("")
   const [casteFilter, setCasteFilter] = useState("")
   const [cityFilter, setCityFilter] = useState("")
 
-  const filteredProfiles = initialProfiles.filter(profile => {
+  const filteredProfiles = profiles.filter(profile => {
     const matchesSearch = profile.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) || 
                           profile.about_me?.toLowerCase().includes(searchTerm.toLowerCase())
     const matchesReligion = religionFilter === "" || profile.religion?.toLowerCase().includes(religionFilter.toLowerCase())
@@ -25,6 +31,28 @@ export default function BrowseClient({ initialProfiles }: { initialProfiles: Pro
 
     return matchesSearch && matchesReligion && matchesCaste && matchesCity
   })
+
+  async function loadMore() {
+    if (loadingMore) return;
+    setLoadingMore(true);
+    
+    try {
+      const newProfiles = await getProfilesPage(page);
+      if (newProfiles.length > 0) {
+        setProfiles(prev => [...prev, ...newProfiles]);
+        setPage(p => p + 1);
+        if (newProfiles.length < 20) {
+          setHasMore(false);
+        }
+      } else {
+        setHasMore(false);
+      }
+    } catch (error) {
+      console.error("Failed to load more profiles", error);
+    } finally {
+      setLoadingMore(false);
+    }
+  }
 
   return (
     <div className="space-y-8">
@@ -151,6 +179,28 @@ export default function BrowseClient({ initialProfiles }: { initialProfiles: Pro
             })}
           </AnimatePresence>
         </motion.div>
+      )}
+
+      {/* Pagination Load More */}
+      {hasMore && (
+        <div className="flex justify-center pt-8">
+          <Button 
+            variant="outline" 
+            size="lg" 
+            className="rounded-full px-8 shadow-sm"
+            onClick={loadMore}
+            disabled={loadingMore}
+          >
+            {loadingMore ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Loading...
+              </>
+            ) : (
+              "Load More Profiles"
+            )}
+          </Button>
+        </div>
       )}
     </div>
   )

@@ -27,6 +27,8 @@ export default async function BrowsePage() {
     .from('profiles')
     .select('id, full_name, profile_photo_path, date_of_birth, town, religion, caste, education, profession, about_me')
     .eq('status', 'VERIFIED')
+    .order('created_at', { ascending: false })
+    .range(0, 19)
 
   if (error) {
     return (
