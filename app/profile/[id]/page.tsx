@@ -7,13 +7,17 @@ import Link from "next/link"
 import SendInterestButton from "./send-interest-button"
 import SubscribeButton from "./subscribe-button"
 
-export default async function ProfilePage({ params }: { params: { id: string } }) {
+export default async function ProfilePage({ params }: { params: Promise<{ id: string }> }) {
   const supabase = await createClient()
 
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) {
     redirect("/login")
   }
+
+  // Resolve params promise (Next.js 15+ breaking change)
+  const resolvedParams = await params
+  const profileId = resolvedParams.id
 
   // We are removing the strict redirect here so pending users can still test and view profiles.
   // We'll just fetch their profile to have it, but not block them.
@@ -24,7 +28,7 @@ export default async function ProfilePage({ params }: { params: { id: string } }
     .single()
 
   // Validate UUID to prevent Supabase 22P02 errors
-  const isValidUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(params.id);
+  const isValidUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(profileId);
   if (!isValidUUID) {
     redirect("/browse")
   }
@@ -33,7 +37,7 @@ export default async function ProfilePage({ params }: { params: { id: string } }
   const { data: profile, error } = await supabase
     .from('profiles')
     .select('*')
-    .eq('id', params.id)
+    .eq('id', profileId)
     .single()
 
   if (error || !profile || profile.status !== 'VERIFIED') {
@@ -65,7 +69,7 @@ export default async function ProfilePage({ params }: { params: { id: string } }
     .from('interests')
     .select('status')
     .eq('sender_profile_id', user.id)
-    .eq('receiver_profile_id', params.id)
+    .eq('receiver_profile_id', profileId)
     .single()
 
   return (
@@ -191,7 +195,7 @@ export default async function ProfilePage({ params }: { params: { id: string } }
             
             {isSubscribed && (
               <div className="pt-8 border-t border-border/50 flex justify-center">
-                <SendInterestButton receiverId={params.id} initialStatus={existingInterest?.status as any} />
+                <SendInterestButton receiverId={profileId} initialStatus={existingInterest?.status as any} />
               </div>
             )}
             
