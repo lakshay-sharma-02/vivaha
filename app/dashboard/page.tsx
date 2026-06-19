@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils"
 import Link from "next/link"
 import { Clock, CheckCircle, AlertCircle, Search, LogOut, ShieldCheck, Heart, User } from "lucide-react"
 import InterestResponseButtons from "./interest-response-buttons"
+import VisibilityToggle from "./visibility-toggle"
 
 export default async function DashboardPage() {
   const supabase = await createClient()
@@ -176,6 +177,12 @@ export default async function DashboardPage() {
               </div>
             )}
           </div>
+
+          {profile.status === 'VERIFIED' && (
+            <div className="mt-6">
+              <VisibilityToggle initialVisibility={profile.is_visible ?? true} />
+            </div>
+          )}
         </div>
 
         {/* Received Interests Section */}

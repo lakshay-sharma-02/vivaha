@@ -27,6 +27,7 @@ export async function getProfilesPage(page: number, pageSize: number = 20) {
     .from('profiles')
     .select(isSubscribed ? baseFields + premiumFields : baseFields)
     .eq('status', 'VERIFIED')
+    .eq('is_visible', true)
     .order('created_at', { ascending: false })
     .range(from, to)
 

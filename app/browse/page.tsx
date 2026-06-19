@@ -35,6 +35,7 @@ export default async function BrowsePage() {
     .from('profiles')
     .select(isSubscribed ? baseFields + premiumFields : baseFields)
     .eq('status', 'VERIFIED')
+    .eq('is_visible', true)
     .order('created_at', { ascending: false })
     .range(0, 19)
 
