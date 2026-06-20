@@ -161,7 +161,7 @@ export default function OnboardingWizard({ editMode = false }: { editMode?: bool
       ["family_type", "father_occupation", "siblings", "gotra", "mothers_gotra", "grandmothers_gotra"],
       ["manglik", "horoscope_details", "diet", "smoking", "drinking", "hobbies"],
       ["partner_age_min", "partner_age_max", "partner_location", "partner_religion", "partner_caste"],
-      ["aadhaar_last_four", "verification_doc_url"]
+      ["aadhaar_last_four"] // verification_doc_url is optional – do not block on it
     ]
 
     const stepFields = fieldsByStep[step]
@@ -182,11 +182,24 @@ export default function OnboardingWizard({ editMode = false }: { editMode?: bool
         } else {
           setStep(s => s + 1)
         }
-      } catch (error) {
+      } catch (error: any) {
         console.error("Save error:", error)
+        window.alert(error.message || "An error occurred while saving your profile.")
       } finally {
         setSaving(false)
       }
+    } else {
+      // Surface validation errors so the user knows exactly what's missing
+      const errors = form.formState.errors
+      const errorMessages = Object.values(errors)
+        .map((e: any) => e?.message)
+        .filter(Boolean)
+      if (errorMessages.length > 0) {
+        window.alert("Please fix the following before continuing:\n\n• " + errorMessages.join("\n• "))
+      } else {
+        window.alert("Please fill in all required fields before continuing.")
+      }
+      console.log("Validation failed:", errors)
     }
   }
 
@@ -478,6 +491,7 @@ export default function OnboardingWizard({ editMode = false }: { editMode?: bool
                     <div className="space-y-2">
                       <Label>Aadhaar Last 4 Digits</Label>
                       <Input {...form.register("aadhaar_last_four")} maxLength={4} placeholder="1234" className="h-12 bg-background/50 text-xl tracking-widest" />
+                      {form.formState.errors.aadhaar_last_four && <p className="text-sm text-destructive">{form.formState.errors.aadhaar_last_four.message}</p>}
                     </div>
                     <div className="space-y-2">
                       <Label>Upload Aadhaar Image</Label>
@@ -485,6 +499,7 @@ export default function OnboardingWizard({ editMode = false }: { editMode?: bool
                         <Input type="file" accept="image/*" onChange={(e) => handleFileUpload(e, "verification_doc_url")} className="mx-auto" />
                       </div>
                       {form.watch("verification_doc_url") && <p className="text-sm text-green-600 font-medium text-center mt-2">Document uploaded successfully ✓</p>}
+                      {form.formState.errors.verification_doc_url && <p className="text-sm text-destructive">{form.formState.errors.verification_doc_url.message}</p>}
                     </div>
                     <div className="bg-primary/5 p-4 rounded-xl border border-primary/10">
                       <p className="text-sm text-muted-foreground text-center">
