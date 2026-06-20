@@ -15,10 +15,8 @@ export async function saveOnboardingProgress(
 
   const profileUpdate: any = {
     onboarding_step: step,
-  }
-
-  if (isCompleted) {
-    profileUpdate.status = 'PENDING_VERIFICATION'
+    // NOTE: 'status' is RLS-protected and cannot be set here.
+    // It is updated via POST /api/onboarding/complete using the admin client.
   }
 
   // Map Step 1

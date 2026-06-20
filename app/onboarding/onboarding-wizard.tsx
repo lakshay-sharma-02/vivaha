@@ -177,7 +177,15 @@ export default function OnboardingWizard({ editMode = false }: { editMode?: bool
       setSaving(true)
       try {
         await saveOnboardingProgress(step + (isLastStep && !editMode ? 0 : 1), form.getValues(), isLastStep && !editMode)
-        if (isLastStep) {
+        if (isLastStep && !editMode) {
+          // Status field is RLS-protected — update it via secure server-side API route
+          const res = await fetch("/api/onboarding/complete", { method: "POST" })
+          if (!res.ok) {
+            const body = await res.json().catch(() => ({}))
+            throw new Error(body.error || "Failed to finalise profile status.")
+          }
+          router.push("/dashboard")
+        } else if (isLastStep) {
           router.push("/dashboard")
         } else {
           setStep(s => s + 1)
