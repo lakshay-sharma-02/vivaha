@@ -130,11 +130,21 @@ export default function OnboardingWizard({ editMode = false }: { editMode?: bool
     const file = e.target.files?.[0]
     if (!file) return
 
+    const isVerificationDocument = field === "verification_doc_url"
+    const allowedTypes = isVerificationDocument
+      ? ["image/jpeg", "image/png", "application/pdf"]
+      : ["image/jpeg", "image/png", "image/webp"]
+    if (!allowedTypes.includes(file.type) || file.size > 5 * 1024 * 1024) {
+      window.alert("Choose a supported JPG, PNG, WebP or PDF file smaller than 5 MB.")
+      e.target.value = ""
+      return
+    }
+
     setSaving(true)
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return
 
-    const bucket = field === "verification_doc_url" ? "verification-docs" : "profile-photos"
+    const bucket = isVerificationDocument ? "verification-docs" : "profile-photos"
     const fileExt = file.name.split(".").pop()
     const filePath = `${user.id}/${Math.random()}.${fileExt}`
 
@@ -146,8 +156,7 @@ export default function OnboardingWizard({ editMode = false }: { editMode?: bool
       console.error("Upload error details:", uploadError)
       alert("Image upload failed: " + uploadError.message)
     } else {
-      const { data: { publicUrl } } = supabase.storage.from(bucket).getPublicUrl(filePath)
-      form.setValue(field, publicUrl)
+      form.setValue(field, filePath, { shouldValidate: true })
     }
     setSaving(false)
   }
@@ -161,7 +170,7 @@ export default function OnboardingWizard({ editMode = false }: { editMode?: bool
       ["family_type", "father_occupation", "siblings", "gotra", "mothers_gotra", "grandmothers_gotra"],
       ["manglik", "horoscope_details", "diet", "smoking", "drinking", "hobbies"],
       ["partner_age_min", "partner_age_max", "partner_location", "partner_religion", "partner_caste"],
-      ["aadhaar_last_four"] // verification_doc_url is optional – do not block on it
+      ["aadhaar_last_four", "verification_doc_url"]
     ]
 
     const stepFields = fieldsByStep[step]

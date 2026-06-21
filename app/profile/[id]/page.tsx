@@ -6,6 +6,7 @@ import { Lock, CheckCircle, MapPin, Briefcase, GraduationCap, Users, Heart } fro
 import Link from "next/link"
 import SendInterestButton from "./send-interest-button"
 import SubscribeButton from "./subscribe-button"
+import { calculateAge, profileImageUrl } from "@/lib/profile-images"
 
 export default async function ProfilePage({ params }: { params: Promise<{ id: string }> }) {
   const supabase = await createClient()
@@ -19,28 +20,19 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
   const resolvedParams = await params
   const profileId = resolvedParams.id
 
-  // We are removing the strict redirect here so pending users can still test and view profiles.
-  // We'll just fetch their profile to have it, but not block them.
-  const { data: currentUserProfile } = await supabase
-    .from('profiles')
-    .select('status, subscription_ends_at')
-    .eq('id', user.id)
-    .single()
-
   // Validate UUID to prevent Supabase 22P02 errors
   const isValidUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(profileId);
   if (!isValidUUID) {
     redirect("/browse")
   }
 
-  // Fetch the target profile
-  const { data: profile, error } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('id', profileId)
-    .single()
+  const { data: detail, error } = await supabase.rpc("get_profile_detail", {
+    target_profile_id: profileId,
+  })
+  const profile = detail?.profile as Record<string, any> | undefined
+  const isSubscribed = detail?.isSubscribed === true
 
-  if (error || !profile || profile.status !== 'VERIFIED') {
+  if (error || !profile) {
     return (
       <div className="flex h-screen items-center justify-center">
         <div className="text-center">
@@ -54,31 +46,8 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
     )
   }
 
-  // Check if current user has an active subscription
-  const isSubscribed = currentUserProfile?.subscription_ends_at 
-    ? new Date(currentUserProfile.subscription_ends_at) > new Date() 
-    : false;
-
-  // SECURITY: Strip premium data if not subscribed
-  if (!isSubscribed) {
-    delete profile.family_type;
-    delete profile.father_occupation;
-    delete profile.siblings_count;
-    delete profile.income_range;
-    delete profile.manglik_status;
-    delete profile.horoscope_details;
-    delete profile.diet;
-    delete profile.smoking;
-    delete profile.drinking;
-    delete profile.hobbies;
-  }
-  // Always strip phone number from the profile page
-  delete profile.phone_number;
-
-  const dob = new Date(profile.date_of_birth)
-  const ageDifMs = Date.now() - dob.getTime()
-  const ageDate = new Date(ageDifMs)
-  const age = Math.abs(ageDate.getUTCFullYear() - 1970)
+  const age = calculateAge(profile.date_of_birth)
+  const heroImage = profileImageUrl(profile.profile_photo_path)
 
   // Check existing interest
   const { data: existingInterest } = await supabase
@@ -102,9 +71,9 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
         <div className="glass-panel rounded-3xl overflow-hidden">
           {/* Hero Section */}
           <div className="relative h-64 sm:h-80 bg-muted">
-            {profile.profile_photo_path ? (
+            {heroImage ? (
               <img 
-                src={profile.profile_photo_path} 
+                src={heroImage}
                 alt={profile.full_name} 
                 className="w-full h-full object-cover"
               />
@@ -116,7 +85,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
             <div className="absolute bottom-0 left-0 p-8 text-white w-full flex flex-col sm:flex-row items-end justify-between gap-4">
               <div>
-                <h1 className="text-4xl font-bold mb-2">{profile.full_name}, {age}</h1>
+                <h1 className="text-4xl font-bold mb-2">{profile.full_name}{age !== null ? `, ${age}` : ""}</h1>
                 <div className="flex flex-wrap items-center gap-4 text-white/80 text-sm font-medium">
                   <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> {profile.town}</span>
                   <span className="flex items-center gap-1"><Briefcase className="w-4 h-4" /> {profile.profession}</span>
@@ -137,7 +106,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {profile.photos.slice(1, 4).map((photo: string, idx: number) => (
                     <div key={idx} className="aspect-square rounded-2xl overflow-hidden bg-muted relative shadow-md">
-                      <img src={photo} alt={`${profile.full_name} photo ${idx + 2}`} className="w-full h-full object-cover transition-transform hover:scale-105" />
+                      <img src={profileImageUrl(photo) ?? ""} alt={`${profile.full_name} photo ${idx + 2}`} className="w-full h-full object-cover transition-transform hover:scale-105" />
                     </div>
                   ))}
                 </div>

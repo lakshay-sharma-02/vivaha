@@ -1,20 +1,20 @@
-"use client"
+"use server"
 
-import { createClient } from "@/lib/supabase/client"
-import { OnboardingData } from "@/lib/validations/onboarding"
+import { createClient } from "@/lib/supabase/server"
+import type { OnboardingData } from "@/lib/validations/onboarding"
 
 export async function saveOnboardingProgress(
   step: number,
   data: Partial<OnboardingData>,
-  isCompleted: boolean = false
+  _isCompleted: boolean = false
 ) {
-  const supabase = createClient()
+  const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) throw new Error("Unauthorized")
 
-  const profileUpdate: any = {
-    onboarding_step: step,
+  const profileUpdate: Record<string, string | number | string[]> = {
+    onboarding_step: Math.min(Math.max(step, 1), 7),
     // NOTE: 'status' is RLS-protected and cannot be set here.
     // It is updated via POST /api/onboarding/complete using the admin client.
   }
@@ -69,7 +69,7 @@ export async function saveOnboardingProgress(
   if (data.hobbies) profileUpdate.hobbies = data.hobbies;
 
   // Compile photos array
-  const photos = [];
+  const photos: string[] = [];
   if (data.avatar_url) photos.push(data.avatar_url);
   if (data.photo_2) photos.push(data.photo_2);
   if (data.photo_3) photos.push(data.photo_3);
@@ -116,7 +116,7 @@ export async function saveOnboardingProgress(
 }
 
 export async function getOnboardingProgress() {
-  const supabase = createClient()
+  const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) return null

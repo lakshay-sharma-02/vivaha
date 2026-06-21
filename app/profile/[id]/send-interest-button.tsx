@@ -18,7 +18,7 @@ export default function SendInterestButton({ receiverId, initialStatus }: { rece
       if (res.ok) {
         setStatus('PENDING')
       } else {
-        setError(res.error || "Something went wrong")
+        setError(res.error.message)
       }
     } catch (err) {
       setError("Failed to send interest")

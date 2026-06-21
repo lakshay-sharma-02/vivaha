@@ -42,11 +42,11 @@ export default function SubscribeButton() {
 
       // 2. Initialize Razorpay checkout
       const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "rzp_test_stub", // Pass public key
+        key: orderData.keyId,
         amount: orderData.amount,
         currency: orderData.currency,
         name: "Sahachar Matrimony",
-        description: "Unlock Profile Contact",
+        description: "30-day Sahachar membership",
         order_id: orderData.orderId,
         handler: async function (response: any) {
           // 3. Verify payment
@@ -102,7 +102,7 @@ export default function SubscribeButton() {
       disabled={loading || !razorpayLoaded}
       className="w-full rounded-full shadow-lg shadow-primary/20 h-12 text-lg"
     >
-      {loading ? "Processing..." : "Subscribe for ₹5,000/mo"}
+      {loading ? "Processing..." : "Join for ₹5,000 / 30 days"}
     </Button>
   )
 }

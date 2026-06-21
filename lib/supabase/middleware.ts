@@ -62,7 +62,7 @@ export async function updateSession(request: NextRequest) {
     const isBrowse = request.nextUrl.pathname.startsWith('/browse')
     const isAuthPage = request.nextUrl.pathname.startsWith('/login') || request.nextUrl.pathname.startsWith('/register')
 
-    const isOnboardingCompleted = profile?.status && profile.status !== 'DRAFT'
+    const isOnboardingCompleted = profile?.status === 'PENDING_VERIFICATION' || profile?.status === 'VERIFIED'
 
     if (!isOnboardingCompleted && !isOnboarding && !request.nextUrl.pathname.startsWith('/auth')) {
       url.pathname = '/onboarding'

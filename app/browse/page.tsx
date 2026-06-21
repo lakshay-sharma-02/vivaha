@@ -4,6 +4,7 @@ import { buttonVariants } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
 import BrowseClient from "./browse-client"
+import { getProfilesPage } from "./actions"
 
 export default async function BrowsePage() {
   const supabase = await createClient()
@@ -28,18 +29,10 @@ export default async function BrowsePage() {
     ? new Date(currentUserProfile.subscription_ends_at) > new Date() 
     : false;
 
-  const baseFields = 'id, full_name, profile_photo_path, date_of_birth, town, religion, caste, education, profession, about_me'
-  const premiumFields = ', income_range, diet, smoking, drinking, hobbies'
-  
-  const { data: profiles, error } = await supabase
-    .from('profiles')
-    .select(isSubscribed ? baseFields + premiumFields : baseFields)
-    .eq('status', 'VERIFIED')
-    .eq('is_visible', true)
-    .order('created_at', { ascending: false })
-    .range(0, 19)
-
-  if (error) {
+  let initialResult
+  try {
+    initialResult = await getProfilesPage(1)
+  } catch {
     return (
       <div className="flex h-screen items-center justify-center">
         <p className="text-destructive font-medium">Error loading profiles. Please try again later.</p>
@@ -67,7 +60,7 @@ export default async function BrowsePage() {
           </Link>
         </div>
 
-        <BrowseClient initialProfiles={profiles || []} isSubscribed={isSubscribed} />
+        <BrowseClient initialResult={initialResult} isSubscribed={isSubscribed} />
       </div>
     </div>
   )

@@ -3,9 +3,9 @@ import * as z from "zod"
 export const onboardingSchema = z.object({
   // Step 1: Basic
   full_name: z.string().min(2, "Name is too short"),
-  date_of_birth: z.string().min(1, "Date of birth is required"),
+  date_of_birth: z.string().date("A valid date of birth is required"),
   gender: z.enum(["male", "female"]),
-  phone_number: z.string().min(10, "Valid phone number is required"),
+  phone_number: z.string().regex(/^\+?[0-9]{10,15}$/, "Enter a valid phone number"),
   height_cm: z.preprocess((val) => Number(val), z.number().min(100).max(250)),
   avatar_url: z.string().optional().or(z.literal("")),
 
@@ -22,7 +22,7 @@ export const onboardingSchema = z.object({
   bio: z.string().min(10, "Tell us more about yourself"),
 
   // Step 4: Family
-  family_type: z.string().min(1, "Family type is required"),
+  family_type: z.enum(["nuclear", "joint"]),
   father_occupation: z.string().min(1, "Father's occupation is required"),
   siblings: z.string().min(1, "Siblings info is required"),
   gotra: z.string().optional().or(z.literal("")),
@@ -45,10 +45,13 @@ export const onboardingSchema = z.object({
   partner_caste: z.string().min(1, "Caste preference is required"),
 
   // Step 7: Verification & Photos
-  aadhaar_last_four: z.string().length(4, "Exactly 4 digits required"),
-  verification_doc_url: z.string().optional().or(z.literal("")),
+  aadhaar_last_four: z.string().regex(/^\d{4}$/, "Enter exactly 4 digits"),
+  verification_doc_url: z.string().min(1, "Aadhaar document is required"),
   photo_2: z.string().optional().or(z.literal("")),
   photo_3: z.string().optional().or(z.literal("")),
+}).refine((data) => data.partner_age_min <= data.partner_age_max, {
+  message: "Minimum age cannot be greater than maximum age",
+  path: ["partner_age_max"],
 })
 
 export type OnboardingData = z.infer<typeof onboardingSchema>

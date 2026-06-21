@@ -1,40 +1,22 @@
 "use server"
 
 import { createClient } from "@/lib/supabase/server"
+import type { BrowseFilters, BrowseResult } from "@/lib/types"
 
-export async function getProfilesPage(page: number, pageSize: number = 20) {
+export async function getProfilesPage(page: number, filters: BrowseFilters = {}): Promise<BrowseResult> {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return []
+  if (!user) throw new Error("Unauthorized")
 
-  const { data: currentUserProfile } = await supabase
-    .from('profiles')
-    .select('subscription_ends_at')
-    .eq('id', user.id)
-    .single()
-
-  const isSubscribed = currentUserProfile?.subscription_ends_at 
-    ? new Date(currentUserProfile.subscription_ends_at) > new Date() 
-    : false;
-
-  const from = page * pageSize
-  const to = from + pageSize - 1
-
-  const baseFields = 'id, full_name, profile_photo_path, date_of_birth, town, religion, caste, education, profession, about_me'
-  const premiumFields = ', income_range, diet, smoking, drinking, hobbies'
-
-  const { data: profiles, error } = await supabase
-    .from('profiles')
-    .select(isSubscribed ? baseFields + premiumFields : baseFields)
-    .eq('status', 'VERIFIED')
-    .eq('is_visible', true)
-    .order('created_at', { ascending: false })
-    .range(from, to)
-
-  if (error) {
-    console.error("Error fetching profiles:", error)
-    return []
-  }
-
-  return profiles
+  const { data, error } = await supabase.rpc("browse_profiles", {
+    page_number: Math.max(1, Math.floor(page)),
+    search_text: filters.search?.trim().slice(0, 100) || null,
+    religion_filter: filters.religion?.trim().slice(0, 100) || null,
+    caste_filter: filters.caste?.trim().slice(0, 100) || null,
+    town_filter: filters.town?.trim().slice(0, 100) || null,
+    age_min: filters.ageMin ?? null,
+    age_max: filters.ageMax ?? null,
+  })
+  if (error) throw new Error("Could not load profiles")
+  return data as BrowseResult
 }
