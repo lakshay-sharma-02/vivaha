@@ -102,7 +102,7 @@ export default function SubscribeButton() {
       disabled={loading || !razorpayLoaded}
       className="w-full rounded-full shadow-lg shadow-primary/20 h-12 text-lg"
     >
-      {loading ? "Processing..." : "Join for ₹5,000 / 30 days"}
+      {loading ? "Processing..." : "Join for ₹5,000 / 30 Days"}
     </Button>
   )
 }

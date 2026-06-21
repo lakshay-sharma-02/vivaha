@@ -44,7 +44,7 @@ export default function LoginPage() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-3xl -z-10" />
 
       <motion.div 
-        className="w-full max-w-md glass-panel p-8 sm:p-10 rounded-3xl"
+        className="w-full max-w-md bg-card border border-border shadow-sm p-8 sm:p-10 rounded-xl"
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}

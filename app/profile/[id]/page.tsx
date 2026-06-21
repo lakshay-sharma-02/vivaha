@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { Lock, CheckCircle, MapPin, Briefcase, GraduationCap, Users, Heart } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 import SendInterestButton from "./send-interest-button"
 import SubscribeButton from "./subscribe-button"
 import { calculateAge, profileImageUrl } from "@/lib/profile-images"
@@ -68,14 +69,17 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
           &larr; Back to Matches
         </Link>
 
-        <div className="glass-panel rounded-3xl overflow-hidden">
+        <div className="bg-card border border-border shadow-sm rounded-xl overflow-hidden">
           {/* Hero Section */}
           <div className="relative h-64 sm:h-80 bg-muted">
             {heroImage ? (
-              <img 
+              <Image 
                 src={heroImage}
                 alt={profile.full_name} 
-                className="w-full h-full object-cover"
+                fill
+                className="object-cover"
+                sizes="100vw"
+                priority
               />
             ) : (
               <div className="flex h-full items-center justify-center bg-primary/5">
@@ -106,7 +110,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {profile.photos.slice(1, 4).map((photo: string, idx: number) => (
                     <div key={idx} className="aspect-square rounded-2xl overflow-hidden bg-muted relative shadow-md">
-                      <img src={profileImageUrl(photo) ?? ""} alt={`${profile.full_name} photo ${idx + 2}`} className="w-full h-full object-cover transition-transform hover:scale-105" />
+                      <Image src={profileImageUrl(photo) ?? ""} alt={`${profile.full_name} photo ${idx + 2}`} fill className="object-cover transition-transform hover:scale-105" sizes="(max-width: 768px) 50vw, 25vw" />
                     </div>
                   ))}
                 </div>
@@ -250,13 +254,13 @@ export default async function ProfilePage({ params }: { params: Promise<{ id: st
 
               {!isSubscribed && (
                 <div className="absolute inset-0 z-10 flex flex-col items-center justify-center p-6 text-center">
-                  <div className="bg-card/90 backdrop-blur-xl p-8 rounded-3xl border border-white/20 shadow-2xl max-w-sm w-full relative overflow-hidden">
-                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-secondary to-primary" />
+                  <div className="bg-card p-8 rounded-xl border border-border shadow-md max-w-sm w-full relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-full h-1 bg-primary" />
                     
                     <Lock className="w-12 h-12 text-primary mx-auto mb-4" />
-                    <h3 className="text-2xl font-bold mb-2">Subscribe to View Full Profile</h3>
+                    <h3 className="text-2xl font-bold mb-2">Premium Access Required</h3>
                     <p className="text-muted-foreground text-sm mb-6">
-                      Get unlimited access to view all profiles and send interests for 30 days!
+                      Get full access to view all profiles and send interests for 30 days.
                     </p>
                     <SubscribeButton />
                     <p className="text-xs text-muted-foreground mt-4">Secured by Razorpay</p>

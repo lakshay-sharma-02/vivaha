@@ -56,8 +56,8 @@ export default function RegisterPage() {
       <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-primary/5 rounded-full blur-3xl -z-10" />
 
       <motion.div
-        className="w-full max-w-md glass-panel p-8 sm:p-10 rounded-3xl"
-        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+        className="w-full max-w-md bg-card border border-border shadow-sm p-8 sm:p-10 rounded-xl"
+        initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
       >

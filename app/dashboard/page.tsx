@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { redirect } from "next/navigation"
 import { AlertCircle, CheckCircle2, Clock3, Eye, Heart, LogOut, Search, ShieldCheck, UserRound } from "lucide-react"
 import { createClient } from "@/lib/supabase/server"
@@ -22,8 +23,8 @@ function InterestCard({ interest, received }: { interest: DashboardInterest; rec
   return (
     <article className="surface-card p-4">
       <Link href={`/profile/${person.id}`} className="flex items-center gap-4">
-        <div className="size-14 overflow-hidden rounded-xl bg-muted">
-          {image ? <img src={image} alt={person.full_name ?? "Member"} className="h-full w-full object-cover" /> : <UserRound className="m-4 size-6 text-muted-foreground" />}
+        <div className="relative size-14 overflow-hidden rounded-xl bg-muted">
+          {image ? <Image src={image} alt={person.full_name ?? "Member"} fill className="object-cover" sizes="56px" /> : <UserRound className="m-4 size-6 text-muted-foreground" />}
         </div>
         <div className="min-w-0 flex-1">
           <h3 className="truncate font-semibold">{person.full_name ?? "Sahachar member"}</h3>

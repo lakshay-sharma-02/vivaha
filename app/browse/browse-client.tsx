@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Briefcase, GraduationCap, Loader2, MapPin, Search, SlidersHorizontal, UserRound } from "lucide-react"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -91,7 +92,7 @@ export default function BrowseClient({ initialResult, isSubscribed }: {
             return (
               <article key={profile.id} className="profile-card group">
                 <div className="relative aspect-[4/5] overflow-hidden bg-muted">
-                  {image ? <img src={image} alt={profile.full_name ?? "Member profile"} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]" /> :
+                  {image ? <Image src={image} alt={profile.full_name ?? "Member profile"} fill className="object-cover transition duration-500 group-hover:scale-[1.03]" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" /> :
                     <div className="grid h-full place-items-center"><UserRound className="size-12 text-muted-foreground/40" /></div>}
                   <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-5 pt-16 text-white">
                     <h3 className="text-xl font-semibold">{profile.full_name}{age !== null ? `, ${age}` : ""}</h3>

@@ -36,60 +36,58 @@
 }
 
 :root {
-  /* Premium Slate Backgrounds */
-  --background: oklch(0.99 0.01 270);
-  --foreground: oklch(0.2 0.05 270);
+  /* Clean, elegant white/cream background */
+  --background: oklch(0.99 0.01 60);
+  --foreground: oklch(0.2 0.05 15);
   
-  /* Cards with slight transparency for glassmorphism */
-  --card: oklch(1 0 0 / 0.9);
-  --card-foreground: oklch(0.2 0.05 270);
+  /* Solid cards */
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0.05 15);
   
-  --popover: oklch(1 0 0 / 0.95);
-  --popover-foreground: oklch(0.2 0.05 270);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2 0.05 15);
 
-  /* Premium Rose/Crimson Primary */
-  --primary: oklch(0.5 0.2 15);
+  /* Primary Deep Rose/Maroon for traditional feel */
+  --primary: oklch(0.45 0.15 15);
   --primary-foreground: oklch(0.98 0.01 15);
   
-  /* Slate/Gold Secondary */
-  --secondary: oklch(0.9 0.05 60);
+  /* Soft Gold/Cream Secondary */
+  --secondary: oklch(0.94 0.04 60);
   --secondary-foreground: oklch(0.3 0.1 60);
 
-  --muted: oklch(0.95 0.02 270);
-  --muted-foreground: oklch(0.5 0.05 270);
+  --muted: oklch(0.96 0.02 60);
+  --muted-foreground: oklch(0.45 0.05 60);
 
   --accent: oklch(0.92 0.05 15);
   --accent-foreground: oklch(0.4 0.1 15);
 
-  --destructive: oklch(0.6 0.2 20);
+  --destructive: oklch(0.55 0.2 20);
   
-  --border: oklch(0.9 0.02 270);
-  --input: oklch(0.92 0.02 270);
-  --ring: oklch(0.5 0.2 15 / 0.4);
+  --border: oklch(0.9 0.02 60);
+  --input: oklch(0.92 0.02 60);
+  --ring: oklch(0.45 0.15 15 / 0.4);
 
-  --radius: 1rem;
+  --radius: 0.5rem;
 }
 
 .dark {
-  /* Deep Premium Dark Slate */
-  --background: oklch(0.15 0.02 270);
+  /* Minimal Dark Mode */
+  --background: oklch(0.12 0.01 270);
   --foreground: oklch(0.95 0.01 270);
   
-  /* Dark Glass Cards */
-  --card: oklch(0.2 0.03 270 / 0.8);
+  --card: oklch(0.15 0.02 270);
   --card-foreground: oklch(0.95 0.01 270);
   
-  --popover: oklch(0.18 0.03 270 / 0.95);
+  --popover: oklch(0.15 0.02 270);
   --popover-foreground: oklch(0.95 0.01 270);
 
-  /* Primary Deep Rose */
   --primary: oklch(0.6 0.2 15);
   --primary-foreground: oklch(0.1 0.05 15);
   
-  --secondary: oklch(0.25 0.05 60);
+  --secondary: oklch(0.2 0.03 60);
   --secondary-foreground: oklch(0.9 0.05 60);
 
-  --muted: oklch(0.25 0.02 270);
+  --muted: oklch(0.2 0.02 270);
   --muted-foreground: oklch(0.7 0.05 270);
 
   --accent: oklch(0.3 0.05 15);
@@ -97,8 +95,8 @@
 
   --destructive: oklch(0.5 0.2 20);
 
-  --border: oklch(0.3 0.02 270);
-  --input: oklch(0.3 0.02 270);
+  --border: oklch(0.25 0.02 270);
+  --input: oklch(0.25 0.02 270);
   --ring: oklch(0.6 0.2 15 / 0.5);
 }
 
@@ -108,25 +106,5 @@
   }
   body {
     @apply bg-background text-foreground antialiased selection:bg-primary/20 selection:text-primary;
-    background-image: 
-      radial-gradient(at 0% 0%, oklch(0.95 0.05 15 / 0.4) 0px, transparent 50%),
-      radial-gradient(at 100% 0%, oklch(0.9 0.05 60 / 0.3) 0px, transparent 50%);
-    background-attachment: fixed;
-  }
-  
-  .dark body {
-    background-image: 
-      radial-gradient(at 0% 0%, oklch(0.3 0.1 15 / 0.2) 0px, transparent 50%),
-      radial-gradient(at 100% 0%, oklch(0.25 0.05 60 / 0.15) 0px, transparent 50%);
-  }
-
-  .glass-panel {
-    @apply bg-card/80 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-xl;
-  }
-}
-
-@keyframes shimmer {
-  100% {
-    transform: translateX(100%);
   }
 }

@@ -5,7 +5,8 @@ import { getPendingProfiles, adminUpdateProfileStatus, adminSearchProfiles, admi
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { motion, AnimatePresence } from "framer-motion"
-import { CheckCircle2, XCircle, FileText, User, Search, Trash2 } from "lucide-react"
+import Image from "next/image"
+import { CheckCircle2, XCircle, Clock, AlertCircle, FileText, User, Search, RefreshCw, Trash2 } from "lucide-react"
 
 export default function AdminVerificationPage() {
   const [profiles, setProfiles] = useState<any[]>([])
@@ -113,10 +114,12 @@ export default function AdminVerificationPage() {
         {activeTab === "queue" && (
           <>
             {profiles.length === 0 ? (
-          <div className="glass-panel p-12 text-center rounded-3xl">
-            <CheckCircle2 className="w-16 h-16 text-green-500 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold mb-2">All caught up!</h2>
-            <p className="text-muted-foreground">There are no pending profiles to verify right now.</p>
+          <div className="max-w-md mx-auto mt-20">
+            <div className="bg-card border border-border shadow-sm p-12 text-center rounded-xl">
+              <CheckCircle2 className="w-16 h-16 text-green-500 mx-auto mb-4" />
+              <h2 className="text-2xl font-bold mb-2">All caught up!</h2>
+              <p className="text-muted-foreground">There are no pending profiles to verify right now.</p>
+            </div>
           </div>
         ) : (
           <motion.div className="grid gap-8" layout>
@@ -131,7 +134,7 @@ export default function AdminVerificationPage() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.3 }}
-                  className="glass-panel rounded-3xl overflow-hidden"
+                  className="bg-card border border-border shadow-sm rounded-xl overflow-hidden"
                 >
                   <div className="flex flex-col lg:flex-row">
                     {/* Left side: Profile Summary */}
@@ -139,7 +142,7 @@ export default function AdminVerificationPage() {
                       <div className="flex items-center gap-4 mb-6">
                         <div className="h-16 w-16 rounded-full overflow-hidden bg-background border-2 border-primary/20 shrink-0">
                           {profile.profile_photo_path ? (
-                            <img src={profile.profile_photo_path} alt="" className="w-full h-full object-cover" />
+                            <Image src={profile.profile_photo_path} alt="" width={64} height={64} className="w-full h-full object-cover" />
                           ) : (
                             <User className="w-full h-full p-3 text-muted-foreground" />
                           )}
@@ -175,10 +178,11 @@ export default function AdminVerificationPage() {
                         <div className="bg-background/50 rounded-2xl border border-border/50 p-4 aspect-video relative overflow-hidden flex items-center justify-center group cursor-pointer"
                              onClick={() => window.open(doc?.aadhaar_photo_path, '_blank')}>
                           {doc?.aadhaar_photo_path ? (
-                            <img 
+                            <Image 
                               src={doc.aadhaar_photo_path} 
                               alt="Aadhaar Document" 
-                              className="max-h-full object-contain"
+                              fill
+                              className="object-contain"
                             />
                           ) : (
                             <p className="text-muted-foreground">No document uploaded</p>
@@ -229,7 +233,7 @@ export default function AdminVerificationPage() {
         )}
 
         {activeTab === "search" && (
-          <div className="glass-panel p-8 rounded-3xl space-y-6">
+          <div className="bg-card border border-border shadow-sm p-8 rounded-xl space-y-6">
             <h2 className="text-2xl font-bold">Search & Manage Profiles</h2>
             <form onSubmit={handleSearch} className="flex gap-4">
               <div className="relative flex-1">
