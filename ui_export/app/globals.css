@@ -7,8 +7,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
-  --font-serif: var(--font-playfair);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-geist-mono);
   
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
@@ -106,47 +106,5 @@
   }
   body {
     @apply bg-background text-foreground antialiased selection:bg-primary/20 selection:text-primary;
-  }
-}
-
-@layer components {
-  .page-shell {
-    @apply min-h-screen py-8 md:py-12;
-  }
-  .page-container {
-    @apply container mx-auto px-4 max-w-5xl;
-  }
-  .surface-card {
-    @apply bg-card border border-border shadow-sm rounded-xl;
-  }
-  .eyebrow {
-    @apply text-sm font-medium uppercase tracking-widest text-muted-foreground;
-  }
-  .font-display {
-    @apply font-serif tracking-tight text-foreground;
-  }
-  .section-title {
-    @apply text-xl font-serif font-semibold flex items-center gap-2;
-  }
-  .quiet-chip {
-    @apply inline-flex items-center rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium text-muted-foreground;
-  }
-  .empty-state {
-    @apply flex flex-col items-center justify-center rounded-xl border border-dashed border-border bg-muted/20 p-8 text-center text-muted-foreground gap-3;
-  }
-  .status-pill {
-    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium capitalize;
-  }
-  .status-success {
-    @apply bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400;
-  }
-  .status-warning {
-    @apply bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400;
-  }
-  .status-danger {
-    @apply bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400;
-  }
-  .status-neutral {
-    @apply bg-muted text-muted-foreground;
   }
 }
