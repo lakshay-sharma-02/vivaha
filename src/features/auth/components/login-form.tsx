@@ -33,20 +33,23 @@ export function LoginForm() {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 15 }}
+      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
+      transition={{ duration: 0.8, ease: [0.32, 0.72, 0, 1] }}
+      className="glass rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden"
     >
-      <div className="flex flex-col space-y-2 text-center mb-10">
-        <h1 className="font-playfair text-3xl font-semibold tracking-tight text-foreground">
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent pointer-events-none" />
+      
+      <div className="flex flex-col space-y-3 text-center mb-12 relative z-10">
+        <h1 className="font-playfair text-4xl font-semibold tracking-tight text-foreground">
           Welcome back
         </h1>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-[15px] text-muted-foreground">
           Enter your email to sign in to your account
         </p>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-7 relative z-10">
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
           <Input

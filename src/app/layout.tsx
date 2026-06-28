@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 import { siteConfig } from "@/config/site";
 import { ThemeProvider } from "@/shared/providers/theme-provider";
+import { AmbientBackground } from "@/shared/components/ambient-background";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -41,13 +42,14 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col relative">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
+          <AmbientBackground />
           {children}
         </ThemeProvider>
       </body>

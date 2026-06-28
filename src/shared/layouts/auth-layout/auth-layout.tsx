@@ -1,4 +1,5 @@
 import * as React from "react"
+import { AuthHeroImage } from "./auth-hero-image"
 
 export function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -12,12 +13,7 @@ export function AuthLayout({ children }: { children: React.ReactNode }) {
         </div>
       </div>
       <div className="relative hidden w-0 flex-1 lg:block">
-        <div className="absolute inset-0 bg-muted/30">
-          {/* 
-            Placeholder for high-end editorial photography. 
-            Will use a slow crossfade image loading technique here.
-          */}
-        </div>
+        <AuthHeroImage />
       </div>
     </div>
   )

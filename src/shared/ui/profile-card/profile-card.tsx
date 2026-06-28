@@ -1,8 +1,8 @@
 "use client"
-
 import * as React from "react"
 import { motion } from "framer-motion"
 import { ShieldCheck, MapPin, Briefcase } from "lucide-react"
+import Link from "next/link"
 import { Button } from "@/shared/ui/button/button"
 import { Card } from "@/shared/ui/card/card"
 
@@ -69,7 +69,9 @@ export function ProfileCard({
 
         {/* Actions */}
         <div className="mt-6 flex items-center space-x-3">
-          <Button className="flex-1">View Profile</Button>
+          <Link href={`/profile/${name.toLowerCase()}`} className="flex-1">
+            <Button className="w-full">View Profile</Button>
+          </Link>
           <Button variant="outline" className="px-4">Pass</Button>
         </div>
       </div>
