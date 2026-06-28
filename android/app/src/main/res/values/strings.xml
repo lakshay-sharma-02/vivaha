@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">Sahachar</string>
-    <string name="title_activity_main">Sahachar</string>
-    <string name="package_name">com.sahachar.app</string>
-    <string name="custom_url_scheme">com.sahachar.app</string>
-</resources>
