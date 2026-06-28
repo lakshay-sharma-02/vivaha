@@ -1,0 +1,9 @@
+typer[all]
+rich
+InquirerPy
+watchdog
+anthropic
+requests
+cryptography
+numpy
+python-frontmatter

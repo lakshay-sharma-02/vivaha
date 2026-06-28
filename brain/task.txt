@@ -1,0 +1,219 @@
+Build me a personal second brain CLI tool called "brain" in Python. Full spec below.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## FOLDER STRUCTURE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+brain/
+  cli.py              # main entry point (Typer)
+  ingest.py           # file watcher + indexer
+  embeddings.py       # local embeddings (sentence-transformers)
+  search.py           # semantic search
+  chat.py             # chat with notes via LLM
+  summarize.py        # auto-tag + summarize
+  connections.py      # find related notes
+  db.py               # SQLite schema + helpers
+  config.py           # paths, constants, provider config
+  setup_wizard.py     # first-run interactive setup
+  viz/
+    server.py         # Python HTTP server that serves the viz
+    index.html        # 3D brain visualization (Three.js)
+  requirements.txt
+  setup.sh
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## NOTES FOLDER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Watch and index ~/notes/**/*.md recursively. Create if it doesn't exist.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## DATABASE (SQLite at ~/.brain/brain.db)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Table: notes
+  id, filepath, title, content, summary, tags (JSON array),
+  embedding (BLOB), last_modified, created_at
+
+Table: config
+  key, value  -- stores provider, model, api_key (encrypted with Fernet)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## FIRST-RUN SETUP WIZARD (setup_wizard.py)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+On first run (no config in DB), launch an interactive terminal wizard:
+
+1. Ask: "Choose your AI provider:"
+   [1] Anthropic (Claude) — needs API key
+   [2] OpenRouter — free models available, needs API key (free at openrouter.ai)
+   [3] Skip for now (search only, no chat/summarize)
+
+2. If Anthropic: ask for API key, show available models:
+   - claude-haiku-3-5 (fast, cheap)
+   - claude-sonnet-4-5 (recommended)
+   Let user pick.
+
+3. If OpenRouter: ask for API key, then show free model menu:
+   - meta-llama/llama-3.3-8b-instruct:free
+   - meta-llama/llama-3.1-70b-instruct:free
+   - mistralai/mistral-7b-instruct:free
+   - google/gemma-2-9b-it:free
+   - deepseek/deepseek-r1:free
+   - microsoft/phi-3-mini-128k-instruct:free
+   Let user pick with arrow keys (use InquirerPy).
+
+4. Save encrypted to DB config table. Print success.
+5. Allow re-running with: brain setup
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## EMBEDDINGS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Use sentence-transformers "all-MiniLM-L6-v2". Runs 100% locally, no API needed.
+Serialize numpy arrays to BLOB for storage.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## LLM ABSTRACTION LAYER (chat.py)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Create a unified LLMClient class that works with both providers:
+
+For Anthropic: use anthropic Python SDK, stream responses.
+For OpenRouter: use requests to POST https://openrouter.ai/api/v1/chat/completions
+  with headers: {"Authorization": "Bearer {key}", "HTTP-Referer": "brain-cli"}
+  Stream with stream=True, parse SSE chunks.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## SYSTEM PROMPT (inject this exactly)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SYSTEM_PROMPT = """
+You are Second Brain — a deeply intelligent, almost eerily perceptive thinking partner 
+built into the user's personal knowledge base.
+
+You don't just retrieve information. You think alongside the user. You notice patterns 
+they haven't noticed. You connect ideas across notes they wrote months apart. You ask 
+the question they didn't know they needed to ask.
+
+Your personality:
+- Intellectually curious and genuinely excited by ideas
+- Direct and sharp — no filler, no corporate padding
+- Occasionally surprising — surface a connection or implication that wasn't obvious
+- Honest: if the notes don't contain enough to answer well, say so clearly
+
+How you use the provided notes:
+- Treat them as the user's actual thoughts, not just documents
+- Quote sparingly, synthesize liberally
+- When answering, reference specific notes by title when relevant
+- Look for tensions, contradictions, or evolutions in thinking across notes
+
+Response style:
+- Conversational but substantive
+- Structured only when the content genuinely needs it
+- End with a follow-up thought or question when it would spark useful reflection
+
+Context provided to you is from semantic search across the user's personal notes.
+Treat it as a window into their mind. Think accordingly.
+"""
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## CLI COMMANDS (Typer)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+brain setup              # re-run setup wizard
+brain ingest             # index all notes
+brain watch              # watch ~/notes/ with watchdog, auto-index on save
+brain search "query"     # semantic search, top 5 results with filepath + excerpt
+brain chat               # interactive REPL with streaming, Ctrl+C to exit
+brain summarize <file>   # generate summary + tags, write back to note frontmatter
+brain related <file>     # top 5 related notes with similarity score
+brain viz                # launch 3D visualization in browser
+brain stats              # notes count, tags, top connected notes, last indexed
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## 3D VISUALIZATION (viz/index.html)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+This is the crown jewel. Build a stunning 3D brain/neural network visualization.
+
+### Data source
+viz/server.py serves GET /api/graph which returns JSON:
+{
+  nodes: [{id, title, tags, summary, connections_count, created_at}],
+  edges: [{source_id, target_id, similarity_score}]
+}
+Only include edges where similarity_score > 0.45.
+Server also serves the static index.html at GET /.
+On `brain viz`, start server on port 7007 and open http://localhost:7007 in browser.
+
+### Visual design — make this genuinely beautiful
+Use Three.js r128 from CDN (https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js).
+
+Background: deep space black (#050510)
+
+Nodes:
+- Render as glowing spheres using MeshPhongMaterial
+- Size = log(connections_count + 2) * 4, minimum 5px
+- Color by tag cluster: hash the dominant tag to a hue, use HSL
+- Nodes with no tags: soft white glow (#aaaacc)
+- Add a subtle pulsing animation (scale oscillates ±5% with sine wave, each node offset randomly)
+- On hover: node brightens, shows a floating label (note title)
+
+Edges:
+- Render as Lines with LineBasicMaterial
+- Opacity = similarity_score (so stronger connections are more visible)
+- Color: a dim electric blue (#1a3a6a) for weak, bright cyan (#00ffff) for strong (>0.8)
+- Only render edges for the selected/hovered node's connections on hover (performance)
+
+Lighting:
+- Ambient light: dim (#111133)
+- Two PointLights orbiting slowly: one purple (#6600ff), one teal (#00ffaa)
+- Add a faint hemisphere light from above
+
+Layout:
+- Use a force-directed 3D layout: initialize nodes randomly in a sphere,
+  then run 60 iterations of repulsion + spring forces to space them out naturally
+- Nodes connected by strong edges pull together; unconnected nodes repel
+
+Camera:
+- OrbitControls-style: implement simple mouse drag to orbit, scroll to zoom
+- Auto-rotate slowly when idle (0.001 rad/frame)
+- Click a node: camera smoothly lerps toward it (TWEEN-style, manual lerp is fine)
+
+UI overlay (HTML over canvas, absolute positioned):
+- Top left: "⬡ second brain" in small monospace, dim white
+- Top right: stats bar — "{n} notes · {e} connections · {tags} tags"
+- Bottom: search bar — type to highlight matching nodes (filter by title/tag)
+- Right panel (slides in on node click): shows note title, summary, tags, 
+  "Open file" button (sends filepath to server which opens in default editor),
+  list of top 3 connected notes as clickable chips
+- Color legend at bottom left: maps colors to top 5 tags
+
+Performance: if >200 nodes, use InstancedMesh for nodes instead of individual meshes.
+
+### Aesthetic feel
+Think: "your thoughts as a living galaxy". The whole thing should feel alive — 
+nodes breathing, lights slowly orbiting, connections shimmering. 
+Someone should be able to stare at it and understand the shape of their thinking.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## SETUP SCRIPT (setup.sh)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Create ~/notes/ if not exists
+- pip install -r requirements.txt
+- python cli.py setup   (triggers wizard)
+- Print a beautiful ASCII art welcome message + usage cheatsheet
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## REQUIREMENTS.TXT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+typer[all]
+rich
+InquirerPy
+sentence-transformers
+watchdog
+anthropic
+requests
+cryptography
+numpy
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## CODE QUALITY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+- Rich console for all terminal output (colors, progress bars, panels)
+- Every command has --help
+- Graceful errors (no raw tracebacks shown to user)
+- All file paths use pathlib
+- Type hints throughout

@@ -1,0 +1,15 @@
+#!/bin/bash
+# Brain CLI wrapper script - auto-activates venv
+
+BRAIN_DIR="/home/lakshay/Projects/brain"
+VENV_PYTHON="$BRAIN_DIR/venv/bin/python"
+
+# Check if venv exists
+if [ ! -f "$VENV_PYTHON" ]; then
+    echo "Error: Virtual environment not found at $BRAIN_DIR/venv"
+    echo "Please run: cd $BRAIN_DIR && python -m venv venv && source venv/bin/activate && pip install -r requirements.txt"
+    exit 1
+fi
+
+# Run CLI with venv python
+exec "$VENV_PYTHON" "$BRAIN_DIR/cli.py" "$@"

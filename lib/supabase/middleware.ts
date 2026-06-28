@@ -41,7 +41,6 @@ export async function updateSession(request: NextRequest) {
   if (
     !user &&
     !request.nextUrl.pathname.startsWith('/login') &&
-    !request.nextUrl.pathname.startsWith('/register') &&
     !request.nextUrl.pathname.startsWith('/auth') &&
     request.nextUrl.pathname !== '/'
   ) {
@@ -60,9 +59,9 @@ export async function updateSession(request: NextRequest) {
 
     const isOnboarding = request.nextUrl.pathname.startsWith('/onboarding')
     const isBrowse = request.nextUrl.pathname.startsWith('/browse')
-    const isAuthPage = request.nextUrl.pathname.startsWith('/login') || request.nextUrl.pathname.startsWith('/register')
+    const isAuthPage = request.nextUrl.pathname.startsWith('/login')
 
-    const isOnboardingCompleted = profile?.status === 'PENDING_VERIFICATION' || profile?.status === 'VERIFIED'
+    const isOnboardingCompleted = profile?.status === 'PENDING' || profile?.status === 'VERIFIED'
 
     if (!isOnboardingCompleted && !isOnboarding && !request.nextUrl.pathname.startsWith('/auth')) {
       url.pathname = '/onboarding'

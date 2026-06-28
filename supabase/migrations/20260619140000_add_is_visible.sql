@@ -1,1 +1,0 @@
-ALTER TABLE profiles ADD COLUMN is_visible BOOLEAN DEFAULT true;
