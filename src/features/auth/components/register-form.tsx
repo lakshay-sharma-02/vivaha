@@ -10,9 +10,14 @@ import { Input } from "@/shared/ui/input/input"
 import { Label } from "@/shared/ui/label/label"
 import { motion } from "framer-motion"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { createClient } from "@/shared/lib/supabase/client"
 
 export function RegisterForm() {
   const [isLoading, setIsLoading] = React.useState(false)
+  const [authError, setAuthError] = React.useState<string | null>(null)
+  const router = useRouter()
+  const supabase = createClient()
 
   const {
     register,
@@ -24,11 +29,34 @@ export function RegisterForm() {
 
   async function onSubmit(data: RegisterFormValues) {
     setIsLoading(true)
-    // Simulate secure API call delay
-    setTimeout(() => {
+    setAuthError(null)
+
+    try {
+      const { error } = await supabase.auth.signUp({
+        email: data.email,
+        password: data.password,
+        options: {
+          data: {
+            first_name: data.firstName,
+            last_name: data.lastName,
+          }
+        }
+      })
+
+      if (error) {
+        setAuthError(error.message)
+        setIsLoading(false)
+        return
+      }
+
+      // Normally we would redirect to a "check your email" page, 
+      // but since we are disabling email confirmation for testing/free-tier ease:
+      router.push("/dashboard")
+      router.refresh()
+    } catch (err) {
+      setAuthError("An unexpected error occurred. Please try again.")
       setIsLoading(false)
-      console.log("Register data:", data)
-    }, 1500)
+    }
   }
 
   return (
@@ -47,6 +75,11 @@ export function RegisterForm() {
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+        {authError && (
+          <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive text-sm text-center">
+            {authError}
+          </div>
+        )}
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label htmlFor="firstName">First Name</Label>

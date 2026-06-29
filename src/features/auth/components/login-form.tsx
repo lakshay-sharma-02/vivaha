@@ -10,9 +10,14 @@ import { Input } from "@/shared/ui/input/input"
 import { Label } from "@/shared/ui/label/label"
 import { motion } from "framer-motion"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { createClient } from "@/shared/lib/supabase/client"
 
 export function LoginForm() {
   const [isLoading, setIsLoading] = React.useState(false)
+  const [authError, setAuthError] = React.useState<string | null>(null)
+  const router = useRouter()
+  const supabase = createClient()
 
   const {
     register,
@@ -24,11 +29,26 @@ export function LoginForm() {
 
   async function onSubmit(data: LoginFormValues) {
     setIsLoading(true)
-    // Simulate secure API call delay
-    setTimeout(() => {
+    setAuthError(null)
+    
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email: data.email,
+        password: data.password,
+      })
+
+      if (error) {
+        setAuthError(error.message)
+        setIsLoading(false)
+        return
+      }
+
+      router.push("/dashboard")
+      router.refresh()
+    } catch (err) {
+      setAuthError("An unexpected error occurred. Please try again.")
       setIsLoading(false)
-      console.log("Login data:", data)
-    }, 1500)
+    }
   }
 
   return (
@@ -50,6 +70,11 @@ export function LoginForm() {
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-7 relative z-10">
+        {authError && (
+          <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive text-sm text-center">
+            {authError}
+          </div>
+        )}
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
           <Input
