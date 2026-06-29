@@ -31,7 +31,7 @@ export function OnboardingWizard() {
   const [isSaving, setIsSaving] = React.useState(false)
   const [formData, setFormData] = React.useState({
     firstName: "", lastName: "", gender: "", dateOfBirth: "", height: "",
-    country: "", state: "", city: "",
+    country: "", state: "", city: "", phone: "", instagram: "",
     highestQual: "", university: "", occupation: "", company: "", income: "",
     religion: "", community: "", motherTongue: "", gotra: "", maternalGotra: "", grandmotherGotra: "",
     fatherOccupation: "", motherOccupation: "", familyType: "", familyValues: "", siblings: "",
@@ -230,6 +230,28 @@ export function OnboardingWizard() {
                       onChange={(e) => setFormData({ ...formData, height: e.target.value })}
                       className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" 
                     />
+                  </div>
+                  <div className="space-y-3 col-span-2">
+                    <Label className="text-white/70 ml-1">Private Phone Number</Label>
+                    <Input 
+                      type="tel" 
+                      placeholder="+91 98765 43210"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" 
+                    />
+                    <p className="text-[10px] text-white/40 ml-1">Only revealed to matches you accept.</p>
+                  </div>
+                  <div className="space-y-3 col-span-2">
+                    <Label className="text-white/70 ml-1">Instagram Handle (Optional)</Label>
+                    <Input 
+                      type="text" 
+                      placeholder="@username"
+                      value={formData.instagram}
+                      onChange={(e) => setFormData({ ...formData, instagram: e.target.value })}
+                      className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" 
+                    />
+                    <p className="text-[10px] text-white/40 ml-1">Helps verify your identity. Only shown to mutual matches.</p>
                   </div>
                 </div>
               </div>

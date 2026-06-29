@@ -63,6 +63,8 @@ export async function saveOnboardingData(formData: any) {
         city_id: cityId,
         country_id: countryId,
         bio: formData.bio || null,
+        phone: formData.phone || null,
+        instagram: formData.instagram || null,
       })
       .eq('id', user.id);
 
