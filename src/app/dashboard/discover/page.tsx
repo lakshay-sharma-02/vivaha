@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { 
   Filter, Search, MapPin, Briefcase, GraduationCap, 
   Heart, X, Check, Info, ShieldCheck, ChevronDown, 
-  Lock, Instagram, Phone, Crown, Sparkles, AlertCircle
+  Lock, AtSign, Phone, Crown, Sparkles, AlertCircle
 } from "lucide-react"
 
 export default function DiscoverPage() {
@@ -299,7 +299,7 @@ export default function DiscoverPage() {
                         </div>
                       </div>
                       <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center"><Instagram className="w-4 h-4" /></div>
+                        <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center"><AtSign className="w-4 h-4" /></div>
                         <div>
                           <div className="text-xs text-white/50">Instagram</div>
                           <div className="text-sm font-medium">@ananya_sharma</div>
