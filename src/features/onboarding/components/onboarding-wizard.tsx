@@ -7,7 +7,8 @@ import { Input } from "@/shared/ui/input/input"
 import { Label } from "@/shared/ui/label/label"
 import { Slider } from "@/shared/ui/slider"
 import { useRouter } from "next/navigation"
-import { Camera, ShieldCheck, UploadCloud, CheckCircle2, Search, Heart, MapPin, Briefcase } from "lucide-react"
+import { Camera, ShieldCheck, UploadCloud, CheckCircle2, Search, Heart, MapPin, Briefcase, Loader2 } from "lucide-react"
+import { saveOnboardingData } from "@/app/actions/onboarding"
 
 const STEPS = [
   { id: "welcome", title: "Welcome" },
@@ -27,13 +28,32 @@ const STEPS = [
 export function OnboardingWizard() {
   const [currentStep, setCurrentStep] = React.useState(0)
   const [direction, setDirection] = React.useState(1)
+  const [isSaving, setIsSaving] = React.useState(false)
+  const [formData, setFormData] = React.useState({
+    firstName: "", lastName: "", gender: "", dateOfBirth: "", height: "",
+    country: "", state: "", city: "",
+    highestQual: "", university: "", occupation: "", company: "", income: "",
+    religion: "", community: "", motherTongue: "",
+    parentsOccupation: "", familyType: "", familyValues: "", siblings: "",
+    minAge: 18, maxAge: 60, minHeight: 140, maxHeight: 220
+  })
   const [selections, setSelections] = React.useState<Record<string, string[]>>({
     lifestyle: [],
     prefReligion: []
   })
   const router = useRouter()
 
-  const nextStep = () => {
+  const nextStep = async () => {
+    if (currentStep === 10) {
+      setIsSaving(true)
+      await saveOnboardingData({
+        ...formData,
+        lifestyleChips: selections.lifestyle,
+        prefReligionChips: selections.prefReligion
+      })
+      setIsSaving(false)
+    }
+
     if (currentStep < STEPS.length - 1) {
       setDirection(1)
       setCurrentStep(c => c + 1)
@@ -166,15 +186,27 @@ export function OnboardingWizard() {
                 <div className="grid grid-cols-2 gap-6 max-w-md mx-auto">
                   <div className="space-y-3">
                     <Label className="text-white/70 ml-1">First Name</Label>
-                    <Input defaultValue="Lakshay" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                    <Input 
+                      value={formData.firstName}
+                      onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                      className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" 
+                    />
                   </div>
                   <div className="space-y-3">
                     <Label className="text-white/70 ml-1">Last Name</Label>
-                    <Input defaultValue="Sharma" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                    <Input 
+                      value={formData.lastName}
+                      onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                      className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" 
+                    />
                   </div>
                   <div className="space-y-3">
                     <Label className="text-white/70 ml-1">Gender</Label>
-                    <select defaultValue="" className="flex h-14 w-full items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-primary appearance-none">
+                    <select 
+                      value={formData.gender}
+                      onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
+                      className="flex h-14 w-full items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-primary appearance-none"
+                    >
                       <option value="" disabled>Select...</option>
                       <option value="male" className="bg-zinc-900">Male</option>
                       <option value="female" className="bg-zinc-900">Female</option>
@@ -182,7 +214,12 @@ export function OnboardingWizard() {
                   </div>
                   <div className="space-y-3">
                     <Label className="text-white/70 ml-1">Date of Birth</Label>
-                    <Input type="date" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white focus:outline-none focus:ring-1 focus:ring-primary [&::-webkit-calendar-picker-indicator]:filter [&::-webkit-calendar-picker-indicator]:invert" />
+                    <Input 
+                      type="date" 
+                      value={formData.dateOfBirth}
+                      onChange={(e) => setFormData({ ...formData, dateOfBirth: e.target.value })}
+                      className="h-14 rounded-2xl bg-white/5 border-white/10 text-white focus:outline-none focus:ring-1 focus:ring-primary [&::-webkit-calendar-picker-indicator]:filter [&::-webkit-calendar-picker-indicator]:invert" 
+                    />
                   </div>
                 </div>
               </div>
@@ -587,7 +624,7 @@ export function OnboardingWizard() {
             animate={{ opacity: 1, y: 0 }} 
             className="fixed bottom-8 w-full flex justify-between items-center px-6 md:px-12 max-w-4xl left-1/2 -translate-x-1/2 z-50 bg-black/50 backdrop-blur-md py-4 rounded-full border border-white/10"
           >
-            <Button variant="ghost" onClick={prevStep} className="text-white/50 hover:text-white hover:bg-white/10 px-6 rounded-full">
+            <Button variant="ghost" onClick={prevStep} disabled={isSaving} className="text-white/50 hover:text-white hover:bg-white/10 px-6 rounded-full">
               Back
             </Button>
             
@@ -595,8 +632,8 @@ export function OnboardingWizard() {
               Step {currentStep} of {STEPS.length - 2} • <span className="text-white/80">{STEPS[currentStep].title}</span>
             </div>
 
-            <Button onClick={nextStep} className="rounded-full px-8 shadow-[0_0_20px_rgba(232,185,108,0.2)]">
-              Continue
+            <Button onClick={nextStep} disabled={isSaving} className="rounded-full px-8 shadow-[0_0_20px_rgba(232,185,108,0.2)]">
+              {isSaving ? <Loader2 className="w-5 h-5 animate-spin" /> : currentStep === 10 ? "Submit Application" : "Continue"}
             </Button>
           </motion.div>
         )}
