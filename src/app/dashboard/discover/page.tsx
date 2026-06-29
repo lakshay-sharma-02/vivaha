@@ -8,8 +8,11 @@ import {
   Lock, AtSign, Phone, Crown, Sparkles, AlertCircle, CheckCircle2
 } from "lucide-react"
 import { requestIntroduction } from "@/app/actions/matchmaking"
+import { fetchDiscoverProfiles } from "@/app/actions/discover"
 
 export default function DiscoverPage() {
+  const [profiles, setProfiles] = React.useState<any[]>([])
+  const [isLoadingProfiles, setIsLoadingProfiles] = React.useState(true)
   const [activeProfileIndex, setActiveProfileIndex] = React.useState(0)
   const [showFilters, setShowFilters] = React.useState(false)
   const [selectedProfile, setSelectedProfile] = React.useState<any>(null)
@@ -19,54 +22,17 @@ export default function DiscoverPage() {
   const [showPaywall, setShowPaywall] = React.useState(false)
   const [toastMessage, setToastMessage] = React.useState<string | null>(null)
 
-  // Dummy Profiles
-  const profiles = [
-    {
-      id: 1,
-      name: "Ananya Sharma",
-      age: 28,
-      location: "San Francisco, CA",
-      profession: "Senior Architect",
-      education: "M.Arch, UC Berkeley",
-      bio: "Passionate about sustainable design and classical music. Looking for an equal partner to build a beautiful life with.",
-      compatibility: 94,
-      verified: true,
-      image: "bg-gradient-to-tr from-zinc-800 to-zinc-950", // Placeholder
-      tags: ["Vegetarian", "Never Drinks", "Hindu - Brahmin", "Nuclear Family"],
-      family: "Father is a Doctor, Mother is a Homemaker. 1 younger brother.",
-      income: "₹50L - ₹1Cr"
-    },
-    {
-      id: 2,
-      name: "Aditya Verma",
-      age: 31,
-      location: "New York, NY",
-      profession: "Investment Banker",
-      education: "MBA, Wharton",
-      bio: "Ambitious but deeply rooted in family values. Weekend hiker and amateur chef.",
-      compatibility: 88,
-      verified: true,
-      image: "bg-gradient-to-bl from-zinc-800 to-zinc-900", // Placeholder
-      tags: ["Non-Vegetarian", "Occasional Drinker", "Hindu - Rajput", "Joint Family"],
-      family: "Both parents are retired civil servants. No siblings.",
-      income: "₹1Cr+"
-    },
-    {
-      id: 3,
-      name: "Riya Patel",
-      age: 27,
-      location: "London, UK",
-      profession: "Product Designer",
-      education: "B.Des, NID",
-      bio: "Creative soul who loves art galleries and spontaneous road trips. Valuing honesty above all.",
-      compatibility: 82,
-      verified: false,
-      image: "bg-gradient-to-tl from-zinc-900 to-black", // Placeholder
-      tags: ["Vegan", "Never Smokes", "Hindu - Patel", "Nuclear Family"],
-      family: "Business family based in London.",
-      income: "₹20L - ₹50L"
+  React.useEffect(() => {
+    async function loadProfiles() {
+      setIsLoadingProfiles(true)
+      const res = await fetchDiscoverProfiles()
+      if (res.success && res.profiles) {
+        setProfiles(res.profiles)
+      }
+      setIsLoadingProfiles(false)
     }
-  ]
+    loadProfiles()
+  }, [])
 
   const activeProfile = profiles[activeProfileIndex]
 
@@ -80,10 +46,7 @@ export default function DiscoverPage() {
     setIsSending(true)
     
     // Call our robust backend RPC via Server Action
-    // Note: Since we are using dummy profiles with integer IDs, we pass a fake UUID 
-    // just so the UI works until we wire up real profile fetching.
-    const targetUuid = "00000000-0000-0000-0000-00000000000" + profileId
-    const res = await requestIntroduction(targetUuid)
+    const res = await requestIntroduction(profileId)
     
     setIsSending(false)
 
@@ -151,7 +114,19 @@ export default function DiscoverPage() {
 
       {/* Main Discover Area (Card Stack) */}
       <div className="flex-1 relative flex items-center justify-center py-4">
-        <AnimatePresence mode="wait">
+        {isLoadingProfiles ? (
+          <div className="flex flex-col items-center justify-center text-white/50 space-y-4">
+            <div className="w-8 h-8 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
+            <p className="font-playfair text-lg">Finding your perfect matches...</p>
+          </div>
+        ) : !activeProfile ? (
+          <div className="flex flex-col items-center justify-center text-white/50 space-y-4">
+            <Heart className="w-12 h-12 text-white/10" />
+            <p className="font-playfair text-xl">You've seen everyone!</p>
+            <p className="text-sm">Check back later for more profiles.</p>
+          </div>
+        ) : (
+          <AnimatePresence mode="wait">
           <motion.div
             key={activeProfile.id}
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -234,6 +209,7 @@ export default function DiscoverPage() {
 
           </motion.div>
         </AnimatePresence>
+        )}
       </div>
 
       {/* Full Detailed Profile Modal (Progressive Disclosure) */}
