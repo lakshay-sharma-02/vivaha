@@ -34,7 +34,10 @@ export function SceneTrust({ progress }: { progress: MotionValue<number> }) {
           ))}
         </motion.div>
 
-        <motion.div style={{ scale: shieldScale }} className="w-full h-full rounded-full border border-zinc-800/50 flex items-center justify-center bg-black/50 backdrop-blur-2xl shadow-[0_0_100px_rgba(0,0,0,0.8)] relative">
+        <motion.div style={{ scale: shieldScale, willChange: "transform" }} className="w-full h-full rounded-full border border-zinc-800/50 flex items-center justify-center bg-black/50 backdrop-blur-md relative">
+          {/* GPU Friendly Faked Drop Shadow */}
+          <div className="absolute -inset-4 rounded-full bg-black/80 blur-xl -z-10" />
+          
           <div className="absolute inset-0 rounded-full border-t border-zinc-500/20 animate-spin-slow" />
           <div className="absolute inset-4 rounded-full border-r border-zinc-500/20 animate-reverse-spin" />
           

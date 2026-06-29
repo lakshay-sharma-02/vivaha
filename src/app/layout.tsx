@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 import { siteConfig } from "@/config/site";
 import { ThemeProvider } from "@/shared/providers/theme-provider";
+import { SmoothScrollProvider } from "@/shared/providers/smooth-scroll-provider";
 import { AmbientBackground } from "@/shared/components/ambient-background";
 import "./globals.css";
 

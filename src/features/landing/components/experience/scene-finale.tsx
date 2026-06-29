@@ -11,9 +11,11 @@ export function SceneFinale({ progress }: { progress: MotionValue<number> }) {
   const foilOpacity = useTransform(progress, [0.96, 1], [0, 1])
 
   return (
-    <motion.div style={{ opacity: finaleOpacity }} className="absolute inset-0 flex items-center justify-center pointer-events-auto z-50">
+    <motion.div style={{ opacity: finaleOpacity, willChange: "opacity" }} className="absolute inset-0 flex items-center justify-center pointer-events-auto z-50">
       
-      <motion.div style={{ scale: cardScale }} className="relative w-[90vw] max-w-xl h-96 md:h-[32rem] glass rounded-[2rem] border-white/10 shadow-[0_0_100px_rgba(0,0,0,1)] overflow-hidden bg-black/60 backdrop-blur-3xl flex flex-col items-center justify-center text-center p-12 group cursor-pointer">
+      <motion.div style={{ scale: cardScale, willChange: "transform" }} className="relative w-[90vw] max-w-xl h-96 md:h-[32rem] glass rounded-[2rem] border-white/10 overflow-hidden bg-black/80 backdrop-blur-md flex flex-col items-center justify-center text-center p-12 group cursor-pointer">
+        {/* GPU Friendly Faked Drop Shadow */}
+        <div className="absolute -inset-20 bg-black/90 blur-3xl -z-10 rounded-full pointer-events-none" />
         
         {/* Animated Gold Foil Reflection */}
         <motion.div 

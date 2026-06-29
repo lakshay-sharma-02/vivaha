@@ -35,8 +35,7 @@ export function SceneHero({ progress }: { progress: MotionValue<number> }) {
         </div>
       </motion.div>
 
-      {/* Scene 2 & 3: Floating Profiles & Connection */}
-      <motion.div style={{ opacity: cardContainerOpacity }} className="absolute inset-0 flex items-center justify-center z-40 pointer-events-none">
+      <motion.div style={{ opacity: cardContainerOpacity, willChange: "transform, opacity" }} className="absolute inset-0 flex items-center justify-center z-40 pointer-events-none">
         
         {/* Connection Lines (Scene 3) */}
         <motion.div style={{ opacity: connectionOpacity }} className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -79,9 +78,12 @@ export function SceneHero({ progress }: { progress: MotionValue<number> }) {
 
         {/* Card 1 */}
         <motion.div
-          style={{ x: card1X, y: card1Y, rotateZ: card1RotateZ }}
-          className="absolute w-64 md:w-80 h-96 rounded-[2rem] glass p-1 shadow-[0_0_50px_rgba(0,0,0,0.8)] border-white/10 overflow-hidden"
+          style={{ x: card1X, y: card1Y, rotateZ: card1RotateZ, willChange: "transform" }}
+          className="absolute w-64 md:w-80 h-96 rounded-[2rem] glass p-1 border-white/10 overflow-hidden"
         >
+          {/* Faked GPU-friendly shadow via absolutely positioned pseudo-element */}
+          <div className="absolute -inset-10 bg-black/80 blur-2xl -z-10 rounded-full" />
+          
           <div className="w-full h-full rounded-[1.8rem] bg-gradient-to-b from-zinc-800/80 to-zinc-950 flex flex-col items-center p-6 relative">
             <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center opacity-40 mix-blend-overlay" />
             <div className="mt-auto relative z-10 w-full text-left">
@@ -93,9 +95,11 @@ export function SceneHero({ progress }: { progress: MotionValue<number> }) {
 
         {/* Card 2 */}
         <motion.div
-          style={{ x: card2X, y: card2Y, rotateZ: card2RotateZ }}
-          className="absolute w-64 md:w-80 h-96 rounded-[2rem] glass p-1 shadow-[0_0_50px_rgba(0,0,0,0.8)] border-white/10 overflow-hidden"
+          style={{ x: card2X, y: card2Y, rotateZ: card2RotateZ, willChange: "transform" }}
+          className="absolute w-64 md:w-80 h-96 rounded-[2rem] glass p-1 border-white/10 overflow-hidden"
         >
+          <div className="absolute -inset-10 bg-black/80 blur-2xl -z-10 rounded-full" />
+          
           <div className="w-full h-full rounded-[1.8rem] bg-gradient-to-b from-zinc-800/80 to-zinc-950 flex flex-col items-center p-6 relative">
             <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center opacity-40 mix-blend-overlay" />
             <div className="mt-auto relative z-10 w-full text-left">
