@@ -5,20 +5,32 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/shared/ui/button/button"
 import { Input } from "@/shared/ui/input/input"
 import { Label } from "@/shared/ui/label/label"
+import { Slider } from "@/shared/ui/slider"
 import { useRouter } from "next/navigation"
+import { Camera, ShieldCheck, UploadCloud, CheckCircle2, Search, Heart, MapPin, Briefcase } from "lucide-react"
 
 const STEPS = [
-  { id: "intro", title: "Welcome to Vivaha" },
-  { id: "basics", title: "The Basics" },
-  { id: "location", title: "Where are you?" },
-  { id: "profession", title: "Your Calling" },
-  { id: "bio", title: "Your Story" },
-  { id: "complete", title: "Review" },
+  { id: "welcome", title: "Welcome" },
+  { id: "identity", title: "Basic Identity" },
+  { id: "location", title: "Location" },
+  { id: "education", title: "Education" },
+  { id: "culture", title: "Religion & Culture" },
+  { id: "family", title: "Family" },
+  { id: "lifestyle", title: "Lifestyle" },
+  { id: "preferences", title: "Partner Preferences" },
+  { id: "photos", title: "Photos" },
+  { id: "verification", title: "Verification" },
+  { id: "review", title: "Review" },
+  { id: "completion", title: "Completion" },
 ]
 
 export function OnboardingWizard() {
   const [currentStep, setCurrentStep] = React.useState(0)
   const [direction, setDirection] = React.useState(1)
+  const [selections, setSelections] = React.useState<Record<string, string[]>>({
+    lifestyle: [],
+    prefReligion: []
+  })
   const router = useRouter()
 
   const nextStep = () => {
@@ -37,63 +49,68 @@ export function OnboardingWizard() {
     }
   }
 
-  // Animation variants
+  const toggleChip = (category: string, value: string) => {
+    setSelections(prev => {
+      const current = prev[category] || []
+      if (current.includes(value)) {
+        return { ...prev, [category]: current.filter(v => v !== value) }
+      }
+      return { ...prev, [category]: [...current, value] }
+    })
+  }
+
   const variants = {
     enter: (direction: number) => ({
-      y: direction > 0 ? 40 : -40,
+      y: direction > 0 ? 30 : -30,
       opacity: 0,
-      scale: 0.95,
-      filter: "blur(10px)"
+      scale: 0.98,
+      filter: "blur(8px)"
     }),
     center: {
       y: 0,
       opacity: 1,
       scale: 1,
       filter: "blur(0px)",
-      transition: { duration: 0.6, ease: [0.32, 0.72, 0, 1] }
+      transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] }
     },
     exit: (direction: number) => ({
-      y: direction < 0 ? 40 : -40,
+      y: direction < 0 ? 30 : -30,
       opacity: 0,
-      scale: 0.95,
-      filter: "blur(10px)",
-      transition: { duration: 0.4, ease: [0.32, 0.72, 0, 1] }
+      scale: 0.98,
+      filter: "blur(8px)",
+      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
     })
   }
 
   return (
     <div className="flex-1 flex flex-col items-center justify-center relative overflow-hidden h-screen w-full">
-      {/* Dynamic Background */}
+      {/* Cinematic Backgrounds */}
       <div className="absolute inset-0 bg-black pointer-events-none">
         <motion.div 
-          animate={{ 
-            opacity: [0.3, 0.5, 0.3],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-          className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[120px]"
+          animate={{ opacity: [0.2, 0.4, 0.2], scale: [1, 1.05, 1] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px]"
         />
         <motion.div 
-          animate={{ 
-            opacity: [0.2, 0.4, 0.2],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{ duration: 15, repeat: Infinity, ease: "linear", delay: 2 }}
-          className="absolute bottom-1/4 right-1/4 w-[30rem] h-[30rem] bg-amber-500/10 rounded-full blur-[150px]"
+          animate={{ opacity: [0.1, 0.3, 0.1], scale: [1, 1.1, 1] }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-[150px]"
         />
       </div>
 
-      {/* Progress Bar */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-white/5 z-50">
-        <motion.div 
-          className="h-full bg-primary"
-          initial={{ width: "0%" }}
-          animate={{ width: `${(currentStep / (STEPS.length - 1)) * 100}%` }}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
-        />
-      </div>
+      {/* Progress Bar (Hidden on Welcome and Completion) */}
+      {currentStep > 0 && currentStep < STEPS.length - 1 && (
+        <div className="absolute top-0 left-0 w-full h-1 bg-white/5 z-50">
+          <motion.div 
+            className="h-full bg-gradient-to-r from-primary to-amber-500"
+            initial={{ width: "0%" }}
+            animate={{ width: `${(currentStep / (STEPS.length - 2)) * 100}%` }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          />
+        </div>
+      )}
 
-      <div className="w-full max-w-2xl px-6 relative z-10 flex flex-col items-center">
+      <div className="w-full max-w-2xl px-6 relative z-10 flex flex-col items-center h-full justify-center">
         <AnimatePresence mode="wait" custom={direction}>
           <motion.div
             key={currentStep}
@@ -102,140 +119,483 @@ export function OnboardingWizard() {
             initial="enter"
             animate="center"
             exit="exit"
-            className="w-full"
+            className="w-full max-h-[80vh] overflow-y-auto hide-scrollbar pb-24"
           >
+            {/* Step 0: Welcome */}
             {currentStep === 0 && (
-              <div className="text-center space-y-6">
-                <h1 className="font-playfair text-5xl md:text-6xl font-medium tracking-tight">
-                  Welcome to Vivaha
-                </h1>
-                <p className="text-lg text-white/60 max-w-lg mx-auto">
-                  Before you enter the inner circle, we need to know a little more about who you are. This ensures absolute exclusivity and trust.
-                </p>
-                <div className="pt-8">
-                  <Button onClick={nextStep} size="lg" className="px-12 text-md h-14 rounded-full">
-                    Begin Interview
+              <div className="text-center space-y-8 flex flex-col items-center justify-center h-[60vh]">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.2, duration: 1, ease: "easeOut" }}
+                  className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mb-4 border border-primary/30 shadow-[0_0_50px_rgba(232,185,108,0.3)]"
+                >
+                  <ShieldCheck className="w-10 h-10 text-primary" />
+                </motion.div>
+                <div className="space-y-4">
+                  <h1 className="font-playfair text-5xl md:text-6xl font-medium tracking-tight">
+                    Welcome to Vivaha
+                  </h1>
+                  <p className="text-lg text-white/60 max-w-md mx-auto leading-relaxed">
+                    Your journey begins here. We will now build your profile, verify your identity, and uncover exactly what you are looking for.
+                  </p>
+                </div>
+                <div className="pt-8 w-full max-w-xs">
+                  <Button onClick={nextStep} size="lg" className="w-full h-14 rounded-full text-md shadow-2xl shadow-primary/20">
+                    Begin Journey
                   </Button>
                 </div>
               </div>
             )}
 
+            {/* Step 1: Basic Identity */}
             {currentStep === 1 && (
-              <div className="space-y-8">
-                <div className="text-center space-y-2 mb-10">
-                  <h2 className="font-playfair text-4xl font-medium">The Basics</h2>
-                  <p className="text-white/50">Tell us about your physical presence.</p>
+              <div className="space-y-10">
+                <div className="text-center space-y-3 mb-12">
+                  <h2 className="font-playfair text-4xl font-medium">Basic Identity</h2>
+                  <p className="text-white/50">Let's start with the essentials.</p>
                 </div>
+                
+                <div className="flex flex-col items-center mb-10">
+                  <div className="w-32 h-32 rounded-full border border-dashed border-white/30 flex flex-col items-center justify-center bg-white/5 text-white/50 hover:bg-white/10 hover:text-white transition-colors cursor-pointer group">
+                    <Camera className="w-8 h-8 mb-2 group-hover:scale-110 transition-transform" />
+                    <span className="text-xs">Add Photo</span>
+                  </div>
+                </div>
+
                 <div className="grid grid-cols-2 gap-6 max-w-md mx-auto">
                   <div className="space-y-3">
+                    <Label className="text-white/70 ml-1">First Name</Label>
+                    <Input defaultValue="Lakshay" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                  </div>
+                  <div className="space-y-3">
+                    <Label className="text-white/70 ml-1">Last Name</Label>
+                    <Input defaultValue="Sharma" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                  </div>
+                  <div className="space-y-3">
                     <Label className="text-white/70 ml-1">Gender</Label>
-                    <select defaultValue="" className="flex h-12 w-full items-center justify-between rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-primary disabled:cursor-not-allowed disabled:opacity-50 appearance-none">
+                    <select defaultValue="" className="flex h-14 w-full items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-primary appearance-none">
                       <option value="" disabled>Select...</option>
                       <option value="male" className="bg-zinc-900">Male</option>
                       <option value="female" className="bg-zinc-900">Female</option>
                     </select>
                   </div>
                   <div className="space-y-3">
-                    <Label className="text-white/70 ml-1">Height (cm)</Label>
-                    <Input type="number" placeholder="175" className="h-12 rounded-xl bg-white/5 border-white/10 text-white placeholder:text-white/30 focus-visible:ring-primary" />
-                  </div>
-                  <div className="col-span-2 space-y-3">
                     <Label className="text-white/70 ml-1">Date of Birth</Label>
-                    <Input type="date" className="h-12 rounded-xl bg-white/5 border-white/10 text-white focus-visible:ring-primary [&::-webkit-calendar-picker-indicator]:filter [&::-webkit-calendar-picker-indicator]:invert" />
+                    <Input type="date" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white focus:outline-none focus:ring-1 focus:ring-primary [&::-webkit-calendar-picker-indicator]:filter [&::-webkit-calendar-picker-indicator]:invert" />
                   </div>
                 </div>
               </div>
             )}
 
+            {/* Step 2: Location */}
             {currentStep === 2 && (
-              <div className="space-y-8">
-                <div className="text-center space-y-2 mb-10">
+              <div className="space-y-10">
+                <div className="text-center space-y-3 mb-12">
                   <h2 className="font-playfair text-4xl font-medium">Location</h2>
-                  <p className="text-white/50">Where in the world are you based?</p>
+                  <p className="text-white/50">Where are you currently based?</p>
                 </div>
+                
+                <div className="w-full max-w-md mx-auto h-40 rounded-3xl bg-white/5 border border-white/10 flex items-center justify-center mb-10 overflow-hidden relative group cursor-pointer">
+                  <MapPin className="w-8 h-8 text-white/20 absolute group-hover:scale-125 group-hover:text-primary transition-all duration-500" />
+                  <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center opacity-10 group-hover:opacity-20 transition-opacity" />
+                  <span className="relative z-10 text-sm font-medium text-white/50 mt-16 group-hover:text-white transition-colors">Detect Current Location</span>
+                </div>
+
                 <div className="space-y-6 max-w-md mx-auto">
                   <div className="space-y-3">
                     <Label className="text-white/70 ml-1">Country</Label>
-                    <Input placeholder="e.g. United States, India, UK" className="h-12 rounded-xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                    <Input placeholder="e.g. United States" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
                   </div>
-                  <div className="space-y-3">
-                    <Label className="text-white/70 ml-1">City</Label>
-                    <Input placeholder="e.g. New York, Mumbai, London" className="h-12 rounded-xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="space-y-3">
+                      <Label className="text-white/70 ml-1">State / Region</Label>
+                      <Input placeholder="e.g. California" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                    </div>
+                    <div className="space-y-3">
+                      <Label className="text-white/70 ml-1">City</Label>
+                      <Input placeholder="e.g. San Francisco" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                    </div>
                   </div>
                 </div>
               </div>
             )}
 
+            {/* Step 3: Education & Career */}
             {currentStep === 3 && (
-              <div className="space-y-8">
-                <div className="text-center space-y-2 mb-10">
-                  <h2 className="font-playfair text-4xl font-medium">Your Calling</h2>
-                  <p className="text-white/50">What do you do, and what are your roots?</p>
+              <div className="space-y-10">
+                <div className="text-center space-y-3 mb-12">
+                  <h2 className="font-playfair text-4xl font-medium">Education & Career</h2>
+                  <p className="text-white/50">Your academic and professional journey.</p>
                 </div>
                 <div className="space-y-6 max-w-md mx-auto">
                   <div className="space-y-3">
-                    <Label className="text-white/70 ml-1">Profession</Label>
-                    <Input placeholder="e.g. Software Architect, Surgeon, CEO" className="h-12 rounded-xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                    <Label className="text-white/70 ml-1">Highest Qualification</Label>
+                    <Input placeholder="e.g. Masters in Computer Science" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
                   </div>
                   <div className="space-y-3">
-                    <Label className="text-white/70 ml-1">Religion / Community</Label>
-                    <Input placeholder="e.g. Hindu, Christian, Muslim, None" className="h-12 rounded-xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                    <Label className="text-white/70 ml-1">University</Label>
+                    <Input placeholder="e.g. Stanford University" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                  </div>
+                  <div className="space-y-3">
+                    <Label className="text-white/70 ml-1">Occupation</Label>
+                    <Input placeholder="e.g. Lead Product Designer" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                  </div>
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="space-y-3">
+                      <Label className="text-white/70 ml-1">Company</Label>
+                      <Input placeholder="e.g. Apple" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                    </div>
+                    <div className="space-y-3">
+                      <Label className="text-white/70 ml-1">Income Range</Label>
+                      <select defaultValue="" className="flex h-14 w-full items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-primary appearance-none">
+                        <option value="" disabled>Select...</option>
+                        <option value="1" className="bg-zinc-900">Prefer not to say</option>
+                        <option value="2" className="bg-zinc-900">$100k - $250k</option>
+                        <option value="3" className="bg-zinc-900">$250k - $500k</option>
+                        <option value="4" className="bg-zinc-900">$500k+</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
               </div>
             )}
 
+            {/* Step 4: Religion & Culture */}
             {currentStep === 4 && (
-              <div className="space-y-8">
-                <div className="text-center space-y-2 mb-10">
-                  <h2 className="font-playfair text-4xl font-medium">Your Story</h2>
-                  <p className="text-white/50">In a few sentences, describe yourself.</p>
+              <div className="space-y-10">
+                <div className="text-center space-y-3 mb-12">
+                  <h2 className="font-playfair text-4xl font-medium">Religion & Culture</h2>
+                  <p className="text-white/50">Your cultural background and roots.</p>
                 </div>
-                <div className="space-y-6 max-w-lg mx-auto">
+                <div className="space-y-6 max-w-md mx-auto">
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="space-y-3">
+                      <Label className="text-white/70 ml-1">Religion</Label>
+                      <Input placeholder="e.g. Hindu" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                    </div>
+                    <div className="space-y-3">
+                      <Label className="text-white/70 ml-1">Community / Caste</Label>
+                      <Input placeholder="e.g. Brahmin (Optional)" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                    </div>
+                  </div>
                   <div className="space-y-3">
-                    <textarea 
-                      placeholder="I am passionate about..." 
-                      className="w-full h-40 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-white/30 p-4 focus:outline-none focus:ring-1 focus:ring-primary resize-none"
-                    />
+                    <Label className="text-white/70 ml-1">Mother Tongue</Label>
+                    <Input placeholder="e.g. Hindi, English" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
                   </div>
                 </div>
               </div>
             )}
 
+            {/* Step 5: Family */}
             {currentStep === 5 && (
-              <div className="text-center space-y-6">
-                <div className="w-24 h-24 rounded-full bg-primary/20 border border-primary/50 mx-auto flex items-center justify-center mb-6">
-                  <svg className="w-10 h-10 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 13l4 4L19 7" />
-                  </svg>
+              <div className="space-y-10">
+                <div className="text-center space-y-3 mb-12">
+                  <h2 className="font-playfair text-4xl font-medium">Family</h2>
+                  <p className="text-white/50">A brief overview of your family.</p>
                 </div>
-                <h1 className="font-playfair text-5xl font-medium tracking-tight">
-                  Profile Complete
-                </h1>
-                <p className="text-lg text-white/60 max-w-lg mx-auto">
-                  Your details have been securely encrypted and saved. The curation committee will review your application shortly.
-                </p>
-                <div className="pt-8">
-                  <Button onClick={nextStep} size="lg" className="px-12 text-md h-14 rounded-full">
+                
+                <div className="space-y-6 max-w-md mx-auto">
+                  <div className="space-y-3">
+                    <Label className="text-white/70 ml-1">Parents' Occupation</Label>
+                    <Input placeholder="e.g. Father is a Doctor, Mother is a Teacher" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                  </div>
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="space-y-3">
+                      <Label className="text-white/70 ml-1">Family Type</Label>
+                      <select defaultValue="" className="flex h-14 w-full items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 text-white placeholder:text-white/30 appearance-none">
+                        <option value="" disabled>Select...</option>
+                        <option value="nuclear" className="bg-zinc-900">Nuclear</option>
+                        <option value="joint" className="bg-zinc-900">Joint</option>
+                      </select>
+                    </div>
+                    <div className="space-y-3">
+                      <Label className="text-white/70 ml-1">Family Values</Label>
+                      <select defaultValue="" className="flex h-14 w-full items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 text-white placeholder:text-white/30 appearance-none">
+                        <option value="" disabled>Select...</option>
+                        <option value="orthodox" className="bg-zinc-900">Orthodox</option>
+                        <option value="traditional" className="bg-zinc-900">Traditional</option>
+                        <option value="moderate" className="bg-zinc-900">Moderate</option>
+                        <option value="liberal" className="bg-zinc-900">Liberal</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="space-y-3">
+                    <Label className="text-white/70 ml-1">Siblings</Label>
+                    <Input placeholder="e.g. 1 Brother, 1 Sister" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Step 6: Lifestyle */}
+            {currentStep === 6 && (
+              <div className="space-y-10">
+                <div className="text-center space-y-3 mb-12">
+                  <h2 className="font-playfair text-4xl font-medium">Lifestyle</h2>
+                  <p className="text-white/50">Select all that apply to you.</p>
+                </div>
+                
+                <div className="max-w-xl mx-auto space-y-8">
+                  <div className="space-y-4">
+                    <Label className="text-white/70 ml-1 block">Diet</Label>
+                    <div className="flex flex-wrap gap-3">
+                      {["Vegetarian", "Non-Vegetarian", "Vegan", "Pescatarian"].map(item => (
+                        <button
+                          key={item}
+                          onClick={() => toggleChip("lifestyle", item)}
+                          className={`px-6 py-3 rounded-full text-sm font-medium transition-all ${
+                            selections.lifestyle.includes(item) 
+                              ? "bg-primary text-primary-foreground shadow-[0_0_15px_rgba(232,185,108,0.4)]" 
+                              : "bg-white/5 border border-white/10 text-white/70 hover:bg-white/10 hover:text-white"
+                          }`}
+                        >
+                          {item}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <Label className="text-white/70 ml-1 block">Habits</Label>
+                    <div className="flex flex-wrap gap-3">
+                      {["Never Smoke", "Occasional Smoker", "Never Drink", "Social Drinker", "Fitness Enthusiast", "Pet Lover"].map(item => (
+                        <button
+                          key={item}
+                          onClick={() => toggleChip("lifestyle", item)}
+                          className={`px-6 py-3 rounded-full text-sm font-medium transition-all ${
+                            selections.lifestyle.includes(item) 
+                              ? "bg-primary text-primary-foreground shadow-[0_0_15px_rgba(232,185,108,0.4)]" 
+                              : "bg-white/5 border border-white/10 text-white/70 hover:bg-white/10 hover:text-white"
+                          }`}
+                        >
+                          {item}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Step 7: Preferences */}
+            {currentStep === 7 && (
+              <div className="space-y-10">
+                <div className="text-center space-y-3 mb-12">
+                  <h2 className="font-playfair text-4xl font-medium">Partner Preferences</h2>
+                  <p className="text-white/50">What are you looking for in a partner?</p>
+                </div>
+                
+                <div className="max-w-md mx-auto space-y-12">
+                  <div className="space-y-6">
+                    <div className="flex justify-between items-end">
+                      <Label className="text-white/70 ml-1">Age Range</Label>
+                      <span className="text-primary font-medium">25 - 32 years</span>
+                    </div>
+                    <Slider defaultValue={[25, 32]} max={60} min={18} step={1} className="w-full" />
+                  </div>
+                  
+                  <div className="space-y-6">
+                    <div className="flex justify-between items-end">
+                      <Label className="text-white/70 ml-1">Height Range</Label>
+                      <span className="text-primary font-medium">160cm - 180cm</span>
+                    </div>
+                    <Slider defaultValue={[160, 180]} max={220} min={140} step={1} className="w-full" />
+                  </div>
+
+                  <div className="space-y-4 pt-4">
+                    <Label className="text-white/70 ml-1 block">Preferred Religions</Label>
+                    <div className="flex flex-wrap gap-3">
+                      {["Open to All", "Hindu", "Christian", "Sikh", "Jain"].map(item => (
+                        <button
+                          key={item}
+                          onClick={() => toggleChip("prefReligion", item)}
+                          className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${
+                            selections.prefReligion.includes(item) 
+                              ? "bg-white text-black" 
+                              : "bg-white/5 border border-white/10 text-white/70 hover:bg-white/10 hover:text-white"
+                          }`}
+                        >
+                          {item}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Step 8: Photos */}
+            {currentStep === 8 && (
+              <div className="space-y-10">
+                <div className="text-center space-y-3 mb-12">
+                  <h2 className="font-playfair text-4xl font-medium">Gallery</h2>
+                  <p className="text-white/50">Upload high-quality, clear photos of yourself.</p>
+                </div>
+                
+                <div className="max-w-2xl mx-auto grid grid-cols-3 gap-4">
+                  {/* Primary Photo Slot */}
+                  <div className="col-span-2 row-span-2 relative rounded-3xl border-2 border-dashed border-primary/50 bg-primary/5 flex flex-col items-center justify-center p-6 cursor-pointer hover:bg-primary/10 transition-colors aspect-square md:aspect-auto">
+                    <UploadCloud className="w-10 h-10 text-primary mb-4" />
+                    <p className="text-white font-medium text-lg">Primary Photo</p>
+                    <p className="text-white/50 text-sm mt-2 text-center">Drag & drop or click to upload<br/>(Max 5MB)</p>
+                  </div>
+                  
+                  {/* Additional Slots */}
+                  {[1, 2].map(i => (
+                    <div key={i} className="relative rounded-3xl border border-dashed border-white/20 bg-white/5 flex flex-col items-center justify-center cursor-pointer hover:bg-white/10 transition-colors aspect-square">
+                      <Camera className="w-6 h-6 text-white/40 mb-2" />
+                      <span className="text-white/40 text-xs">Add Photo</span>
+                    </div>
+                  ))}
+                  {[3, 4, 5].map(i => (
+                    <div key={i} className="relative rounded-3xl border border-dashed border-white/20 bg-white/5 flex flex-col items-center justify-center cursor-pointer hover:bg-white/10 transition-colors aspect-square">
+                      <Camera className="w-6 h-6 text-white/40 mb-2" />
+                      <span className="text-white/40 text-xs">Add Photo</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Step 9: Verification */}
+            {currentStep === 9 && (
+              <div className="space-y-10">
+                <div className="text-center space-y-3 mb-12">
+                  <h2 className="font-playfair text-4xl font-medium">Verification</h2>
+                  <p className="text-white/50">Vivaha is a trusted community. We require basic identity verification.</p>
+                </div>
+                
+                <div className="max-w-md mx-auto space-y-6">
+                  <div className="glass rounded-3xl p-6 border-white/10 flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                      <Camera className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-white font-medium mb-1">Selfie Verification</h3>
+                      <p className="text-white/50 text-sm mb-4">Take a quick selfie to prove you're a real person. It won't be shown on your profile.</p>
+                      <Button variant="outline" className="w-full rounded-full border-white/20 text-white hover:bg-white/10">Start Camera</Button>
+                    </div>
+                  </div>
+                  
+                  <div className="glass rounded-3xl p-6 border-white/10 flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                      <ShieldCheck className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-white font-medium mb-1">Government ID</h3>
+                      <p className="text-white/50 text-sm mb-4">Upload a secure copy of your Passport, Driver's License, or National ID.</p>
+                      <Button variant="outline" className="w-full rounded-full border-white/20 text-white hover:bg-white/10">Upload Document</Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Step 10: Review */}
+            {currentStep === 10 && (
+              <div className="space-y-10">
+                <div className="text-center space-y-3 mb-12">
+                  <h2 className="font-playfair text-4xl font-medium">Review Profile</h2>
+                  <p className="text-white/50">Your profile is 98% complete.</p>
+                </div>
+                
+                <div className="max-w-lg mx-auto glass rounded-[2.5rem] p-8 border-white/10 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent pointer-events-none" />
+                  
+                  <div className="flex items-center gap-6 mb-8 relative z-10">
+                    <div className="w-24 h-24 rounded-full bg-zinc-800 shrink-0 border-2 border-primary/50 overflow-hidden">
+                      <div className="w-full h-full bg-[url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop')] bg-cover" />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-playfair font-medium text-white flex items-center gap-2">
+                        Lakshay Sharma
+                        <CheckCircle2 className="w-5 h-5 text-primary" />
+                      </h3>
+                      <p className="text-white/60">28 • San Francisco, CA</p>
+                      <p className="text-primary mt-1 text-sm font-medium">Lead Product Designer at Apple</p>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4 relative z-10 border-t border-white/10 pt-6">
+                    <div className="flex justify-between">
+                      <span className="text-white/50 text-sm">Religion</span>
+                      <span className="text-white text-sm font-medium">Hindu</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-white/50 text-sm">Height</span>
+                      <span className="text-white text-sm font-medium">175 cm</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-white/50 text-sm">Diet</span>
+                      <span className="text-white text-sm font-medium">Vegetarian</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Step 11: Completion */}
+            {currentStep === 11 && (
+              <div className="text-center space-y-8 flex flex-col items-center justify-center h-[60vh]">
+                <motion.div
+                  initial={{ scale: 0, rotateZ: -180 }}
+                  animate={{ scale: 1, rotateZ: 0 }}
+                  transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.2 }}
+                  className="w-24 h-24 bg-primary rounded-full flex items-center justify-center mb-4 shadow-[0_0_80px_rgba(232,185,108,0.6)] relative"
+                >
+                  <CheckCircle2 className="w-12 h-12 text-black" />
+                  
+                  {/* Celebration Particles */}
+                  {[...Array(6)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ scale: 0, x: 0, y: 0 }}
+                      animate={{ 
+                        scale: [0, 1, 0], 
+                        x: Math.cos((i * 60) * (Math.PI / 180)) * 100, 
+                        y: Math.sin((i * 60) * (Math.PI / 180)) * 100 
+                      }}
+                      transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+                      className="absolute w-3 h-3 bg-white rounded-full"
+                    />
+                  ))}
+                </motion.div>
+                <div className="space-y-4">
+                  <h1 className="font-playfair text-5xl md:text-6xl font-medium tracking-tight">
+                    Application Submitted
+                  </h1>
+                  <p className="text-lg text-white/60 max-w-lg mx-auto leading-relaxed">
+                    Your profile is now live in the verification queue. Welcome to the world's most exclusive matrimony platform.
+                  </p>
+                </div>
+                <div className="pt-8 w-full max-w-xs">
+                  <Button onClick={() => router.push('/dashboard')} size="lg" className="w-full h-14 rounded-full text-md shadow-2xl shadow-primary/20">
                     Enter Dashboard
                   </Button>
                 </div>
               </div>
             )}
+
           </motion.div>
         </AnimatePresence>
 
-        {/* Navigation Controls */}
+        {/* Global Navigation Controls */}
         {currentStep > 0 && currentStep < STEPS.length - 1 && (
           <motion.div 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            className="absolute bottom-[-100px] w-full flex justify-between items-center px-4 max-w-lg"
+            initial={{ opacity: 0, y: 20 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            className="fixed bottom-8 w-full flex justify-between items-center px-6 md:px-12 max-w-4xl left-1/2 -translate-x-1/2 z-50 bg-black/50 backdrop-blur-md py-4 rounded-full border border-white/10"
           >
-            <Button variant="ghost" onClick={prevStep} className="text-white/50 hover:text-white hover:bg-white/10">
+            <Button variant="ghost" onClick={prevStep} className="text-white/50 hover:text-white hover:bg-white/10 px-6 rounded-full">
               Back
             </Button>
-            <Button onClick={nextStep} className="rounded-full px-8">
+            
+            <div className="text-sm font-medium text-white/40 hidden md:block">
+              Step {currentStep} of {STEPS.length - 2} • <span className="text-white/80">{STEPS[currentStep].title}</span>
+            </div>
+
+            <Button onClick={nextStep} className="rounded-full px-8 shadow-[0_0_20px_rgba(232,185,108,0.2)]">
               Continue
             </Button>
           </motion.div>
