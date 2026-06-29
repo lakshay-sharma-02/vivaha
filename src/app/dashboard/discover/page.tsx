@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { 
   Filter, Search, MapPin, Briefcase, GraduationCap, 
   Heart, X, Check, Info, ShieldCheck, ChevronDown, 
-  Lock, AtSign, Phone, Crown, Sparkles, AlertCircle
+  Lock, AtSign, Phone, Crown, Sparkles, AlertCircle, CheckCircle2
 } from "lucide-react"
 
 export default function DiscoverPage() {
