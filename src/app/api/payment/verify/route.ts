@@ -50,8 +50,8 @@ export async function POST(req: Request) {
       .insert({
         profile_id: user.id,
         tier: 'premium',
-        provider_subscription_id: razorpay_payment_id, // Store payment ID for tracing
-        status: 'active',
+        gateway_customer_id: razorpay_payment_id, 
+        is_active: true,
         ends_at: endsAt.toISOString(),
       })
 
