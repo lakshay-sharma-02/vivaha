@@ -5,10 +5,10 @@ import { ShieldCheck, LockKeyhole } from "lucide-react"
 
 export function SceneTrust({ progress }: { progress: MotionValue<number> }) {
   
-  // Scene 8: Privacy Vault (0.8 to 0.95)
-  const vaultOpacity = useTransform(progress, [0.75, 0.8, 0.9, 0.95], [0, 1, 1, 0])
-  const shieldScale = useTransform(progress, [0.8, 0.9], [0.5, 1.2])
-  const particlesY = useTransform(progress, [0.8, 0.95], [0, -200])
+  // Scene 8: Privacy Vault (0.84 to 0.98)
+  const vaultOpacity = useTransform(progress, [0.84, 0.88, 0.94, 0.98], [0, 1, 1, 0])
+  const shieldScale = useTransform(progress, [0.84, 0.90], [0.5, 1.2])
+  const particlesY = useTransform(progress, [0.84, 0.98], [0, -200])
 
   return (
     <motion.div style={{ opacity: vaultOpacity }} className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10">

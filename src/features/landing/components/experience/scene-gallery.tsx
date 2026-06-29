@@ -4,15 +4,15 @@ import { motion, MotionValue, useTransform } from "framer-motion"
 
 export function SceneGallery({ progress }: { progress: MotionValue<number> }) {
   
-  // Scene 6: Floating Gallery (0.65 to 0.8)
-  const galleryOpacity = useTransform(progress, [0.6, 0.65, 0.8, 0.85], [0, 1, 1, 0])
-  const galleryScale = useTransform(progress, [0.6, 0.7, 0.85], [0.8, 1, 1.2])
+  // Scene 6: Floating Gallery (0.64 to 0.86)
+  const galleryOpacity = useTransform(progress, [0.64, 0.68, 0.82, 0.86], [0, 1, 1, 0])
+  const galleryScale = useTransform(progress, [0.64, 0.75, 0.86], [0.8, 1, 1.2])
 
   // Sub-transforms for parallax shifting based on progress range
-  const shiftY1 = useTransform(progress, [0.6, 0.85], [200, -200])
-  const shiftY2 = useTransform(progress, [0.6, 0.85], [-150, 300])
-  const shiftY3 = useTransform(progress, [0.6, 0.85], [300, -100])
-  const shiftY4 = useTransform(progress, [0.6, 0.85], [-50, 150])
+  const shiftY1 = useTransform(progress, [0.64, 0.86], [200, -200])
+  const shiftY2 = useTransform(progress, [0.64, 0.86], [-150, 300])
+  const shiftY3 = useTransform(progress, [0.64, 0.86], [300, -100])
+  const shiftY4 = useTransform(progress, [0.64, 0.86], [-50, 150])
 
   return (
     <motion.div style={{ opacity: galleryOpacity, scale: galleryScale }} className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">

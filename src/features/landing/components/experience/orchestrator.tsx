@@ -31,7 +31,7 @@ export function Orchestrator() {
   }, [])
 
   return (
-    <div ref={containerRef} className="relative h-[1200vh] w-full bg-black text-white">
+    <div ref={containerRef} className="relative h-[3000vh] w-full bg-black text-white">
       {/* 
         This is the single sticky viewport. 
         All scenes render here simultaneously as absolute overlapping layers.

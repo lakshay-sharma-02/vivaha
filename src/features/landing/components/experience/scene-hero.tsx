@@ -3,25 +3,25 @@
 import { motion, MotionValue, useTransform } from "framer-motion"
 
 export function SceneHero({ progress }: { progress: MotionValue<number> }) {
-  // Scene 1: Arrival & Logo Dissolve (0.0 to 0.1)
-  const arrivalOpacity = useTransform(progress, [0, 0.05, 0.1], [1, 1, 0])
-  const arrivalScale = useTransform(progress, [0, 0.1], [1, 1.5])
-  const arrivalBlur = useTransform(progress, [0, 0.1], ["blur(0px)", "blur(30px)"])
+  // Scene 1: Arrival & Logo Dissolve (0.0 to 0.12)
+  const arrivalOpacity = useTransform(progress, [0, 0.08, 0.12], [1, 1, 0])
+  const arrivalScale = useTransform(progress, [0, 0.12], [1, 1.5])
+  const arrivalBlur = useTransform(progress, [0, 0.12], ["blur(0px)", "blur(30px)"])
 
-  // Scene 2: 3D Floating Cards Orbit (0.05 to 0.25)
-  const cardContainerOpacity = useTransform(progress, [0.05, 0.1, 0.25, 0.3], [0, 1, 1, 0])
+  // Scene 2: 3D Floating Cards Orbit (0.10 to 0.32)
+  const cardContainerOpacity = useTransform(progress, [0.10, 0.15, 0.28, 0.32], [0, 1, 1, 0])
   
-  const card1X = useTransform(progress, [0.1, 0.2, 0.3], [100, -150, -400])
-  const card1Y = useTransform(progress, [0.1, 0.2, 0.3], [50, -50, -100])
-  const card1RotateZ = useTransform(progress, [0.1, 0.2, 0.3], [-10, 0, -20])
+  const card1X = useTransform(progress, [0.10, 0.20, 0.32], [100, -150, -400])
+  const card1Y = useTransform(progress, [0.10, 0.20, 0.32], [50, -50, -100])
+  const card1RotateZ = useTransform(progress, [0.10, 0.20, 0.32], [-10, 0, -20])
 
-  const card2X = useTransform(progress, [0.1, 0.2, 0.3], [-100, 150, 400])
-  const card2Y = useTransform(progress, [0.1, 0.2, 0.3], [-50, 50, 100])
-  const card2RotateZ = useTransform(progress, [0.1, 0.2, 0.3], [10, 0, 20])
+  const card2X = useTransform(progress, [0.10, 0.20, 0.32], [-100, 150, 400])
+  const card2Y = useTransform(progress, [0.10, 0.20, 0.32], [-50, 50, 100])
+  const card2RotateZ = useTransform(progress, [0.10, 0.20, 0.32], [10, 0, 20])
 
-  // Scene 3: Connection Nodes (0.15 to 0.3)
-  const connectionOpacity = useTransform(progress, [0.15, 0.2, 0.28, 0.32], [0, 1, 1, 0])
-  const linePathLength = useTransform(progress, [0.15, 0.25], [0, 1])
+  // Scene 3: Connection Nodes (0.18 to 0.32)
+  const connectionOpacity = useTransform(progress, [0.18, 0.22, 0.28, 0.32], [0, 1, 1, 0])
+  const linePathLength = useTransform(progress, [0.18, 0.25], [0, 1])
 
   return (
     <>

@@ -5,10 +5,10 @@ import { Button } from "@/shared/ui/button/button"
 
 export function SceneFinale({ progress }: { progress: MotionValue<number> }) {
   
-  // Scene 10 & 11: The Luxury Invitation (0.9 to 1.0)
-  const finaleOpacity = useTransform(progress, [0.85, 0.95, 1], [0, 1, 1])
-  const cardScale = useTransform(progress, [0.85, 1], [0.9, 1])
-  const foilOpacity = useTransform(progress, [0.9, 1], [0, 1])
+  // Scene 10 & 11: The Luxury Invitation (0.95 to 1.0)
+  const finaleOpacity = useTransform(progress, [0.95, 0.98, 1], [0, 1, 1])
+  const cardScale = useTransform(progress, [0.95, 1], [0.9, 1])
+  const foilOpacity = useTransform(progress, [0.96, 1], [0, 1])
 
   return (
     <motion.div style={{ opacity: finaleOpacity }} className="absolute inset-0 flex items-center justify-center pointer-events-auto z-50">

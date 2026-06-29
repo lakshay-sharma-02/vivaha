@@ -5,15 +5,15 @@ import { CheckCircle2, ScanFace, FileSignature } from "lucide-react"
 
 export function SceneIdentity({ progress }: { progress: MotionValue<number> }) {
   
-  // Scene 4: Build Identity (0.25 to 0.45)
-  const buildOpacity = useTransform(progress, [0.25, 0.3, 0.45, 0.5], [0, 1, 1, 0])
-  const buildY = useTransform(progress, [0.25, 0.35], [100, 0])
-  const profileCompletion = useTransform(progress, [0.3, 0.45], [0, 100])
+  // Scene 4: Build Identity (0.28 to 0.50)
+  const buildOpacity = useTransform(progress, [0.30, 0.34, 0.46, 0.50], [0, 1, 1, 0])
+  const buildY = useTransform(progress, [0.30, 0.38], [100, 0])
+  const profileCompletion = useTransform(progress, [0.34, 0.46], [0, 100])
 
-  // Scene 5: Verification (0.45 to 0.65)
-  const verifyOpacity = useTransform(progress, [0.45, 0.5, 0.65, 0.7], [0, 1, 1, 0])
-  const verifyScale = useTransform(progress, [0.45, 0.5], [0.8, 1])
-  const scanPosition = useTransform(progress, [0.5, 0.6], ["0%", "100%"])
+  // Scene 5: Verification (0.48 to 0.66)
+  const verifyOpacity = useTransform(progress, [0.48, 0.52, 0.62, 0.66], [0, 1, 1, 0])
+  const verifyScale = useTransform(progress, [0.48, 0.52], [0.8, 1])
+  const scanPosition = useTransform(progress, [0.53, 0.58], ["0%", "100%"])
 
   return (
     <>
@@ -64,7 +64,7 @@ export function SceneIdentity({ progress }: { progress: MotionValue<number> }) {
           <div className="w-12 md:w-16 h-[1px] bg-zinc-800 relative">
             <motion.div 
               className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-[2px] bg-amber-500/50 shadow-[0_0_10px_rgba(245,158,11,0.5)]" 
-              style={{ scaleX: useTransform(progress, [0.5, 0.55], [0, 1]), transformOrigin: "left" }} 
+              style={{ scaleX: useTransform(progress, [0.50, 0.53], [0, 1]), transformOrigin: "left" }} 
             />
           </div>
 
@@ -82,22 +82,22 @@ export function SceneIdentity({ progress }: { progress: MotionValue<number> }) {
           <div className="w-12 md:w-16 h-[1px] bg-zinc-800 relative">
             <motion.div 
               className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-[2px] bg-green-500/50 shadow-[0_0_10px_rgba(34,197,94,0.5)]" 
-              style={{ scaleX: useTransform(progress, [0.55, 0.6], [0, 1]), transformOrigin: "left" }} 
+              style={{ scaleX: useTransform(progress, [0.58, 0.61], [0, 1]), transformOrigin: "left" }} 
             />
           </div>
 
           <div className="flex flex-col items-center gap-4">
             <motion.div 
               style={{ 
-                scale: useTransform(progress, [0.6, 0.65], [0, 1]),
-                opacity: useTransform(progress, [0.6, 0.65], [0, 1])
+                scale: useTransform(progress, [0.61, 0.63], [0, 1]),
+                opacity: useTransform(progress, [0.61, 0.63], [0, 1])
               }}
               className="w-24 h-24 rounded-full bg-green-500/10 border border-green-500/30 flex items-center justify-center shadow-[0_0_30px_rgba(34,197,94,0.2)]"
             >
               <CheckCircle2 className="w-10 h-10 text-green-500" />
             </motion.div>
             <motion.span 
-              style={{ opacity: useTransform(progress, [0.62, 0.65], [0, 1]) }}
+              style={{ opacity: useTransform(progress, [0.62, 0.64], [0, 1]) }}
               className="text-[10px] md:text-xs uppercase tracking-widest text-green-500"
             >
               Verified
