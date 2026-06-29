@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-import { useScroll } from "framer-motion"
+import { useScroll, useSpring } from "framer-motion"
 import { SceneHero } from "./scene-hero"
 import { SceneIdentity } from "./scene-identity"
 import { SceneGallery } from "./scene-gallery"
@@ -14,6 +14,15 @@ export function Orchestrator() {
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"]
+  })
+
+  // Apply a buttery smooth physics spring to the raw scroll value
+  // This completely eliminates jagged mouse-wheel scrolling
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 40,
+    damping: 15,
+    mass: 0.2,
+    restDelta: 0.0001
   })
 
   // Prevent default body scrolling behavior to ensure a smooth cinematic track
@@ -46,11 +55,11 @@ export function Orchestrator() {
           ))}
         </div>
 
-        <SceneHero progress={scrollYProgress} />
-        <SceneIdentity progress={scrollYProgress} />
-        <SceneGallery progress={scrollYProgress} />
-        <SceneTrust progress={scrollYProgress} />
-        <SceneFinale progress={scrollYProgress} />
+        <SceneHero progress={smoothProgress} />
+        <SceneIdentity progress={smoothProgress} />
+        <SceneGallery progress={smoothProgress} />
+        <SceneTrust progress={smoothProgress} />
+        <SceneFinale progress={smoothProgress} />
 
       </div>
     </div>
