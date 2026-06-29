@@ -1,3 +1,6 @@
+import Link from "next/link"
+import { Button } from "@/shared/ui/button/button"
+
 export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
@@ -5,10 +8,15 @@ export default function DashboardPage() {
         <h1 className="text-4xl font-playfair font-semibold mb-4 text-foreground">
           Welcome to the Inner Circle
         </h1>
-        <p className="text-muted-foreground">
+        <p className="text-muted-foreground mb-8">
           Your application is currently under review by the Vivaha curation committee.
           We will notify you via email once your profile has been approved for full access.
         </p>
+        <Link href="/onboarding">
+          <Button size="lg" className="rounded-full px-8">
+            Complete Your Profile
+          </Button>
+        </Link>
       </div>
     </div>
   )
