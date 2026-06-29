@@ -3,20 +3,89 @@
 import * as React from "react"
 import { motion } from "framer-motion"
 import { Crown, CheckCircle2, Star, ShieldCheck, ArrowRight } from "lucide-react"
+import Script from "next/script"
+
+declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}
 
 export default function MembershipClient() {
   const [isProcessing, setIsProcessing] = React.useState(false)
 
-  const handleUpgrade = () => {
+  const handleUpgrade = async () => {
     setIsProcessing(true)
-    // Placeholder for Razorpay integration
-    setTimeout(() => {
-      alert("Razorpay integration will open here!")
+    
+    try {
+      // 1. Create order on our backend
+      const res = await fetch("/api/payment/create-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ planId: "premium_lifetime" })
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to create order")
+      }
+
+      // 2. Initialize Razorpay Options
+      const options = {
+        key: data.keyId, 
+        amount: data.amount,
+        currency: data.currency,
+        name: "Vivaha Premium",
+        description: "Lifetime Premium Matchmaking Access",
+        order_id: data.orderId,
+        handler: async function (response: any) {
+          // 3. Verify payment on our backend
+          const verifyRes = await fetch("/api/payment/verify", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_signature: response.razorpay_signature
+            })
+          })
+          
+          const verifyData = await verifyRes.json()
+          if (verifyRes.ok) {
+            alert("Welcome to Vivaha Premium!")
+            window.location.reload()
+          } else {
+            alert("Verification Failed: " + verifyData.error)
+          }
+        },
+        prefill: {
+          name: "Vivaha Member", // Could pull from auth context
+          email: "member@example.com",
+          contact: "9999999999"
+        },
+        theme: {
+          color: "#E8B96C" // Our primary brand color
+        }
+      }
+
+      const rzp = new window.Razorpay(options)
+      rzp.on("payment.failed", function (response: any) {
+        alert("Payment failed: " + response.error.description)
+      })
+      
+      rzp.open()
+      
+    } catch (err: any) {
+      alert("Error: " + err.message)
+    } finally {
       setIsProcessing(false)
-    }, 1500)
+    }
   }
 
   return (
+    <>
+    <Script src="https://checkout.razorpay.com/v1/checkout.js" />
     <div className="space-y-12 pb-24 max-w-5xl">
       <section className="pt-8 text-center max-w-2xl mx-auto">
         <motion.div 
@@ -118,6 +187,7 @@ export default function MembershipClient() {
 
       </div>
     </div>
+    </>
   )
 }
 
