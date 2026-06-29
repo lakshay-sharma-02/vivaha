@@ -4,12 +4,19 @@ import * as React from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { 
   Filter, Search, MapPin, Briefcase, GraduationCap, 
-  Heart, X, Check, Info, ShieldCheck, ChevronDown
+  Heart, X, Check, Info, ShieldCheck, ChevronDown, 
+  Lock, Instagram, Phone, Crown, Sparkles, AlertCircle
 } from "lucide-react"
 
 export default function DiscoverPage() {
-  const [activeProfile, setActiveProfile] = React.useState(0)
+  const [activeProfileIndex, setActiveProfileIndex] = React.useState(0)
   const [showFilters, setShowFilters] = React.useState(false)
+  const [selectedProfile, setSelectedProfile] = React.useState<any>(null)
+  
+  // Paywall Logic
+  const [interestsSent, setInterestsSent] = React.useState(0)
+  const [showPaywall, setShowPaywall] = React.useState(false)
+  const [toastMessage, setToastMessage] = React.useState<string | null>(null)
 
   // Dummy Profiles
   const profiles = [
@@ -24,7 +31,9 @@ export default function DiscoverPage() {
       compatibility: 94,
       verified: true,
       image: "bg-gradient-to-tr from-zinc-800 to-zinc-950", // Placeholder
-      tags: ["Vegetarian", "Never Drinks", "Hindu - Brahmin", "Nuclear Family"]
+      tags: ["Vegetarian", "Never Drinks", "Hindu - Brahmin", "Nuclear Family"],
+      family: "Father is a Doctor, Mother is a Homemaker. 1 younger brother.",
+      income: "₹50L - ₹1Cr"
     },
     {
       id: 2,
@@ -37,7 +46,9 @@ export default function DiscoverPage() {
       compatibility: 88,
       verified: true,
       image: "bg-gradient-to-bl from-zinc-800 to-zinc-900", // Placeholder
-      tags: ["Non-Vegetarian", "Occasional Drinker", "Hindu - Rajput", "Joint Family"]
+      tags: ["Non-Vegetarian", "Occasional Drinker", "Hindu - Rajput", "Joint Family"],
+      family: "Both parents are retired civil servants. No siblings.",
+      income: "₹1Cr+"
     },
     {
       id: 3,
@@ -50,19 +61,54 @@ export default function DiscoverPage() {
       compatibility: 82,
       verified: false,
       image: "bg-gradient-to-tl from-zinc-900 to-black", // Placeholder
-      tags: ["Vegan", "Never Smokes", "Hindu - Patel", "Nuclear Family"]
+      tags: ["Vegan", "Never Smokes", "Hindu - Patel", "Nuclear Family"],
+      family: "Business family based in London.",
+      income: "₹20L - ₹50L"
     }
   ]
 
-  const nextProfile = () => {
-    setActiveProfile((prev) => (prev + 1) % profiles.length)
+  const activeProfile = profiles[activeProfileIndex]
+
+  const handleNextProfile = () => {
+    setActiveProfileIndex((prev) => (prev + 1) % profiles.length)
   }
 
-  const profile = profiles[activeProfile]
+  const handleSendInterest = (profileId: number) => {
+    if (interestsSent >= 1) {
+      setShowPaywall(true)
+      return
+    }
+    
+    // Success for first free interest
+    setInterestsSent(prev => prev + 1)
+    setToastMessage("Interest Sent Successfully!")
+    setTimeout(() => setToastMessage(null), 3000)
+    
+    // Move to next profile after sending interest
+    setTimeout(() => {
+      handleNextProfile()
+      setSelectedProfile(null) // Close modal if open
+    }, 600)
+  }
 
   return (
     <div className="h-[calc(100vh-8rem)] lg:h-[calc(100vh-5rem)] flex flex-col relative overflow-hidden">
       
+      {/* Toast Notification */}
+      <AnimatePresence>
+        {toastMessage && (
+          <motion.div
+            initial={{ opacity: 0, y: -20, x: "-50%" }}
+            animate={{ opacity: 1, y: 0, x: "-50%" }}
+            exit={{ opacity: 0, y: -20, x: "-50%" }}
+            className="fixed top-24 left-1/2 z-50 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium shadow-[0_0_20px_rgba(232,185,108,0.4)] flex items-center gap-2"
+          >
+            <CheckCircle2 className="w-5 h-5" />
+            {toastMessage}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Top Action Bar */}
       <div className="flex items-center justify-between py-4 z-20">
         <div className="flex items-center gap-4">
@@ -87,32 +133,32 @@ export default function DiscoverPage() {
         </div>
       </div>
 
-      {/* Main Discover Area */}
+      {/* Main Discover Area (Card Stack) */}
       <div className="flex-1 relative flex items-center justify-center py-4">
-        
         <AnimatePresence mode="wait">
           <motion.div
-            key={profile.id}
+            key={activeProfile.id}
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 1.05, y: -20 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className="w-full max-w-2xl h-full max-h-[800px] bg-white/5 border border-white/10 rounded-[2.5rem] overflow-hidden flex flex-col relative shadow-2xl"
           >
-            {/* Image Section (Top Half) */}
-            <div className={`relative h-[55%] ${profile.image} overflow-hidden`}>
+            {/* Image Section */}
+            <div className={`relative h-[60%] ${activeProfile.image} overflow-hidden cursor-pointer group`} onClick={() => setSelectedProfile(activeProfile)}>
               
-              {/* Top gradient for badges */}
-              <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black/60 to-transparent z-10" />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors z-10" />
               
-              <div className="absolute top-6 left-6 z-20 flex items-center gap-2">
+              <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black/60 to-transparent z-10 pointer-events-none" />
+              
+              <div className="absolute top-6 left-6 z-20 flex items-center gap-2 pointer-events-none">
                 <div className="px-3 py-1.5 bg-black/50 backdrop-blur-md rounded-full border border-white/10 flex items-center gap-1.5">
                   <Sparkles className="w-3.5 h-3.5 text-primary" />
                   <span className="text-[10px] font-bold uppercase tracking-wider text-primary">
-                    {profile.compatibility}% Match
+                    {activeProfile.compatibility}% Match
                   </span>
                 </div>
-                {profile.verified && (
+                {activeProfile.verified && (
                   <div className="px-3 py-1.5 bg-black/50 backdrop-blur-md rounded-full border border-white/10 flex items-center gap-1.5 text-white/80">
                     <ShieldCheck className="w-3.5 h-3.5" />
                     <span className="text-[10px] font-bold uppercase tracking-wider">Verified</span>
@@ -120,71 +166,48 @@ export default function DiscoverPage() {
                 )}
               </div>
 
-              {/* Bottom gradient for text readability */}
-              <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-black via-black/50 to-transparent z-10" />
+              {/* View Profile Indicator */}
+              <div className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="px-6 py-3 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white font-medium flex items-center gap-2 shadow-2xl">
+                  <Info className="w-5 h-5" />
+                  View Full Profile
+                </div>
+              </div>
+
+              <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-black via-black/50 to-transparent z-10 pointer-events-none" />
               
-              <div className="absolute bottom-6 left-6 right-6 z-20">
+              <div className="absolute bottom-6 left-6 right-6 z-20 pointer-events-none">
                 <h2 className="font-playfair text-4xl md:text-5xl font-medium tracking-tight text-white mb-2">
-                  {profile.name}, {profile.age}
+                  {activeProfile.name}, {activeProfile.age}
                 </h2>
                 <div className="flex flex-wrap items-center gap-4 text-sm text-white/70">
-                  <span className="flex items-center gap-1.5"><Briefcase className="w-4 h-4" /> {profile.profession}</span>
-                  <span className="flex items-center gap-1.5"><MapPin className="w-4 h-4" /> {profile.location}</span>
+                  <span className="flex items-center gap-1.5"><Briefcase className="w-4 h-4" /> {activeProfile.profession}</span>
+                  <span className="flex items-center gap-1.5"><MapPin className="w-4 h-4" /> {activeProfile.location}</span>
                 </div>
               </div>
             </div>
 
-            {/* Content Section (Bottom Half) */}
-            <div className="flex-1 bg-black p-6 md:p-8 overflow-y-auto scrollbar-hide space-y-8">
-              
-              <div className="space-y-3">
-                <h3 className="text-sm font-semibold uppercase tracking-widest text-white/30">About</h3>
-                <p className="text-white/80 leading-relaxed text-lg font-light">
-                  "{profile.bio}"
-                </p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <h3 className="text-[10px] font-bold uppercase tracking-widest text-white/30">Education</h3>
-                  <div className="flex items-center gap-2 text-sm text-white/80">
-                    <GraduationCap className="w-4 h-4 text-white/50" />
-                    {profile.education}
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <h3 className="text-[10px] font-bold uppercase tracking-widest text-white/30">Lifestyle & Culture</h3>
-                  <div className="flex flex-wrap gap-2 pt-1">
-                    {profile.tags.map(tag => (
-                      <span key={tag} className="px-2.5 py-1 bg-white/5 border border-white/5 rounded text-xs text-white/60">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
+            {/* Quick Actions (Bottom Half) */}
+            <div className="flex-1 bg-black flex flex-col justify-center px-10 relative">
+              <p className="text-white/60 text-center text-lg italic font-playfair px-4 line-clamp-2">
+                "{activeProfile.bio}"
+              </p>
             </div>
 
-            {/* Action Bar (Fixed Bottom) */}
-            <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black via-black/90 to-transparent flex items-center justify-center gap-6 z-30">
+            {/* Floating Action Bar */}
+            <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black via-black/90 to-transparent flex items-center justify-center gap-8 z-30">
               <button 
-                onClick={nextProfile}
-                className="w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-all hover:scale-105"
+                onClick={(e) => { e.stopPropagation(); handleNextProfile(); }}
+                className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-all hover:scale-105"
               >
-                <X className="w-6 h-6" />
+                <X className="w-7 h-7" />
               </button>
               
               <button 
-                className="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-[0_0_30px_rgba(232,185,108,0.3)] hover:shadow-[0_0_40px_rgba(232,185,108,0.5)] transition-all hover:scale-105"
+                onClick={(e) => { e.stopPropagation(); handleSendInterest(activeProfile.id); }}
+                className="w-20 h-20 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-[0_0_30px_rgba(232,185,108,0.3)] hover:shadow-[0_0_50px_rgba(232,185,108,0.5)] transition-all hover:scale-110"
               >
-                <Heart className="w-7 h-7 fill-current" />
-              </button>
-
-              <button 
-                className="w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-all hover:scale-105"
-              >
-                <Info className="w-6 h-6" />
+                <Heart className="w-10 h-10 fill-current" />
               </button>
             </div>
 
@@ -192,64 +215,196 @@ export default function DiscoverPage() {
         </AnimatePresence>
       </div>
 
-      {/* Filter Overlay (Slide In) */}
+      {/* Full Detailed Profile Modal (Progressive Disclosure) */}
       <AnimatePresence>
-        {showFilters && (
-          <>
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setShowFilters(false)}
-              className="absolute inset-0 bg-black/60 backdrop-blur-sm z-40" 
-            />
+        {selectedProfile && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex justify-end"
+          >
             <motion.div 
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="absolute top-0 right-0 bottom-0 w-full max-w-md bg-zinc-950 border-l border-white/10 z-50 p-6 flex flex-col"
+              transition={{ type: "spring", damping: 30, stiffness: 200 }}
+              className="w-full max-w-2xl h-full bg-zinc-950 border-l border-white/10 overflow-y-auto"
             >
-              <div className="flex items-center justify-between mb-8">
-                <h2 className="font-playfair text-2xl font-medium">Preferences</h2>
-                <button onClick={() => setShowFilters(false)} className="p-2 rounded-full hover:bg-white/5">
-                  <X className="w-5 h-5 text-white/50" />
-                </button>
-              </div>
-              
-              <div className="flex-1 overflow-y-auto space-y-8 scrollbar-hide">
-                <div className="space-y-4">
-                  <label className="text-xs uppercase tracking-widest text-white/50 font-bold">Age Range</label>
-                  <div className="flex items-center gap-4">
-                    <input type="number" placeholder="Min" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary" />
-                    <span className="text-white/30">to</span>
-                    <input type="number" placeholder="Max" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary" />
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <label className="text-xs uppercase tracking-widest text-white/50 font-bold">Location</label>
-                  <div className="relative">
-                    <Search className="absolute left-4 top-3.5 w-4 h-4 text-white/30" />
-                    <input type="text" placeholder="Search cities..." className="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-sm focus:outline-none focus:border-primary" />
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <label className="text-xs uppercase tracking-widest text-white/50 font-bold">Community</label>
-                  <button className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-left flex items-center justify-between text-white/70">
-                    Select Communities <ChevronDown className="w-4 h-4" />
+              <div className={`relative h-96 ${selectedProfile.image}`}>
+                <div className="absolute top-6 left-6">
+                  <button onClick={() => setSelectedProfile(null)} className="w-10 h-10 rounded-full bg-black/50 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors">
+                    <X className="w-5 h-5" />
                   </button>
                 </div>
+                <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-zinc-950 to-transparent" />
+                <div className="absolute bottom-8 left-8">
+                  <h1 className="font-playfair text-5xl font-medium tracking-tight">{selectedProfile.name}, {selectedProfile.age}</h1>
+                  <p className="text-white/60 text-lg mt-2">{selectedProfile.profession} • {selectedProfile.location}</p>
+                </div>
               </div>
 
-              <div className="pt-6 mt-6 border-t border-white/10">
-                <button className="w-full py-4 bg-primary text-primary-foreground font-medium rounded-xl hover:bg-primary/90 transition-colors">
-                  Apply Filters
+              <div className="p-8 space-y-12 pb-32">
+                
+                {/* Public Details */}
+                <section className="space-y-4">
+                  <h3 className="text-xs font-bold uppercase tracking-widest text-primary">About</h3>
+                  <p className="text-white/80 leading-relaxed text-lg font-light">"{selectedProfile.bio}"</p>
+                </section>
+
+                <section className="space-y-4">
+                  <h3 className="text-xs font-bold uppercase tracking-widest text-primary">Background</h3>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="p-4 rounded-2xl bg-white/5 border border-white/5">
+                      <div className="text-[10px] text-white/40 uppercase mb-1">Education</div>
+                      <div className="text-sm">{selectedProfile.education}</div>
+                    </div>
+                    <div className="p-4 rounded-2xl bg-white/5 border border-white/5">
+                      <div className="text-[10px] text-white/40 uppercase mb-1">Income Range</div>
+                      <div className="text-sm">{selectedProfile.income}</div>
+                    </div>
+                  </div>
+                </section>
+
+                <section className="space-y-4">
+                  <h3 className="text-xs font-bold uppercase tracking-widest text-primary">Family Details</h3>
+                  <p className="text-white/80 leading-relaxed text-sm">{selectedProfile.family}</p>
+                </section>
+
+                <section className="space-y-4">
+                  <h3 className="text-xs font-bold uppercase tracking-widest text-primary">Lifestyle</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedProfile.tags.map((tag: string) => (
+                      <span key={tag} className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-full text-xs text-white/70">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </section>
+
+                {/* Progressive Disclosure: Private Contact Info */}
+                <section className="relative mt-8">
+                  <div className="p-6 rounded-3xl border border-white/10 bg-white/5 overflow-hidden relative">
+                    <h3 className="text-xs font-bold uppercase tracking-widest text-primary mb-4 flex items-center gap-2">
+                      <Lock className="w-3.5 h-3.5" /> Private Contact Details
+                    </h3>
+                    
+                    {/* Blurred Content */}
+                    <div className="space-y-4 blur-md opacity-40 select-none pointer-events-none">
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center"><Phone className="w-4 h-4" /></div>
+                        <div>
+                          <div className="text-xs text-white/50">Phone Number</div>
+                          <div className="text-sm font-medium">+91 98765 43210</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center"><Instagram className="w-4 h-4" /></div>
+                        <div>
+                          <div className="text-xs text-white/50">Instagram</div>
+                          <div className="text-sm font-medium">@ananya_sharma</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Lock Overlay */}
+                    <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-zinc-950/40 text-center p-6">
+                      <div className="w-12 h-12 rounded-full bg-black/80 border border-white/10 flex items-center justify-center mb-3">
+                        <Lock className="w-5 h-5 text-white/70" />
+                      </div>
+                      <p className="text-sm font-medium text-white max-w-xs">
+                        Private details unlock mutually upon acceptance of interest.
+                      </p>
+                    </div>
+                  </div>
+                </section>
+
+              </div>
+              
+              {/* Fixed Bottom Action in Modal */}
+              <div className="sticky bottom-0 p-6 bg-zinc-950/80 backdrop-blur-xl border-t border-white/5 flex items-center gap-4 justify-between">
+                <button 
+                  onClick={() => handleSendInterest(selectedProfile.id)}
+                  className="w-full h-14 bg-primary text-primary-foreground font-medium rounded-full flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(232,185,108,0.2)] hover:shadow-[0_0_30px_rgba(232,185,108,0.4)] transition-all hover:scale-[1.02]"
+                >
+                  <Heart className="w-5 h-5 fill-current" />
+                  Send Interest
                 </button>
               </div>
+
             </motion.div>
-          </>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ₹5000 Premium Paywall Modal */}
+      <AnimatePresence>
+        {showPaywall && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-md flex items-center justify-center p-4"
+          >
+            <motion.div 
+              initial={{ scale: 0.95, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              className="w-full max-w-lg bg-zinc-950 border border-white/10 rounded-[2rem] overflow-hidden shadow-2xl relative"
+            >
+              {/* Close Button */}
+              <button 
+                onClick={() => setShowPaywall(false)}
+                className="absolute top-6 right-6 z-20 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+
+              <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-primary/20 to-transparent pointer-events-none" />
+              
+              <div className="p-10 flex flex-col items-center text-center relative z-10 space-y-6">
+                
+                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-amber-600 p-[1px] shadow-[0_0_40px_rgba(232,185,108,0.3)]">
+                  <div className="w-full h-full bg-zinc-950 rounded-full flex items-center justify-center">
+                    <Crown className="w-8 h-8 text-primary" />
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <div className="text-xs font-bold uppercase tracking-widest text-primary">Vivaha Premium</div>
+                  <h2 className="font-playfair text-3xl font-medium">Unlock Unlimited Interests</h2>
+                  <p className="text-white/60 text-sm max-w-sm mx-auto leading-relaxed">
+                    You have used your complimentary interest. Upgrade to Vivaha Premium to connect with unlimited highly curated profiles and get priority placement.
+                  </p>
+                </div>
+
+                <div className="w-full bg-white/5 border border-white/10 rounded-2xl p-6 text-left space-y-4 my-2">
+                  <div className="flex items-center gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-primary" />
+                    <span className="text-sm font-medium">Send unlimited interests</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-primary" />
+                    <span className="text-sm font-medium">See who viewed your profile</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-primary" />
+                    <span className="text-sm font-medium">Priority placement in Discover</span>
+                  </div>
+                </div>
+
+                <div className="w-full space-y-4">
+                  <button className="w-full h-14 bg-primary text-primary-foreground font-medium rounded-xl hover:bg-primary/90 transition-colors shadow-[0_0_20px_rgba(232,185,108,0.2)] text-lg">
+                    Upgrade for ₹5,000 <span className="text-xs opacity-80 font-normal">/ lifetime</span>
+                  </button>
+                  <button onClick={() => setShowPaywall(false)} className="text-sm text-white/50 hover:text-white transition-colors">
+                    Maybe later
+                  </button>
+                </div>
+
+              </div>
+            </motion.div>
+          </motion.div>
         )}
       </AnimatePresence>
 
