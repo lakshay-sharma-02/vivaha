@@ -1,4 +1,3 @@
-import { AuthLayout } from "@/shared/layouts/auth-layout/auth-layout"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -7,5 +6,5 @@ export const metadata: Metadata = {
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  return <AuthLayout>{children}</AuthLayout>
+  return <>{children}</>
 }
