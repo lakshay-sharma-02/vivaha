@@ -45,6 +45,9 @@ export async function POST(req: Request) {
     const endsAt = new Date()
     endsAt.setFullYear(endsAt.getFullYear() + 100)
 
+    // Ensure idempotency: remove any existing membership first
+    await supabase.from('memberships').delete().eq('profile_id', user.id)
+
     const { error: dbError } = await supabase
       .from('memberships')
       .insert({

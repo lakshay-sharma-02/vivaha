@@ -5,10 +5,15 @@ import { motion, AnimatePresence } from "framer-motion"
 import { 
   Filter, Search, MapPin, Briefcase, GraduationCap, 
   Heart, X, Check, Info, ShieldCheck, ChevronDown, 
-  Lock, AtSign, Phone, Crown, Sparkles, AlertCircle, CheckCircle2
+  Lock, AtSign, Phone, Crown, Sparkles, AlertCircle, CheckCircle2, ArrowRight
 } from "lucide-react"
 import { requestIntroduction } from "@/app/actions/matchmaking"
 import { fetchDiscoverProfiles } from "@/app/actions/discover"
+import Script from "next/script"
+
+declare global {
+  interface Window { Razorpay: any }
+}
 
 export default function DiscoverPage() {
   const [profiles, setProfiles] = React.useState<any[]>([])
@@ -41,6 +46,58 @@ export default function DiscoverPage() {
   }
 
   const [isSending, setIsSending] = React.useState(false)
+  const [isProcessingPayment, setIsProcessingPayment] = React.useState(false)
+
+  const handlePaywallUpgrade = async () => {
+    setIsProcessingPayment(true)
+    try {
+      const res = await fetch("/api/payment/create-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ planId: "premium_lifetime" }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || "Failed to create order")
+
+      const options = {
+        key: data.keyId,
+        amount: data.amount,
+        currency: data.currency,
+        name: "Vivaha Premium",
+        description: "Lifetime Premium Matchmaking Access",
+        order_id: data.orderId,
+        handler: async function (response: any) {
+          const verifyRes = await fetch("/api/payment/verify", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_signature: response.razorpay_signature,
+            }),
+          })
+          const verifyData = await verifyRes.json()
+          if (verifyRes.ok) {
+            setShowPaywall(false)
+            setToastMessage("Welcome to Vivaha Premium! 🎉")
+            setTimeout(() => setToastMessage(null), 4000)
+          } else {
+            alert("Verification Failed: " + verifyData.error)
+          }
+        },
+        theme: { color: "#E8B96C" },
+      }
+      const rzp = new window.Razorpay(options)
+      rzp.on("payment.failed", (r: any) => {
+        alert("Payment failed: " + r.error.description)
+      })
+      rzp.open()
+    } catch (err: any) {
+      alert("Error: " + err.message)
+    } finally {
+      setIsProcessingPayment(false)
+    }
+  }
 
   const handleSendInterest = async (profileId: any) => {
     setIsSending(true)
@@ -71,6 +128,8 @@ export default function DiscoverPage() {
   }
 
   return (
+    <>
+    <Script src="https://checkout.razorpay.com/v1/checkout.js" />
     <div className="h-[calc(100vh-8rem)] lg:h-[calc(100vh-5rem)] flex flex-col relative overflow-hidden">
       
       {/* Toast Notification */}
@@ -395,8 +454,13 @@ export default function DiscoverPage() {
                 </div>
 
                 <div className="w-full space-y-4">
-                  <button className="w-full h-14 bg-primary text-primary-foreground font-medium rounded-xl hover:bg-primary/90 transition-colors shadow-[0_0_20px_rgba(232,185,108,0.2)] text-lg">
-                    Upgrade for ₹5,000 <span className="text-xs opacity-80 font-normal">/ lifetime</span>
+                  <button
+                    onClick={handlePaywallUpgrade}
+                    disabled={isProcessingPayment}
+                    className="w-full h-14 bg-primary text-primary-foreground font-medium rounded-xl hover:bg-primary/90 transition-colors shadow-[0_0_20px_rgba(232,185,108,0.2)] text-lg flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                  >
+                    {isProcessingPayment ? "Initializing Secure Gateway..." : <>Upgrade for ₹5,000 <span className="text-xs opacity-80 font-normal">/ lifetime</span></>}
+                    {!isProcessingPayment && <ArrowRight className="w-4 h-4" />}
                   </button>
                   <button onClick={() => setShowPaywall(false)} className="text-sm text-white/50 hover:text-white transition-colors">
                     Maybe later
@@ -410,5 +474,6 @@ export default function DiscoverPage() {
       </AnimatePresence>
 
     </div>
+    </>
   )
 }

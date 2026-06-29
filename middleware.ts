@@ -31,13 +31,14 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  // Protect internal routes
-  const isProtectedRoute = request.nextUrl.pathname.startsWith('/home') || 
-                           request.nextUrl.pathname.startsWith('/discover') || 
-                           request.nextUrl.pathname.startsWith('/profile')
-                           
-  const isAuthRoute = request.nextUrl.pathname === '/login' || 
-                      request.nextUrl.pathname === '/register'
+  // Protect internal routes — /dashboard/* and /onboarding
+  const isProtectedRoute =
+    request.nextUrl.pathname.startsWith('/dashboard') ||
+    request.nextUrl.pathname.startsWith('/onboarding')
+
+  const isAuthRoute =
+    request.nextUrl.pathname === '/login' ||
+    request.nextUrl.pathname === '/register'
 
   if (isProtectedRoute && !user) {
     // Redirect unauthenticated users to login
@@ -47,9 +48,9 @@ export async function middleware(request: NextRequest) {
   }
 
   if (isAuthRoute && user) {
-    // Redirect authenticated users away from login
+    // Redirect already-authenticated users away from auth pages
     const url = request.nextUrl.clone()
-    url.pathname = '/home'
+    url.pathname = '/dashboard'
     return NextResponse.redirect(url)
   }
 

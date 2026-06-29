@@ -1,7 +1,7 @@
-import { ProfileCard } from "@/shared/ui/profile-card/profile-card"
 import { Input } from "@/shared/ui/input/input"
 import { Button } from "@/shared/ui/button/button"
 import { SlidersHorizontal, Search } from "lucide-react"
+import { DiscoverGrid } from "./discover-grid"
 
 export default function DiscoverPage() {
   return (
@@ -27,20 +27,9 @@ export default function DiscoverPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
-        {/* Placeholder rendering to show the discover grid */}
-        {Array.from({ length: 6 }).map((_, i) => (
-          <ProfileCard
-            key={i}
-            name={["Aditi", "Karan", "Sneha", "Vikram", "Neha", "Rahul"][i]}
-            age={26 + i}
-            location={["San Francisco", "London", "Dubai", "Singapore", "New York", "Mumbai"][i]}
-            profession={["Data Scientist", "Surgeon", "Founder", "Director", "Consultant", "Architect"][i]}
-            education="Top Tier University"
-            isVerified={true}
-          />
-        ))}
-      </div>
+      {/* DiscoverGrid is 'use client' so framer-motion only runs in the browser,
+          preventing React #418 hydration mismatch */}
+      <DiscoverGrid />
     </div>
   )
 }
