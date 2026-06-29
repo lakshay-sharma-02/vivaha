@@ -14,7 +14,7 @@ const NAV_ITEMS = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { label: "Discover", href: "/dashboard/discover", icon: Compass },
   { label: "Matches", href: "/dashboard/matches", icon: Users },
-  { label: "Messages", href: "/dashboard/messages", icon: MessageSquare },
+  { label: "Connections", href: "/dashboard/connections", icon: MessageSquare },
   { label: "Saved", href: "/dashboard/saved", icon: Bookmark },
   { label: "Notifications", href: "/dashboard/notifications", icon: Bell },
 ]
