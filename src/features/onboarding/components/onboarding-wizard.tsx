@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence, Variants } from "framer-motion"
 import { Button } from "@/shared/ui/button/button"
 import { Input } from "@/shared/ui/input/input"
 import { Label } from "@/shared/ui/label/label"
@@ -59,7 +59,7 @@ export function OnboardingWizard() {
     })
   }
 
-  const variants = {
+  const variants: Variants = {
     enter: (direction: number) => ({
       y: direction > 0 ? 30 : -30,
       opacity: 0,
