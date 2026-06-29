@@ -33,9 +33,9 @@ export function OnboardingWizard() {
     firstName: "", lastName: "", gender: "", dateOfBirth: "", height: "",
     country: "", state: "", city: "",
     highestQual: "", university: "", occupation: "", company: "", income: "",
-    religion: "", community: "", motherTongue: "",
-    parentsOccupation: "", familyType: "", familyValues: "", siblings: "",
-    minAge: 18, maxAge: 60, minHeight: 140, maxHeight: 220
+    religion: "", community: "", motherTongue: "", gotra: "", maternalGotra: "", grandmotherGotra: "",
+    fatherOccupation: "", motherOccupation: "", familyType: "", familyValues: "", siblings: "",
+    minAge: 18, maxAge: 60, minHeight: 140, maxHeight: 220, hobbies: ""
   })
   const [selections, setSelections] = React.useState<Record<string, string[]>>({
     lifestyle: [],
@@ -221,6 +221,16 @@ export function OnboardingWizard() {
                       className="h-14 rounded-2xl bg-white/5 border-white/10 text-white focus:outline-none focus:ring-1 focus:ring-primary [&::-webkit-calendar-picker-indicator]:filter [&::-webkit-calendar-picker-indicator]:invert" 
                     />
                   </div>
+                  <div className="space-y-3 col-span-2 md:col-span-1">
+                    <Label className="text-white/70 ml-1">Height (cm)</Label>
+                    <Input 
+                      type="number" 
+                      placeholder="e.g. 175"
+                      value={formData.height}
+                      onChange={(e) => setFormData({ ...formData, height: e.target.value })}
+                      className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" 
+                    />
+                  </div>
                 </div>
               </div>
             )}
@@ -285,12 +295,18 @@ export function OnboardingWizard() {
                     </div>
                     <div className="space-y-3">
                       <Label className="text-white/70 ml-1">Income Range</Label>
-                      <select defaultValue="" className="flex h-14 w-full items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-primary appearance-none">
+                      <select 
+                        value={formData.income}
+                        onChange={(e) => setFormData({ ...formData, income: e.target.value })}
+                        className="flex h-14 w-full items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-primary appearance-none"
+                      >
                         <option value="" disabled>Select...</option>
                         <option value="1" className="bg-zinc-900">Prefer not to say</option>
-                        <option value="2" className="bg-zinc-900">$100k - $250k</option>
-                        <option value="3" className="bg-zinc-900">$250k - $500k</option>
-                        <option value="4" className="bg-zinc-900">$500k+</option>
+                        <option value="2" className="bg-zinc-900">₹5L - ₹10L</option>
+                        <option value="3" className="bg-zinc-900">₹10L - ₹20L</option>
+                        <option value="4" className="bg-zinc-900">₹20L - ₹50L</option>
+                        <option value="5" className="bg-zinc-900">₹50L - ₹1Cr</option>
+                        <option value="6" className="bg-zinc-900">₹1Cr+</option>
                       </select>
                     </div>
                   </div>
@@ -309,16 +325,30 @@ export function OnboardingWizard() {
                   <div className="grid grid-cols-2 gap-6">
                     <div className="space-y-3">
                       <Label className="text-white/70 ml-1">Religion</Label>
-                      <Input placeholder="e.g. Hindu" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                      <Input value={formData.religion} onChange={(e) => setFormData({ ...formData, religion: e.target.value })} placeholder="e.g. Hindu" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
                     </div>
                     <div className="space-y-3">
                       <Label className="text-white/70 ml-1">Community / Caste</Label>
-                      <Input placeholder="e.g. Brahmin (Optional)" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                      <Input value={formData.community} onChange={(e) => setFormData({ ...formData, community: e.target.value })} placeholder="e.g. Brahmin (Optional)" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
                     </div>
                   </div>
                   <div className="space-y-3">
                     <Label className="text-white/70 ml-1">Mother Tongue</Label>
-                    <Input placeholder="e.g. Hindi, English" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                    <Input value={formData.motherTongue} onChange={(e) => setFormData({ ...formData, motherTongue: e.target.value })} placeholder="e.g. Hindi, English" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                  </div>
+                  <div className="grid grid-cols-3 gap-6">
+                    <div className="space-y-3">
+                      <Label className="text-white/70 ml-1">Your Gotra</Label>
+                      <Input value={formData.gotra} onChange={(e) => setFormData({ ...formData, gotra: e.target.value })} placeholder="e.g. Kashyap" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                    </div>
+                    <div className="space-y-3">
+                      <Label className="text-white/70 ml-1">Mother's Gotra</Label>
+                      <Input value={formData.maternalGotra} onChange={(e) => setFormData({ ...formData, maternalGotra: e.target.value })} placeholder="Optional" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                    </div>
+                    <div className="space-y-3">
+                      <Label className="text-white/70 ml-1">Dadi's Gotra</Label>
+                      <Input value={formData.grandmotherGotra} onChange={(e) => setFormData({ ...formData, grandmotherGotra: e.target.value })} placeholder="Optional" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -333,14 +363,20 @@ export function OnboardingWizard() {
                 </div>
                 
                 <div className="space-y-6 max-w-md mx-auto">
-                  <div className="space-y-3">
-                    <Label className="text-white/70 ml-1">Parents' Occupation</Label>
-                    <Input placeholder="e.g. Father is a Doctor, Mother is a Teacher" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="space-y-3">
+                      <Label className="text-white/70 ml-1">Father's Occupation</Label>
+                      <Input value={formData.fatherOccupation} onChange={(e) => setFormData({ ...formData, fatherOccupation: e.target.value })} placeholder="e.g. Doctor" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                    </div>
+                    <div className="space-y-3">
+                      <Label className="text-white/70 ml-1">Mother's Occupation</Label>
+                      <Input value={formData.motherOccupation} onChange={(e) => setFormData({ ...formData, motherOccupation: e.target.value })} placeholder="e.g. Teacher" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                    </div>
                   </div>
                   <div className="grid grid-cols-2 gap-6">
                     <div className="space-y-3">
                       <Label className="text-white/70 ml-1">Family Type</Label>
-                      <select defaultValue="" className="flex h-14 w-full items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 text-white placeholder:text-white/30 appearance-none">
+                      <select value={formData.familyType} onChange={(e) => setFormData({ ...formData, familyType: e.target.value })} className="flex h-14 w-full items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 text-white placeholder:text-white/30 appearance-none focus:outline-none focus:ring-1 focus:ring-primary">
                         <option value="" disabled>Select...</option>
                         <option value="nuclear" className="bg-zinc-900">Nuclear</option>
                         <option value="joint" className="bg-zinc-900">Joint</option>
@@ -348,7 +384,7 @@ export function OnboardingWizard() {
                     </div>
                     <div className="space-y-3">
                       <Label className="text-white/70 ml-1">Family Values</Label>
-                      <select defaultValue="" className="flex h-14 w-full items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 text-white placeholder:text-white/30 appearance-none">
+                      <select value={formData.familyValues} onChange={(e) => setFormData({ ...formData, familyValues: e.target.value })} className="flex h-14 w-full items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 text-white placeholder:text-white/30 appearance-none focus:outline-none focus:ring-1 focus:ring-primary">
                         <option value="" disabled>Select...</option>
                         <option value="orthodox" className="bg-zinc-900">Orthodox</option>
                         <option value="traditional" className="bg-zinc-900">Traditional</option>
@@ -359,7 +395,7 @@ export function OnboardingWizard() {
                   </div>
                   <div className="space-y-3">
                     <Label className="text-white/70 ml-1">Siblings</Label>
-                    <Input placeholder="e.g. 1 Brother, 1 Sister" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                    <Input value={formData.siblings} onChange={(e) => setFormData({ ...formData, siblings: e.target.value })} placeholder="e.g. 1 Brother, 1 Sister" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
                   </div>
                 </div>
               </div>
@@ -410,6 +446,16 @@ export function OnboardingWizard() {
                         </button>
                       ))}
                     </div>
+                  </div>
+
+                  <div className="space-y-3 pt-4 border-t border-white/10">
+                    <Label className="text-white/70 ml-1 block">Other Hobbies & Interests</Label>
+                    <Input 
+                      value={formData.hobbies} 
+                      onChange={(e) => setFormData({ ...formData, hobbies: e.target.value })} 
+                      placeholder="e.g. Reading, Traveling, Photography" 
+                      className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" 
+                    />
                   </div>
                 </div>
               </div>

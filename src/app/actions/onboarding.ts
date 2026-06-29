@@ -90,11 +90,19 @@ export async function saveOnboardingData(formData: any) {
       .from('family_details')
       .upsert({
         profile_id: user.id,
-        father_occupation: formData.parentsOccupation,
+        father_occupation: formData.fatherOccupation,
+        mother_occupation: formData.motherOccupation,
         family_type: formData.familyType,
         family_values: formData.familyValues,
-        siblings_info: formData.siblings
+        siblings_info: formData.siblings,
+        gotra: formData.gotra,
+        maternal_gotra: formData.maternalGotra,
+        grandmother_gotra: formData.grandmotherGotra
       }, { onConflict: 'profile_id' });
+
+    if (familyError) {
+      console.error("Family details error:", familyError)
+    }
 
     // 5. Update Lifestyle & Compatibility
     const { error: compatError } = await supabase
