@@ -7,6 +7,7 @@ import {
   Heart, X, Check, Info, ShieldCheck, ChevronDown, 
   Lock, AtSign, Phone, Crown, Sparkles, AlertCircle, CheckCircle2
 } from "lucide-react"
+import { requestIntroduction } from "@/app/actions/matchmaking"
 
 export default function DiscoverPage() {
   const [activeProfileIndex, setActiveProfileIndex] = React.useState(0)
@@ -73,15 +74,30 @@ export default function DiscoverPage() {
     setActiveProfileIndex((prev) => (prev + 1) % profiles.length)
   }
 
-  const handleSendInterest = (profileId: number) => {
-    if (interestsSent >= 1) {
-      setShowPaywall(true)
+  const [isSending, setIsSending] = React.useState(false)
+
+  const handleSendInterest = async (profileId: any) => {
+    setIsSending(true)
+    
+    // Call our robust backend RPC via Server Action
+    // Note: Since we are using dummy profiles with integer IDs, we pass a fake UUID 
+    // just so the UI works until we wire up real profile fetching.
+    const targetUuid = "00000000-0000-0000-0000-00000000000" + profileId
+    const res = await requestIntroduction(targetUuid)
+    
+    setIsSending(false)
+
+    if (!res.success) {
+      if (res.error === 'PAYWALL_REACHED') {
+        setShowPaywall(true)
+      } else {
+        setToastMessage(res.error || "Something went wrong.")
+        setTimeout(() => setToastMessage(null), 3000)
+      }
       return
     }
-    
-    // Success for first free interest
-    setInterestsSent(prev => prev + 1)
-    setToastMessage("Interest Sent Successfully!")
+
+    setToastMessage(res.message === 'MUTUAL_MATCH' ? "It's a Mutual Match!" : "Introduction Requested!")
     setTimeout(() => setToastMessage(null), 3000)
     
     // Move to next profile after sending interest
@@ -205,7 +221,12 @@ export default function DiscoverPage() {
               
               <button 
                 onClick={(e) => { e.stopPropagation(); handleSendInterest(activeProfile.id); }}
-                className="w-20 h-20 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-[0_0_30px_rgba(232,185,108,0.3)] hover:shadow-[0_0_50px_rgba(232,185,108,0.5)] transition-all hover:scale-110"
+                disabled={isSending}
+                className={`w-20 h-20 rounded-full flex items-center justify-center text-primary-foreground transition-all shadow-[0_0_30px_rgba(232,185,108,0.3)] ${
+                  isSending 
+                    ? "bg-primary/50 cursor-not-allowed scale-95" 
+                    : "bg-primary hover:shadow-[0_0_50px_rgba(232,185,108,0.5)] hover:scale-110"
+                }`}
               >
                 <Heart className="w-10 h-10 fill-current" />
               </button>
@@ -325,10 +346,14 @@ export default function DiscoverPage() {
               <div className="sticky bottom-0 p-6 bg-zinc-950/80 backdrop-blur-xl border-t border-white/5 flex items-center gap-4 justify-between">
                 <button 
                   onClick={() => handleSendInterest(selectedProfile.id)}
-                  className="w-full h-14 bg-primary text-primary-foreground font-medium rounded-full flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(232,185,108,0.2)] hover:shadow-[0_0_30px_rgba(232,185,108,0.4)] transition-all hover:scale-[1.02]"
+                  disabled={isSending}
+                  className={`w-full h-14 font-medium rounded-full flex items-center justify-center gap-2 transition-all ${
+                    isSending 
+                      ? "bg-primary/50 text-primary-foreground/70 cursor-not-allowed" 
+                      : "bg-primary text-primary-foreground shadow-[0_0_20px_rgba(232,185,108,0.2)] hover:shadow-[0_0_30px_rgba(232,185,108,0.4)] hover:scale-[1.02]"
+                  }`}
                 >
-                  <Heart className="w-5 h-5 fill-current" />
-                  Send Interest
+                  <Heart className="w-5 h-5 fill-current" /> {isSending ? "Sending..." : "Send Interest"}
                 </button>
               </div>
 
