@@ -51,12 +51,12 @@ export function SceneHero() {
               key={i}
               className="absolute w-1 h-1 bg-amber-500/50 rounded-full"
               initial={{
-                x: Math.random() * window.innerWidth,
-                y: Math.random() * window.innerHeight,
+                x: `${Math.random() * 100}vw`,
+                y: `${Math.random() * 100}vh`,
                 opacity: Math.random() * 0.5 + 0.1
               }}
               animate={{
-                y: [null, Math.random() * window.innerHeight],
+                y: [null, `${Math.random() * 100}vh`],
                 opacity: [null, Math.random(), 0]
               }}
               transition={{

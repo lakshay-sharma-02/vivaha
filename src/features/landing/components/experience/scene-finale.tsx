@@ -59,11 +59,11 @@ export function SceneFinale() {
                 key={i}
                 className="absolute w-[2px] h-[2px] bg-white/20 rounded-full"
                 initial={{
-                  x: Math.random() * window.innerWidth,
-                  y: Math.random() * window.innerHeight,
+                  x: `${Math.random() * 100}vw`,
+                  y: `${Math.random() * 100}vh`,
                 }}
                 animate={{
-                  y: [null, Math.random() * window.innerHeight],
+                  y: [null, `${Math.random() * 100}vh`],
                   opacity: [0, 1, 0]
                 }}
                 transition={{
