@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { motion } from "framer-motion"
-import { Crown, CheckCircle2, Star, ShieldCheck, ArrowRight } from "lucide-react"
+import { Crown, CheckCircle2, Star, ShieldCheck, ArrowRight, Lock } from "lucide-react"
 import Script from "next/script"
 
 declare global {
