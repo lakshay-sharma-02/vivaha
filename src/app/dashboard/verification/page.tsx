@@ -16,5 +16,5 @@ export default async function VerificationPage() {
     .eq('id', user.id)
     .single()
 
-  return <VerificationClient status={profile?.verification_status} />
+  return <VerificationClient status={profile?.verification_status ?? 'unverified'} />
 }

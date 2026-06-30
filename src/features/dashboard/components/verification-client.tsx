@@ -5,7 +5,7 @@ import { motion } from "framer-motion"
 import { ShieldCheck, UploadCloud, Lock, FileText, CheckCircle2 } from "lucide-react"
 import { createClient } from "@/shared/lib/supabase/client"
 
-export default function VerificationClient({ status }: { status: string }) {
+export default function VerificationClient({ status }: { status: string | null }) {
   const [isUploading, setIsUploading] = React.useState(false)
   const [file, setFile] = React.useState<File | null>(null)
 

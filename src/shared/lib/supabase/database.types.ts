@@ -34,6 +34,20 @@ export interface Database {
           note?: string
           created_at?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: 'introductions_sender_id_fkey'
+            columns: ['sender_id']
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'introductions_receiver_id_fkey'
+            columns: ['receiver_id']
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          },
+        ]
       }
       audit_logs: {
         Row: {
@@ -60,6 +74,14 @@ export interface Database {
           metadata?: Json | null
           created_at?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: 'cities_country_id_fkey'
+            columns: ['country_id']
+            referencedRelation: 'countries'
+            referencedColumns: ['id']
+          },
+        ]
       }
       introductions: {
         Row: {
@@ -86,6 +108,15 @@ export interface Database {
           created_at?: string | null
           updated_at?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: 'compatibility_profiles_profile_id_fkey'
+            columns: ['profile_id']
+            isOneToOne: true
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          },
+        ]
       }
       blocks: {
         Row: {
@@ -106,6 +137,15 @@ export interface Database {
           blocked_id?: string
           created_at?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: 'family_details_profile_id_fkey'
+            columns: ['profile_id']
+            isOneToOne: true
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          },
+        ]
       }
       cities: {
         Row: {
@@ -123,6 +163,26 @@ export interface Database {
           country_id?: string | null
           name?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: 'matches_user_a_id_fkey'
+            columns: ['user_a_id']
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'matches_user_b_id_fkey'
+            columns: ['user_b_id']
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'matches_action_by_id_fkey'
+            columns: ['action_by_id']
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          },
+        ]
       }
       compatibility_profiles: {
         Row: {
@@ -152,6 +212,14 @@ export interface Database {
           relationship_goals?: string | null
           updated_at?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: 'memberships_profile_id_fkey'
+            columns: ['profile_id']
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          },
+        ]
       }
       countries: {
         Row: {
@@ -166,6 +234,20 @@ export interface Database {
           id?: string
           name?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: 'messages_match_id_fkey'
+            columns: ['match_id']
+            referencedRelation: 'matches'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'messages_sender_id_fkey'
+            columns: ['sender_id']
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          },
+        ]
       }
       family_details: {
         Row: {
@@ -204,6 +286,14 @@ export interface Database {
           grandmother_gotra?: string | null
           updated_at?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: 'notifications_user_id_fkey'
+            columns: ['user_id']
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          },
+        ]
       }
       matches: {
         Row: {
@@ -233,6 +323,14 @@ export interface Database {
           created_at?: string | null
           updated_at?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: 'payments_profile_id_fkey'
+            columns: ['profile_id']
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          },
+        ]
       }
       memberships: {
         Row: {
@@ -265,6 +363,15 @@ export interface Database {
           gateway_customer_id?: string | null
           created_at?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: 'preferences_profile_id_fkey'
+            columns: ['profile_id']
+            isOneToOne: true
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          },
+        ]
       }
       messages: {
         Row: {
@@ -303,6 +410,15 @@ export interface Database {
           read_at?: string | null
           created_at?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: 'profile_completion_profile_id_fkey'
+            columns: ['profile_id']
+            isOneToOne: true
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          },
+        ]
       }
       notifications: {
         Row: {
@@ -332,6 +448,14 @@ export interface Database {
           is_read?: boolean | null
           created_at?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: 'profile_media_profile_id_fkey'
+            columns: ['profile_id']
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          },
+        ]
       }
       otp_logs: {
         Row: {
@@ -355,6 +479,20 @@ export interface Database {
           ip?: string | null
           created_at?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: 'profile_views_viewer_id_fkey'
+            columns: ['viewer_id']
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'profile_views_viewed_id_fkey'
+            columns: ['viewed_id']
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          },
+        ]
       }
       payments: {
         Row: {
@@ -393,6 +531,32 @@ export interface Database {
           receipt_url?: string | null
           created_at?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: 'profiles_city_id_fkey'
+            columns: ['city_id']
+            referencedRelation: 'cities'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'profiles_country_id_fkey'
+            columns: ['country_id']
+            referencedRelation: 'countries'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'profiles_profession_id_fkey'
+            columns: ['profession_id']
+            referencedRelation: 'professions'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'profiles_religion_id_fkey'
+            columns: ['religion_id']
+            referencedRelation: 'religions'
+            referencedColumns: ['id']
+          },
+        ]
       }
       preferences: {
         Row: {
@@ -422,6 +586,14 @@ export interface Database {
           preferred_cities?: string[] | null
           updated_at?: string | null
         }
+        Relationships: [
+          {
+            foreignKeyName: 'search_history_user_id_fkey'
+            columns: ['user_id']
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          },
+        ]
       }
       professions: {
         Row: {
@@ -436,6 +608,14 @@ export interface Database {
           id?: string
           name?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: 'verification_documents_profile_id_fkey'
+            columns: ['profile_id']
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          },
+        ]
       }
       profile_completion: {
         Row: {
@@ -453,6 +633,7 @@ export interface Database {
           score?: number | null
           updated_at?: string | null
         }
+        Relationships: []
       }
       profile_media: {
         Row: {
@@ -503,6 +684,7 @@ export interface Database {
           is_verified?: boolean | null
           created_at?: string | null
         }
+        Relationships: []
       }
       profile_views: {
         Row: {
@@ -523,6 +705,7 @@ export interface Database {
           viewed_id?: string
           viewed_at?: string | null
         }
+        Relationships: []
       }
       profiles: {
         Row: {
@@ -600,6 +783,7 @@ export interface Database {
           company?: string | null
           income_range?: string | null
         }
+        Relationships: []
       }
       religions: {
         Row: {
@@ -614,6 +798,7 @@ export interface Database {
           id?: string
           name?: string
         }
+        Relationships: []
       }
       reports: {
         Row: {
@@ -640,6 +825,7 @@ export interface Database {
           status?: 'pending' | 'reviewing' | 'resolved' | 'dismissed' | null
           created_at?: string | null
         }
+        Relationships: []
       }
       search_history: {
         Row: {
@@ -660,6 +846,7 @@ export interface Database {
           filters?: Json
           created_at?: string | null
         }
+        Relationships: []
       }
       user_sessions: {
         Row: {
@@ -692,6 +879,7 @@ export interface Database {
           last_seen?: string | null
           created_at?: string | null
         }
+        Relationships: []
       }
       verification_documents: {
         Row: {
@@ -721,10 +909,18 @@ export interface Database {
           submitted_at?: string | null
           reviewed_at?: string | null
         }
+        Relationships: []
       }
     }
     Views: {
-      [_ in never]: never
+      // Dummy entry prevents Supabase from resolving table operations to `never`
+      // when no real views exist in the database
+      _placeholder: {
+        Row: { id: string }
+        Insert: { id?: string }
+        Update: { id?: string }
+        Relationships: []
+      }
     }
     Functions: {
       request_introduction: {
@@ -744,7 +940,11 @@ export interface Database {
       payment_gateway_enum: 'stripe' | 'razorpay' | 'apple' | 'google'
     }
     CompositeTypes: {
-      [_ in never]: never
+      // Dummy entry prevents Supabase from resolving table operations to `never`
+      // when no real composite types exist in the database
+      _placeholder: {
+        id: string
+      }
     }
   }
 }

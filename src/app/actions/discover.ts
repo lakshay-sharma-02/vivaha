@@ -28,11 +28,8 @@ export async function fetchDiscoverProfiles(page: number = 1) {
         verification_status,
         education,
         income_range,
-        profession:profession_id(name),
-        city:city_id(name),
-        media:profile_media(bucket_path, is_primary),
-        compatibility:compatibility_profiles(lifestyle),
-        family:family_details(family_type)
+        profession_id,
+        city_id
       `)
       .neq('id', user.id)
       .range(start, end)
@@ -51,34 +48,61 @@ export async function fetchDiscoverProfiles(page: number = 1) {
       verification_status: string | null
       education: string | null
       income_range: string | null
-      profession: { name: string }[] | { name: string } | null
-      city: { name: string }[] | { name: string } | null
-      media: { bucket_path: string, is_primary: boolean }[] | null
-      compatibility: { lifestyle: string[] }[] | { lifestyle: string[] } | null
-      family: { family_type: string }[] | { family_type: string } | null
+      profession_id: string | null
+      city_id: string | null
     }
 
     // We need to map the database structure to the UI structure our components expect
     const profiles = profilesRaw as ProfileJoined[] | null
+    const profileIds = (profiles || []).map((p) => p.id)
+    const professionIds = [...new Set((profiles || []).map((p) => p.profession_id).filter((id): id is string => Boolean(id)))]
+    const cityIds = [...new Set((profiles || []).map((p) => p.city_id).filter((id): id is string => Boolean(id)))]
+
+    const [{ data: professions }, { data: cities }, { data: mediaRows }, { data: compatibilityRows }, { data: familyRows }] = await Promise.all([
+      professionIds.length > 0
+        ? supabase.from('professions').select('id, name').in('id', professionIds)
+        : Promise.resolve({ data: [], error: null }),
+      cityIds.length > 0
+        ? supabase.from('cities').select('id, name').in('id', cityIds)
+        : Promise.resolve({ data: [], error: null }),
+      profileIds.length > 0
+        ? supabase.from('profile_media').select('profile_id, bucket_path, is_primary').in('profile_id', profileIds)
+        : Promise.resolve({ data: [], error: null }),
+      profileIds.length > 0
+        ? supabase.from('compatibility_profiles').select('profile_id, lifestyle').in('profile_id', profileIds)
+        : Promise.resolve({ data: [], error: null }),
+      profileIds.length > 0
+        ? supabase.from('family_details').select('profile_id, family_type').in('profile_id', profileIds)
+        : Promise.resolve({ data: [], error: null }),
+    ])
+
+    const professionMap = new Map((professions || []).map((item) => [item.id, item.name]))
+    const cityMap = new Map((cities || []).map((item) => [item.id, item.name]))
+    const mediaMap = new Map<string, { bucket_path: string; is_primary: boolean | null }[]>()
+    for (const row of mediaRows || []) {
+      const existing = mediaMap.get(row.profile_id) || []
+      existing.push(row)
+      mediaMap.set(row.profile_id, existing)
+    }
+    const compatibilityMap = new Map((compatibilityRows || []).map((row) => [row.profile_id, row.lifestyle]))
+    const familyMap = new Map((familyRows || []).map((row) => [row.profile_id, row.family_type]))
+
     const mappedProfiles = (profiles || []).map((p) => {
       // Calculate age from date_of_birth
       const age = p.date_of_birth ? new Date().getFullYear() - new Date(p.date_of_birth).getFullYear() : '?'
       
-      // Handle Supabase foreign key array/object response
-      const professionName = Array.isArray(p.profession) ? p.profession[0]?.name : (p.profession as { name: string } | null)?.name ?? "Professional"
-      const cityName = Array.isArray(p.city) ? p.city[0]?.name : (p.city as { name: string } | null)?.name ?? "Not Specified"
+      const professionName = p.profession_id ? professionMap.get(p.profession_id) ?? "Professional" : "Professional"
+      const cityName = p.city_id ? cityMap.get(p.city_id) ?? "Not Specified" : "Not Specified"
       
-      const mediaArr = p.media || [];
+      const mediaArr = mediaMap.get(p.id) || [];
       const primaryMedia = mediaArr.find(m => m.is_primary) || mediaArr[0];
       const imageUrl = primaryMedia
         ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/profile_photos/${primaryMedia.bucket_path}`
         : null;
 
-      const compatObj = Array.isArray(p.compatibility) ? p.compatibility[0] : p.compatibility;
-      const tags = compatObj?.lifestyle || [];
+      const tags = compatibilityMap.get(p.id) || [];
 
-      const familyObj = Array.isArray(p.family) ? p.family[0] : p.family;
-      const familyType = familyObj?.family_type || "Not Specified";
+      const familyType = familyMap.get(p.id) || "Not Specified";
 
       // Deterministic compatibility score based on ID string
       const idSum = p.id.split('').reduce((sum, char) => sum + char.charCodeAt(0), 0);
@@ -94,7 +118,7 @@ export async function fetchDiscoverProfiles(page: number = 1) {
         bio: p.bio || "No bio provided.",
         compatibility: compatScore,
         verified: p.verification_status === 'verified',
-        image: imageUrl,
+        image: imageUrl ?? "",
         tags: tags.length > 0 ? tags : ["No Tags"],
         family: familyType,
         income: p.income_range || "Not Specified"

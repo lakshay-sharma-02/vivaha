@@ -34,13 +34,34 @@ export default async function DashboardPage() {
       first_name, 
       last_name, 
       gender, 
-      profession:profession_id(name), 
-      city:city_id(name), 
+      profession_id,
+      city_id,
       verification_status,
       date_of_birth
     `)
     .eq('gender', targetGender)
     .limit(5)
+
+  const typedRecommendedMatches = recommendedMatches || []
+  const professionIds = [...new Set(typedRecommendedMatches.map((match) => match.profession_id).filter((id): id is string => Boolean(id)))]
+  const cityIds = [...new Set(typedRecommendedMatches.map((match) => match.city_id).filter((id): id is string => Boolean(id)))]
+
+  const [{ data: professions }, { data: cities }] = await Promise.all([
+    professionIds.length > 0
+      ? supabase.from('professions').select('id, name').in('id', professionIds)
+      : Promise.resolve({ data: [], error: null }),
+    cityIds.length > 0
+      ? supabase.from('cities').select('id, name').in('id', cityIds)
+      : Promise.resolve({ data: [], error: null }),
+  ])
+
+  const professionMap = new Map((professions || []).map((item) => [item.id, item.name]))
+  const cityMap = new Map((cities || []).map((item) => [item.id, item.name]))
+  const normalizedRecommendedMatches = typedRecommendedMatches.map((match) => ({
+    ...match,
+    profession: match.profession_id ? { name: professionMap.get(match.profession_id) ?? "Professional" } : null,
+    city: match.city_id ? { name: cityMap.get(match.city_id) ?? "Not Specified" } : null,
+  }))
 
   // Pass sanitized data to the client component
   // Notice we do NOT send the phone or instagram of matches to the client.
@@ -58,7 +79,7 @@ export default async function DashboardPage() {
   type ProfileViewRow = { id: string; viewed_at: string | null; viewer: { first_name: string; city: { name: string } | null } | null }
   const { data: rawUpdates } = await supabase
     .from('profile_views')
-    .select('id, viewed_at, viewer:viewer_id(first_name, city:city_id(name))')
+    .select('id, viewed_at, viewer:profiles!profile_views_viewer_id_fkey(first_name, city:cities!profiles_city_id_fkey(name))')
     .eq('viewed_id', user.id)
     .order('viewed_at', { ascending: false })
     .limit(2) as { data: ProfileViewRow[] | null; error: unknown }
@@ -89,7 +110,7 @@ export default async function DashboardPage() {
       id: n.id,
       title: n.title,
       desc: n.body,
-      time: new Date(n.created_at).toLocaleDateString(),
+      time: new Date(n.created_at || new Date().toISOString()).toLocaleDateString(),
       iconType: n.type === 'verification' ? 'success' : 'time'
   }))
   if (timeline.length === 0) {
@@ -105,7 +126,7 @@ export default async function DashboardPage() {
   return (
     <DashboardClient 
       userProfile={profile} 
-      recommendedMatches={recommendedMatches || []} 
+      recommendedMatches={normalizedRecommendedMatches} 
       completionScore={completionScore}
       updates={updates}
       timeline={timeline}

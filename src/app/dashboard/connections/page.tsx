@@ -33,7 +33,7 @@ export default async function ConnectionsPage() {
   // Fetch profiles for all matched users
   const { data: profileRows } = await supabase
     .from("profiles")
-    .select("id, first_name, last_name, date_of_birth, phone, instagram, profession:profession_id(name), city:city_id(name)")
+    .select("id, first_name, last_name, date_of_birth, phone, instagram, profession_id, city_id")
     .in("id", matchedUserIds)
 
   type MediaRow = { profile_id: string; bucket_path: string }
@@ -60,25 +60,35 @@ export default async function ConnectionsPage() {
     date_of_birth: string | null
     phone: string | null
     instagram: string | null
-    profession: { name: string }[] | { name: string } | null
-    city: { name: string }[] | { name: string } | null
+    profession_id: string | null
+    city_id: string | null
   }
+
+  const typedProfiles = (profileRows || []) as ProfileRow[]
+  const professionIds = [...new Set(typedProfiles.map((profile) => profile.profession_id).filter((id): id is string => Boolean(id)))]
+  const cityIds = [...new Set(typedProfiles.map((profile) => profile.city_id).filter((id): id is string => Boolean(id)))]
+
+  const [{ data: professions }, { data: cities }] = await Promise.all([
+    professionIds.length > 0
+      ? supabase.from("professions").select("id, name").in("id", professionIds)
+      : Promise.resolve({ data: [], error: null }),
+    cityIds.length > 0
+      ? supabase.from("cities").select("id, name").in("id", cityIds)
+      : Promise.resolve({ data: [], error: null }),
+  ])
+
+  const professionMap = new Map((professions || []).map((item) => [item.id, item.name]))
+  const cityMap = new Map((cities || []).map((item) => [item.id, item.name]))
 
   const connections = matches.map((match) => {
     const otherId = match.user_a_id === user.id ? match.user_b_id : match.user_a_id
-    const profile = (profileRows as ProfileRow[])?.find((p) => p.id === otherId)
+    const profile = typedProfiles.find((p) => p.id === otherId)
     if (!profile) return null
 
     const dob = profile.date_of_birth
     const age = dob ? new Date().getFullYear() - new Date(dob).getFullYear() : 0
-    const profName =
-      Array.isArray(profile.profession)
-        ? profile.profession[0]?.name
-        : (profile.profession as { name: string } | null)?.name ?? "Not specified"
-    const cityName =
-      Array.isArray(profile.city)
-        ? profile.city[0]?.name
-        : (profile.city as { name: string } | null)?.name ?? "Not specified"
+    const profName = profile.profession_id ? professionMap.get(profile.profession_id) ?? "Not specified" : "Not specified"
+    const cityName = profile.city_id ? cityMap.get(profile.city_id) ?? "Not specified" : "Not specified"
 
     return {
       id: match.id,

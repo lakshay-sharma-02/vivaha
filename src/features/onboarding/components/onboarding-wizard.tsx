@@ -112,11 +112,20 @@ export function OnboardingWizard() {
   })
   const router = useRouter()
 
+  const getRangeValues = (value: number | readonly number[]) => {
+    if (Array.isArray(value)) {
+      return [value[0] ?? 0, value[1] ?? value[0] ?? 0] as const
+    }
+
+    return [value, value] as const
+  }
+
   const nextStep = async () => {
     if (currentStep === 10) {
       setIsSaving(true)
       await saveOnboardingData({
         ...formData,
+        gender: formData.gender === "male" || formData.gender === "female" ? formData.gender : undefined,
         lifestyleChips: selections.lifestyle,
         prefReligionChips: selections.prefReligion
       })
@@ -568,7 +577,10 @@ export function OnboardingWizard() {
                     </div>
                     <Slider 
                       value={[formData.minAge, formData.maxAge]} 
-                      onValueChange={(val) => setFormData({ ...formData, minAge: val[0], maxAge: val[1] })}
+                      onValueChange={(val) => {
+                        const [minAge, maxAge] = getRangeValues(val)
+                        setFormData({ ...formData, minAge, maxAge })
+                      }}
                       max={60} 
                       min={18} 
                       step={1} 
@@ -583,7 +595,10 @@ export function OnboardingWizard() {
                     </div>
                     <Slider 
                       value={[formData.minHeight, formData.maxHeight]} 
-                      onValueChange={(val) => setFormData({ ...formData, minHeight: val[0], maxHeight: val[1] })}
+                      onValueChange={(val) => {
+                        const [minHeight, maxHeight] = getRangeValues(val)
+                        setFormData({ ...formData, minHeight, maxHeight })
+                      }}
                       max={220} 
                       min={140} 
                       step={1} 

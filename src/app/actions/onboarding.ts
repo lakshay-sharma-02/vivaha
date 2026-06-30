@@ -28,6 +28,7 @@ export interface OnboardingData {
   maternalGotra?: string
   grandmotherGotra?: string
   lifestyleChips?: string[]
+  prefReligionChips?: string[]
   highestQual?: string
   university?: string
   company?: string
@@ -91,8 +92,8 @@ export async function saveOnboardingData(formData: OnboardingData) {
     const { error: profileError } = await supabase
       .from('profiles')
       .update({
-        first_name: formData.firstName || null,
-        last_name: formData.lastName || null,
+        first_name: formData.firstName?.trim() || "",
+        last_name: formData.lastName?.trim() || "",
         gender: formData.gender || null,
         date_of_birth: formData.dateOfBirth || null,
         height_cm: formData.height ? parseInt(formData.height) : null,
