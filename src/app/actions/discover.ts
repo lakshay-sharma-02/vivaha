@@ -70,7 +70,9 @@ export async function fetchDiscoverProfiles(page: number = 1) {
       
       const mediaArr = p.media || [];
       const primaryMedia = mediaArr.find(m => m.is_primary) || mediaArr[0];
-      const imageUrl = primaryMedia ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/profile_photos/${primaryMedia.bucket_path}` : "bg-gradient-to-tr from-zinc-800 to-zinc-950";
+      const imageUrl = primaryMedia
+        ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/profile_photos/${primaryMedia.bucket_path}`
+        : null;
 
       const compatObj = Array.isArray(p.compatibility) ? p.compatibility[0] : p.compatibility;
       const tags = compatObj?.lifestyle || [];
@@ -92,7 +94,7 @@ export async function fetchDiscoverProfiles(page: number = 1) {
         bio: p.bio || "No bio provided.",
         compatibility: compatScore,
         verified: p.verification_status === 'verified',
-        image: primaryMedia ? `bg-[url('${imageUrl}')] bg-cover bg-center` : imageUrl,
+        image: imageUrl,
         tags: tags.length > 0 ? tags : ["No Tags"],
         family: familyType,
         income: p.income_range || "Not Specified"

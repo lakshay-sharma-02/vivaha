@@ -234,7 +234,11 @@ export default function DiscoverPage() {
             className="w-full max-w-2xl h-full max-h-[800px] bg-white/5 border border-white/10 rounded-[2.5rem] overflow-hidden flex flex-col relative shadow-2xl"
           >
             {/* Image Section */}
-            <div className={`relative h-[60%] ${activeProfile.image} overflow-hidden cursor-pointer group`} onClick={() => setSelectedProfile(activeProfile)}>
+            <div 
+              className="relative h-[60%] overflow-hidden cursor-pointer group bg-cover bg-center" 
+              onClick={() => setSelectedProfile(activeProfile)}
+              style={activeProfile.image ? { backgroundImage: `url('${activeProfile.image}')` } : { background: 'linear-gradient(to top right, #27272a, #09090b)' }}
+            >
               
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors z-10" />
               
@@ -326,7 +330,10 @@ export default function DiscoverPage() {
               transition={{ type: "spring", damping: 30, stiffness: 200 }}
               className="w-full max-w-2xl h-full bg-zinc-950 border-l border-white/10 overflow-y-auto"
             >
-              <div className={`relative h-96 ${selectedProfile.image}`}>
+              <div 
+                className="relative h-96 bg-cover bg-center" 
+                style={selectedProfile.image ? { backgroundImage: `url('${selectedProfile.image}')` } : { background: 'linear-gradient(to top right, #27272a, #09090b)' }}
+              >
                 <div className="absolute top-6 left-6">
                   <button onClick={() => setSelectedProfile(null)} className="w-10 h-10 rounded-full bg-black/50 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors">
                     <X className="w-5 h-5" />

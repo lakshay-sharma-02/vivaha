@@ -83,7 +83,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
         transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 2 }}
         className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-amber-900/10 rounded-full blur-[100px] mix-blend-screen"
       />
-      <div className="absolute inset-0 bg-[url('/noise.png')] opacity-[0.02] mix-blend-overlay" />
+      <div className="absolute inset-0 opacity-[0.02] mix-blend-overlay" />
     </div>
   )
 
