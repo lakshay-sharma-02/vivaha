@@ -10,5 +10,7 @@ export default async function MembershipPage() {
     redirect('/login')
   }
 
-  return <MembershipClient />
+  const { data: profile } = await supabase.from('profiles').select('first_name, last_name, phone').eq('id', user.id).single()
+
+  return <MembershipClient userEmail={user.email} userProfile={profile} />
 }

@@ -4,12 +4,24 @@ import * as React from "react"
 import { motion } from "framer-motion"
 import { Bell, Search, Sparkles, ChevronRight, CheckCircle2, Clock, MapPin, Briefcase, UserPlus, Eye, ShieldCheck } from "lucide-react"
 
-interface DashboardClientProps {
-  userProfile: any;
-  recommendedMatches: any[];
+import { Database } from "@/shared/lib/supabase/database.types"
+
+type ProfileRow = Database['public']['Tables']['profiles']['Row']
+
+export interface MatchType extends Partial<ProfileRow> {
+  profession?: { name: string } | { name: string }[] | null
+  city?: { name: string } | { name: string }[] | null
 }
 
-export default function DashboardClient({ userProfile, recommendedMatches }: DashboardClientProps) {
+interface DashboardClientProps {
+  userProfile: ProfileRow;
+  recommendedMatches: MatchType[];
+  completionScore: number;
+  updates: { id: string; type: string; title: string; desc: string; time: string; iconType: string }[];
+  timeline: { id: string; title: string; desc: string; time: string; iconType: string }[];
+}
+
+export default function DashboardClient({ userProfile, recommendedMatches, completionScore, updates, timeline }: DashboardClientProps) {
   return (
     <div className="space-y-12 pb-24">
       
@@ -47,14 +59,14 @@ export default function DashboardClient({ userProfile, recommendedMatches }: Das
               
               <div className="space-y-2">
                 <div className="flex justify-between items-end">
-                  <span className="text-3xl font-playfair font-medium">72%</span>
+                  <span className="text-3xl font-playfair font-medium">{completionScore}%</span>
                   <span className="text-sm text-white/50 uppercase tracking-widest">Complete</span>
                 </div>
                 {/* Beautiful Progress Bar */}
                 <div className="h-2 w-full bg-black/50 rounded-full overflow-hidden border border-white/5">
                   <motion.div 
                     initial={{ width: 0 }}
-                    animate={{ width: "72%" }}
+                    animate={{ width: `${completionScore}%` }}
                     transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay: 0.5 }}
                     className="h-full bg-gradient-to-r from-primary/50 to-primary rounded-full relative"
                   >
@@ -94,18 +106,17 @@ export default function DashboardClient({ userProfile, recommendedMatches }: Das
             <h2 className="text-lg font-playfair font-medium">Today's Updates</h2>
           </div>
           <div className="grid sm:grid-cols-2 gap-4">
-            <UpdateCard 
-              icon={<Eye className="w-5 h-5 text-blue-400" />}
-              title="Profile Viewed"
-              desc="Someone from San Francisco just viewed your profile."
-              time="2 hours ago"
-            />
-            <UpdateCard 
-              icon={<UserPlus className="w-5 h-5 text-primary" />}
-              title="New Match Nearby"
-              desc="A verified member matching your preferences joined."
-              time="5 hours ago"
-            />
+            {updates.length > 0 ? updates.map(update => (
+              <UpdateCard 
+                key={update.id}
+                icon={update.iconType === 'view' ? <Eye className="w-5 h-5 text-blue-400" /> : <UserPlus className="w-5 h-5 text-primary" />}
+                title={update.title}
+                desc={update.desc}
+                time={update.time}
+              />
+            )) : (
+              <div className="text-white/50 py-4 col-span-2">No new updates today.</div>
+            )}
           </div>
         </div>
 
@@ -142,7 +153,7 @@ export default function DashboardClient({ userProfile, recommendedMatches }: Das
 
         <div className="flex gap-6 overflow-x-auto pb-8 snap-x snap-mandatory scrollbar-hide">
           {recommendedMatches.length > 0 ? (
-            recommendedMatches.map((match: any, i: number) => (
+            recommendedMatches.map((match, i) => (
               <MatchCard key={match.id} match={match} delay={i * 0.1} />
             ))
           ) : (
@@ -160,33 +171,22 @@ export default function DashboardClient({ userProfile, recommendedMatches }: Das
         <div className="bg-white/5 border border-white/5 rounded-3xl p-8 max-w-3xl">
           <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-white/10 before:to-transparent">
             
-            {/* Timeline Item */}
-            <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-              <div className="flex items-center justify-center w-10 h-10 rounded-full border border-white/10 bg-zinc-900 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
-                <CheckCircle2 className="w-4 h-4 text-primary" />
-              </div>
-              <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-2xl bg-white/5 border border-white/5">
-                <div className="flex items-center justify-between space-x-2 mb-1">
-                  <div className="font-bold text-white/90">Identity Verified</div>
-                  <time className="text-[10px] uppercase tracking-wider text-white/40">Today, 2:40 PM</time>
+            {timeline.length > 0 ? timeline.map((item, i) => (
+              <div key={item.id} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                <div className="flex items-center justify-center w-10 h-10 rounded-full border border-white/10 bg-zinc-900 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
+                  {item.iconType === 'success' ? <CheckCircle2 className="w-4 h-4 text-primary" /> : <Clock className="w-4 h-4 text-white/50" />}
                 </div>
-                <div className="text-sm text-white/60">Your government ID has been successfully verified by our team.</div>
-              </div>
-            </div>
-
-            {/* Timeline Item */}
-            <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
-              <div className="flex items-center justify-center w-10 h-10 rounded-full border border-white/10 bg-zinc-900 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2">
-                <Clock className="w-4 h-4 text-white/50" />
-              </div>
-              <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-2xl bg-transparent">
-                <div className="flex items-center justify-between space-x-2 mb-1">
-                  <div className="font-bold text-white/60">Application Submitted</div>
-                  <time className="text-[10px] uppercase tracking-wider text-white/30">Yesterday</time>
+                <div className={`w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-2xl ${i === 0 ? 'bg-white/5 border border-white/5' : 'bg-transparent'}`}>
+                  <div className="flex items-center justify-between space-x-2 mb-1">
+                    <div className={`font-bold ${i === 0 ? 'text-white/90' : 'text-white/60'}`}>{item.title}</div>
+                    <time className={`text-[10px] uppercase tracking-wider ${i === 0 ? 'text-white/40' : 'text-white/30'}`}>{item.time}</time>
+                  </div>
+                  <div className={`text-sm ${i === 0 ? 'text-white/60' : 'text-white/40'}`}>{item.desc}</div>
                 </div>
-                <div className="text-sm text-white/40">Your onboarding application was submitted to the curation committee.</div>
               </div>
-            </div>
+            )) : (
+              <div className="text-white/50 py-4 pl-12 text-center w-full">No activity yet. Your journey is just beginning.</div>
+            )}
 
           </div>
         </div>
@@ -196,7 +196,7 @@ export default function DashboardClient({ userProfile, recommendedMatches }: Das
   )
 }
 
-function UpdateCard({ icon, title, desc, time }: any) {
+function UpdateCard({ icon, title, desc, time }: { icon: React.ReactNode, title: string, desc: string, time: string }) {
   return (
     <motion.div 
       whileHover={{ y: -2, backgroundColor: "rgba(255,255,255,0.08)" }}
@@ -215,7 +215,14 @@ function UpdateCard({ icon, title, desc, time }: any) {
     </motion.div>
   )
 }
-const MatchCard = ({ delay, match }: { delay: number; match?: any }) => (
+const MatchCard = ({ delay, match }: { delay: number; match?: MatchType }) => {
+  const profName = match?.profession
+    ? Array.isArray(match.profession) ? match.profession[0]?.name : (match.profession as { name: string }).name
+    : "Professional"
+  const cityName = match?.city
+    ? Array.isArray(match.city) ? match.city[0]?.name : (match.city as { name: string }).name
+    : "City"
+  return (
   <motion.div 
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
@@ -235,7 +242,8 @@ const MatchCard = ({ delay, match }: { delay: number; match?: any }) => (
 
     <div className="absolute bottom-6 left-6 right-6 z-10 space-y-2">
       <h3 className="font-playfair text-2xl font-medium text-white">{match?.first_name || "Match Name"}, {match?.date_of_birth ? new Date().getFullYear() - new Date(match.date_of_birth).getFullYear() : '28'}</h3>
-      <p className="text-sm text-white/70">{match?.profession?.name || "Professional"} • {match?.city?.name || "City"}</p>
+      <p className="text-sm text-white/70">{profName} • {cityName}</p>
     </div>
   </motion.div>
-)
+  )
+}

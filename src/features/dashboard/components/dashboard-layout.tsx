@@ -3,7 +3,8 @@
 import * as React from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
+import { createClient } from "@/shared/lib/supabase/client"
 import { 
   LayoutDashboard, Compass, Users, MessageSquare, 
   Bookmark, Bell, ShieldCheck, User, Settings, 
@@ -29,7 +30,38 @@ const SETTINGS_ITEMS = [
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
+  const router = useRouter()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
+  const [userInfo, setUserInfo] = React.useState<{ name: string; isPremium: boolean } | null>(null)
+
+  React.useEffect(() => {
+    async function loadUser() {
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) return
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("first_name, last_name, memberships(tier)")
+        .eq("id", user.id)
+        .maybeSingle()
+      if (profile) {
+        const membershipArr = (profile as any).memberships
+        const tier = Array.isArray(membershipArr) ? membershipArr[0]?.tier : membershipArr?.tier
+        setUserInfo({
+          name: `${profile.first_name} ${profile.last_name}`.trim() || "Member",
+          isPremium: tier === "premium",
+        })
+      }
+    }
+    loadUser()
+  }, [])
+
+  const handleSignOut = async () => {
+    const supabase = createClient()
+    await supabase.auth.signOut()
+    router.push("/login")
+    router.refresh()
+  }
 
   // Ambient animated background
   const AmbientBackground = () => (
@@ -55,7 +87,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
     </div>
   )
 
-  const NavLink = ({ item }: { item: any }) => {
+  const NavLink = ({ item }: { item: { href: string; icon: React.ElementType; label: string; premium?: boolean } }) => {
     const isActive = pathname === item.href
     return (
       <Link href={item.href} onClick={() => setIsMobileMenuOpen(false)}>
@@ -114,7 +146,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
         </div>
 
         <div className="p-4 border-t border-white/5 mt-auto">
-          <button className="flex items-center gap-4 px-4 py-3 w-full rounded-xl text-white/50 hover:text-white hover:bg-white/5 transition-colors">
+          <button onClick={handleSignOut} className="flex items-center gap-4 px-4 py-3 w-full rounded-xl text-white/50 hover:text-white hover:bg-white/5 transition-colors">
             <LogOut className="w-5 h-5" />
             <span className="font-medium text-sm">Sign Out</span>
           </button>
@@ -190,8 +222,10 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                 <div className="w-full h-full bg-gradient-to-br from-primary/40 to-transparent" />
               </div>
               <div className="flex flex-col">
-                <span className="text-sm font-medium">Lakshay</span>
-                <span className="text-[10px] text-primary uppercase tracking-wider font-bold">Premium</span>
+                <span className="text-sm font-medium">{userInfo?.name ?? "Loading..."}</span>
+                {userInfo?.isPremium && (
+                  <span className="text-[10px] text-primary uppercase tracking-wider font-bold">Premium</span>
+                )}
               </div>
             </div>
           </div>
@@ -219,7 +253,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   )
 }
 
-function SearchIcon(props: any) {
+function SearchIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>

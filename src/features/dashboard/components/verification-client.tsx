@@ -3,16 +3,61 @@
 import * as React from "react"
 import { motion } from "framer-motion"
 import { ShieldCheck, UploadCloud, Lock, FileText, CheckCircle2 } from "lucide-react"
+import { createClient } from "@/shared/lib/supabase/client"
 
 export default function VerificationClient({ status }: { status: string }) {
   const [isUploading, setIsUploading] = React.useState(false)
+  const [file, setFile] = React.useState<File | null>(null)
 
-  const handleUpload = () => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFile(e.target.files[0])
+    }
+  }
+
+  const handleUpload = async () => {
+    if (!file) return alert("Please select a document first")
     setIsUploading(true)
-    setTimeout(() => {
+    
+    try {
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) throw new Error("Not authenticated")
+
+      const fileExt = file.name.split('.').pop()
+      const fileName = `${user.id}-${Math.random()}.${fileExt}`
+
+      const { error: storageError } = await supabase.storage
+        .from('verification_documents')
+        .upload(fileName, file)
+
+      if (storageError) throw storageError
+
+      // Insert into verification_documents table
+      const { error: dbError } = await supabase
+        .from('verification_documents')
+        .insert({
+          profile_id: user.id,
+          document_type: 'government_id',
+          bucket_path: fileName,
+          status: 'pending'
+        })
+      
+      if (dbError) throw dbError
+      
+      // Update profile status
+      await supabase
+        .from('profiles')
+        .update({ verification_status: 'pending' })
+        .eq('id', user.id)
+
+      setFile(null)
+      alert("Document submitted successfully! Your profile is now pending verification.")
+    } catch (e) {
+      alert("Upload failed: " + (e as Error).message)
+    } finally {
       setIsUploading(false)
-      // Fake success for UI
-    }, 2000)
+    }
   }
 
   return (
@@ -53,12 +98,18 @@ export default function VerificationClient({ status }: { status: string }) {
             </p>
 
             <div 
-              className="border-2 border-dashed border-white/20 rounded-2xl p-12 flex flex-col items-center justify-center text-center hover:bg-white/5 transition-colors cursor-pointer group"
+              className="border-2 border-dashed border-white/20 rounded-2xl p-12 flex flex-col items-center justify-center text-center hover:bg-white/5 transition-colors cursor-pointer group relative"
             >
+              <input 
+                type="file" 
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" 
+                accept=".png,.jpg,.jpeg,.pdf"
+                onChange={handleFileChange}
+              />
               <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                 <UploadCloud className="w-8 h-8 text-primary" />
               </div>
-              <h4 className="font-medium text-lg mb-1">Click to upload document</h4>
+              <h4 className="font-medium text-lg mb-1">{file ? file.name : "Click to upload document"}</h4>
               <p className="text-xs text-white/40">PNG, JPG or PDF (Max 5MB)</p>
             </div>
 

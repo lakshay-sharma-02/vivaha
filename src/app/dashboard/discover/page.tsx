@@ -9,40 +9,80 @@ import {
 } from "lucide-react"
 import { requestIntroduction } from "@/app/actions/matchmaking"
 import { fetchDiscoverProfiles } from "@/app/actions/discover"
-import Script from "next/script"
 
 declare global {
   interface Window { Razorpay: any }
 }
 
+interface ProfileType {
+  id: string
+  name: string
+  age: string | number
+  location: string
+  profession: string
+  education: string
+  bio: string
+  compatibility: number
+  verified: boolean
+  image: string
+  tags: string[]
+  family: string
+  income: string
+}
+
 export default function DiscoverPage() {
-  const [profiles, setProfiles] = React.useState<any[]>([])
+  const [profiles, setProfiles] = React.useState<ProfileType[]>([])
   const [isLoadingProfiles, setIsLoadingProfiles] = React.useState(true)
   const [activeProfileIndex, setActiveProfileIndex] = React.useState(0)
   const [showFilters, setShowFilters] = React.useState(false)
-  const [selectedProfile, setSelectedProfile] = React.useState<any>(null)
+  const [selectedProfile, setSelectedProfile] = React.useState<ProfileType | null>(null)
   
   // Paywall Logic
   const [interestsSent, setInterestsSent] = React.useState(0)
   const [showPaywall, setShowPaywall] = React.useState(false)
   const [toastMessage, setToastMessage] = React.useState<string | null>(null)
 
-  React.useEffect(() => {
-    async function loadProfiles() {
-      setIsLoadingProfiles(true)
-      const res = await fetchDiscoverProfiles()
-      if (res.success && res.profiles) {
-        setProfiles(res.profiles)
+  const [page, setPage] = React.useState(1)
+  const [hasMore, setHasMore] = React.useState(true)
+
+  const loadProfiles = async (pageToLoad: number) => {
+    setIsLoadingProfiles(true)
+    const res = await fetchDiscoverProfiles(pageToLoad)
+    if (res.success && res.profiles) {
+      if (res.profiles.length < 20) {
+        setHasMore(false)
       }
-      setIsLoadingProfiles(false)
+      if (pageToLoad === 1) {
+        setProfiles(res.profiles)
+      } else {
+        setProfiles(prev => [...prev, ...res.profiles])
+      }
     }
-    loadProfiles()
+    setIsLoadingProfiles(false)
+  }
+
+  React.useEffect(() => {
+    loadProfiles(1)
   }, [])
 
   const activeProfile = profiles[activeProfileIndex]
 
-  const handleNextProfile = () => {
-    setActiveProfileIndex((prev) => (prev + 1) % profiles.length)
+  const handleNextProfile = async () => {
+    const nextIndex = activeProfileIndex + 1
+    
+    if (nextIndex >= profiles.length - 3 && hasMore && !isLoadingProfiles) {
+      const nextPage = page + 1
+      setPage(nextPage)
+      setIsLoadingProfiles(true)
+      const res = await fetchDiscoverProfiles(nextPage)
+      if (res.success && res.profiles) {
+        if (res.profiles.length < 20) setHasMore(false)
+        setProfiles(prev => [...prev, ...res.profiles])
+      }
+      setIsLoadingProfiles(false)
+    }
+    
+    setActiveProfileIndex(nextIndex)
   }
 
   const [isSending, setIsSending] = React.useState(false)
@@ -66,7 +106,7 @@ export default function DiscoverPage() {
         name: "Vivaha Premium",
         description: "Lifetime Premium Matchmaking Access",
         order_id: data.orderId,
-        handler: async function (response: any) {
+        handler: async function (response: { razorpay_payment_id: string; razorpay_order_id: string; razorpay_signature: string }) {
           const verifyRes = await fetch("/api/payment/verify", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -88,18 +128,18 @@ export default function DiscoverPage() {
         theme: { color: "#E8B96C" },
       }
       const rzp = new window.Razorpay(options)
-      rzp.on("payment.failed", (r: any) => {
+      rzp.on("payment.failed", (r: { error: { description: string } }) => {
         alert("Payment failed: " + r.error.description)
       })
       rzp.open()
-    } catch (err: any) {
-      alert("Error: " + err.message)
+    } catch (err) {
+      alert("Error: " + (err as Error).message)
     } finally {
       setIsProcessingPayment(false)
     }
   }
 
-  const handleSendInterest = async (profileId: any) => {
+  const handleSendInterest = async (profileId: string) => {
     setIsSending(true)
     
     // Call our robust backend RPC via Server Action
@@ -129,7 +169,6 @@ export default function DiscoverPage() {
 
   return (
     <>
-    <Script src="https://checkout.razorpay.com/v1/checkout.js" />
     <div className="h-[calc(100vh-8rem)] lg:h-[calc(100vh-5rem)] flex flex-col relative overflow-hidden">
       
       {/* Toast Notification */}

@@ -9,6 +9,7 @@ import { Slider } from "@/shared/ui/slider"
 import { useRouter } from "next/navigation"
 import { Camera, ShieldCheck, UploadCloud, CheckCircle2, Search, Heart, MapPin, Briefcase, Loader2 } from "lucide-react"
 import { saveOnboardingData } from "@/app/actions/onboarding"
+import { createClient } from "@/shared/lib/supabase/client"
 
 const STEPS = [
   { id: "welcome", title: "Welcome" },
@@ -29,6 +30,74 @@ export function OnboardingWizard() {
   const [currentStep, setCurrentStep] = React.useState(0)
   const [direction, setDirection] = React.useState(1)
   const [isSaving, setIsSaving] = React.useState(false)
+  const [isUploadingPhoto, setIsUploadingPhoto] = React.useState(false)
+  const [primaryPhotoUrl, setPrimaryPhotoUrl] = React.useState("")
+  const [isUploadingDoc, setIsUploadingDoc] = React.useState(false)
+  const [documentUploaded, setDocumentUploaded] = React.useState(false)
+
+  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setIsUploadingPhoto(true)
+    try {
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) throw new Error("Not authenticated")
+      const fileExt = file.name.split('.').pop()
+      const fileName = `${user.id}-primary-${Math.random()}.${fileExt}`
+      const { error: storageError } = await supabase.storage.from('profile_photos').upload(fileName, file)
+      if (storageError) throw storageError
+      
+      await supabase.from('profile_media').update({ is_primary: false }).eq('profile_id', user.id)
+      const { error: dbError } = await supabase.from('profile_media').insert({
+        profile_id: user.id,
+        type: 'image',
+        bucket_path: fileName,
+        is_primary: true,
+        display_order: 0
+      })
+      if (dbError) throw dbError
+
+      // Fetch the public URL to display immediately
+      const { data: urlData } = supabase.storage.from('profile_photos').getPublicUrl(fileName)
+      setPrimaryPhotoUrl(urlData.publicUrl)
+    } catch (err) {
+      alert("Failed to upload photo: " + (err as Error).message)
+    } finally {
+      setIsUploadingPhoto(false)
+    }
+  }
+
+  const handleDocUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setIsUploadingDoc(true)
+    try {
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) throw new Error("Not authenticated")
+      const fileExt = file.name.split('.').pop()
+      const fileName = `${user.id}-${Math.random()}.${fileExt}`
+      const { error: storageError } = await supabase.storage.from('verification_documents').upload(fileName, file)
+      if (storageError) throw storageError
+
+      const { error: dbError } = await supabase.from('verification_documents').insert({
+        profile_id: user.id,
+        document_type: 'government_id',
+        bucket_path: fileName,
+        status: 'pending'
+      })
+      if (dbError) throw dbError
+      
+      await supabase.from('profiles').update({ verification_status: 'pending' }).eq('id', user.id)
+      setDocumentUploaded(true)
+    } catch (err) {
+      alert("Failed to upload document: " + (err as Error).message)
+    } finally {
+      setIsUploadingDoc(false)
+    }
+  }
+
   const [formData, setFormData] = React.useState({
     firstName: "", lastName: "", gender: "", dateOfBirth: "", height: "",
     country: "", state: "", city: "", phone: "", instagram: "",
@@ -274,16 +343,16 @@ export function OnboardingWizard() {
                 <div className="space-y-6 max-w-md mx-auto">
                   <div className="space-y-3">
                     <Label className="text-white/70 ml-1">Country</Label>
-                    <Input placeholder="e.g. United States" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                    <Input value={formData.country} onChange={(e) => setFormData({ ...formData, country: e.target.value })} placeholder="e.g. United States" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
                   </div>
                   <div className="grid grid-cols-2 gap-6">
                     <div className="space-y-3">
                       <Label className="text-white/70 ml-1">State / Region</Label>
-                      <Input placeholder="e.g. California" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                      <Input value={formData.state} onChange={(e) => setFormData({ ...formData, state: e.target.value })} placeholder="e.g. California" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
                     </div>
                     <div className="space-y-3">
                       <Label className="text-white/70 ml-1">City</Label>
-                      <Input placeholder="e.g. San Francisco" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                      <Input value={formData.city} onChange={(e) => setFormData({ ...formData, city: e.target.value })} placeholder="e.g. San Francisco" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
                     </div>
                   </div>
                 </div>
@@ -300,20 +369,20 @@ export function OnboardingWizard() {
                 <div className="space-y-6 max-w-md mx-auto">
                   <div className="space-y-3">
                     <Label className="text-white/70 ml-1">Highest Qualification</Label>
-                    <Input placeholder="e.g. Masters in Computer Science" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                    <Input value={formData.highestQual} onChange={(e) => setFormData({ ...formData, highestQual: e.target.value })} placeholder="e.g. Masters in Computer Science" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
                   </div>
                   <div className="space-y-3">
                     <Label className="text-white/70 ml-1">University</Label>
-                    <Input placeholder="e.g. Stanford University" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                    <Input value={formData.university} onChange={(e) => setFormData({ ...formData, university: e.target.value })} placeholder="e.g. Stanford University" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
                   </div>
                   <div className="space-y-3">
                     <Label className="text-white/70 ml-1">Occupation</Label>
-                    <Input placeholder="e.g. Lead Product Designer" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                    <Input value={formData.occupation} onChange={(e) => setFormData({ ...formData, occupation: e.target.value })} placeholder="e.g. Lead Product Designer" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
                   </div>
                   <div className="grid grid-cols-2 gap-6">
                     <div className="space-y-3">
                       <Label className="text-white/70 ml-1">Company</Label>
-                      <Input placeholder="e.g. Apple" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
+                      <Input value={formData.company} onChange={(e) => setFormData({ ...formData, company: e.target.value })} placeholder="e.g. Apple" className="h-14 rounded-2xl bg-white/5 border-white/10 text-white placeholder:text-white/30" />
                     </div>
                     <div className="space-y-3">
                       <Label className="text-white/70 ml-1">Income Range</Label>
@@ -495,17 +564,31 @@ export function OnboardingWizard() {
                   <div className="space-y-6">
                     <div className="flex justify-between items-end">
                       <Label className="text-white/70 ml-1">Age Range</Label>
-                      <span className="text-primary font-medium">25 - 32 years</span>
+                      <span className="text-primary font-medium">{formData.minAge} - {formData.maxAge} years</span>
                     </div>
-                    <Slider defaultValue={[25, 32]} max={60} min={18} step={1} className="w-full" />
+                    <Slider 
+                      value={[formData.minAge, formData.maxAge]} 
+                      onValueChange={(val) => setFormData({ ...formData, minAge: val[0], maxAge: val[1] })}
+                      max={60} 
+                      min={18} 
+                      step={1} 
+                      className="w-full" 
+                    />
                   </div>
                   
                   <div className="space-y-6">
                     <div className="flex justify-between items-end">
                       <Label className="text-white/70 ml-1">Height Range</Label>
-                      <span className="text-primary font-medium">160cm - 180cm</span>
+                      <span className="text-primary font-medium">{formData.minHeight}cm - {formData.maxHeight}cm</span>
                     </div>
-                    <Slider defaultValue={[160, 180]} max={220} min={140} step={1} className="w-full" />
+                    <Slider 
+                      value={[formData.minHeight, formData.maxHeight]} 
+                      onValueChange={(val) => setFormData({ ...formData, minHeight: val[0], maxHeight: val[1] })}
+                      max={220} 
+                      min={140} 
+                      step={1} 
+                      className="w-full" 
+                    />
                   </div>
 
                   <div className="space-y-4 pt-4">
@@ -540,10 +623,22 @@ export function OnboardingWizard() {
                 
                 <div className="max-w-2xl mx-auto grid grid-cols-3 gap-4">
                   {/* Primary Photo Slot */}
-                  <div className="col-span-2 row-span-2 relative rounded-3xl border-2 border-dashed border-primary/50 bg-primary/5 flex flex-col items-center justify-center p-6 cursor-pointer hover:bg-primary/10 transition-colors aspect-square md:aspect-auto">
-                    <UploadCloud className="w-10 h-10 text-primary mb-4" />
-                    <p className="text-white font-medium text-lg">Primary Photo</p>
-                    <p className="text-white/50 text-sm mt-2 text-center">Drag & drop or click to upload<br/>(Max 5MB)</p>
+                  <div className="col-span-2 row-span-2 relative rounded-3xl border-2 border-dashed border-primary/50 bg-primary/5 flex flex-col items-center justify-center p-6 cursor-pointer hover:bg-primary/10 transition-colors aspect-square md:aspect-auto overflow-hidden">
+                    <input type="file" accept="image/*" onChange={handlePhotoUpload} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
+                    {isUploadingPhoto ? (
+                      <div className="flex flex-col items-center justify-center text-primary">
+                        <Loader2 className="w-10 h-10 animate-spin mb-4" />
+                        <p className="font-medium text-lg">Uploading...</p>
+                      </div>
+                    ) : primaryPhotoUrl ? (
+                      <img src={primaryPhotoUrl} className="absolute inset-0 w-full h-full object-cover" alt="Primary" />
+                    ) : (
+                      <>
+                        <UploadCloud className="w-10 h-10 text-primary mb-4" />
+                        <p className="text-white font-medium text-lg">Primary Photo</p>
+                        <p className="text-white/50 text-sm mt-2 text-center">Drag & drop or click to upload<br/>(Max 5MB)</p>
+                      </>
+                    )}
                   </div>
                   
                   {/* Additional Slots */}
@@ -590,7 +685,12 @@ export function OnboardingWizard() {
                     <div>
                       <h3 className="text-white font-medium mb-1">Government ID</h3>
                       <p className="text-white/50 text-sm mb-4">Upload a secure copy of your Passport, Driver's License, or National ID.</p>
-                      <Button variant="outline" className="w-full rounded-full border-white/20 text-white hover:bg-white/10">Upload Document</Button>
+                      <div className="relative">
+                        <input type="file" accept=".png,.jpg,.jpeg,.pdf" onChange={handleDocUpload} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
+                        <Button variant="outline" className="w-full rounded-full border-white/20 text-white hover:bg-white/10" disabled={isUploadingDoc}>
+                          {isUploadingDoc ? "Uploading..." : documentUploaded ? "Document Uploaded ✓" : "Upload Document"}
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -598,47 +698,82 @@ export function OnboardingWizard() {
             )}
 
             {/* Step 10: Review */}
-            {currentStep === 10 && (
-              <div className="space-y-10">
-                <div className="text-center space-y-3 mb-12">
-                  <h2 className="font-playfair text-4xl font-medium">Review Profile</h2>
-                  <p className="text-white/50">Your profile is 98% complete.</p>
-                </div>
-                
-                <div className="max-w-lg mx-auto glass rounded-[2.5rem] p-8 border-white/10 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent pointer-events-none" />
+            {currentStep === 10 && (() => {
+              const fullName = [formData.firstName, formData.lastName].filter(Boolean).join(" ") || "—"
+              const age = formData.dateOfBirth
+                ? new Date().getFullYear() - new Date(formData.dateOfBirth).getFullYear()
+                : null
+              const locationStr = [formData.city, formData.state].filter(Boolean).join(", ") || "—"
+              const jobStr = [formData.occupation, formData.company].filter(Boolean).join(" at ") || "—"
+              const diet = selections.lifestyle.find(s => ["Vegetarian", "Non-Vegetarian", "Vegan", "Pescatarian"].includes(s)) || "—"
+              return (
+                <div className="space-y-10">
+                  <div className="text-center space-y-3 mb-12">
+                    <h2 className="font-playfair text-4xl font-medium">Review Profile</h2>
+                    <p className="text-white/50">Your profile is 98% complete.</p>
+                  </div>
                   
-                  <div className="flex items-center gap-6 mb-8 relative z-10">
-                    <div className="w-24 h-24 rounded-full bg-zinc-800 shrink-0 border-2 border-primary/50 overflow-hidden">
-                      <div className="w-full h-full bg-[url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop')] bg-cover" />
+                  <div className="max-w-lg mx-auto glass rounded-[2.5rem] p-8 border-white/10 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent pointer-events-none" />
+                    
+                    <div className="flex items-center gap-6 mb-8 relative z-10">
+                      <div className="w-24 h-24 rounded-full bg-zinc-800 shrink-0 border-2 border-primary/50 overflow-hidden">
+                        {primaryPhotoUrl ? (
+                          <img src={primaryPhotoUrl} alt="Profile" className="w-full h-full object-cover" />
+                        ) : (
+                          <div className="w-full h-full bg-gradient-to-br from-zinc-700 to-zinc-900 flex items-center justify-center text-3xl font-playfair text-white/30">
+                            {formData.firstName?.[0]?.toUpperCase() || "?"}
+                          </div>
+                        )}
+                      </div>
+                      <div>
+                        <h3 className="text-2xl font-playfair font-medium text-white flex items-center gap-2">
+                          {fullName}
+                          <CheckCircle2 className="w-5 h-5 text-primary" />
+                        </h3>
+                        <p className="text-white/60">{age ? `${age}` : "—"} • {locationStr}</p>
+                        {jobStr !== "—" && <p className="text-primary mt-1 text-sm font-medium">{jobStr}</p>}
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="text-2xl font-playfair font-medium text-white flex items-center gap-2">
-                        Lakshay Sharma
-                        <CheckCircle2 className="w-5 h-5 text-primary" />
-                      </h3>
-                      <p className="text-white/60">28 • San Francisco, CA</p>
-                      <p className="text-primary mt-1 text-sm font-medium">Lead Product Designer at Apple</p>
-                    </div>
-                  </div>
 
-                  <div className="space-y-4 relative z-10 border-t border-white/10 pt-6">
-                    <div className="flex justify-between">
-                      <span className="text-white/50 text-sm">Religion</span>
-                      <span className="text-white text-sm font-medium">Hindu</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-white/50 text-sm">Height</span>
-                      <span className="text-white text-sm font-medium">175 cm</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-white/50 text-sm">Diet</span>
-                      <span className="text-white text-sm font-medium">Vegetarian</span>
+                    <div className="space-y-4 relative z-10 border-t border-white/10 pt-6">
+                      <div className="flex justify-between">
+                        <span className="text-white/50 text-sm">Religion</span>
+                        <span className="text-white text-sm font-medium">{formData.religion || "—"}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-white/50 text-sm">Community</span>
+                        <span className="text-white text-sm font-medium">{formData.community || "—"}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-white/50 text-sm">Height</span>
+                        <span className="text-white text-sm font-medium">{formData.height ? `${formData.height} cm` : "—"}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-white/50 text-sm">Diet</span>
+                        <span className="text-white text-sm font-medium">{diet}</span>
+                      </div>
+                      {formData.motherTongue && (
+                        <div className="flex justify-between">
+                          <span className="text-white/50 text-sm">Mother Tongue</span>
+                          <span className="text-white text-sm font-medium">{formData.motherTongue}</span>
+                        </div>
+                      )}
+                      {selections.lifestyle.length > 0 && (
+                        <div className="flex justify-between items-start gap-4 pt-2">
+                          <span className="text-white/50 text-sm shrink-0">Lifestyle</span>
+                          <div className="flex flex-wrap gap-1.5 justify-end">
+                            {selections.lifestyle.slice(0, 4).map(s => (
+                              <span key={s} className="px-2 py-0.5 rounded-full bg-white/10 text-white text-xs">{s}</span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
-              </div>
-            )}
+              )
+            })()}
 
             {/* Step 11: Completion */}
             {currentStep === 11 && (

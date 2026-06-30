@@ -5,8 +5,20 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Heart, X, Sparkles, MapPin, Briefcase, Check, ShieldCheck } from "lucide-react"
 import { getPendingRequests, respondToRequest } from "@/app/actions/matches"
 
+interface MatchRequest {
+  introduction_id: string
+  sender_id: string
+  name: string
+  age: number | string
+  location: string
+  profession: string
+  bio: string | null
+  verified: boolean
+  received_at: string | null
+}
+
 export default function MatchesClient() {
-  const [requests, setRequests] = React.useState<any[]>([])
+  const [requests, setRequests] = React.useState<MatchRequest[]>([])
   const [isLoading, setIsLoading] = React.useState(true)
   const [processingId, setProcessingId] = React.useState<string | null>(null)
 

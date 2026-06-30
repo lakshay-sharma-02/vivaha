@@ -7,7 +7,7 @@ export async function requestIntroduction(targetUserId: string) {
     const supabase = await createClient()
 
     // Call the RPC function we created in the database
-    const { data, error } = await supabase.rpc('request_introduction', {
+    const { data, error } = await (supabase.rpc as any)('express_interest', {
       target_user_id: targetUserId
     })
 

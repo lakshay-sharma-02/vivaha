@@ -10,5 +10,11 @@ export default async function NotificationsPage() {
     redirect('/login')
   }
 
-  return <NotificationsClient />
+  const { data: notifications } = await supabase
+    .from('notifications')
+    .select('*')
+    .eq('user_id', user.id)
+    .order('created_at', { ascending: false })
+
+  return <NotificationsClient notifications={notifications || []} />
 }

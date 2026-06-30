@@ -4,6 +4,7 @@ import { siteConfig } from "@/config/site";
 import { ThemeProvider } from "@/shared/providers/theme-provider";
 import { SmoothScrollProvider } from "@/shared/providers/smooth-scroll-provider";
 import { AmbientBackground } from "@/shared/components/ambient-background";
+import Script from "next/script";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -50,6 +51,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
           <AmbientBackground />
           {children}
         </ThemeProvider>

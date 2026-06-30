@@ -12,14 +12,25 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
-    // 2. Parse request
+    // 2. Prevent duplicate active memberships
+    const { data: membership } = await supabase
+      .from('memberships')
+      .select('is_active')
+      .eq('profile_id', user.id)
+      .single()
+
+    if (membership?.is_active) {
+      return NextResponse.json({ error: "You already have an active premium membership." }, { status: 400 })
+    }
+
+    // 3. Parse request
     const body = await req.json()
     const { planId } = body // e.g., 'premium_lifetime'
 
     // We hardcode the 5000 INR price here to prevent client-side tampering
     const amountInPaise = 5000 * 100 
 
-    // 3. Initialize Razorpay
+    // 4. Initialize Razorpay
     if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
       console.error("Razorpay keys missing from environment.")
       return NextResponse.json({ error: "Payment gateway misconfigured." }, { status: 500 })
@@ -30,7 +41,7 @@ export async function POST(req: Request) {
       key_secret: process.env.RAZORPAY_KEY_SECRET,
     })
 
-    // 4. Create the Razorpay Order
+    // 5. Create the Razorpay Order
     const options = {
       amount: amountInPaise,
       currency: "INR",
@@ -50,8 +61,8 @@ export async function POST(req: Request) {
       keyId: process.env.RAZORPAY_KEY_ID // Safe to send public key to frontend
     })
 
-  } catch (err: any) {
-    console.error("Razorpay Order Creation Error:", err)
+  } catch (err) {
+    console.error("Razorpay Order Creation Error:", (err as Error).message)
     return NextResponse.json(
       { error: "Failed to initialize payment gateway." },
       { status: 500 }

@@ -1,6 +1,9 @@
 "use server"
 
 import { createClient } from "@/shared/lib/supabase/server"
+import type { Database } from "@/shared/lib/supabase/database.types"
+
+type IntroductionRow = Database["public"]["Tables"]["introductions"]["Row"]
 
 export async function getPendingRequests() {
   try {
@@ -13,7 +16,7 @@ export async function getPendingRequests() {
 
     // Fetch introductions where receiver_id is the current user and status is 'pending'
     // We also join the sender's profile data
-    const { data: requests, error } = await supabase
+    const { data: requestsRaw, error } = await supabase
       .from('introductions')
       .select(`
         id,
@@ -39,11 +42,24 @@ export async function getPendingRequests() {
     }
 
     // Map to UI format
-    const mappedRequests = requests.map((req: any) => {
+    type SenderProfile = {
+      id: string
+      first_name: string
+      last_name: string | null
+      date_of_birth: string | null
+      bio: string | null
+      verification_status: string | null
+      profession: { name: string }[] | { name: string } | null
+      city: { name: string }[] | { name: string } | null
+    }
+    type RequestJoined = Pick<IntroductionRow, 'id' | 'created_at'> & { sender: SenderProfile }
+
+    const requests = requestsRaw as RequestJoined[] | null
+    const mappedRequests = (requests || []).map((req) => {
       const p = req.sender
       const age = p.date_of_birth ? new Date().getFullYear() - new Date(p.date_of_birth).getFullYear() : '?'
-      const professionName = p.profession?.[0]?.name || p.profession?.name || "Professional"
-      const cityName = p.city?.[0]?.name || p.city?.name || "Not Specified"
+      const professionName = Array.isArray(p.profession) ? p.profession[0]?.name : (p.profession as { name: string } | null)?.name ?? "Professional"
+      const cityName = Array.isArray(p.city) ? p.city[0]?.name : (p.city as { name: string } | null)?.name ?? "Not Specified"
 
       return {
         introduction_id: req.id,
@@ -75,11 +91,11 @@ export async function respondToRequest(introductionId: string, accept: boolean) 
       return { success: false, error: "Not authenticated" }
     }
 
-    const newStatus = accept ? 'accepted' : 'rejected'
+    const newStatus = (accept ? 'accepted' : 'rejected') as 'accepted' | 'rejected'
 
     // Update the introduction status.
     // RLS policies ensure the user can only update if they are the receiver.
-    const { data, error } = await supabase
+    const { data: updatedRaw, error } = await supabase
       .from('introductions')
       .update({ status: newStatus, updated_at: new Date().toISOString() })
       .eq('id', introductionId)
@@ -92,14 +108,18 @@ export async function respondToRequest(introductionId: string, accept: boolean) 
       return { success: false, error: "Failed to update status." }
     }
 
+    const updated = updatedRaw as Pick<IntroductionRow, 'sender_id'> | null
+
     // If accepted, we should theoretically fire a notification to the sender
     // For simplicity, we just log the audit event
-    await supabase.from('audit_logs').insert({
-      action: `introduction_${newStatus}`,
-      actor_id: user.id,
-      target_id: data.sender_id,
-      metadata: { introduction_id: introductionId }
-    })
+    if (updated?.sender_id) {
+      await supabase.from('audit_logs').insert({
+        action: `introduction_${newStatus}`,
+        actor_id: user.id,
+        target_id: updated.sender_id,
+        metadata: { introduction_id: introductionId }
+      })
+    }
 
     return { success: true }
 

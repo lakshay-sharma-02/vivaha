@@ -45,18 +45,16 @@ export async function POST(req: Request) {
     const endsAt = new Date()
     endsAt.setFullYear(endsAt.getFullYear() + 100)
 
-    // Ensure idempotency: remove any existing membership first
-    await supabase.from('memberships').delete().eq('profile_id', user.id)
-
+    // Ensure idempotency: upsert the membership
     const { error: dbError } = await supabase
       .from('memberships')
-      .insert({
+      .upsert({
         profile_id: user.id,
         tier: 'premium',
         gateway_customer_id: razorpay_payment_id, 
         is_active: true,
         ends_at: endsAt.toISOString(),
-      })
+      }, { onConflict: 'profile_id' })
 
     if (dbError) {
       console.error("Database error activating membership:", dbError)
@@ -72,7 +70,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ success: true, message: "Membership upgraded successfully!" })
 
-  } catch (err: any) {
+  } catch (err) {
     console.error("Razorpay Verification Error:", err)
     return NextResponse.json(
       { error: "An unexpected error occurred during verification." },

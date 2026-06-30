@@ -13,9 +13,20 @@ export default async function ProfilePage() {
   // Fetch their profile
   const { data: profile } = await supabase
     .from('profiles')
-    .select('first_name, last_name, gender, date_of_birth, profession:profession_id(name), city:city_id(name), phone, instagram')
+    .select(`
+      *,
+      profession:profession_id(name), 
+      city:city_id(name),
+      profile_media(bucket_path, is_primary),
+      family_details(gotra),
+      compatibility_profiles(lifestyle)
+    `)
     .eq('id', user.id)
     .single()
 
-  return <ProfileClient profile={profile} />
+  if (!profile) {
+    redirect('/onboarding')
+  }
+
+  return <ProfileClient profile={profile as Parameters<typeof ProfileClient>[0]['profile']} />
 }

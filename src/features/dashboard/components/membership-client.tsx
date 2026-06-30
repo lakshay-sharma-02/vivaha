@@ -3,7 +3,6 @@
 import * as React from "react"
 import { motion } from "framer-motion"
 import { Crown, CheckCircle2, Star, ShieldCheck, ArrowRight, Lock } from "lucide-react"
-import Script from "next/script"
 
 declare global {
   interface Window {
@@ -11,7 +10,16 @@ declare global {
   }
 }
 
-export default function MembershipClient() {
+interface MembershipClientProps {
+  userEmail?: string;
+  userProfile?: {
+    first_name: string;
+    last_name: string;
+    phone: string | null;
+  } | null;
+}
+
+export default function MembershipClient({ userEmail, userProfile }: MembershipClientProps) {
   const [isProcessing, setIsProcessing] = React.useState(false)
 
   const handleUpgrade = async () => {
@@ -39,7 +47,7 @@ export default function MembershipClient() {
         name: "Vivaha Premium",
         description: "Lifetime Premium Matchmaking Access",
         order_id: data.orderId,
-        handler: async function (response: any) {
+        handler: async function (response: { razorpay_payment_id: string; razorpay_order_id: string; razorpay_signature: string }) {
           // 3. Verify payment on our backend
           const verifyRes = await fetch("/api/payment/verify", {
             method: "POST",
@@ -60,9 +68,9 @@ export default function MembershipClient() {
           }
         },
         prefill: {
-          name: "Vivaha Member", // Could pull from auth context
-          email: "member@example.com",
-          contact: "9999999999"
+          name: userProfile ? `${userProfile.first_name} ${userProfile.last_name}` : "Vivaha Member",
+          email: userEmail || "member@example.com",
+          contact: userProfile?.phone || "9999999999"
         },
         theme: {
           color: "#E8B96C" // Our primary brand color
@@ -70,14 +78,14 @@ export default function MembershipClient() {
       }
 
       const rzp = new window.Razorpay(options)
-      rzp.on("payment.failed", function (response: any) {
+      rzp.on("payment.failed", function (response: { error: { description: string } }) {
         alert("Payment failed: " + response.error.description)
       })
       
       rzp.open()
       
-    } catch (err: any) {
-      alert("Error: " + err.message)
+    } catch (err) {
+      alert("Error: " + (err as Error).message)
     } finally {
       setIsProcessing(false)
     }
@@ -85,7 +93,6 @@ export default function MembershipClient() {
 
   return (
     <>
-    <Script src="https://checkout.razorpay.com/v1/checkout.js" />
     <div className="space-y-12 pb-24 max-w-5xl">
       <section className="pt-8 text-center max-w-2xl mx-auto">
         <motion.div 
@@ -191,7 +198,7 @@ export default function MembershipClient() {
   )
 }
 
-function XIcon(props: any) {
+function XIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}

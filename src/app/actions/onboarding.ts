@@ -3,7 +3,39 @@
 import { createClient } from "@/shared/lib/supabase/server"
 import { revalidatePath } from "next/cache"
 
-export async function saveOnboardingData(formData: any) {
+export interface OnboardingData {
+  firstName?: string
+  lastName?: string
+  gender?: 'male' | 'female'
+  dateOfBirth?: string
+  height?: string
+  religion?: string
+  profession?: string
+  country?: string
+  city?: string
+  bio?: string
+  phone?: string
+  instagram?: string
+  minAge?: number
+  maxAge?: number
+  minHeight?: number
+  fatherOccupation?: string
+  motherOccupation?: string
+  familyType?: string
+  familyValues?: string
+  siblings?: string
+  gotra?: string
+  maternalGotra?: string
+  grandmotherGotra?: string
+  lifestyleChips?: string[]
+  highestQual?: string
+  university?: string
+  company?: string
+  income?: string
+  occupation?: string
+}
+
+export async function saveOnboardingData(formData: OnboardingData) {
   try {
     const supabase = await createClient()
     
@@ -15,46 +47,52 @@ export async function saveOnboardingData(formData: any) {
     }
 
     // Helper to get or create a lookup table entry
-    async function getOrCreateLookup(tableName: string, name: string) {
+    // Using `as any` because dynamic table names can't be typed through the Supabase generic client
+    async function getOrCreateLookup(tableName: string, name?: string): Promise<string | null> {
       if (!name) return null;
-      // Try to find it
-      const { data } = await supabase.from(tableName).select('id').ilike('name', name).single()
-      if (data) return data.id;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data } = await (supabase.from(tableName as any) as any).select('id').ilike('name', name).single()
+      if (data?.id) return data.id as string;
       
       // If not found, create it
-      const { data: newData, error } = await supabase.from(tableName).insert({ name }).select('id').single()
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: newData, error } = await (supabase.from(tableName as any) as any).insert({ name }).select('id').single()
       if (error) {
         console.error(`Error creating ${tableName}:`, error);
         return null;
       }
-      return newData.id;
+      return newData?.id as string | null;
     }
 
     // Helper for Country/City specifically (since city depends on country)
-    async function getOrCreateLocation(countryName: string, cityName: string) {
+    async function getOrCreateLocation(countryName?: string, cityName?: string): Promise<{ countryId: string | null; cityId: string | null }> {
       const countryId = await getOrCreateLookup('countries', countryName);
       if (!countryId || !cityName) return { countryId, cityId: null };
 
-      const { data } = await supabase.from('cities').select('id').eq('country_id', countryId).ilike('name', cityName).single();
-      if (data) return { countryId, cityId: data.id };
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data } = await (supabase.from('cities') as any).select('id').eq('country_id', countryId).ilike('name', cityName).single();
+      if (data?.id) return { countryId, cityId: data.id as string };
 
-      const { data: newCity, error } = await supabase.from('cities').insert({ name: cityName, country_id: countryId }).select('id').single();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: newCity, error } = await (supabase.from('cities') as any).insert({ name: cityName, country_id: countryId }).select('id').single();
       if (error) {
         console.error('Error creating city:', error);
         return { countryId, cityId: null };
       }
-      return { countryId, cityId: newCity.id };
+      return { countryId, cityId: newCity?.id as string | null };
     }
 
     // Process Lookups
     const religionId = await getOrCreateLookup('religions', formData.religion);
-    const professionId = await getOrCreateLookup('professions', formData.profession);
+    const professionId = await getOrCreateLookup('professions', formData.occupation);
     const { countryId, cityId } = await getOrCreateLocation(formData.country, formData.city);
 
     // 2. Update Profile
     const { error: profileError } = await supabase
       .from('profiles')
       .update({
+        first_name: formData.firstName || null,
+        last_name: formData.lastName || null,
         gender: formData.gender || null,
         date_of_birth: formData.dateOfBirth || null,
         height_cm: formData.height ? parseInt(formData.height) : null,
@@ -65,6 +103,10 @@ export async function saveOnboardingData(formData: any) {
         bio: formData.bio || null,
         phone: formData.phone || null,
         instagram: formData.instagram || null,
+        education: formData.highestQual || null,
+        university: formData.university || null,
+        company: formData.company || null,
+        income_range: formData.income || null,
       })
       .eq('id', user.id);
 
@@ -113,6 +155,10 @@ export async function saveOnboardingData(formData: any) {
         profile_id: user.id,
         lifestyle: formData.lifestyleChips || [],
       }, { onConflict: 'profile_id' });
+
+    if (compatError) {
+      console.error("Compatibility error:", compatError)
+    }
 
     revalidatePath('/dashboard')
     return { success: true }

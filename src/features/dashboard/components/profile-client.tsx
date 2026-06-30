@@ -4,16 +4,89 @@ import * as React from "react"
 import { motion } from "framer-motion"
 import { Camera, Edit2, ShieldCheck, MapPin, Briefcase, Calendar, AtSign, Phone } from "lucide-react"
 import Link from "next/link"
+import { createClient } from "@/shared/lib/supabase/client"
 
-export default function ProfileClient({ profile }: { profile: any }) {
+import { Database } from "@/shared/lib/supabase/database.types"
+
+type ProfileMedia = Database['public']['Tables']['profile_media']['Row']
+
+interface ProfileProps {
+  profile: Database['public']['Tables']['profiles']['Row'] & {
+    profession?: { name: string }[] | { name: string } | null
+    city?: { name: string }[] | { name: string } | null
+    profile_media?: ProfileMedia[]
+    family_details?: { gotra: string | null }[] | { gotra: string | null } | null
+    compatibility_profiles?: { lifestyle: string[] | null }[] | { lifestyle: string[] | null } | null
+    education?: string | null
+    income_range?: string | null
+  }
+}
+
+export default function ProfileClient({ profile }: ProfileProps) {
   const [isEditing, setIsEditing] = React.useState(false)
+  const [isUploadingPhoto, setIsUploadingPhoto] = React.useState(false)
+  const fileInputRef = React.useRef<HTMLInputElement>(null)
+
+  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setIsUploadingPhoto(true)
+    try {
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) throw new Error("Not authenticated")
+
+      const fileExt = file.name.split('.').pop()
+      const fileName = `${user.id}-${Math.random()}.${fileExt}`
+
+      const { error: storageError } = await supabase.storage
+        .from('profile_photos')
+        .upload(fileName, file)
+
+      if (storageError) throw storageError
+
+      // Insert into profile_media
+      // First clear any existing primary flags
+      await supabase.from('profile_media').update({ is_primary: false } as any).eq('profile_id', user.id)
+      const { error: dbError } = await supabase
+        .from('profile_media')
+        .insert({
+          profile_id: user.id,
+          type: 'image',
+          bucket_path: fileName,
+          is_primary: true,
+          display_order: 0
+        } as any)
+
+      if (dbError) throw dbError
+
+      alert("Photo uploaded successfully!")
+      // Normally we would refresh the page or state here
+      window.location.reload()
+    } catch (err) {
+      alert("Failed to upload photo: " + (err as Error).message)
+    } finally {
+      setIsUploadingPhoto(false)
+    }
+  }
 
   // Fallback for null/undefined nested objects
-  const professionName = profile?.profession?.[0]?.name || profile?.profession?.name || "Not specified"
-  const cityName = profile?.city?.[0]?.name || profile?.city?.name || "Not specified"
+  const professionRaw = profile?.profession
+  const professionName = professionRaw 
+    ? (Array.isArray(professionRaw) ? professionRaw[0]?.name : (professionRaw as { name: string }).name) ?? "Not specified"
+    : "Not specified"
+  const cityRaw = profile?.city
+  const cityName = cityRaw
+    ? (Array.isArray(cityRaw) ? cityRaw[0]?.name : (cityRaw as { name: string }).name) ?? "Not specified"
+    : "Not specified"
   
   // Calculate Age
   const age = profile?.date_of_birth ? new Date().getFullYear() - new Date(profile.date_of_birth).getFullYear() : '?'
+
+  // Get primary photo
+  const primaryMedia = profile?.profile_media?.find((m) => m.is_primary) || profile?.profile_media?.[0]
+  const photoUrl = primaryMedia ? createClient().storage.from('profile_photos').getPublicUrl(primaryMedia.bucket_path).data.publicUrl : null
 
   return (
     <div className="space-y-12 pb-24 max-w-4xl">
@@ -40,15 +113,25 @@ export default function ProfileClient({ profile }: { profile: any }) {
       <section className="space-y-8">
         {/* Hero Card */}
         <div className="h-80 w-full rounded-3xl bg-zinc-900 overflow-hidden relative group">
-          <div className="absolute inset-0 bg-gradient-to-tr from-zinc-800 to-zinc-950 opacity-50" />
+          {photoUrl ? (
+            <img src={photoUrl} alt="Profile" className="absolute inset-0 w-full h-full object-cover" />
+          ) : (
+            <div className="absolute inset-0 bg-gradient-to-tr from-zinc-800 to-zinc-950 opacity-50" />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
           
-          <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40 backdrop-blur-sm">
-            <button className="px-6 py-3 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md transition-colors flex items-center gap-2">
-              <Camera className="w-5 h-5" /> Change Photos
+          <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40 backdrop-blur-sm z-10">
+            <input type="file" ref={fileInputRef} className="hidden" accept="image/*" onChange={handlePhotoUpload} />
+            <button 
+              onClick={() => fileInputRef.current?.click()}
+              disabled={isUploadingPhoto}
+              className="px-6 py-3 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md transition-colors flex items-center gap-2"
+            >
+              <Camera className="w-5 h-5" /> {isUploadingPhoto ? "Uploading..." : "Change Photos"}
             </button>
           </div>
 
-          <div className="absolute bottom-8 left-8">
+          <div className="absolute bottom-8 left-8 z-10">
             <h2 className="font-playfair text-4xl font-medium text-white mb-2">
               {profile?.first_name} {profile?.last_name}, {age}
             </h2>
@@ -139,19 +222,28 @@ export default function ProfileClient({ profile }: { profile: any }) {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               <div>
                 <label className="text-xs text-white/40 uppercase tracking-wider mb-1 block">Height</label>
-                <div className="text-sm">-</div>
+                <div className="text-sm">{profile?.height_cm ? `${profile.height_cm} cm` : 'Not added'}</div>
               </div>
               <div>
                 <label className="text-xs text-white/40 uppercase tracking-wider mb-1 block">Gotra</label>
-                <div className="text-sm">-</div>
+                <div className="text-sm">{
+                  Array.isArray(profile?.family_details) ? profile?.family_details[0]?.gotra : profile?.family_details?.gotra || 'Not added'
+                }</div>
               </div>
               <div>
                 <label className="text-xs text-white/40 uppercase tracking-wider mb-1 block">Income Range</label>
-                <div className="text-sm">-</div>
+                <div className="text-sm">{profile?.income_range || 'Not added'}</div>
               </div>
               <div>
                 <label className="text-xs text-white/40 uppercase tracking-wider mb-1 block">Diet</label>
-                <div className="text-sm">-</div>
+                <div className="text-sm">{(() => {
+                  const lifestyle = Array.isArray(profile?.compatibility_profiles) 
+                    ? profile?.compatibility_profiles[0]?.lifestyle 
+                    : profile?.compatibility_profiles?.lifestyle;
+                  const diets = ["Vegetarian", "Non-Vegetarian", "Vegan", "Pescatarian"];
+                  const found = lifestyle?.find((l) => diets.includes(l));
+                  return found || 'Not added';
+                })()}</div>
               </div>
             </div>
           </div>
