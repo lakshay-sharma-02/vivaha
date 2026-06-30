@@ -92,12 +92,13 @@ export async function respondToRequest(introductionId: string, accept: boolean) 
     }
 
     const newStatus = (accept ? 'accepted' : 'rejected') as 'accepted' | 'rejected'
+    const now = new Date().toISOString()
 
     // Update the introduction status.
     // RLS policies ensure the user can only update if they are the receiver.
     const { data: updatedRaw, error } = await supabase
       .from('introductions')
-      .update({ status: newStatus, updated_at: new Date().toISOString() })
+      .update({ status: newStatus, updated_at: now } satisfies Record<string, unknown>)
       .eq('id', introductionId)
       .eq('receiver_id', user.id)
       .select('sender_id')
