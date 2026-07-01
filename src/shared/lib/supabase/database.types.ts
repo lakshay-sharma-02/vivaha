@@ -827,6 +827,40 @@ export interface Database {
         }
         Relationships: []
       }
+      saved_profiles: {
+        Row: {
+          id: string
+          user_id: string
+          saved_profile_id: string
+          created_at: string | null
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          saved_profile_id: string
+          created_at?: string | null
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          saved_profile_id?: string
+          created_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'saved_profiles_user_id_fkey'
+            columns: ['user_id']
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'saved_profiles_saved_profile_id_fkey'
+            columns: ['saved_profile_id']
+            referencedRelation: 'profiles'
+            referencedColumns: ['id']
+          },
+        ]
+      }
       search_history: {
         Row: {
           id: string

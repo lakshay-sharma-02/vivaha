@@ -4,6 +4,7 @@ import * as React from "react"
 import { motion } from "framer-motion"
 import { ShieldCheck, UploadCloud, Lock, FileText, CheckCircle2 } from "lucide-react"
 import { createClient } from "@/shared/lib/supabase/client"
+import { toast } from "sonner"
 
 export default function VerificationClient({ status }: { status: string | null }) {
   const [isUploading, setIsUploading] = React.useState(false)
@@ -16,7 +17,10 @@ export default function VerificationClient({ status }: { status: string | null }
   }
 
   const handleUpload = async () => {
-    if (!file) return alert("Please select a document first")
+    if (!file) {
+      toast.error("Please select a document first")
+      return
+    }
     setIsUploading(true)
     
     try {
@@ -52,9 +56,9 @@ export default function VerificationClient({ status }: { status: string | null }
         .eq('id', user.id)
 
       setFile(null)
-      alert("Document submitted successfully! Your profile is now pending verification.")
+      toast.success("Document submitted successfully! Your profile is now pending verification.")
     } catch (e) {
-      alert("Upload failed: " + (e as Error).message)
+      toast.error("Upload failed: " + (e as Error).message)
     } finally {
       setIsUploading(false)
     }

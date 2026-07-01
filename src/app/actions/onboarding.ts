@@ -12,6 +12,7 @@ export interface OnboardingData {
   religion?: string
   profession?: string
   country?: string
+  state?: string
   city?: string
   bio?: string
   phone?: string
@@ -19,6 +20,7 @@ export interface OnboardingData {
   minAge?: number
   maxAge?: number
   minHeight?: number
+  maxHeight?: number
   fatherOccupation?: string
   motherOccupation?: string
   familyType?: string
@@ -27,6 +29,9 @@ export interface OnboardingData {
   gotra?: string
   maternalGotra?: string
   grandmotherGotra?: string
+  community?: string
+  motherTongue?: string
+  hobbies?: string
   lifestyleChips?: string[]
   prefReligionChips?: string[]
   highestQual?: string
@@ -65,33 +70,64 @@ export async function saveOnboardingData(formData: OnboardingData) {
       return newData?.id as string | null;
     }
 
-    // Helper for Country/City specifically (since city depends on country)
-    async function getOrCreateLocation(countryName?: string, cityName?: string): Promise<{ countryId: string | null; cityId: string | null }> {
+    // Helper for Country/City/State location hierarchy
+    async function getOrCreateLocation(countryName?: string, cityName?: string, stateName?: string): Promise<{ countryId: string | null; stateId: string | null; cityId: string | null }> {
       const countryId = await getOrCreateLookup('countries', countryName);
-      if (!countryId || !cityName) return { countryId, cityId: null };
+      if (!countryId) return { countryId: null, stateId: null, cityId: null };
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { data } = await (supabase.from('cities') as any).select('id').eq('country_id', countryId).ilike('name', cityName).single();
-      if (data?.id) return { countryId, cityId: data.id as string };
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { data: newCity, error } = await (supabase.from('cities') as any).insert({ name: cityName, country_id: countryId }).select('id').single();
-      if (error) {
-        console.error('Error creating city:', error);
-        return { countryId, cityId: null };
+      // Handle state
+      let stateId: string | null = null;
+      if (stateName) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const { data } = await (supabase.from('states' as any) as any).select('id').eq('country_id', countryId).ilike('name', stateName).single();
+        if (data?.id) {
+          stateId = data.id as string;
+        } else {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const { data: newState, error } = await (supabase.from('states' as any) as any).insert({ name: stateName, country_id: countryId }).select('id').single();
+          if (!error && newState?.id) {
+            stateId = newState.id as string;
+          } else {
+            console.error('Error creating state:', error);
+          }
+        }
       }
-      return { countryId, cityId: newCity?.id as string | null };
+
+      // Handle city
+      let cityId: string | null = null;
+      if (cityName) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const { data } = await (supabase.from('cities') as any).select('id').eq('country_id', countryId).ilike('name', cityName).single();
+        if (data?.id) {
+          cityId = data.id as string;
+        } else {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const { data: newCity, error } = await (supabase.from('cities') as any).insert({ name: cityName, country_id: countryId }).select('id').single();
+          if (!error && newCity?.id) {
+            cityId = newCity.id as string;
+          } else {
+            console.error('Error creating city:', error);
+          }
+        }
+      }
+
+      return { countryId, stateId, cityId };
     }
 
     // Process Lookups
     const religionId = await getOrCreateLookup('religions', formData.religion);
     const professionId = await getOrCreateLookup('professions', formData.occupation);
-    const { countryId, cityId } = await getOrCreateLocation(formData.country, formData.city);
+    const communityId = await getOrCreateLookup('communities', formData.community);
+    const languageId = await getOrCreateLookup('languages', formData.motherTongue);
+    const { countryId, stateId, cityId } = await getOrCreateLocation(formData.country, formData.city, formData.state);
 
-    // 2. Update Profile
+    // 2. Upsert Profile
+    // Note: state_id, community_id, mother_tongue_id are new columns added via migrations
+    // but not yet in generated types. Cast to any until types are regenerated.
     const { error: profileError } = await supabase
       .from('profiles')
-      .update({
+      .upsert({
+        id: user.id,
         first_name: formData.firstName?.trim() || "",
         last_name: formData.lastName?.trim() || "",
         gender: formData.gender || null,
@@ -99,8 +135,11 @@ export async function saveOnboardingData(formData: OnboardingData) {
         height_cm: formData.height ? parseInt(formData.height) : null,
         religion_id: religionId,
         profession_id: professionId,
-        city_id: cityId,
         country_id: countryId,
+        state_id: stateId,
+        city_id: cityId,
+        community_id: communityId,
+        mother_tongue_id: languageId,
         bio: formData.bio || null,
         phone: formData.phone || null,
         instagram: formData.instagram || null,
@@ -108,8 +147,7 @@ export async function saveOnboardingData(formData: OnboardingData) {
         university: formData.university || null,
         company: formData.company || null,
         income_range: formData.income || null,
-      })
-      .eq('id', user.id);
+      } as any, { onConflict: 'id' });
 
     if (profileError) {
       console.error("Profile update error:", profileError)
@@ -117,6 +155,7 @@ export async function saveOnboardingData(formData: OnboardingData) {
     }
 
     // 3. Update Preferences
+    // Note: max_height_cm is a new column added via migrations but not yet in generated types
     const { error: prefError } = await supabase
       .from('preferences')
       .upsert({
@@ -124,7 +163,8 @@ export async function saveOnboardingData(formData: OnboardingData) {
         min_age: formData.minAge,
         max_age: formData.maxAge,
         min_height_cm: formData.minHeight,
-      }, { onConflict: 'profile_id' });
+        max_height_cm: formData.maxHeight,
+      } as any, { onConflict: 'profile_id' });
       
     if (prefError) {
       console.error("Preferences error:", prefError)
@@ -155,6 +195,7 @@ export async function saveOnboardingData(formData: OnboardingData) {
       .upsert({
         profile_id: user.id,
         lifestyle: formData.lifestyleChips || [],
+        interests: formData.hobbies ? formData.hobbies.split(',').map(h => h.trim()).filter(Boolean) : [],
       }, { onConflict: 'profile_id' });
 
     if (compatError) {

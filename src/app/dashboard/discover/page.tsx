@@ -2,13 +2,15 @@
 
 import * as React from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { 
-  Filter, Search, MapPin, Briefcase, GraduationCap, 
-  Heart, X, Check, Info, ShieldCheck, ChevronDown, 
-  Lock, AtSign, Phone, Crown, Sparkles, AlertCircle, CheckCircle2, ArrowRight
+import {
+  Filter, Search, MapPin, Briefcase, GraduationCap,
+  Heart, X, Check, Info, ShieldCheck, ChevronDown,
+  Lock, AtSign, Phone, Crown, Sparkles, AlertCircle, CheckCircle2, ArrowRight, Bookmark
 } from "lucide-react"
 import { requestIntroduction } from "@/app/actions/matchmaking"
 import { fetchDiscoverProfiles } from "@/app/actions/discover"
+import { saveProfile, unsaveProfile, getSavedProfileIds } from "@/app/actions/saved"
+import { toast } from "sonner"
 
 declare global {
   interface Window { Razorpay: any }
@@ -44,6 +46,7 @@ export default function DiscoverPage() {
 
   const [page, setPage] = React.useState(1)
   const [hasMore, setHasMore] = React.useState(true)
+  const [savedProfileIds, setSavedProfileIds] = React.useState<string[]>([])
 
   const loadProfiles = async (pageToLoad: number) => {
     setIsLoadingProfiles(true)
@@ -63,7 +66,35 @@ export default function DiscoverPage() {
 
   React.useEffect(() => {
     loadProfiles(1)
+    loadSavedProfileIds()
   }, [])
+
+  const loadSavedProfileIds = async () => {
+    const result = await getSavedProfileIds()
+    if (result.success && result.ids) {
+      setSavedProfileIds(result.ids)
+    }
+  }
+
+  const handleToggleSave = async (profileId: string) => {
+    const isSaved = savedProfileIds.includes(profileId)
+
+    if (isSaved) {
+      const result = await unsaveProfile(profileId)
+      if (result.success) {
+        setSavedProfileIds(prev => prev.filter(id => id !== profileId))
+        setToastMessage("Removed from saved")
+        setTimeout(() => setToastMessage(null), 2000)
+      }
+    } else {
+      const result = await saveProfile(profileId)
+      if (result.success) {
+        setSavedProfileIds(prev => [...prev, profileId])
+        setToastMessage("Saved for later")
+        setTimeout(() => setToastMessage(null), 2000)
+      }
+    }
+  }
 
   const activeProfile = profiles[activeProfileIndex]
 
@@ -122,18 +153,18 @@ export default function DiscoverPage() {
             setToastMessage("Welcome to Vivaha Premium! 🎉")
             setTimeout(() => setToastMessage(null), 4000)
           } else {
-            alert("Verification Failed: " + verifyData.error)
+            toast.error("Verification Failed: " + verifyData.error)
           }
         },
         theme: { color: "#E8B96C" },
       }
       const rzp = new window.Razorpay(options)
       rzp.on("payment.failed", (r: { error: { description: string } }) => {
-        alert("Payment failed: " + r.error.description)
+        toast.error("Payment failed: " + r.error.description)
       })
       rzp.open()
     } catch (err) {
-      alert("Error: " + (err as Error).message)
+      toast.error("Error: " + (err as Error).message)
     } finally {
       setIsProcessingPayment(false)
     }
@@ -259,6 +290,19 @@ export default function DiscoverPage() {
                 )}
               </div>
 
+              <button
+                onClick={(e) => { e.stopPropagation(); handleToggleSave(activeProfile.id); }}
+                className="absolute top-6 right-6 z-20 w-11 h-11 rounded-full bg-black/50 backdrop-blur-md border border-white/10 flex items-center justify-center hover:bg-black/70 transition-colors pointer-events-auto"
+              >
+                <Bookmark
+                  className={`w-5 h-5 transition-colors ${
+                    savedProfileIds.includes(activeProfile.id)
+                      ? 'fill-primary text-primary'
+                      : 'text-white'
+                  }`}
+                />
+              </button>
+
               {/* View Profile Indicator */}
               <div className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                 <div className="px-6 py-3 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white font-medium flex items-center gap-2 shadow-2xl">
@@ -330,13 +374,25 @@ export default function DiscoverPage() {
               transition={{ type: "spring", damping: 30, stiffness: 200 }}
               className="w-full max-w-2xl h-full bg-zinc-950 border-l border-white/10 overflow-y-auto"
             >
-              <div 
-                className="relative h-96 bg-cover bg-center" 
+              <div
+                className="relative h-96 bg-cover bg-center"
                 style={selectedProfile.image ? { backgroundImage: `url('${selectedProfile.image}')` } : { background: 'linear-gradient(to top right, #27272a, #09090b)' }}
               >
-                <div className="absolute top-6 left-6">
+                <div className="absolute top-6 left-6 right-6 flex items-center justify-between">
                   <button onClick={() => setSelectedProfile(null)} className="w-10 h-10 rounded-full bg-black/50 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors">
                     <X className="w-5 h-5" />
+                  </button>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); handleToggleSave(selectedProfile.id); }}
+                    className="w-10 h-10 rounded-full bg-black/50 backdrop-blur-md border border-white/10 flex items-center justify-center hover:bg-black/70 transition-colors"
+                  >
+                    <Bookmark
+                      className={`w-5 h-5 transition-colors ${
+                        savedProfileIds.includes(selectedProfile.id)
+                          ? 'fill-primary text-primary'
+                          : 'text-white'
+                      }`}
+                    />
                   </button>
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-zinc-950 to-transparent" />

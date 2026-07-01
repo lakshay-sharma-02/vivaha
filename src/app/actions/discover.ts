@@ -11,6 +11,19 @@ export async function fetchDiscoverProfiles(page: number = 1) {
       return { success: false, error: "Not authenticated", profiles: [] }
     }
 
+    // Fetch current user's profile and preferences for compatibility calculation
+    const { data: currentUserProfile } = await supabase
+      .from('profiles')
+      .select('date_of_birth, religion_id, city_id, height_cm')
+      .eq('id', user.id)
+      .single()
+
+    const { data: currentUserPrefs } = await supabase
+      .from('preferences')
+      .select('min_age, max_age, min_height_cm, preferred_religions, preferred_cities')
+      .eq('profile_id', user.id)
+      .single()
+
     const pageSize = 20
     const start = (page - 1) * pageSize
     const end = start + pageSize - 1
@@ -29,7 +42,9 @@ export async function fetchDiscoverProfiles(page: number = 1) {
         education,
         income_range,
         profession_id,
-        city_id
+        city_id,
+        religion_id,
+        height_cm
       `)
       .neq('id', user.id)
       .range(start, end)
@@ -50,6 +65,8 @@ export async function fetchDiscoverProfiles(page: number = 1) {
       income_range: string | null
       profession_id: string | null
       city_id: string | null
+      religion_id: string | null
+      height_cm: number | null
     }
 
     // We need to map the database structure to the UI structure our components expect
@@ -89,7 +106,14 @@ export async function fetchDiscoverProfiles(page: number = 1) {
 
     const mappedProfiles = (profiles || []).map((p) => {
       // Calculate age from date_of_birth
-      const age = p.date_of_birth ? new Date().getFullYear() - new Date(p.date_of_birth).getFullYear() : '?'
+      let age: number | string = '?'
+      if (p.date_of_birth) {
+        const birth = new Date(p.date_of_birth)
+        const today = new Date()
+        age = today.getFullYear() - birth.getFullYear()
+        const m = today.getMonth() - birth.getMonth()
+        if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--
+      }
       
       const professionName = p.profession_id ? professionMap.get(p.profession_id) ?? "Professional" : "Professional"
       const cityName = p.city_id ? cityMap.get(p.city_id) ?? "Not Specified" : "Not Specified"
@@ -104,9 +128,46 @@ export async function fetchDiscoverProfiles(page: number = 1) {
 
       const familyType = familyMap.get(p.id) || "Not Specified";
 
-      // Deterministic compatibility score based on ID string
-      const idSum = p.id.split('').reduce((sum, char) => sum + char.charCodeAt(0), 0);
-      const compatScore = 75 + (idSum % 24);
+      // Real compatibility score based on preferences and profile matching
+      let compatScore = 50; // Base score
+
+      if (currentUserPrefs) {
+        // Age compatibility
+        if (typeof age === 'number' && currentUserPrefs.min_age && currentUserPrefs.max_age) {
+          if (age >= currentUserPrefs.min_age && age <= currentUserPrefs.max_age) {
+            compatScore += 20;
+          }
+        }
+
+        // Location compatibility
+        if (p.city_id && currentUserPrefs.preferred_cities && Array.isArray(currentUserPrefs.preferred_cities)) {
+          if (currentUserPrefs.preferred_cities.includes(p.city_id)) {
+            compatScore += 15;
+          }
+        }
+
+        // Religion compatibility
+        if (p.religion_id && currentUserPrefs.preferred_religions && Array.isArray(currentUserPrefs.preferred_religions)) {
+          if (currentUserPrefs.preferred_religions.includes(p.religion_id)) {
+            compatScore += 15;
+        }
+        }
+
+        // Height compatibility
+        if (p.height_cm && currentUserPrefs.min_height_cm) {
+          if (p.height_cm >= currentUserPrefs.min_height_cm) {
+            compatScore += 10;
+          }
+        }
+      }
+
+      // Verification bonus
+      if (p.verification_status === 'verified') {
+        compatScore += 5;
+      }
+
+      // Ensure score stays within 50-99 range (never 100 to show it's calculated)
+      compatScore = Math.min(Math.max(compatScore, 50), 99);
 
       return {
         id: p.id,

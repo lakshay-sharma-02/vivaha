@@ -3,6 +3,7 @@
 import * as React from "react"
 import { motion } from "framer-motion"
 import { Crown, CheckCircle2, Star, ShieldCheck, ArrowRight, Lock } from "lucide-react"
+import { toast } from "sonner"
 
 declare global {
   interface Window {
@@ -61,10 +62,10 @@ export default function MembershipClient({ userEmail, userProfile }: MembershipC
           
           const verifyData = await verifyRes.json()
           if (verifyRes.ok) {
-            alert("Welcome to Vivaha Premium!")
+            toast.success("Welcome to Vivaha Premium!")
             window.location.reload()
           } else {
-            alert("Verification Failed: " + verifyData.error)
+            toast.error("Verification Failed: " + verifyData.error)
           }
         },
         prefill: {
@@ -79,13 +80,13 @@ export default function MembershipClient({ userEmail, userProfile }: MembershipC
 
       const rzp = new window.Razorpay(options)
       rzp.on("payment.failed", function (response: { error: { description: string } }) {
-        alert("Payment failed: " + response.error.description)
+        toast.error("Payment failed: " + response.error.description)
       })
       
       rzp.open()
-      
+
     } catch (err) {
-      alert("Error: " + (err as Error).message)
+      toast.error("Error: " + (err as Error).message)
     } finally {
       setIsProcessing(false)
     }

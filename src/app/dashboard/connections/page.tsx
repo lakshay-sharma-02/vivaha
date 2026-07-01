@@ -86,7 +86,14 @@ export default async function ConnectionsPage() {
     if (!profile) return null
 
     const dob = profile.date_of_birth
-    const age = dob ? new Date().getFullYear() - new Date(dob).getFullYear() : 0
+    let age = 0
+    if (dob) {
+      const birth = new Date(dob)
+      const today = new Date()
+      age = today.getFullYear() - birth.getFullYear()
+      const m = today.getMonth() - birth.getMonth()
+      if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--
+    }
     const profName = profile.profession_id ? professionMap.get(profile.profession_id) ?? "Not specified" : "Not specified"
     const cityName = profile.city_id ? cityMap.get(profile.city_id) ?? "Not specified" : "Not specified"
 

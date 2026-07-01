@@ -82,7 +82,14 @@ export default function ProfileClient({ profile }: ProfileProps) {
     : "Not specified"
   
   // Calculate Age
-  const age = profile?.date_of_birth ? new Date().getFullYear() - new Date(profile.date_of_birth).getFullYear() : '?'
+  let age: number | string = '?'
+  if (profile?.date_of_birth) {
+    const birth = new Date(profile.date_of_birth)
+    const today = new Date()
+    age = today.getFullYear() - birth.getFullYear()
+    const m = today.getMonth() - birth.getMonth()
+    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--
+  }
 
   // Get primary photo
   const primaryMedia = profile?.profile_media?.find((m) => m.is_primary) || profile?.profile_media?.[0]

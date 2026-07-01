@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation"
 import { Camera, ShieldCheck, UploadCloud, CheckCircle2, Search, Heart, MapPin, Briefcase, Loader2 } from "lucide-react"
 import { saveOnboardingData } from "@/app/actions/onboarding"
 import { createClient } from "@/shared/lib/supabase/client"
+import { toast } from "sonner"
 
 const STEPS = [
   { id: "welcome", title: "Welcome" },
@@ -62,7 +63,7 @@ export function OnboardingWizard() {
       const { data: urlData } = supabase.storage.from('profile_photos').getPublicUrl(fileName)
       setPrimaryPhotoUrl(urlData.publicUrl)
     } catch (err) {
-      alert("Failed to upload photo: " + (err as Error).message)
+      toast.error("Failed to upload photo: " + (err as Error).message)
     } finally {
       setIsUploadingPhoto(false)
     }
@@ -92,7 +93,7 @@ export function OnboardingWizard() {
       await supabase.from('profiles').update({ verification_status: 'pending' }).eq('id', user.id)
       setDocumentUploaded(true)
     } catch (err) {
-      alert("Failed to upload document: " + (err as Error).message)
+      toast.error("Failed to upload document: " + (err as Error).message)
     } finally {
       setIsUploadingDoc(false)
     }
@@ -715,9 +716,14 @@ export function OnboardingWizard() {
             {/* Step 10: Review */}
             {currentStep === 10 && (() => {
               const fullName = [formData.firstName, formData.lastName].filter(Boolean).join(" ") || "—"
-              const age = formData.dateOfBirth
-                ? new Date().getFullYear() - new Date(formData.dateOfBirth).getFullYear()
-                : null
+              let age: number | null = null
+              if (formData.dateOfBirth) {
+                const birth = new Date(formData.dateOfBirth)
+                const today = new Date()
+                age = today.getFullYear() - birth.getFullYear()
+                const m = today.getMonth() - birth.getMonth()
+                if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--
+              }
               const locationStr = [formData.city, formData.state].filter(Boolean).join(", ") || "—"
               const jobStr = [formData.occupation, formData.company].filter(Boolean).join(" at ") || "—"
               const diet = selections.lifestyle.find(s => ["Vegetarian", "Non-Vegetarian", "Vegan", "Pescatarian"].includes(s)) || "—"

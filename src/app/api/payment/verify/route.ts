@@ -61,6 +61,24 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Payment successful, but failed to activate plan. Please contact support." }, { status: 500 })
     }
 
+    // Record payment transaction (idempotent via gateway_transaction_id)
+    const { error: paymentError } = await supabase
+      .from('payments')
+      .upsert({
+        profile_id: user.id,
+        amount_cents: 500000, // 5000 INR (matches create-order)
+        currency: 'INR',
+        status: 'success',
+        gateway: 'razorpay',
+        gateway_transaction_id: razorpay_payment_id,
+        gateway_reference: razorpay_order_id,
+      }, { onConflict: 'gateway_transaction_id' })
+
+    if (paymentError) {
+      console.error("Database error recording payment:", paymentError)
+      // Non-fatal: membership is already activated
+    }
+
     // Log the successful upgrade
     await supabase.from('audit_logs').insert({
       action: 'membership_upgraded',

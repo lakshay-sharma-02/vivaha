@@ -22,6 +22,54 @@ interface DashboardClientProps {
 }
 
 export default function DashboardClient({ userProfile, recommendedMatches, completionScore, updates, timeline }: DashboardClientProps) {
+  // Generate dynamic AI insights based on actual match data
+  const generateInsight = () => {
+    if (recommendedMatches.length === 0) {
+      return "Complete your profile to receive personalized match recommendations and insights."
+    }
+
+    // Analyze professions in matches
+    const professions = recommendedMatches
+      .map(m => {
+        if (!m.profession) return null
+        return Array.isArray(m.profession) ? m.profession[0]?.name : m.profession.name
+      })
+      .filter(Boolean)
+
+    const professionCounts = professions.reduce((acc, p) => {
+      acc[p] = (acc[p] || 0) + 1
+      return acc
+    }, {} as Record<string, number>)
+
+    const topProfession = Object.entries(professionCounts).sort((a, b) => b[1] - a[1])[0]
+
+    // Analyze cities in matches
+    const cities = recommendedMatches
+      .map(m => {
+        if (!m.city) return null
+        return Array.isArray(m.city) ? m.city[0]?.name : m.city.name
+      })
+      .filter(Boolean)
+
+    const cityCounts = cities.reduce((acc, c) => {
+      acc[c] = (acc[c] || 0) + 1
+      return acc
+    }, {} as Record<string, number>)
+
+    const topCity = Object.entries(cityCounts).sort((a, b) => b[1] - a[1])[0]
+
+    // Generate personalized insight
+    if (topProfession && topCity) {
+      const profPercentage = Math.round((topProfession[1] / recommendedMatches.length) * 100)
+      return `${profPercentage}% of your curated matches are ${topProfession[0].toLowerCase()}s, with the highest concentration in ${topCity[0]}.`
+    } else if (topProfession) {
+      const profPercentage = Math.round((topProfession[1] / recommendedMatches.length) * 100)
+      return `${profPercentage}% of your curated matches are ${topProfession[0].toLowerCase()}s based on your preferences.`
+    } else {
+      return `You have ${recommendedMatches.length} curated matches based on your preferences and profile.`
+    }
+  }
+
   return (
     <div className="space-y-12 pb-24">
       
@@ -128,12 +176,12 @@ export default function DashboardClient({ userProfile, recommendedMatches, compl
               Vivaha AI
             </h2>
           </div>
-          <motion.div 
+          <motion.div
             whileHover={{ y: -4 }}
             className="bg-gradient-to-br from-primary/10 to-transparent border border-primary/20 rounded-2xl p-6 space-y-4 h-[calc(100%-2rem)]"
           >
             <p className="text-sm text-white/80 leading-relaxed">
-              You have <strong className="text-white">85% higher compatibility</strong> with professionals in the Bay Area who also prioritize joint family values.
+              {generateInsight()}
             </p>
             <button className="text-xs font-semibold text-primary uppercase tracking-wider flex items-center gap-1 group">
               View Analytics <ChevronRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
@@ -222,6 +270,16 @@ const MatchCard = ({ delay, match }: { delay: number; match?: MatchType }) => {
   const cityName = match?.city
     ? Array.isArray(match.city) ? match.city[0]?.name : (match.city as { name: string }).name
     : "City"
+
+  let displayAge: number | string = '28'
+  if (match?.date_of_birth) {
+    const birth = new Date(match.date_of_birth)
+    const today = new Date()
+    displayAge = today.getFullYear() - birth.getFullYear()
+    const m = today.getMonth() - birth.getMonth()
+    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) displayAge--
+  }
+
   return (
   <motion.div 
     initial={{ opacity: 0, y: 20 }}
@@ -241,7 +299,7 @@ const MatchCard = ({ delay, match }: { delay: number; match?: MatchType }) => {
     </div>
 
     <div className="absolute bottom-6 left-6 right-6 z-10 space-y-2">
-      <h3 className="font-playfair text-2xl font-medium text-white">{match?.first_name || "Match Name"}, {match?.date_of_birth ? new Date().getFullYear() - new Date(match.date_of_birth).getFullYear() : '28'}</h3>
+      <h3 className="font-playfair text-2xl font-medium text-white">{match?.first_name || "Match Name"}, {displayAge}</h3>
       <p className="text-sm text-white/70">{profName} • {cityName}</p>
     </div>
   </motion.div>

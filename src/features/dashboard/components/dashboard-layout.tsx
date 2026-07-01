@@ -33,6 +33,11 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false)
   const [userInfo, setUserInfo] = React.useState<{ name: string; isPremium: boolean } | null>(null)
+  const [searchQuery, setSearchQuery] = React.useState("")
+  const [searchResults, setSearchResults] = React.useState<any[]>([])
+  const [isSearchOpen, setIsSearchOpen] = React.useState(false)
+  const [isSearching, setIsSearching] = React.useState(false)
+  const searchInputRef = React.useRef<HTMLInputElement>(null)
 
   React.useEffect(() => {
     async function loadUser() {
@@ -54,6 +59,53 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
       }
     }
     loadUser()
+  }, [])
+
+  // Search functionality with debouncing
+  React.useEffect(() => {
+    if (!searchQuery.trim()) {
+      setSearchResults([])
+      setIsSearchOpen(false)
+      return
+    }
+
+    setIsSearching(true)
+    const timeoutId = setTimeout(async () => {
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) return
+
+      const { data: profiles } = await supabase
+        .from('profiles')
+        .select('id, first_name, last_name, bio, city_id, profession_id, cities(name), professions(name)')
+        .neq('id', user.id)
+        .or(`first_name.ilike.%${searchQuery}%,last_name.ilike.%${searchQuery}%`)
+        .limit(5)
+
+      setSearchResults(profiles || [])
+      setIsSearching(false)
+      setIsSearchOpen(true)
+    }, 300)
+
+    return () => clearTimeout(timeoutId)
+  }, [searchQuery])
+
+  // Keyboard shortcut for Cmd+K / Ctrl+K
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault()
+        searchInputRef.current?.focus()
+        setIsSearchOpen(true)
+      }
+      if (e.key === 'Escape') {
+        setIsSearchOpen(false)
+        setSearchQuery("")
+        searchInputRef.current?.blur()
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
   }, [])
 
   const handleSignOut = async () => {
@@ -201,14 +253,61 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
       <main className="flex-1 relative z-10 w-full min-h-screen pt-20 lg:pt-0">
         {/* Top Glass Bar for Desktop (Optional, maybe search bar and profile widget) */}
         <header className="hidden lg:flex sticky top-0 h-24 items-center justify-between px-10 z-30 bg-gradient-to-b from-zinc-950 to-transparent">
-          <div className="flex items-center gap-4 bg-white/5 border border-white/10 rounded-full px-6 py-3 w-96 backdrop-blur-md focus-within:bg-white/10 focus-within:border-primary/50 transition-all">
-            <SearchIcon className="w-5 h-5 text-white/30" />
-            <input 
-              type="text" 
-              placeholder="Search people, messages..." 
-              className="bg-transparent border-none outline-none text-sm text-white placeholder:text-white/30 w-full ml-3"
-            />
-            <div className="px-2 py-0.5 rounded text-[10px] bg-white/10 text-white/50 border border-white/5">⌘K</div>
+          <div className="relative">
+            <div className="flex items-center gap-4 bg-white/5 border border-white/10 rounded-full px-6 py-3 w-96 backdrop-blur-md focus-within:bg-white/10 focus-within:border-primary/50 transition-all">
+              <SearchIcon className="w-5 h-5 text-white/30" />
+              <input
+                ref={searchInputRef}
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={() => searchQuery && setIsSearchOpen(true)}
+                placeholder="Search people, messages..."
+                className="bg-transparent border-none outline-none text-sm text-white placeholder:text-white/30 w-full ml-3"
+              />
+              <div className="px-2 py-0.5 rounded text-[10px] bg-white/10 text-white/50 border border-white/5">⌘K</div>
+            </div>
+
+            {/* Search Results Dropdown */}
+            {isSearchOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="absolute top-full mt-2 w-full bg-zinc-900 border border-white/10 rounded-2xl shadow-2xl backdrop-blur-xl overflow-hidden z-50"
+              >
+                {isSearching ? (
+                  <div className="p-6 text-center text-white/50 text-sm">Searching...</div>
+                ) : searchResults.length === 0 ? (
+                  <div className="p-6 text-center text-white/50 text-sm">No results found</div>
+                ) : (
+                  <div className="py-2">
+                    {searchResults.map((profile) => (
+                      <button
+                        key={profile.id}
+                        onClick={() => {
+                          router.push(`/dashboard/discover`)
+                          setIsSearchOpen(false)
+                          setSearchQuery("")
+                        }}
+                        className="w-full px-6 py-3 flex items-center gap-4 hover:bg-white/5 transition-colors text-left"
+                      >
+                        <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-medium">
+                          {profile.first_name?.[0]}{profile.last_name?.[0]}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="text-sm font-medium text-white truncate">
+                            {profile.first_name} {profile.last_name}
+                          </div>
+                          <div className="text-xs text-white/50 truncate">
+                            {profile.professions?.name} • {profile.cities?.name}
+                          </div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </motion.div>
+            )}
           </div>
           
           <div className="flex items-center gap-6">

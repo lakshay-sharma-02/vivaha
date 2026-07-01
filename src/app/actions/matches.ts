@@ -79,7 +79,14 @@ export async function getPendingRequests() {
     const mappedRequests = (requests || []).map((req): MappedRequest | null => {
       const p = senderMap.get(req.sender_id)
       if (!p) return null
-      const age = p.date_of_birth ? new Date().getFullYear() - new Date(p.date_of_birth).getFullYear() : '?'
+      let age: number | string = '?'
+      if (p.date_of_birth) {
+        const birth = new Date(p.date_of_birth)
+        const today = new Date()
+        age = today.getFullYear() - birth.getFullYear()
+        const m = today.getMonth() - birth.getMonth()
+        if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--
+      }
       const professionName = p.profession_id ? professionMap.get(p.profession_id) ?? "Professional" : "Professional"
       const cityName = p.city_id ? cityMap.get(p.city_id) ?? "Not Specified" : "Not Specified"
 

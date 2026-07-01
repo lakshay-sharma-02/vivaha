@@ -319,7 +319,7 @@ export default function ChatDrawer({
           </button>
         </div>
         <p className="text-center text-[10px] text-white/20 mt-2">
-          Messages are private and end-to-end encrypted
+          Messages are private and transmitted securely
         </p>
       </div>
     </motion.div>
