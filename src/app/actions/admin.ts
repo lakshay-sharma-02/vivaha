@@ -48,7 +48,7 @@ export async function getPendingVerifications() {
   const profileIds = documents.map(d => d.profile_id)
   const { data: profiles, error: profilesError } = await supabase
     .from('profiles')
-    .select('id, first_name, last_name, verification_status, email, phone, date_of_birth')
+    .select('id, first_name, last_name, verification_status, phone, date_of_birth')
     .in('id', profileIds)
 
   if (profilesError) {

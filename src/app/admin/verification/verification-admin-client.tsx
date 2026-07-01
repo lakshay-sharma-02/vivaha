@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Check, X, FileText, User, Calendar, Mail, Phone, ExternalLink } from "lucide-react"
+import { Check, X, FileText, User, Calendar, Phone, ExternalLink } from "lucide-react"
 import { approveVerification, rejectVerification } from "@/app/actions/admin"
 import { toast } from "sonner"
 import Image from "next/image"
@@ -19,7 +19,6 @@ interface VerificationData {
     first_name: string
     last_name: string
     verification_status: string | null
-    email: string
     phone: string | null
     date_of_birth: string | null
   } | null
@@ -127,12 +126,6 @@ export default function VerificationAdminClient({ verifications }: { verificatio
                     </div>
 
                     <div className="grid grid-cols-2 gap-4 text-sm">
-                      {verification.profiles.email && (
-                        <div className="flex items-center gap-2 text-white/60">
-                          <Mail className="w-4 h-4" />
-                          {verification.profiles.email}
-                        </div>
-                      )}
                       {verification.profiles.phone && (
                         <div className="flex items-center gap-2 text-white/60">
                           <Phone className="w-4 h-4" />
