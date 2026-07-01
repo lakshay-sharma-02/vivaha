@@ -36,6 +36,11 @@ export default function VerificationAdminClient({ verifications }: { verificatio
   }
 
   const handleApprove = async (verification: VerificationData) => {
+    if (!verification.profiles) {
+      toast.error("Profile data not found")
+      return
+    }
+
     setIsProcessing(true)
     const result = await approveVerification(verification.id, verification.profile_id)
 
@@ -50,6 +55,11 @@ export default function VerificationAdminClient({ verifications }: { verificatio
   }
 
   const handleReject = async (verification: VerificationData) => {
+    if (!verification.profiles) {
+      toast.error("Profile data not found")
+      return
+    }
+
     setIsProcessing(true)
     const result = await rejectVerification(verification.id, verification.profile_id, rejectionReason)
 
@@ -101,7 +111,10 @@ export default function VerificationAdminClient({ verifications }: { verificatio
           </div>
         ) : (
           <div className="grid gap-4">
-            {localVerifications.map((verification) => (
+            {localVerifications.map((verification) => {
+              if (!verification.profiles) return null
+
+              return (
               <motion.div
                 key={verification.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -187,7 +200,8 @@ export default function VerificationAdminClient({ verifications }: { verificatio
                   </div>
                 </div>
               </motion.div>
-            ))}
+            )
+          })}
           </div>
         )}
 
@@ -228,7 +242,7 @@ export default function VerificationAdminClient({ verifications }: { verificatio
                   <div className="flex items-center justify-between">
                     <div>
                       <h3 className="text-xl font-medium mb-1">
-                        {selectedVerification.profiles.first_name} {selectedVerification.profiles.last_name}
+                        {selectedVerification.profiles?.first_name} {selectedVerification.profiles?.last_name}
                       </h3>
                       <p className="text-white/60 text-sm">{selectedVerification.document_type}</p>
                     </div>
@@ -276,7 +290,7 @@ export default function VerificationAdminClient({ verifications }: { verificatio
               >
                 <h3 className="text-xl font-medium mb-4">Reject Verification</h3>
                 <p className="text-white/60 mb-4">
-                  Provide a reason for rejecting {selectedVerification.profiles.first_name}'s verification (optional):
+                  Provide a reason for rejecting {selectedVerification.profiles?.first_name}'s verification (optional):
                 </p>
                 <textarea
                   value={rejectionReason}
