@@ -12,17 +12,17 @@ interface VerificationData {
   profile_id: string
   document_type: string
   bucket_path: string
-  status: string
-  submitted_at: string
+  status: string | null
+  submitted_at: string | null
   profiles: {
     id: string
     first_name: string
     last_name: string
-    verification_status: string
+    verification_status: string | null
     email: string
     phone: string | null
     date_of_birth: string | null
-  }
+  } | null
 }
 
 export default function VerificationAdminClient({ verifications }: { verifications: VerificationData[] }) {
