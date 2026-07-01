@@ -2,13 +2,20 @@
 
 import { motion, MotionValue, useTransform } from "framer-motion"
 import { ShieldCheck, LockKeyhole } from "lucide-react"
+import { useMemo } from "react"
 
-export function SceneTrust({ progress }: { progress: MotionValue<number> }) {
-  
-  // Scene 8: Privacy Vault (0.84 to 0.98)
+export function SceneTrust({ progress, rawProgress }: { progress: MotionValue<number>; rawProgress: MotionValue<number> }) {
+
+  const shouldRender = useMemo(() => {
+    const p = rawProgress.get()
+    return p >= 0.82 && p <= 1.0
+  }, [rawProgress])
+
   const vaultOpacity = useTransform(progress, [0.84, 0.88, 0.94, 0.98], [0, 1, 1, 0])
   const shieldScale = useTransform(progress, [0.84, 0.90], [0.5, 1.2])
   const particlesY = useTransform(progress, [0.84, 0.98], [0, -200])
+
+  if (!shouldRender) return null
 
   return (
     <motion.div style={{ opacity: vaultOpacity }} className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10">
@@ -34,10 +41,8 @@ export function SceneTrust({ progress }: { progress: MotionValue<number> }) {
           ))}
         </motion.div>
 
-        <motion.div style={{ scale: shieldScale, willChange: "transform" }} className="w-full h-full rounded-full border border-zinc-800/50 flex items-center justify-center bg-black/50 backdrop-blur-md relative">
-          {/* GPU Friendly Faked Drop Shadow */}
-          <div className="absolute -inset-4 rounded-full bg-black/80 blur-xl -z-10" />
-          
+        <motion.div style={{ scale: shieldScale, transform: "translateZ(0)" }} className="w-full h-full rounded-full border border-zinc-800/50 flex items-center justify-center bg-black/50 backdrop-blur-sm relative shadow-2xl">
+
           <div className="absolute inset-0 rounded-full border-t border-zinc-500/20 animate-spin-slow" />
           <div className="absolute inset-4 rounded-full border-r border-zinc-500/20 animate-reverse-spin" />
           

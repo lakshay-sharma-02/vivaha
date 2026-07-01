@@ -2,13 +2,19 @@
 
 import { motion, MotionValue, useTransform } from "framer-motion"
 import { Button } from "@/shared/ui/button/button"
+import { useMemo } from "react"
 
-export function SceneFinale({ progress }: { progress: MotionValue<number> }) {
-  
-  // Scene 10 & 11: The Luxury Invitation (0.95 to 1.0)
+export function SceneFinale({ progress, rawProgress }: { progress: MotionValue<number>; rawProgress: MotionValue<number> }) {
+
+  const shouldRender = useMemo(() => {
+    return rawProgress.get() >= 0.93
+  }, [rawProgress])
+
   const finaleOpacity = useTransform(progress, [0.95, 0.98, 1], [0, 1, 1])
   const cardScale = useTransform(progress, [0.95, 1], [0.9, 1])
   const foilOpacity = useTransform(progress, [0.96, 1], [0, 1])
+
+  if (!shouldRender) return null
 
   return (
     <motion.div style={{ opacity: finaleOpacity, willChange: "opacity" }} className="absolute inset-0 flex items-center justify-center pointer-events-auto z-50">

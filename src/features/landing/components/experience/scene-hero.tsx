@@ -1,16 +1,18 @@
 "use client"
 
 import { motion, MotionValue, useTransform } from "framer-motion"
+import { useMemo } from "react"
 
-export function SceneHero({ progress }: { progress: MotionValue<number> }) {
-  // Scene 1: Arrival & Logo Dissolve (0.0 to 0.12)
+export function SceneHero({ progress, rawProgress }: { progress: MotionValue<number>; rawProgress: MotionValue<number> }) {
+  const shouldRender = useMemo(() => {
+    return rawProgress.get() < 0.35
+  }, [rawProgress])
+
   const arrivalOpacity = useTransform(progress, [0, 0.08, 0.12], [1, 1, 0])
   const arrivalScale = useTransform(progress, [0, 0.12], [1, 1.5])
-  const arrivalBlur = useTransform(progress, [0, 0.12], ["blur(0px)", "blur(30px)"])
 
-  // Scene 2: 3D Floating Cards Orbit (0.10 to 0.32)
   const cardContainerOpacity = useTransform(progress, [0.10, 0.15, 0.28, 0.32], [0, 1, 1, 0])
-  
+
   const card1X = useTransform(progress, [0.10, 0.20, 0.32], [100, -150, -400])
   const card1Y = useTransform(progress, [0.10, 0.20, 0.32], [50, -50, -100])
   const card1RotateZ = useTransform(progress, [0.10, 0.20, 0.32], [-10, 0, -20])
@@ -19,15 +21,16 @@ export function SceneHero({ progress }: { progress: MotionValue<number> }) {
   const card2Y = useTransform(progress, [0.10, 0.20, 0.32], [-50, 50, 100])
   const card2RotateZ = useTransform(progress, [0.10, 0.20, 0.32], [10, 0, 20])
 
-  // Scene 3: Connection Nodes (0.18 to 0.32)
   const connectionOpacity = useTransform(progress, [0.18, 0.22, 0.28, 0.32], [0, 1, 1, 0])
   const linePathLength = useTransform(progress, [0.18, 0.25], [0, 1])
+
+  if (!shouldRender) return null
 
   return (
     <>
       {/* Scene 1: The Emblem */}
-      <motion.div 
-        style={{ opacity: arrivalOpacity, scale: arrivalScale, filter: arrivalBlur }}
+      <motion.div
+        style={{ opacity: arrivalOpacity, scale: arrivalScale, transform: "translateZ(0)" }}
         className="absolute inset-0 flex flex-col items-center justify-center z-50 pointer-events-none"
       >
         <div className="w-32 h-32 md:w-48 md:h-48 rounded-full bg-gradient-to-tr from-amber-500/10 to-transparent border border-amber-500/20 shadow-[0_0_100px_rgba(245,158,11,0.2)] flex items-center justify-center">
@@ -35,7 +38,7 @@ export function SceneHero({ progress }: { progress: MotionValue<number> }) {
         </div>
       </motion.div>
 
-      <motion.div style={{ opacity: cardContainerOpacity, willChange: "transform, opacity" }} className="absolute inset-0 flex items-center justify-center z-40 pointer-events-none">
+      <motion.div style={{ opacity: cardContainerOpacity, transform: "translateZ(0)" }} className="absolute inset-0 flex items-center justify-center z-40 pointer-events-none">
         
         {/* Connection Lines (Scene 3) */}
         <motion.div style={{ opacity: connectionOpacity }} className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -78,12 +81,9 @@ export function SceneHero({ progress }: { progress: MotionValue<number> }) {
 
         {/* Card 1 */}
         <motion.div
-          style={{ x: card1X, y: card1Y, rotateZ: card1RotateZ, willChange: "transform" }}
-          className="absolute w-64 md:w-80 h-96 rounded-[2rem] glass p-1 border-white/10 overflow-hidden"
+          style={{ x: card1X, y: card1Y, rotateZ: card1RotateZ, transform: "translateZ(0)" }}
+          className="absolute w-64 md:w-80 h-96 rounded-[2rem] glass p-1 border-white/10 overflow-hidden shadow-2xl"
         >
-          {/* Faked GPU-friendly shadow via absolutely positioned pseudo-element */}
-          <div className="absolute -inset-10 bg-black/80 blur-2xl -z-10 rounded-full" />
-          
           <div className="w-full h-full rounded-[1.8rem] bg-gradient-to-b from-zinc-800/80 to-zinc-950 flex flex-col items-center p-6 relative">
             <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center opacity-40 mix-blend-overlay" />
             <div className="mt-auto relative z-10 w-full text-left">
@@ -95,11 +95,9 @@ export function SceneHero({ progress }: { progress: MotionValue<number> }) {
 
         {/* Card 2 */}
         <motion.div
-          style={{ x: card2X, y: card2Y, rotateZ: card2RotateZ, willChange: "transform" }}
-          className="absolute w-64 md:w-80 h-96 rounded-[2rem] glass p-1 border-white/10 overflow-hidden"
+          style={{ x: card2X, y: card2Y, rotateZ: card2RotateZ, transform: "translateZ(0)" }}
+          className="absolute w-64 md:w-80 h-96 rounded-[2rem] glass p-1 border-white/10 overflow-hidden shadow-2xl"
         >
-          <div className="absolute -inset-10 bg-black/80 blur-2xl -z-10 rounded-full" />
-          
           <div className="w-full h-full rounded-[1.8rem] bg-gradient-to-b from-zinc-800/80 to-zinc-950 flex flex-col items-center p-6 relative">
             <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center opacity-40 mix-blend-overlay" />
             <div className="mt-auto relative z-10 w-full text-left">

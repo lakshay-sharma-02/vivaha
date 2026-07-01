@@ -1,18 +1,24 @@
 "use client"
 
 import { motion, MotionValue, useTransform } from "framer-motion"
+import { useMemo } from "react"
 
-export function SceneGallery({ progress }: { progress: MotionValue<number> }) {
-  
-  // Scene 6: Floating Gallery (0.64 to 0.86)
+export function SceneGallery({ progress, rawProgress }: { progress: MotionValue<number>; rawProgress: MotionValue<number> }) {
+
+  const shouldRender = useMemo(() => {
+    const p = rawProgress.get()
+    return p >= 0.62 && p <= 0.88
+  }, [rawProgress])
+
   const galleryOpacity = useTransform(progress, [0.64, 0.68, 0.82, 0.86], [0, 1, 1, 0])
   const galleryScale = useTransform(progress, [0.64, 0.75, 0.86], [0.8, 1, 1.2])
 
-  // Sub-transforms for parallax shifting based on progress range
   const shiftY1 = useTransform(progress, [0.64, 0.86], [200, -200])
   const shiftY2 = useTransform(progress, [0.64, 0.86], [-150, 300])
   const shiftY3 = useTransform(progress, [0.64, 0.86], [300, -100])
   const shiftY4 = useTransform(progress, [0.64, 0.86], [-50, 150])
+
+  if (!shouldRender) return null
 
   return (
     <motion.div style={{ opacity: galleryOpacity, scale: galleryScale, willChange: "transform, opacity" }} className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">

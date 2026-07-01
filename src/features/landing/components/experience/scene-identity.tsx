@@ -2,18 +2,24 @@
 
 import { motion, MotionValue, useTransform } from "framer-motion"
 import { CheckCircle2, ScanFace, FileSignature } from "lucide-react"
+import { useMemo } from "react"
 
-export function SceneIdentity({ progress }: { progress: MotionValue<number> }) {
-  
-  // Scene 4: Build Identity (0.28 to 0.50)
+export function SceneIdentity({ progress, rawProgress }: { progress: MotionValue<number>; rawProgress: MotionValue<number> }) {
+
+  const shouldRender = useMemo(() => {
+    const p = rawProgress.get()
+    return p >= 0.28 && p <= 0.68
+  }, [rawProgress])
+
   const buildOpacity = useTransform(progress, [0.30, 0.34, 0.46, 0.50], [0, 1, 1, 0])
   const buildY = useTransform(progress, [0.30, 0.38], [100, 0])
   const profileCompletion = useTransform(progress, [0.34, 0.46], [0, 100])
 
-  // Scene 5: Verification (0.48 to 0.66)
   const verifyOpacity = useTransform(progress, [0.48, 0.52, 0.62, 0.66], [0, 1, 1, 0])
   const verifyScale = useTransform(progress, [0.48, 0.52], [0.8, 1])
   const scanPosition = useTransform(progress, [0.53, 0.58], ["0%", "100%"])
+
+  if (!shouldRender) return null
 
   return (
     <>
