@@ -133,7 +133,7 @@ export default function VerificationAdminClient({ verifications }: { verificatio
                           {verification.profiles.first_name} {verification.profiles.last_name}
                         </h3>
                         <p className="text-sm text-white/60">
-                          Submitted {new Date(verification.submitted_at).toLocaleDateString()}
+                          Submitted {verification.submitted_at ? new Date(verification.submitted_at).toLocaleDateString() : 'N/A'}
                         </p>
                       </div>
                     </div>
