@@ -4,6 +4,7 @@ import { siteConfig } from "@/config/site";
 import { ThemeProvider } from "@/shared/providers/theme-provider";
 import { SmoothScrollProvider } from "@/shared/providers/smooth-scroll-provider";
 import { AmbientBackground } from "@/shared/components/ambient-background";
+import { Toaster } from "sonner";
 import Script from "next/script";
 import "./globals.css";
 
@@ -52,6 +53,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
+          <Toaster />
           <AmbientBackground />
           {children}
         </ThemeProvider>
