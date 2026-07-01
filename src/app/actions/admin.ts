@@ -28,32 +28,40 @@ export async function getPendingVerifications() {
     return { success: false, error: "Unauthorized", verifications: [] }
   }
 
-  const { data: verifications, error } = await supabase
+  // Fetch verification documents
+  const { data: documents, error: docsError } = await supabase
     .from('verification_documents')
-    .select(`
-      id,
-      profile_id,
-      document_type,
-      bucket_path,
-      status,
-      submitted_at,
-      profiles (
-        id,
-        first_name,
-        last_name,
-        verification_status,
-        email,
-        phone,
-        date_of_birth
-      )
-    `)
+    .select('id, profile_id, document_type, bucket_path, status, submitted_at')
     .eq('status', 'pending')
     .order('submitted_at', { ascending: false })
 
-  if (error) {
-    console.error('Error fetching pending verifications:', error)
-    return { success: false, error: error.message, verifications: [] }
+  if (docsError) {
+    console.error('Error fetching verification documents:', docsError)
+    return { success: false, error: docsError.message, verifications: [] }
   }
+
+  if (!documents || documents.length === 0) {
+    return { success: true, verifications: [] }
+  }
+
+  // Fetch associated profiles
+  const profileIds = documents.map(d => d.profile_id)
+  const { data: profiles, error: profilesError } = await supabase
+    .from('profiles')
+    .select('id, first_name, last_name, verification_status, email, phone, date_of_birth')
+    .in('id', profileIds)
+
+  if (profilesError) {
+    console.error('Error fetching profiles:', profilesError)
+    return { success: false, error: profilesError.message, verifications: [] }
+  }
+
+  // Join documents with profiles
+  const profileMap = new Map(profiles?.map(p => [p.id, p]) || [])
+  const verifications = documents.map(doc => ({
+    ...doc,
+    profiles: profileMap.get(doc.profile_id) || null
+  }))
 
   return { success: true, verifications }
 }
