@@ -34,7 +34,7 @@ export default function DashboardClient({ userProfile, recommendedMatches, compl
         if (!m.profession) return null
         return Array.isArray(m.profession) ? m.profession[0]?.name : m.profession.name
       })
-      .filter(Boolean)
+      .filter((p): p is string => p !== null && p !== undefined)
 
     const professionCounts = professions.reduce((acc, p) => {
       acc[p] = (acc[p] || 0) + 1
@@ -49,7 +49,7 @@ export default function DashboardClient({ userProfile, recommendedMatches, compl
         if (!m.city) return null
         return Array.isArray(m.city) ? m.city[0]?.name : m.city.name
       })
-      .filter(Boolean)
+      .filter((c): c is string => c !== null && c !== undefined)
 
     const cityCounts = cities.reduce((acc, c) => {
       acc[c] = (acc[c] || 0) + 1

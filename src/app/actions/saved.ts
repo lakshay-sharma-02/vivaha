@@ -17,7 +17,7 @@ export async function getSavedProfiles() {
       id,
       created_at,
       saved_profile_id,
-      profiles:saved_profile_id (
+      profiles!saved_profile_id (
         id,
         first_name,
         last_name,
@@ -28,15 +28,7 @@ export async function getSavedProfiles() {
         city_id,
         profession_id,
         religion_id,
-        verification_status,
-        cities (name),
-        professions (name),
-        religions (name),
-        profile_media (
-          id,
-          bucket_path,
-          is_primary
-        )
+        verification_status
       )
     `)
     .eq('user_id', user.id)

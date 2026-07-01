@@ -9,7 +9,7 @@ import { toast } from "sonner"
 
 type SavedProfile = {
   id: string
-  created_at: string
+  created_at: string | null
   saved_profile_id: string
   profiles: {
     id: string
@@ -23,14 +23,6 @@ type SavedProfile = {
     profession_id: string | null
     religion_id: string | null
     verification_status: string | null
-    cities: { name: string } | null
-    professions: { name: string } | null
-    religions: { name: string } | null
-    profile_media: Array<{
-      id: string
-      bucket_path: string
-      is_primary: boolean | null
-    }>
   }
 }
 
@@ -46,7 +38,7 @@ export default function SavedClient() {
     setLoading(true)
     const result = await getSavedProfiles()
     if (result.success && result.data) {
-      setSavedProfiles(result.data as SavedProfile[])
+      setSavedProfiles(result.data)
     } else {
       toast.error(result.error || "Failed to load saved profiles")
     }
@@ -109,7 +101,6 @@ export default function SavedClient() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {savedProfiles.map((saved) => {
               const profile = saved.profiles
-              const primaryMedia = profile.profile_media?.find(m => m.is_primary) || profile.profile_media?.[0]
               const age = calculateAge(profile.date_of_birth)
 
               return (
@@ -126,19 +117,8 @@ export default function SavedClient() {
                     <X className="w-5 h-5 text-white" />
                   </button>
 
-                  <div className="relative h-80 bg-white/5">
-                    {primaryMedia ? (
-                      <Image
-                        src={primaryMedia.bucket_path}
-                        alt={`${profile.first_name}'s photo`}
-                        fill
-                        className="object-cover"
-                      />
-                    ) : (
-                      <div className="flex items-center justify-center h-full">
-                        <Heart className="w-16 h-16 text-white/20" />
-                      </div>
-                    )}
+                  <div className="relative h-80 bg-gradient-to-br from-white/10 to-white/5 flex items-center justify-center">
+                    <div className="text-6xl text-white/20 font-bold">{profile.first_name[0]}</div>
                   </div>
 
                   <div className="p-6 space-y-4">
@@ -150,18 +130,10 @@ export default function SavedClient() {
                     </div>
 
                     <div className="space-y-2 text-sm text-white/60">
-                      {profile.cities && (
-                        <div className="flex items-center gap-2">
-                          <MapPin className="w-4 h-4" />
-                          <span>{profile.cities.name}</span>
-                        </div>
-                      )}
-                      {profile.professions && (
-                        <div className="flex items-center gap-2">
-                          <Briefcase className="w-4 h-4" />
-                          <span>{profile.professions.name}</span>
-                        </div>
-                      )}
+                      <div className="flex items-center gap-2">
+                        <Bookmark className="w-4 h-4" />
+                        <span>Saved profile</span>
+                      </div>
                     </div>
 
                     {profile.bio && (
