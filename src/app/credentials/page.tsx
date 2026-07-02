@@ -42,8 +42,9 @@ export default function CredentialsPage() {
         if (uploadError) throw uploadError;
         
         const { error: dbError } = await supabase.from('profile_media').insert({ 
-          user_id: user.id,
-          url: uploadData.path, 
+          profile_id: user.id,
+          type: 'image',
+          bucket_path: uploadData.path, 
           is_primary: true 
         });
         
@@ -62,8 +63,9 @@ export default function CredentialsPage() {
         if (uploadError) throw uploadError;
         
         const { error: dbError } = await supabase.from('verification_documents').insert({ 
-          user_id: user.id,
-          file_path: uploadData.path, 
+          profile_id: user.id,
+          document_type: 'aadhar',
+          bucket_path: uploadData.path, 
           status: 'pending' 
         });
         
