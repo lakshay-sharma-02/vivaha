@@ -1,0 +1,274 @@
+.main {
+  background-color: #fcfbf9; /* Warm off-white paper texture feel */
+  color: #3b3631; /* Deep charcoal/warm stone */
+  font-family: var(--font-playfair), serif; /* Using Next.js Playfair Display */
+  position: relative;
+  overflow-x: hidden;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+
+.sans {
+  font-family: var(--font-geist-sans), sans-serif;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Texture overlay for the entire page */
+.main::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.04"/></svg>');
+  pointer-events: none;
+  z-index: 50;
+  mix-blend-mode: multiply;
+}
+
+/* Common Section Styles */
+.scene {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 10vh 5vw;
+  box-sizing: border-box;
+}
+
+.contentWrapper {
+  max-width: 1200px;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.splitContent {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10vw;
+  text-align: left;
+}
+
+.splitContent.reverse {
+  flex-direction: row-reverse;
+}
+
+@media (max-width: 768px) {
+  .splitContent, .splitContent.reverse {
+    flex-direction: column;
+    text-align: center;
+    gap: 15vw;
+  }
+}
+
+/* Typography */
+h1 {
+  font-size: clamp(3rem, 6vw, 6rem);
+  line-height: 1.1;
+  font-weight: 400;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  line-height: 1.2;
+  font-weight: 400;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  line-height: 1.3;
+  font-weight: 300;
+  margin-bottom: 2rem;
+}
+
+p {
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  line-height: 1.8;
+  max-width: 600px;
+  font-weight: 300;
+  opacity: 0.85;
+}
+
+.subtitle {
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  opacity: 0.6;
+}
+
+/* The Thread Motif */
+.threadLine {
+  position: absolute;
+  background-color: rgba(59, 54, 49, 0.2);
+}
+
+.threadVertical {
+  width: 1px;
+  height: 100vh;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
+  z-index: 1;
+}
+
+.threadHorizontal {
+  height: 1px;
+  width: 100vw;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+  z-index: 1;
+}
+
+.wovenThread {
+  position: relative;
+  width: 1px;
+  height: 200px;
+  margin: 4rem auto;
+  overflow: hidden;
+}
+
+.wovenThread::before,
+.wovenThread::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background-color: rgba(59, 54, 49, 0.3);
+}
+
+.wovenThread::before {
+  left: -2px;
+  animation: weave1 4s ease-in-out infinite alternate;
+}
+
+.wovenThread::after {
+  left: 2px;
+  animation: weave2 4s ease-in-out infinite alternate;
+}
+
+@keyframes weave1 {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(4px); }
+}
+
+@keyframes weave2 {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-4px); }
+}
+
+/* Images */
+.imageContainer {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+  border-radius: 4px;
+}
+
+.imageContainer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.imageContainer:hover img {
+  transform: scale(1.03);
+}
+
+/* Buttons */
+.ctaButton {
+  margin-top: 4rem;
+  padding: 1.2rem 3rem;
+  background-color: transparent;
+  color: #3b3631;
+  border: 1px solid rgba(59, 54, 49, 0.3);
+  font-family: var(--font-geist-sans), sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.ctaButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #3b3631;
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  z-index: -1;
+}
+
+.ctaButton:hover {
+  color: #fcfbf9;
+  border-color: #3b3631;
+}
+
+.ctaButton:hover::before {
+  transform: translateY(0);
+}
+
+/* specific scene styles */
+.scene1 {
+  background: radial-gradient(circle at center, #ffffff 0%, #fcfbf9 100%);
+}
+
+.sceneDark {
+  background-color: #1a1918;
+  color: #fcfbf9;
+}
+
+.sceneDark .threadLine,
+.sceneDark .wovenThread::before,
+.sceneDark .wovenThread::after {
+  background-color: rgba(252, 251, 249, 0.15);
+}
+
+.sceneDark .ctaButton {
+  color: #fcfbf9;
+  border-color: rgba(252, 251, 249, 0.3);
+}
+
+.sceneDark .ctaButton::before {
+  background-color: #fcfbf9;
+}
+
+.sceneDark .ctaButton:hover {
+  color: #1a1918;
+}
+
+/* Thread SVG path for the end */
+.finalThread {
+  width: 100%;
+  height: 300px;
+  stroke: rgba(59, 54, 49, 0.3);
+  stroke-width: 1;
+  fill: none;
+}
