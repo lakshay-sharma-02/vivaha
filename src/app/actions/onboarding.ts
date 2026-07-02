@@ -121,10 +121,11 @@ export async function saveOnboardingData(formData: OnboardingData) {
     const languageId = await getOrCreateLookup('languages', formData.motherTongue);
     const { countryId, stateId, cityId } = await getOrCreateLocation(formData.country, formData.city, formData.state);
 
-    // 2. Update Profile (using update instead of upsert to avoid RLS INSERT permission issues)
+    // 2. Upsert Profile
     const { error: profileError } = await supabase
       .from('profiles')
-      .update({
+      .upsert({
+        id: user.id,
         first_name: formData.firstName?.trim() || "",
         last_name: formData.lastName?.trim() || "",
         gender: formData.gender || null,
@@ -138,8 +139,7 @@ export async function saveOnboardingData(formData: OnboardingData) {
         community_id: communityId,
         mother_tongue_id: languageId,
         bio: formData.bio || null,
-      } as any)
-      .eq('id', user.id);
+      } as any, { onConflict: 'id' });
 
     if (profileError) {
       console.error("Profile update error:", profileError)
