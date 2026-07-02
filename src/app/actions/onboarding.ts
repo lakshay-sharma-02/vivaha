@@ -121,18 +121,15 @@ export async function saveOnboardingData(formData: OnboardingData) {
     const languageId = await getOrCreateLookup('languages', formData.motherTongue);
     const { countryId, stateId, cityId } = await getOrCreateLocation(formData.country, formData.city, formData.state);
 
-    // 2. Upsert Profile
-    // Note: state_id, community_id, mother_tongue_id are new columns added via migrations
-    // but not yet in generated types. Cast to any until types are regenerated.
+    // 2. Update Profile (using update instead of upsert to avoid RLS INSERT permission issues)
     const { error: profileError } = await supabase
       .from('profiles')
-      .upsert({
-        id: user.id,
+      .update({
         first_name: formData.firstName?.trim() || "",
         last_name: formData.lastName?.trim() || "",
         gender: formData.gender || null,
         date_of_birth: formData.dateOfBirth || null,
-        height_cm: formData.height ? parseInt(formData.height) : null,
+        height_cm: formData.height ? parseInt(formData.height as any) : null,
         religion_id: religionId,
         profession_id: professionId,
         country_id: countryId,
@@ -141,7 +138,8 @@ export async function saveOnboardingData(formData: OnboardingData) {
         community_id: communityId,
         mother_tongue_id: languageId,
         bio: formData.bio || null,
-      } as any, { onConflict: 'id' });
+      })
+      .eq('id', user.id);
 
     if (profileError) {
       console.error("Profile update error:", profileError)
