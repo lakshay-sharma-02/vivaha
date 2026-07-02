@@ -121,11 +121,10 @@ export async function saveOnboardingData(formData: OnboardingData) {
     const languageId = await getOrCreateLookup('languages', formData.motherTongue);
     const { countryId, stateId, cityId } = await getOrCreateLocation(formData.country, formData.city, formData.state);
 
-    // 2. Upsert Profile
+    // 2. Update Profile (Row created securely by database auth trigger, so we can't INSERT/upsert)
     const { error: profileError } = await supabase
       .from('profiles')
-      .upsert({
-        id: user.id,
+      .update({
         first_name: formData.firstName?.trim() || "",
         last_name: formData.lastName?.trim() || "",
         gender: formData.gender || null,
@@ -139,7 +138,8 @@ export async function saveOnboardingData(formData: OnboardingData) {
         community_id: communityId,
         mother_tongue_id: languageId,
         bio: formData.bio || null,
-      } as any, { onConflict: 'id' });
+      } as any)
+      .eq('id', user.id);
 
     if (profileError) {
       console.error("Profile update error:", profileError)
