@@ -10,16 +10,16 @@ export interface UseSmartInViewOptions {
   margin?: string
 }
 
-export interface UseSmartInViewResult {
-  ref: RefObject<HTMLElement | null>
+export interface UseSmartInViewResult<T extends HTMLElement = HTMLElement> {
+  ref: RefObject<T | null>
   isInView: boolean
   shouldAnimate: boolean
 }
 
-export function useSmartInView(
+export function useSmartInView<T extends HTMLElement = HTMLElement>(
   options: UseSmartInViewOptions = {}
-): UseSmartInViewResult {
-  const ref = useRef<HTMLElement>(null)
+): UseSmartInViewResult<T> {
+  const ref = useRef<T>(null)
   const reducedMotion = useReducedMotion()
 
   const inViewOptions: any = {

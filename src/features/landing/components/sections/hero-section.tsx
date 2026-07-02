@@ -5,7 +5,7 @@ import { motion } from "framer-motion"
 import { useSmartInView, scaleIn, fadeIn } from "@/shared/animations"
 
 export function HeroSection() {
-  const { ref, shouldAnimate } = useSmartInView({ once: true, amount: 0.5 })
+  const { ref, shouldAnimate } = useSmartInView<HTMLDivElement>({ once: true, amount: 0.5 })
 
   return (
     <CinematicSection isFirst>
