@@ -4,7 +4,6 @@ import { CinematicSection, use3DTilt } from "../experience"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { useRef } from "react"
-import { staggerContainer, staggerItem } from "@/shared/animations"
 
 const profiles = [
   { id: 1, name: "Priya", age: 28, location: "New York", imageUrl: "https://images.unsplash.com/photo-1513258496099-48168024aec0?q=80&w=600&auto=format&fit=crop" },
@@ -20,7 +19,6 @@ function GalleryCard({ profile }: { profile: { id: number, name: string, age: nu
   return (
     <motion.div
       ref={ref}
-      variants={staggerItem}
       style={{ rotateX, rotateY, transformPerspective: 1000 }}
       className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl aspect-[3/4] cursor-pointer group"
     >
@@ -64,17 +62,13 @@ export function GallerySection() {
           </p>
         </div>
 
-        <motion.div
+        <div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl w-full"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={staggerContainer}
         >
           {profiles.map((profile) => (
             <GalleryCard key={profile.id} profile={profile} />
           ))}
-        </motion.div>
+        </div>
       </div>
     </CinematicSection>
   )

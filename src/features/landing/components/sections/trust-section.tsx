@@ -1,20 +1,14 @@
 "use client"
 
 import { CinematicSection } from "../experience"
-import { motion } from "framer-motion"
 import { ShieldCheck, LockKeyhole } from "lucide-react"
-import { fadeInUp } from "@/shared/animations"
 
 export function TrustSection() {
   return (
     <CinematicSection>
       <div className="relative flex flex-col items-center justify-center w-full h-full py-20">
-        <motion.div
+        <div
           className="relative flex flex-col items-center"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeInUp}
         >
           <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full border border-zinc-800/50 flex items-center justify-center bg-gradient-to-br from-zinc-900/50 to-black backdrop-blur-sm shadow-2xl">
             <div className="absolute inset-0 rounded-full bg-zinc-700/10 shield-pulse" />
@@ -37,7 +31,7 @@ export function TrustSection() {
             Zero public exposure. Invisible to search engines. You control who sees
             your legacy.
           </p>
-        </motion.div>
+        </div>
 
         <style jsx>{`
           @keyframes shield-pulse {

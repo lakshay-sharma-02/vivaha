@@ -3,7 +3,6 @@
 import { CinematicSection, use3DTilt } from "../experience"
 import { motion } from "framer-motion"
 import { useRef } from "react"
-import { fadeInUp } from "@/shared/animations"
 
 export function IdentitySection() {
   const cardRef = useRef<HTMLDivElement>(null)
@@ -12,25 +11,16 @@ export function IdentitySection() {
   return (
     <CinematicSection>
       <div className="relative flex flex-col items-center justify-center w-full h-full py-20 px-4">
-        <motion.h2
+        <h2
           className="font-playfair text-4xl md:text-5xl mb-16 font-light tracking-wide text-zinc-300 text-center"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeInUp}
         >
           Crafting Your Narrative
-        </motion.h2>
+        </h2>
 
         <motion.div
           ref={cardRef}
           className="w-[90vw] max-w-2xl rounded-3xl p-8 border border-white/5 flex flex-col shadow-2xl relative overflow-hidden bg-black/40 backdrop-blur-xl"
           style={{ rotateX, rotateY, transformPerspective: 1000 }}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeInUp}
-          transition={{ delay: 0.2 }}
         >
           <div className="flex items-center gap-6 mb-8 relative z-10">
             <div className="w-24 h-24 rounded-full bg-zinc-800/80 border border-white/5 shadow-inner" />

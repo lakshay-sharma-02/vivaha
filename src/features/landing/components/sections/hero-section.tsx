@@ -1,24 +1,12 @@
 "use client"
 
 import { CinematicSection } from "../experience"
-import { motion } from "framer-motion"
-import { useSmartInView, scaleIn, fadeIn } from "@/shared/animations"
 
 export function HeroSection() {
-  const { ref, shouldAnimate } = useSmartInView<HTMLDivElement>({ once: true, amount: 0.5 })
-
   return (
     <CinematicSection isFirst>
-      <div
-        ref={ref}
-        className="relative flex flex-col items-center justify-center overflow-hidden w-full h-full"
-      >
-        <motion.div
-          className="flex flex-col items-center justify-center z-10"
-          initial="hidden"
-          animate={shouldAnimate ? "visible" : "hidden"}
-          variants={scaleIn}
-        >
+      <div className="relative flex flex-col items-center justify-center overflow-hidden w-full h-full">
+        <div className="flex flex-col items-center justify-center z-10">
           <div className="relative w-32 h-32 md:w-48 md:h-48 rounded-full bg-gradient-to-tr from-amber-500/10 to-transparent border border-amber-500/20 flex items-center justify-center">
             <div className="absolute inset-0 rounded-full bg-amber-500/10 animate-pulse-glow" />
             <span className="relative font-playfair text-4xl md:text-6xl text-amber-50/90 font-light tracking-widest drop-shadow-[0_0_15px_rgba(245,158,11,0.3)]">
@@ -26,16 +14,10 @@ export function HeroSection() {
             </span>
           </div>
 
-          <motion.p
-            className="mt-8 text-amber-500/60 text-sm tracking-[0.4em] uppercase"
-            initial="hidden"
-            animate={shouldAnimate ? "visible" : "hidden"}
-            variants={fadeIn}
-            transition={{ delay: 0.8, duration: 1.5, ease: "easeOut" }}
-          >
+          <p className="mt-8 text-amber-500/60 text-sm tracking-[0.4em] uppercase">
             Where Souls Connect
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
         <style jsx>{`
           @keyframes pulse-glow {

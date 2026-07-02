@@ -1,30 +1,20 @@
 "use client"
 
 import { CinematicSection } from "../experience"
-import { motion } from "framer-motion"
 import { CheckCircle2, ScanFace, FileSignature } from "lucide-react"
-import { fadeInUp } from "@/shared/animations"
 
 export function VerificationSection() {
   return (
     <CinematicSection>
       <div className="relative flex flex-col items-center justify-center w-full h-full py-20 px-4">
-        <motion.h2 
+        <h2 
           className="font-playfair text-4xl md:text-5xl mb-16 font-light text-zinc-300 text-center drop-shadow-md"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeInUp}
         >
           Uncompromising Standards
-        </motion.h2>
+        </h2>
 
-        <motion.div
+        <div
           className="flex items-center gap-4 md:gap-12 scale-75 md:scale-100"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeInUp}
         >
           <div className="flex flex-col items-center gap-4">
             <div className="w-20 h-20 rounded-2xl border border-white/10 bg-zinc-900/50 backdrop-blur-sm flex items-center justify-center shadow-xl">
@@ -57,7 +47,7 @@ export function VerificationSection() {
               Verified
             </span>
           </div>
-        </motion.div>
+        </div>
 
         <style jsx>{`
           @keyframes scan {
