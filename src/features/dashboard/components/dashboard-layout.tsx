@@ -141,7 +141,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
     </div>
   )
 
-  const NavLink = ({ item }: { item: { href: string; icon: React.ElementType; label: string; premium?: boolean } }) => {
+  const NavLink = ({ item }: { item: { href: string; icon: React.ComponentType<{ className?: string }>; label: string; premium?: boolean } }) => {
     const isActive = pathname === item.href
     return (
       <Link href={item.href} onClick={() => setIsMobileMenuOpen(false)}>
