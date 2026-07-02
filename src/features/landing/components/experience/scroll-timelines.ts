@@ -39,26 +39,26 @@ export function useCinematicTimeline(
   
   const opacity = useTransform(
     scrollYProgress,
-    isFirst ? [0, 0.5, 1] : [0, 0.5, 0.8, 1],
+    isFirst ? [0, 0.5, 1] : [0, 0.33, 0.66, 1],
     isFirst ? [1, 1, 0] : [0, 1, 1, 0]
   )
 
   const scale = useTransform(
     scrollYProgress,
-    isFirst ? [0.5, 1] : [0, 0.5, 0.8, 1],
+    isFirst ? [0.5, 1] : [0, 0.33, 0.66, 1],
     isFirst ? [1, 0.9] : [1.05, 1, 1, 0.9]
   )
 
   const y = useTransform(
     scrollYProgress,
-    isFirst ? [0, 1] : [0, 0.5, 0.8, 1],
+    isFirst ? [0.5, 1] : [0, 0.33, 0.66, 1],
     isFirst ? [0, -100] : [50, 0, 0, -100]
   )
 
   const blur = useTransform(
     scrollYProgress,
-    isFirst ? [0.6, 1] : [0, 0.5, 0.8, 1],
-    isFirst ? ["blur(0px)", "blur(20px)"] : ["blur(10px)", "blur(0px)", "blur(0px)", "blur(20px)"]
+    isFirst ? [0.5, 1] : [0, 0.33, 0.66, 1],
+    isFirst ? ["blur(0px)", "blur(20px)"] : ["blur(15px)", "blur(0px)", "blur(0px)", "blur(20px)"]
   )
 
   return {

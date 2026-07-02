@@ -18,7 +18,7 @@ export function CinematicSection({ children, isFirst = false, className = "" }: 
   return (
     <section 
       ref={ref} 
-      className={`relative h-[200vh] w-full ${!isFirst ? "-mt-[100vh]" : ""} ${className}`}
+      className={`relative w-full ${isFirst ? "h-[200vh]" : "h-[300vh] -mt-[100vh]"} ${className}`}
     >
       <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden pointer-events-none">
         <motion.div
