@@ -12,7 +12,9 @@ const STEPS = [
   { id: 2, title: "Where You Belong", desc: "Tell us where your life is currently rooted." },
   { id: 3, title: "Your Heritage", desc: "Understanding the cultural background that shaped you." },
   { id: 4, title: "Your Family", desc: "Because a meaningful connection involves those who matter most." },
-  { id: 5, title: "Your Path", desc: "Your education, career, and a few words about yourself." },
+  { id: 5, title: "Your Path", desc: "Your education and professional journey." },
+  { id: 6, title: "Your World", desc: "Your lifestyle, hobbies, and personal story." },
+  { id: 7, title: "Your Preferences", desc: "What you are looking for in a partner." },
 ];
 
 export default function ApplyPage() {
@@ -20,24 +22,42 @@ export default function ApplyPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [serverError, setServerError] = useState<string | null>(null);
   
-  const { register, handleSubmit, formState: { isSubmitting } } = useForm<OnboardingData>();
+  // We extend the form data slightly to handle string inputs for arrays before submission
+  type FormInputs = Omit<OnboardingData, 'lifestyleChips' | 'prefReligionChips'> & {
+    lifestyleChipsString?: string;
+    prefReligionChipsString?: string;
+  };
 
-  const onSubmit = async (data: OnboardingData) => {
+  const { register, handleSubmit, formState: { isSubmitting } } = useForm<FormInputs>();
+
+  const onSubmit = async (formData: FormInputs) => {
     setServerError(null);
-    const result = await saveOnboardingData(data);
+    
+    // Process chips
+    const submissionData: OnboardingData = {
+      ...formData,
+      lifestyleChips: formData.lifestyleChipsString 
+        ? formData.lifestyleChipsString.split(',').map(s => s.trim()).filter(Boolean) 
+        : [],
+      prefReligionChips: formData.prefReligionChipsString 
+        ? formData.prefReligionChipsString.split(',').map(s => s.trim()).filter(Boolean) 
+        : [],
+    };
+
+    const result = await saveOnboardingData(submissionData);
     
     if (!result.success) {
       setServerError(result.error || "An error occurred.");
     } else {
-      router.push("/dashboard"); // Or wherever the inside of the estate is
+      router.push("/credentials");
     }
   };
 
-  const nextStep = () => setCurrentStep(prev => Math.min(prev + 1, 5));
+  const nextStep = () => setCurrentStep(prev => Math.min(prev + 1, 7));
   const prevStep = () => setCurrentStep(prev => Math.max(prev - 1, 1));
 
-  const InputField = ({ label, name, placeholder, type = "text" }: { label: string, name: keyof OnboardingData, placeholder?: string, type?: string }) => (
-    <div className="space-y-2">
+  const InputField = ({ label, name, placeholder, type = "text" }: { label: string, name: keyof FormInputs, placeholder?: string, type?: string }) => (
+    <div className="space-y-2 w-full">
       <label className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-[0.2em]">{label}</label>
       <input 
         type={type} 
@@ -52,7 +72,7 @@ export default function ApplyPage() {
     <main className="relative w-full h-screen flex flex-col md:flex-row bg-[#FDFBF7] overflow-hidden">
       
       {/* ENVIRONMENT: The Study Room (Left 50%) */}
-      <div className="w-full md:w-1/2 h-[30vh] md:h-full relative">
+      <div className="w-full md:w-1/2 h-[20vh] md:h-full relative">
         <Image 
           src="/images/architecture/interview.jpg"
           alt="Vivaha Study Room"
@@ -64,7 +84,7 @@ export default function ApplyPage() {
 
       {/* ARCHITECTURAL SURFACE: The Application Desk (Right 50%) */}
       <div className="w-full md:w-1/2 h-full flex flex-col px-8 md:px-16 lg:px-24 py-12 md:py-24 z-10 bg-[#FDFBF7] relative shadow-[-20px_0_40px_rgba(0,0,0,0.05)] overflow-y-auto">
-        <div className="w-full max-w-md mx-auto flex flex-col h-full">
+        <div className="w-full max-w-md mx-auto flex flex-col min-h-full">
           
           {/* Header */}
           <div className="mb-12">
@@ -78,8 +98,8 @@ export default function ApplyPage() {
           </div>
 
           {/* Form Content */}
-          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col flex-1">
-            <div className="flex-1 relative">
+          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col flex-1 pb-16">
+            <div className="flex-1 relative min-h-[300px]">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentStep}
@@ -91,7 +111,14 @@ export default function ApplyPage() {
                 >
                   {currentStep === 1 && (
                     <>
-                      <InputField label="Phone Number" name="phone" placeholder="+91 98765 43210" />
+                      <div className="flex gap-6">
+                        <InputField label="First Name" name="firstName" placeholder="Ananya" />
+                        <InputField label="Last Name" name="lastName" placeholder="Sharma" />
+                      </div>
+                      <div className="flex gap-6">
+                        <InputField label="Phone" name="phone" placeholder="+91 98765..." />
+                        <InputField label="Instagram" name="instagram" placeholder="@username" />
+                      </div>
                       <div className="flex gap-6">
                         <div className="flex-1 space-y-2">
                           <label className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-[0.2em]">Gender</label>
@@ -101,9 +128,7 @@ export default function ApplyPage() {
                             <option value="female">Female</option>
                           </select>
                         </div>
-                        <div className="flex-1">
-                          <InputField label="Height (cm)" name="height" placeholder="e.g. 175" type="number" />
-                        </div>
+                        <div className="flex-1"><InputField label="Height (cm)" name="height" placeholder="175" type="number" /></div>
                       </div>
                       <InputField label="Date of Birth" name="dateOfBirth" type="date" />
                     </>
@@ -113,19 +138,23 @@ export default function ApplyPage() {
                     <>
                       <InputField label="Country" name="country" placeholder="e.g. India" />
                       <div className="flex gap-6">
-                        <div className="flex-1"><InputField label="State" name="state" placeholder="e.g. Maharashtra" /></div>
-                        <div className="flex-1"><InputField label="City" name="city" placeholder="e.g. Mumbai" /></div>
+                        <InputField label="State" name="state" placeholder="e.g. Maharashtra" />
+                        <InputField label="City" name="city" placeholder="e.g. Mumbai" />
                       </div>
                     </>
                   )}
 
                   {currentStep === 3 && (
                     <>
-                      <InputField label="Religion" name="religion" placeholder="e.g. Hindu" />
-                      <InputField label="Community / Caste" name="community" placeholder="e.g. Brahmin" />
                       <div className="flex gap-6">
-                        <div className="flex-1"><InputField label="Mother Tongue" name="motherTongue" placeholder="e.g. Hindi" /></div>
-                        <div className="flex-1"><InputField label="Gotra" name="gotra" placeholder="e.g. Kashyap" /></div>
+                        <InputField label="Religion" name="religion" placeholder="e.g. Hindu" />
+                        <InputField label="Community" name="community" placeholder="e.g. Brahmin" />
+                      </div>
+                      <InputField label="Mother Tongue" name="motherTongue" placeholder="e.g. Hindi" />
+                      <InputField label="Your Gotra" name="gotra" placeholder="e.g. Kashyap" />
+                      <div className="flex gap-6">
+                        <InputField label="Maternal Gotra" name="maternalGotra" placeholder="Optional" />
+                        <InputField label="Grandmother Gotra" name="grandmotherGotra" placeholder="Optional" />
                       </div>
                     </>
                   )}
@@ -134,6 +163,7 @@ export default function ApplyPage() {
                     <>
                       <InputField label="Father's Occupation" name="fatherOccupation" placeholder="e.g. Business Owner" />
                       <InputField label="Mother's Occupation" name="motherOccupation" placeholder="e.g. Homemaker" />
+                      <InputField label="Siblings Information" name="siblings" placeholder="e.g. 1 elder brother (married)" />
                       <div className="flex gap-6">
                         <div className="flex-1 space-y-2">
                           <label className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-[0.2em]">Family Type</label>
@@ -158,19 +188,47 @@ export default function ApplyPage() {
 
                   {currentStep === 5 && (
                     <>
-                      <InputField label="Highest Qualification" name="highestQual" placeholder="e.g. MBA" />
                       <div className="flex gap-6">
-                        <div className="flex-1"><InputField label="Occupation" name="occupation" placeholder="e.g. Product Manager" /></div>
-                        <div className="flex-1"><InputField label="Company" name="company" placeholder="e.g. Google" /></div>
+                        <InputField label="Highest Qual." name="highestQual" placeholder="e.g. MBA" />
+                        <InputField label="University" name="university" placeholder="e.g. IIM" />
                       </div>
+                      <div className="flex gap-6">
+                        <InputField label="Industry/Profession" name="profession" placeholder="e.g. Technology" />
+                        <InputField label="Occupation/Role" name="occupation" placeholder="e.g. Product Manager" />
+                      </div>
+                      <div className="flex gap-6">
+                        <InputField label="Company" name="company" placeholder="e.g. Google" />
+                        <InputField label="Annual Income" name="income" placeholder="e.g. 30 LPA" />
+                      </div>
+                    </>
+                  )}
+
+                  {currentStep === 6 && (
+                    <>
+                      <InputField label="Hobbies (comma separated)" name="hobbies" placeholder="e.g. Reading, Hiking, Photography" />
+                      <InputField label="Lifestyle Tags (comma separated)" name="lifestyleChipsString" placeholder="e.g. Early Riser, Vegetarian, Pet Lover" />
                       <div className="space-y-2 pt-4">
-                        <label className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-[0.2em]">A few words about you</label>
+                        <label className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-[0.2em]">Your Personal Story</label>
                         <textarea 
                           {...register("bio")}
-                          className="w-full bg-transparent border-b border-[#2A2621]/20 pb-2 text-sm text-[#2A2621] font-medium placeholder-[#8C7A6B]/40 focus:outline-none focus:border-[#2A2621] transition-colors resize-none h-20"
-                          placeholder="What values are most important to you?"
+                          className="w-full bg-transparent border-b border-[#2A2621]/20 pb-2 text-sm text-[#2A2621] font-medium placeholder-[#8C7A6B]/40 focus:outline-none focus:border-[#2A2621] transition-colors resize-none h-24"
+                          placeholder="What values are most important to you? What kind of life do you envision?"
                         />
                       </div>
+                    </>
+                  )}
+
+                  {currentStep === 7 && (
+                    <>
+                      <div className="flex gap-6">
+                        <InputField label="Min Age" name="minAge" type="number" placeholder="e.g. 25" />
+                        <InputField label="Max Age" name="maxAge" type="number" placeholder="e.g. 32" />
+                      </div>
+                      <div className="flex gap-6">
+                        <InputField label="Min Height (cm)" name="minHeight" type="number" placeholder="e.g. 150" />
+                        <InputField label="Max Height (cm)" name="maxHeight" type="number" placeholder="e.g. 190" />
+                      </div>
+                      <InputField label="Preferred Religions (comma separated)" name="prefReligionChipsString" placeholder="e.g. Hindu, Sikh" />
                     </>
                   )}
                 </motion.div>
@@ -178,7 +236,7 @@ export default function ApplyPage() {
             </div>
 
             {/* Navigation & Submit */}
-            <div className="pt-12 mt-auto">
+            <div className="pt-12 mt-8 border-t border-[#8C7A6B]/20">
               {serverError && (
                 <div className="mb-6 text-[10px] text-red-900/80 font-bold uppercase tracking-widest bg-red-50/50 p-3 rounded-sm border border-red-900/10 text-center">
                   {serverError}
@@ -195,7 +253,7 @@ export default function ApplyPage() {
                   ← Back
                 </button>
                 
-                {currentStep < 5 ? (
+                {currentStep < 7 ? (
                   <button 
                     type="button"
                     onClick={nextStep}
@@ -222,7 +280,7 @@ export default function ApplyPage() {
               
               {/* Step Indicators */}
               <div className="flex justify-center gap-2 mt-12">
-                {[1, 2, 3, 4, 5].map(step => (
+                {[1, 2, 3, 4, 5, 6, 7].map(step => (
                   <div key={step} className={`h-[2px] transition-all duration-500 ${step === currentStep ? 'w-6 bg-[#2A2621]' : 'w-2 bg-[#8C7A6B]/20'}`} />
                 ))}
               </div>
