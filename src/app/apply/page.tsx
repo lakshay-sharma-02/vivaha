@@ -58,8 +58,9 @@ export default function ApplyPage() {
 
   const InputField = ({ label, name, placeholder, type = "text" }: { label: string, name: keyof FormInputs, placeholder?: string, type?: string }) => (
     <div className="space-y-2 w-full">
-      <label className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-[0.2em]">{label}</label>
+      <label htmlFor={name} className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-[0.2em]">{label}</label>
       <input 
+        id={name}
         type={type} 
         {...register(name)}
         className="w-full bg-transparent border-b border-[#2A2621]/20 pb-2 text-sm text-[#2A2621] font-medium placeholder-[#8C7A6B]/40 focus:outline-none focus:border-[#2A2621] transition-colors"
@@ -121,8 +122,8 @@ export default function ApplyPage() {
                       </div>
                       <div className="flex gap-6">
                         <div className="flex-1 space-y-2">
-                          <label className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-[0.2em]">Gender</label>
-                          <select {...register("gender")} className="w-full bg-transparent border-b border-[#2A2621]/20 pb-2 text-sm text-[#2A2621] font-medium focus:outline-none focus:border-[#2A2621] cursor-pointer">
+                          <label htmlFor="gender" className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-[0.2em]">Gender</label>
+                          <select id="gender" {...register("gender")} className="w-full bg-transparent border-b border-[#2A2621]/20 pb-2 text-sm text-[#2A2621] font-medium focus:outline-none focus:border-[#2A2621] cursor-pointer">
                             <option value="">Select...</option>
                             <option value="male">Male</option>
                             <option value="female">Female</option>
@@ -166,16 +167,16 @@ export default function ApplyPage() {
                       <InputField label="Siblings Information" name="siblings" placeholder="e.g. 1 elder brother (married)" />
                       <div className="flex gap-6">
                         <div className="flex-1 space-y-2">
-                          <label className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-[0.2em]">Family Type</label>
-                          <select {...register("familyType")} className="w-full bg-transparent border-b border-[#2A2621]/20 pb-2 text-sm text-[#2A2621] font-medium focus:outline-none focus:border-[#2A2621] cursor-pointer">
+                          <label htmlFor="familyType" className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-[0.2em]">Family Type</label>
+                          <select id="familyType" {...register("familyType")} className="w-full bg-transparent border-b border-[#2A2621]/20 pb-2 text-sm text-[#2A2621] font-medium focus:outline-none focus:border-[#2A2621] cursor-pointer">
                             <option value="">Select...</option>
                             <option value="Nuclear">Nuclear</option>
                             <option value="Joint">Joint</option>
                           </select>
                         </div>
                         <div className="flex-1 space-y-2">
-                          <label className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-[0.2em]">Family Values</label>
-                          <select {...register("familyValues")} className="w-full bg-transparent border-b border-[#2A2621]/20 pb-2 text-sm text-[#2A2621] font-medium focus:outline-none focus:border-[#2A2621] cursor-pointer">
+                          <label htmlFor="familyValues" className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-[0.2em]">Family Values</label>
+                          <select id="familyValues" {...register("familyValues")} className="w-full bg-transparent border-b border-[#2A2621]/20 pb-2 text-sm text-[#2A2621] font-medium focus:outline-none focus:border-[#2A2621] cursor-pointer">
                             <option value="">Select...</option>
                             <option value="Traditional">Traditional</option>
                             <option value="Moderate">Moderate</option>
@@ -208,8 +209,9 @@ export default function ApplyPage() {
                       <InputField label="Hobbies (comma separated)" name="hobbies" placeholder="e.g. Reading, Hiking, Photography" />
                       <InputField label="Lifestyle Tags (comma separated)" name="lifestyleChipsString" placeholder="e.g. Early Riser, Vegetarian, Pet Lover" />
                       <div className="space-y-2 pt-4">
-                        <label className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-[0.2em]">Your Personal Story</label>
+                        <label htmlFor="bio" className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-[0.2em]">Your Personal Story</label>
                         <textarea 
+                          id="bio"
                           {...register("bio")}
                           className="w-full bg-transparent border-b border-[#2A2621]/20 pb-2 text-sm text-[#2A2621] font-medium placeholder-[#8C7A6B]/40 focus:outline-none focus:border-[#2A2621] transition-colors resize-none h-24"
                           placeholder="What values are most important to you? What kind of life do you envision?"

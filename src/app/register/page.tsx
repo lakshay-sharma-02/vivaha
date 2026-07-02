@@ -93,8 +93,9 @@ export default function RegisterPage() {
             {/* First Name & Last Name (Side by Side) */}
             <div className="flex flex-col md:flex-row gap-8">
               <div className="flex-1 space-y-2">
-                <label className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-[0.2em]">First Name</label>
+                <label htmlFor="firstName" className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-[0.2em]">First Name</label>
                 <input 
+                  id="firstName"
                   type="text" 
                   {...register("firstName")}
                   className="w-full bg-transparent border-b border-[#2A2621]/20 pb-2 text-sm text-[#2A2621] font-medium placeholder-[#8C7A6B]/40 focus:outline-none focus:border-[#2A2621] transition-colors"
@@ -106,8 +107,9 @@ export default function RegisterPage() {
               </div>
               
               <div className="flex-1 space-y-2">
-                <label className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-[0.2em]">Last Name</label>
+                <label htmlFor="lastName" className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-[0.2em]">Last Name</label>
                 <input 
+                  id="lastName"
                   type="text" 
                   {...register("lastName")}
                   className="w-full bg-transparent border-b border-[#2A2621]/20 pb-2 text-sm text-[#2A2621] font-medium placeholder-[#8C7A6B]/40 focus:outline-none focus:border-[#2A2621] transition-colors"
@@ -121,8 +123,9 @@ export default function RegisterPage() {
 
             {/* Email */}
             <div className="space-y-2">
-              <label className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-[0.2em]">Email Address</label>
+              <label htmlFor="email" className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-[0.2em]">Email Address</label>
               <input 
+                id="email"
                 type="email" 
                 {...register("email")}
                 className="w-full bg-transparent border-b border-[#2A2621]/20 pb-2 text-sm text-[#2A2621] font-medium placeholder-[#8C7A6B]/40 focus:outline-none focus:border-[#2A2621] transition-colors"
@@ -135,8 +138,9 @@ export default function RegisterPage() {
 
             {/* Password */}
             <div className="space-y-2">
-              <label className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-[0.2em]">Secure Password</label>
+              <label htmlFor="password" className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-[0.2em]">Secure Password</label>
               <input 
+                id="password"
                 type="password" 
                 {...register("password")}
                 className="w-full bg-transparent border-b border-[#2A2621]/20 pb-2 text-sm text-[#2A2621] font-medium placeholder-[#8C7A6B]/40 focus:outline-none focus:border-[#2A2621] transition-colors"
