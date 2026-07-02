@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-import { useScroll, useSpring, useTransform } from "framer-motion"
+import { useScroll, useSpring } from "framer-motion"
 import { SceneHero } from "./scene-hero"
 import { SceneIdentity } from "./scene-identity"
 import { SceneGallery } from "./scene-gallery"
@@ -24,8 +24,6 @@ export function Orchestrator() {
     restDelta: 0.001
   })
 
-  const rawProgress = useTransform(scrollYProgress, (v) => v)
-
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
@@ -36,11 +34,11 @@ export function Orchestrator() {
 
         <CanvasParticles />
 
-        <SceneHero progress={smoothProgress} rawProgress={rawProgress} />
-        <SceneIdentity progress={smoothProgress} rawProgress={rawProgress} />
-        <SceneGallery progress={smoothProgress} rawProgress={rawProgress} />
-        <SceneTrust progress={smoothProgress} rawProgress={rawProgress} />
-        <SceneFinale progress={smoothProgress} rawProgress={rawProgress} />
+        <SceneHero progress={smoothProgress} />
+        <SceneIdentity progress={smoothProgress} />
+        <SceneGallery progress={smoothProgress} />
+        <SceneTrust progress={smoothProgress} />
+        <SceneFinale progress={smoothProgress} />
 
       </div>
     </div>

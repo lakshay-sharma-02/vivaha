@@ -2,14 +2,8 @@
 
 import { motion, MotionValue, useTransform } from "framer-motion"
 import { CheckCircle2, ScanFace, FileSignature } from "lucide-react"
-import { useMemo } from "react"
 
-export function SceneIdentity({ progress, rawProgress }: { progress: MotionValue<number>; rawProgress: MotionValue<number> }) {
-
-  const shouldRender = useMemo(() => {
-    const p = rawProgress.get()
-    return p >= 0.28 && p <= 0.68
-  }, [rawProgress])
+export function SceneIdentity({ progress }: { progress: MotionValue<number> }) {
 
   const buildOpacity = useTransform(progress, [0.30, 0.34, 0.46, 0.50], [0, 1, 1, 0])
   const buildY = useTransform(progress, [0.30, 0.38], [100, 0])
@@ -19,39 +13,75 @@ export function SceneIdentity({ progress, rawProgress }: { progress: MotionValue
   const verifyScale = useTransform(progress, [0.48, 0.52], [0.8, 1])
   const scanPosition = useTransform(progress, [0.53, 0.58], ["0%", "100%"])
 
-  if (!shouldRender) return null
+  // Enhanced animation transforms
+  const titleOpacity = useTransform(progress, [0.30, 0.34], [0, 1])
+  const titleScale = useTransform(progress, [0.30, 0.34], [0.95, 1])
+  const avatarOpacity = useTransform(progress, [0.32, 0.36], [0, 1])
+  const avatarScale = useTransform(progress, [0.32, 0.36], [0.8, 1])
+  const profileLine1Scale = useTransform(progress, [0.34, 0.38], [0, 1])
+  const profileLine2Scale = useTransform(progress, [0.36, 0.40], [0, 1])
+  const contentLine1Scale = useTransform(progress, [0.36, 0.40], [0, 1])
+  const contentLine2Scale = useTransform(progress, [0.38, 0.42], [0, 1])
+  const contentLine3Scale = useTransform(progress, [0.40, 0.44], [0, 1])
+  const progressBarScale = useTransform(profileCompletion, v => v / 100)
+  const percentageText = useTransform(profileCompletion, v => `${Math.round(v)}%`)
+  const percentageOpacity = useTransform(progress, [0.38, 0.42], [0, 1])
 
   return (
     <>
-      {/* Scene 4: Identity Build */}
+      {/* Scene 4: Identity Build - Enhanced with typing effect */}
       <motion.div style={{ y: buildY, opacity: buildOpacity }} className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-30">
-        <h2 className="font-playfair text-4xl md:text-5xl mb-12 font-light tracking-wide text-zinc-300">Crafting Your Narrative</h2>
-        
+        <motion.h2
+          className="font-playfair text-4xl md:text-5xl mb-12 font-light tracking-wide text-zinc-300"
+          style={{ opacity: titleOpacity, scale: titleScale }}
+        >
+          Crafting Your Narrative
+        </motion.h2>
+
         <div className="w-[90vw] max-w-2xl h-80 glass rounded-3xl p-8 border-white/5 flex flex-col shadow-2xl relative overflow-hidden bg-black/40 backdrop-blur-xl">
-          <div className="flex items-center gap-6 mb-8">
-            <div className="w-24 h-24 rounded-full bg-zinc-800/80 animate-pulse border border-white/5" />
+          {/* Animated gradient overlay */}
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-amber-500/5 via-transparent to-amber-500/5"
+            animate={{ x: [-1000, 1000] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+          />
+
+          <div className="flex items-center gap-6 mb-8 relative z-10">
+            <motion.div
+              className="w-24 h-24 rounded-full bg-zinc-800/80 border border-white/5"
+              style={{ opacity: avatarOpacity, scale: avatarScale }}
+            />
             <div className="flex-1 space-y-4">
-              <div className="h-6 w-1/3 bg-zinc-800/80 rounded animate-pulse" />
-              <div className="h-4 w-1/4 bg-zinc-800/50 rounded animate-pulse" />
+              <motion.div
+                className="h-6 w-1/3 bg-zinc-800/80 rounded"
+                style={{ scaleX: profileLine1Scale, transformOrigin: "left" }}
+              />
+              <motion.div
+                className="h-4 w-1/4 bg-zinc-800/50 rounded"
+                style={{ scaleX: profileLine2Scale, transformOrigin: "left" }}
+              />
             </div>
           </div>
-          
-          <div className="space-y-4">
-            <div className="h-4 w-full bg-zinc-800/30 rounded" />
-            <div className="h-4 w-5/6 bg-zinc-800/30 rounded" />
-            <div className="h-4 w-4/6 bg-zinc-800/30 rounded" />
+
+          <div className="space-y-4 relative z-10">
+            <motion.div className="h-4 bg-zinc-800/30 rounded" style={{ width: '100%', scaleX: contentLine1Scale, transformOrigin: "left" }} />
+            <motion.div className="h-4 bg-zinc-800/30 rounded" style={{ width: '83.33%', scaleX: contentLine2Scale, transformOrigin: "left" }} />
+            <motion.div className="h-4 bg-zinc-800/30 rounded" style={{ width: '66.67%', scaleX: contentLine3Scale, transformOrigin: "left" }} />
           </div>
 
-          <div className="absolute bottom-0 left-0 h-1 bg-amber-500/80 shadow-[0_0_10px_rgba(245,158,11,0.8)]" style={{ width: "100%" }}>
-            <motion.div 
-              className="absolute inset-0 bg-amber-400"
-              style={{ scaleX: useTransform(profileCompletion, v => v / 100), transformOrigin: "left" }} 
+          <div className="absolute bottom-0 left-0 h-1 bg-zinc-800/50 w-full">
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-amber-500 to-amber-400 shadow-[0_0_15px_rgba(245,158,11,0.6)]"
+              style={{ scaleX: progressBarScale, transformOrigin: "left" }}
             />
           </div>
-          <div className="absolute bottom-4 right-8 font-mono text-amber-500/80">
+          <motion.div
+            className="absolute bottom-4 right-8 font-mono text-amber-500/90 font-semibold"
+            style={{ opacity: percentageOpacity }}
+          >
             {/* @ts-ignore */}
-            <motion.span>{useTransform(profileCompletion, v => `${Math.round(v)}%`)}</motion.span>
-          </div>
+            <motion.span>{percentageText}</motion.span>
+          </motion.div>
         </div>
       </motion.div>
 

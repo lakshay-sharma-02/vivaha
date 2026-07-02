@@ -1,15 +1,11 @@
 "use client"
 
 import { motion, MotionValue, useTransform } from "framer-motion"
-import { useMemo } from "react"
 
-export function SceneHero({ progress, rawProgress }: { progress: MotionValue<number>; rawProgress: MotionValue<number> }) {
-  const shouldRender = useMemo(() => {
-    return rawProgress.get() < 0.35
-  }, [rawProgress])
-
+export function SceneHero({ progress }: { progress: MotionValue<number> }) {
   const arrivalOpacity = useTransform(progress, [0, 0.08, 0.12], [1, 1, 0])
   const arrivalScale = useTransform(progress, [0, 0.12], [1, 1.5])
+  const subtitleOpacity = useTransform(progress, [0.04, 0.08], [0, 1])
 
   const cardContainerOpacity = useTransform(progress, [0.10, 0.15, 0.28, 0.32], [0, 1, 1, 0])
 
@@ -24,22 +20,38 @@ export function SceneHero({ progress, rawProgress }: { progress: MotionValue<num
   const connectionOpacity = useTransform(progress, [0.18, 0.22, 0.28, 0.32], [0, 1, 1, 0])
   const linePathLength = useTransform(progress, [0.18, 0.25], [0, 1])
 
-  if (!shouldRender) return null
-
   return (
     <>
-      {/* Scene 1: The Emblem */}
+      {/* Scene 1: The Emblem - Enhanced with glow pulse */}
       <motion.div
         style={{ opacity: arrivalOpacity, scale: arrivalScale, transform: "translateZ(0)" }}
         className="absolute inset-0 flex flex-col items-center justify-center z-50 pointer-events-none"
       >
-        <div className="w-32 h-32 md:w-48 md:h-48 rounded-full bg-gradient-to-tr from-amber-500/10 to-transparent border border-amber-500/20 shadow-[0_0_100px_rgba(245,158,11,0.2)] flex items-center justify-center">
+        <motion.div
+          className="w-32 h-32 md:w-48 md:h-48 rounded-full bg-gradient-to-tr from-amber-500/10 to-transparent border border-amber-500/20 flex items-center justify-center relative"
+          animate={{
+            boxShadow: [
+              "0 0 100px rgba(245,158,11,0.2)",
+              "0 0 150px rgba(245,158,11,0.4)",
+              "0 0 100px rgba(245,158,11,0.2)"
+            ]
+          }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        >
           <span className="font-playfair text-4xl md:text-6xl text-amber-50/90 font-light tracking-widest">V</span>
-        </div>
+        </motion.div>
+
+        {/* Subtitle fade in */}
+        <motion.p
+          style={{ opacity: subtitleOpacity }}
+          className="mt-6 text-amber-500/60 text-sm tracking-[0.3em] uppercase"
+        >
+          Where Souls Connect
+        </motion.p>
       </motion.div>
 
       <motion.div style={{ opacity: cardContainerOpacity, transform: "translateZ(0)" }} className="absolute inset-0 flex items-center justify-center z-40 pointer-events-none">
-        
+
         {/* Connection Lines (Scene 3) */}
         <motion.div style={{ opacity: connectionOpacity }} className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <svg className="w-full h-full absolute" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
