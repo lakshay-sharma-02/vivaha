@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import styles from "./vivaha.module.css";
 import Lenis from "lenis";
 
@@ -48,10 +48,10 @@ export default function Home() {
       <section className={`${styles.scene} ${styles.scene1}`}>
         <div className={styles.contentWrapper}>
           <FadeIn>
-            <p className={styles.sans} style={{ marginBottom: "2rem", opacity: 0.6 }}>Vivaha</p>
+            <p className={`${styles.sans} ${styles.p}`} style={{ marginBottom: "2rem", opacity: 0.6 }}>Vivaha</p>
           </FadeIn>
           <FadeIn delay={0.2}>
-            <h1>The beginning of<br />someone&apos;s love story.</h1>
+            <h1 className={styles.h1}>The beginning of<br />someone&apos;s love story.</h1>
           </FadeIn>
           <FadeIn delay={0.4}>
             <div className={styles.wovenThread} style={{ margin: "4rem auto" }} />
@@ -63,10 +63,10 @@ export default function Home() {
       <section className={styles.scene}>
         <div className={styles.contentWrapper}>
           <FadeIn>
-            <h2>Because forever deserves<br />more than endless swiping.</h2>
+            <h2 className={styles.h2}>Because forever deserves<br />more than endless swiping.</h2>
           </FadeIn>
           <FadeIn delay={0.2}>
-            <p style={{ marginTop: "2rem", marginInline: "auto" }}>
+            <p className={styles.p} style={{ marginTop: "2rem", marginInline: "auto" }}>
               Finding the right person has become a game of metrics and algorithms. 
               We swipe through lives in seconds, hoping for a spark in a sea of noise. 
               But meaningful relationships aren&apos;t built on volume. They are built on understanding.
@@ -81,9 +81,9 @@ export default function Home() {
           <FadeIn>
             <div className={styles.splitContent}>
               <div style={{ flex: 1 }}>
-                <p className={styles.sans} style={{ opacity: 0.5, marginBottom: "1rem" }}>A Thoughtful Guide</p>
-                <h3>Technology should quietly<br />disappear into the background.</h3>
-                <p>
+                <p className={`${styles.sans} ${styles.p}`} style={{ opacity: 0.5, marginBottom: "1rem" }}>A Thoughtful Guide</p>
+                <h3 className={styles.h3}>Technology should quietly<br />disappear into the background.</h3>
+                <p className={styles.p}>
                   Vivaha is not a software product you use to filter through matches. 
                   It is a calm, intentional space designed to guide you toward the person 
                   who truly aligns with your future. We listen to the unspoken nuances 
@@ -104,10 +104,10 @@ export default function Home() {
       <section className={styles.scene}>
         <div className={styles.contentWrapper}>
           <FadeIn>
-            <h2>Every meaningful relationship<br />begins with understanding.</h2>
+            <h2 className={styles.h2}>Every meaningful relationship<br />begins with understanding.</h2>
           </FadeIn>
           <FadeIn delay={0.2}>
-            <p style={{ marginTop: "2rem", marginInline: "auto" }}>
+            <p className={styles.p} style={{ marginTop: "2rem", marginInline: "auto" }}>
               We don&apos;t match based on superficial data points. We seek to understand 
               your values, your dreams, your family expectations, and your habits. 
               Because true compatibility is found in shared silence just as much as in shared conversation.
@@ -125,9 +125,9 @@ export default function Home() {
           <FadeIn>
             <div className={`${styles.splitContent} ${styles.reverse}`}>
               <div style={{ flex: 1 }}>
-                <p className={styles.sans} style={{ opacity: 0.5, marginBottom: "1rem" }}>Moments over metrics</p>
-                <h3>&quot;I never miss Sunday breakfast.&quot;</h3>
-                <p>
+                <p className={`${styles.sans} ${styles.p}`} style={{ opacity: 0.5, marginBottom: "1rem" }}>Moments over metrics</p>
+                <h3 className={styles.h3}>&quot;I never miss Sunday breakfast.&quot;</h3>
+                <p className={styles.p}>
                   People are not feature lists. They are a collection of habits, beliefs, and quiet moments. 
                   On Vivaha, you won&apos;t see a resume. You will see stories. You will learn that they still write birthday letters, 
                   that they dream of living near the mountains, and that their parents are their best friends.
@@ -149,9 +149,9 @@ export default function Home() {
           <FadeIn>
             <div className={styles.splitContent}>
               <div style={{ flex: 1 }}>
-                <p className={styles.sans} style={{ opacity: 0.5, marginBottom: "1rem" }}>Generations</p>
-                <h3>Honoring roots while<br />growing new branches.</h3>
-                <p>
+                <p className={`${styles.sans} ${styles.p}`} style={{ opacity: 0.5, marginBottom: "1rem" }}>Generations</p>
+                <h3 className={styles.h3}>Honoring roots while<br />growing new branches.</h3>
+                <p className={styles.p}>
                   Marriage is the coming together of two individuals, and the blending of two families. 
                   Vivaha respects the delicate balance between modern values and traditional warmth, 
                   ensuring your family feels as confident in your choice as you do.
@@ -171,10 +171,10 @@ export default function Home() {
       <section className={styles.scene}>
         <div className={styles.contentWrapper}>
           <FadeIn>
-            <h2>Built on absolute trust.</h2>
+            <h2 className={styles.h2}>Built on absolute trust.</h2>
           </FadeIn>
           <FadeIn delay={0.2}>
-            <p style={{ marginTop: "2rem", marginInline: "auto" }}>
+            <p className={styles.p} style={{ marginTop: "2rem", marginInline: "auto" }}>
               In a space where the stakes are this high, authenticity is paramount. 
               Every individual is verified. Every interaction is private. 
               We protect your journey so you can focus entirely on what matters.
@@ -189,9 +189,9 @@ export default function Home() {
           <FadeIn>
             <div className={styles.splitContent}>
               <div style={{ flex: 1 }}>
-                <p className={styles.sans} style={{ opacity: 0.5, marginBottom: "1rem" }}>The Future</p>
-                <h3>The smallest shared moments<br />often become lifelong memories.</h3>
-                <p>
+                <p className={`${styles.sans} ${styles.p}`} style={{ opacity: 0.5, marginBottom: "1rem" }}>The Future</p>
+                <h3 className={styles.h3}>The smallest shared moments<br />often become lifelong memories.</h3>
+                <p className={styles.p}>
                   Imagine the quiet evenings, the morning coffee, the celebrations, and the 
                   challenges faced together. We are not just helping you find a match. 
                   We are helping you imagine a life.
@@ -229,7 +229,7 @@ export default function Home() {
              </svg>
           </FadeIn>
           <FadeIn delay={0.5}>
-            <h2>Some journeys are<br />worth taking slowly.</h2>
+            <h2 className={styles.h2}>Some journeys are<br />worth taking slowly.</h2>
           </FadeIn>
           <FadeIn delay={0.8}>
             <button className={styles.ctaButton}>
