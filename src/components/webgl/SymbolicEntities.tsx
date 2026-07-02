@@ -54,25 +54,21 @@ function LightStreams() {
 function ParticleConstellations() {
   const count = 3000;
   const meshRef = useRef<THREE.InstancedMesh>(null);
-  const scrollProgress = useRef(0);
-  const stRef = useRef<gsap.core.Timeline>(null);
+  const scrollTarget = useRef(0);
+  const scrollCurrent = useRef(0);
   
   useEffect(() => {
-    stRef.current = gsap.timeline({
-      scrollTrigger: {
-        trigger: document.body,
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 1.5,
+    const trigger = ScrollTrigger.create({
+      trigger: document.body,
+      start: "top top",
+      end: "bottom bottom",
+      onUpdate: (self) => {
+        scrollTarget.current = self.progress;
       },
     });
-    stRef.current.to(scrollProgress, { current: 1, ease: "none" });
 
     return () => {
-      if (stRef.current) {
-        stRef.current.scrollTrigger?.kill();
-        stRef.current.kill();
-      }
+      trigger.kill();
     };
   }, []);
   
@@ -83,9 +79,9 @@ function ParticleConstellations() {
     const temp = [];
     for (let i = 0; i < count; i++) {
       // State A: Chaotic Drift (Unknown / Isolation)
-      const chaoticX = (Math.random() - 0.5) * 30;
-      const chaoticY = (Math.random() - 0.5) * 30;
-      const chaoticZ = (Math.random() - 0.5) * 30;
+      const chaoticX = (Math.random() - 0.5) * 40;
+      const chaoticY = (Math.random() - 0.5) * 40;
+      const chaoticZ = (Math.random() - 0.5) * 40;
       
       // State B: Structured Convergence (Double Helix for Compatibility)
       const t_helix = i / count;
@@ -106,15 +102,20 @@ function ParticleConstellations() {
     return temp;
   }, [count]);
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
     if (!meshRef.current) return;
-    const t = state.clock.getElapsedTime();
-    const p = scrollProgress.current;
     
-    // Convergence logic: Map scroll [0.4 to 0.75] to [0 to 1]
+    // Exponential decay dampening for scroll
+    const lambda = 5;
+    scrollCurrent.current += (scrollTarget.current - scrollCurrent.current) * (1 - Math.exp(-lambda * delta));
+
+    const t = state.clock.getElapsedTime();
+    const p = scrollCurrent.current;
+    
+    // Convergence logic: Map scroll [0.35 to 0.75] to [0 to 1]
     let convergence = 0;
-    if (p > 0.4) {
-      convergence = Math.min(1, (p - 0.4) / 0.35);
+    if (p > 0.35) {
+      convergence = Math.min(1, (p - 0.35) / 0.40);
     }
     // Smoothstep easing for organic magnetic pull
     convergence = convergence * convergence * (3 - 2 * convergence);
@@ -124,9 +125,10 @@ function ParticleConstellations() {
       
       // Drift is active mostly in the chaotic state, diminishing as they lock in
       const driftMult = 1 - convergence;
-      const xDrift = Math.sin(t * speed + factor) * 1.5 * driftMult;
-      const yDrift = Math.cos(t * speed + factor) * 1.5 * driftMult;
-      const zDrift = Math.sin(t * speed + factor) * 1.5 * driftMult;
+      // Multi-frequency drift
+      const xDrift = (Math.sin(t * speed + factor) + 0.5 * Math.sin(t * speed * 2.5 + factor)) * 2 * driftMult;
+      const yDrift = (Math.cos(t * speed + factor) + 0.5 * Math.cos(t * speed * 2.1 + factor)) * 2 * driftMult;
+      const zDrift = (Math.sin(t * speed + factor) + 0.5 * Math.sin(t * speed * 1.8 + factor)) * 2 * driftMult;
       
       // Interpolate between Chaos and Structure
       const currentX = THREE.MathUtils.lerp(chaoticX + xDrift, targetX, convergence);
@@ -135,8 +137,9 @@ function ParticleConstellations() {
       
       dummy.position.set(currentX, currentY, currentZ);
       
-      // Scale pulse
-      const s = 1 + Math.sin(t * speed * 2 + factor) * 0.3;
+      // Subtle scale pulse when aligned
+      const alignmentPulse = convergence * (Math.sin(t * speed * 5 + factor) * 0.2);
+      const s = 1 + Math.sin(t * speed * 2 + factor) * 0.3 + alignmentPulse;
       dummy.scale.set(s, s, s);
       dummy.updateMatrix();
       

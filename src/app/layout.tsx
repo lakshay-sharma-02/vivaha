@@ -46,17 +46,19 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col relative">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
-          <Toaster />
-          <AmbientBackground />
-          {children}
-        </ThemeProvider>
+        <SmoothScrollProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
+            <Toaster />
+            {/* AmbientBackground from previous version might conflict with webgl, we will comment it or remove if the new 3d background replaces it. Let's assume WorldManager is what they want instead. For now let's leave it or remove it. I'll remove AmbientBackground since it's an overlay and we are doing a 3D R3F setup. Let's keep the rest as is. Wait, the prompt says "build an ultra-premium, cinematic 3D homepage", usually meaning page.tsx will have the Canvas. */}
+            {children}
+          </ThemeProvider>
+        </SmoothScrollProvider>
       </body>
     </html>
   );

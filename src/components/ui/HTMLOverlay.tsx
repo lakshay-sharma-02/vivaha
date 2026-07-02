@@ -148,27 +148,34 @@ export function HTMLOverlay() {
           
           <motion.form 
             variants={revealVariants}
-            className="flex flex-col gap-6 text-left glass p-10 rounded-2xl shadow-2xl relative overflow-hidden group"
+            className="flex flex-col gap-6 text-left p-10 rounded-2xl shadow-2xl relative overflow-hidden group backdrop-blur-2xl border border-white/10 bg-black/20"
           >
             {/* Subtle glow behind form */}
-            <div className="absolute inset-0 bg-gradient-to-br from-[#d4af37]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+            <div className="absolute inset-0 bg-gradient-to-br from-[#d4af37]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
             
-            <div className="relative z-10 flex flex-col gap-2">
-              <label className="text-xs uppercase tracking-widest text-white/50">Email Address</label>
+            <div className="relative z-10 flex flex-col gap-2 group/input mt-4">
               <input 
                 type="email" 
-                placeholder="Exquire@domain.com" 
-                className="bg-transparent border-b border-white/20 py-3 text-white font-serif text-lg focus:outline-none focus:border-[#d4af37] transition-colors placeholder:text-white/20"
+                id="email"
+                required
+                placeholder="Email Address" 
+                className="peer w-full bg-transparent border-b border-white/20 py-3 text-white font-serif text-lg focus:outline-none focus:border-[#d4af37] transition-colors placeholder-transparent"
               />
+              <label 
+                htmlFor="email"
+                className="absolute left-0 top-3 text-xs uppercase tracking-widest text-white/50 transition-all peer-focus:-top-4 peer-focus:text-[#d4af37] peer-focus:text-[10px] peer-valid:-top-4 peer-valid:text-[10px]"
+              >
+                Email Address
+              </label>
             </div>
             
             <button 
               type="button" 
-              className="relative z-10 mt-6 overflow-hidden bg-white text-black py-4 rounded font-sans uppercase tracking-[0.15em] text-sm font-medium hover:bg-[#d4af37] hover:text-white transition-all duration-500 ease-out"
+              className="relative z-10 mt-6 overflow-hidden bg-white/5 text-white border border-white/20 py-4 rounded font-sans uppercase tracking-[0.15em] text-sm font-medium hover:bg-[#d4af37] hover:border-[#d4af37] hover:text-[#0a0a0c] transition-all duration-500 ease-out focus:outline-none focus:ring-2 focus:ring-[#d4af37] focus:ring-offset-2 focus:ring-offset-black"
             >
               Submit Inquiry
             </button>
-            <p className="relative z-10 mt-4 text-center text-xs text-white/30 font-light tracking-wide">
+            <p className="relative z-10 mt-4 text-center text-xs text-white/40 font-light tracking-wide">
               Membership is strictly by invitation or private review.
             </p>
           </motion.form>
