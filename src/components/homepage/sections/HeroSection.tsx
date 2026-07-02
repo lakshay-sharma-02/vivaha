@@ -2,11 +2,10 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Button } from "@/shared/ui";
 
 export function HeroSection() {
   return (
-    <section className="relative w-full h-screen flex flex-col items-center justify-center px-6 text-center overflow-hidden bg-[#FAF9F7]">
+    <section className="relative w-full h-screen flex flex-col justify-center overflow-hidden bg-[#1A1814]">
       
       {/* PHYSICAL ARCHITECTURE: The Forest Pathway & Curtains */}
       <div className="absolute inset-0 z-0">
@@ -17,56 +16,105 @@ export function HeroSection() {
           priority
           className="object-cover object-center"
         />
-        {/* Atmospheric Diffusion: Creates realistic air depth and ensures typography is legible while preserving the architecture */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#FAF9F7]/60 via-transparent to-[#FAF9F7]/20 mix-blend-overlay" />
-        <div className="absolute inset-0 bg-white/25 backdrop-blur-[2px]" />
         
-        {/* Morning Sunlight Ray (Environmental Motion) */}
+        {/* DIRECTIONAL LIGHTING: Morning sunlight cutting across from the top right */}
         <motion.div 
-          initial={{ opacity: 0.3, scale: 1 }}
-          animate={{ opacity: 0.6, scale: 1.05 }}
+          initial={{ opacity: 0.5 }}
+          animate={{ opacity: 0.7 }}
           transition={{ duration: 15, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
-          className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[80%] h-[60%] bg-[radial-gradient(circle_at_center,_rgba(255,250,240,0.8)_0%,_transparent_60%)] pointer-events-none mix-blend-screen"
+          className="absolute top-0 right-0 w-[70%] h-full bg-gradient-to-bl from-[#FFF8ED]/70 via-[#FFF8ED]/10 to-transparent mix-blend-overlay pointer-events-none transform skew-x-12 origin-top-right"
         />
+        {/* Soft natural bounce lighting on the left wall/curtain */}
+        <div className="absolute top-1/4 left-0 w-[40%] h-[60%] bg-[radial-gradient(ellipse_at_left,_rgba(255,250,240,0.15)_0%,_transparent_70%)] pointer-events-none mix-blend-screen" />
+        
+        {/* LOCALIZED MASK: Protects the typography hierarchy without fogging the floor */}
+        <div className="absolute top-[10%] left-0 w-[70%] h-[80%] bg-gradient-to-r from-black/50 via-black/20 to-transparent pointer-events-none blur-3xl" />
       </div>
 
-      {/* CONTENT: Resting inside the physical space */}
-      <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center space-y-10 mt-20">
-        <motion.div 
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 2.5, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-          className="space-y-8"
+      {/* FOREGROUND PRESENCE: Optical depth (out-of-focus framing extremely close to the lens) */}
+      <div className="absolute top-0 left-[-5%] w-[10%] h-full bg-gradient-to-r from-black/40 to-transparent blur-2xl pointer-events-none z-20" />
+      <div className="absolute top-0 right-[-5%] w-[10%] h-full bg-gradient-to-l from-black/40 to-transparent blur-2xl pointer-events-none z-20" />
+
+      {/* ARCHITECTURAL NAVIGATION: Etched into the top shadow of the entrance */}
+      <nav className="absolute top-0 left-0 w-full px-8 md:px-16 py-12 z-30 flex items-center justify-between pointer-events-auto">
+        <div 
+          className="text-2xl font-display text-[#FDFBF7] tracking-widest uppercase"
+          style={{ textShadow: "0 2px 4px rgba(0,0,0,0.8), 0 0 16px rgba(0,0,0,0.5)" }}
         >
-          {/* Ambient Occlusion Typography */}
+          Vivaha
+        </div>
+        <div className="hidden lg:flex items-center space-x-12">
+          {["How It Works", "Discover", "Success Stories", "Membership", "About Us"].map((link) => (
+            <a 
+              key={link} 
+              href="#" 
+              className="text-sm font-medium text-white/90 hover:text-white transition-colors tracking-wide"
+              style={{ textShadow: "0 1px 2px rgba(0,0,0,0.8)" }}
+            >
+              {link}
+            </a>
+          ))}
+        </div>
+        <div className="flex items-center">
+          <button className="px-8 py-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-medium hover:bg-white/20 transition-colors shadow-[0_4px_12px_rgba(0,0,0,0.15)]">
+            Create Profile
+          </button>
+        </div>
+      </nav>
+
+      {/* CONTENT: Asymmetrical, Editorial Layout */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-8 md:px-16 flex flex-col items-start pt-16">
+        <motion.div 
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 2.5, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+          className="max-w-2xl space-y-8"
+        >
+          {/* Headline perfectly sharp, lit by the environment */}
           <h1 
-            className="text-5xl md:text-6xl lg:text-7xl tracking-tight text-[#2A2621] font-display leading-[1.1]"
-            style={{ textShadow: "0 2px 4px rgba(255,255,255,0.9), 0 0 20px rgba(255,255,255,0.6)" }}
+            className="text-5xl md:text-6xl lg:text-7xl xl:text-[84px] tracking-tight text-[#FDFBF7] font-display leading-[1.05]"
+            style={{ textShadow: "0 4px 16px rgba(0,0,0,0.5), 0 2px 4px rgba(0,0,0,0.8)" }}
           >
-            Meaningful relationships<br />begin with trust.
+            Meaningful<br />relationships<br />begin with trust.
           </h1>
-          <p className="text-lg md:text-xl text-[#4A453E] font-medium max-w-[640px] mx-auto font-body leading-relaxed drop-shadow-sm">
+          <p 
+            className="text-lg md:text-xl text-white/90 font-medium max-w-[500px] font-body leading-relaxed"
+            style={{ textShadow: "0 2px 4px rgba(0,0,0,0.8)" }}
+          >
             Vivaha is a thoughtfully designed space where individuals and families discover lifelong partnerships with confidence and dignity.
           </p>
         </motion.div>
         
         <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 2, delay: 1.2 }}
-          className="flex flex-col sm:flex-row items-center gap-6 pt-4"
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 2, delay: 1 }}
+          className="flex flex-col sm:flex-row items-start sm:items-center gap-8 pt-12"
         >
-          <Button variant="primary" size="lg" className="px-10 h-14 text-md bg-[#2A2621] text-[#FDFBF7] shadow-[0_10px_30px_-10px_rgba(42,38,33,0.4)] hover:shadow-[0_15px_40px_-10px_rgba(42,38,33,0.5)] transition-all duration-700">
-            Create Profile
-          </Button>
-          <Button variant="text" size="lg" className="text-[#2A2621] font-medium hover:text-black transition-colors duration-500" style={{ textShadow: "0 1px 2px rgba(255,255,255,0.8)" }}>
-            How Vivaha Works
-          </Button>
+          {/* MATERIAL BUTTON: Warm Limestone / Embossed Paper */}
+          <button 
+            className="px-10 h-14 rounded-full text-md font-medium transition-all duration-500 group relative overflow-hidden"
+            style={{ 
+              backgroundColor: "#F2EFE9", 
+              color: "#2A2621",
+              boxShadow: "0 12px 30px -8px rgba(0,0,0,0.5), inset 0 -2px 4px rgba(0,0,0,0.08), inset 0 2px 4px rgba(255,255,255,0.9)" 
+            }}
+          >
+            <span className="relative z-10">Create Profile</span>
+            {/* Natural material shine moving across the button */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-[1.5s] ease-in-out pointer-events-none" />
+          </button>
+          
+          <button 
+            className="text-white/90 font-medium hover:text-white transition-colors duration-500 flex items-center gap-2 group"
+            style={{ textShadow: "0 2px 4px rgba(0,0,0,0.8)" }}
+          >
+            How Vivaha Works 
+            <span className="opacity-60 transition-transform duration-300 group-hover:translate-x-1">→</span>
+          </button>
         </motion.div>
       </div>
       
-      {/* PATHWAY CONTINUITY: The stone floor physically transitions into the Trust Gallery */}
-      <div className="absolute bottom-0 left-0 w-full h-56 bg-gradient-to-t from-[#FAF9F7] to-transparent z-10 pointer-events-none" />
     </section>
   );
 }
