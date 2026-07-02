@@ -138,7 +138,7 @@ export async function saveOnboardingData(formData: OnboardingData) {
         community_id: communityId,
         mother_tongue_id: languageId,
         bio: formData.bio || null,
-      })
+      } as any)
       .eq('id', user.id);
 
     if (profileError) {
