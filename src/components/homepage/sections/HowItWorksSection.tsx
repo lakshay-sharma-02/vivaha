@@ -1,55 +1,90 @@
+"use client";
+
+import Image from "next/image";
+import { motion } from "framer-motion";
+
 export function HowItWorksSection() {
   const steps = [
-    { num: "01", title: "Create Profile", desc: "Help others understand you." },
-    { num: "02", title: "Verification", desc: "Identity and profile review." },
-    { num: "03", title: "Discover Profiles", desc: "Meaningful information." },
-    { num: "04", title: "Conversations", desc: "Respectful messaging." },
-    { num: "05", title: "Build A Journey", desc: "The journey continues offline." },
+    { num: "1", title: "Create Profile", desc: "Help others understand you." },
+    { num: "2", title: "Verification", desc: "Identity and profile review for your safety." },
+    { num: "3", title: "Discover", desc: "Meaningful information and shared values." },
+    { num: "4", title: "Conversations", desc: "Respectful and secure interactions." },
+    { num: "5", title: "Build a Journey", desc: "The journey continues offline." },
   ];
 
   return (
-    <section className="relative w-full h-full flex flex-col items-center justify-center px-6 text-center overflow-hidden bg-[#F9F8F6]">
-      {/* Material Suggestion: Inherits the stone from Trust */}
-      <div 
-        className="absolute inset-0 opacity-[0.02] mix-blend-multiply pointer-events-none z-0" 
-        style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")' }}
-      />
-
-      {/* Lighting System: Open garden daylight washing over the pathway */}
-      <div className="absolute top-0 right-0 w-[70%] h-full bg-[radial-gradient(ellipse_at_top_right,_rgba(255,255,255,0.6)_0%,_transparent_70%)] pointer-events-none z-0 blur-3xl" />
-
-      <div className="relative z-10 max-w-6xl mx-auto flex flex-col items-center space-y-24 w-full">
-        <div className="space-y-6">
-          <h2 className="text-4xl md:text-5xl text-[var(--color-text-primary)] font-display tracking-tight">
-            A Thoughtful Journey
-          </h2>
-          <p className="text-md md:text-lg text-[var(--color-text-secondary)] max-w-[640px] mx-auto leading-relaxed">
-            Vivaha guides people through a respectful matchmaking journey.
-          </p>
-        </div>
-        
-        {/* Pathway Layout: Clarity first, but visually connected like stepping stones without sacrificing readability */}
-        <div className="relative flex flex-col lg:flex-row items-start lg:items-center justify-between w-full max-w-5xl gap-12 lg:gap-4 before:absolute before:top-1/2 before:left-0 before:w-full before:h-[1px] before:bg-gradient-to-r before:from-transparent before:via-[var(--color-border)] before:to-transparent before:hidden lg:before:block">
-          {steps.map((step, index) => (
-            <div key={index} className="relative flex flex-col items-center text-center space-y-6 w-full lg:w-48 group">
-              {/* Stepping Stone Node */}
-              <div className="w-16 h-16 rounded-full bg-white shadow-[0_4px_20px_-4px_rgba(0,0,0,0.04)] border border-black/[0.02] flex items-center justify-center transition-transform duration-[var(--animate-slow)] group-hover:-translate-y-1 z-10 relative">
-                <span className="text-lg font-display text-[var(--color-text-secondary)]">{step.num}</span>
-                {/* Glow behind the stone on hover */}
-                <div className="absolute inset-0 rounded-full bg-[var(--color-primary-100)] opacity-0 group-hover:opacity-20 transition-opacity blur-md -z-10" />
-              </div>
-              
-              <div className="space-y-2">
-                <h3 className="text-lg font-medium text-[var(--color-text-primary)]">{step.title}</h3>
-                <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed px-4 lg:px-0">{step.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+    <section className="relative w-full min-h-screen flex flex-col bg-[#F4F1EA]">
+      
+      {/* 
+        ENVIRONMENT: The Pergola Walkway (Top 55%) 
+        Completely unobstructed photograph. No text floats here.
+      */}
+      <div className="w-full h-[55vh] relative">
+        <Image 
+          src="/images/architecture/how_it_works.jpg"
+          alt="Vivaha Garden Pathway"
+          fill
+          className="object-cover object-center"
+        />
       </div>
 
-      {/* Continuity Transition: The bright garden light transitions into the editorial studio light of the Discover section */}
-      <div className="absolute bottom-0 left-0 w-full h-48 bg-gradient-to-t from-[#FAFAFA] to-transparent z-0 pointer-events-none" />
+      {/* 
+        ARCHITECTURAL SURFACE: The Physical Ground (Bottom 45%)
+        A solid, opaque pathway block.
+      */}
+      <div className="relative w-full bg-[#EBE6DF] flex flex-col items-center pt-16 pb-24 px-6 z-10 shadow-[0_-20px_40px_rgba(0,0,0,0.1)]">
+        
+        <div className="w-full max-w-7xl mx-auto flex flex-col items-center">
+          
+          <div className="space-y-4 text-center mb-16">
+            <h2 className="text-3xl md:text-4xl text-[#2A2621] font-display tracking-tight">
+              A Thoughtful Journey
+            </h2>
+            <p className="text-sm text-[#5A534B] font-medium tracking-wide">
+              We guide you through every step with care and clarity.
+            </p>
+          </div>
+
+          {/* Stepping Stones embedded in the solid ground surface */}
+          <div className="relative w-full max-w-5xl mx-auto">
+            {/* Subtle connecting line etched into the ground surface */}
+            <div className="absolute top-[40px] left-[10%] right-[10%] h-[1px] bg-[#8C7A6B]/20 pointer-events-none" />
+            
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-12 md:gap-4 relative z-10">
+              {steps.map((step, idx) => (
+                <motion.div 
+                  key={step.num}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 1.2, delay: idx * 0.15, ease: [0.22, 1, 0.36, 1] }}
+                  className="flex flex-col items-center text-center space-y-6 flex-1"
+                >
+                  {/* Physical Marker */}
+                  <div 
+                    className="w-16 h-20 flex flex-col items-center justify-center relative bg-[#F4F1EA] shadow-[0_10px_20px_-5px_rgba(20,18,15,0.1),_inset_0_2px_4px_rgba(255,255,255,1)] border border-[#8C7A6B]/15"
+                    style={{ borderRadius: "2px 2px 8px 8px" }}
+                  >
+                    <div className="text-sm font-serif text-[#8C7A6B] italic mb-1">{step.num}</div>
+                    <div className="w-6 h-6 rounded-full border border-[#8C7A6B]/20" />
+                  </div>
+                  
+                  {/* Text resting directly on the solid CSS ground */}
+                  <div className="space-y-2">
+                    <h3 className="text-sm font-display text-[#2A2621] tracking-tight">
+                      {step.title}
+                    </h3>
+                    <p className="text-xs text-[#5A534B] leading-relaxed max-w-[140px] mx-auto font-medium">
+                      {step.desc}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+        </div>
+      </div>
     </section>
   );
 }

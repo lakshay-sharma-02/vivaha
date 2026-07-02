@@ -1,89 +1,95 @@
-import { Button } from "@/shared/ui";
+"use client";
+
+import Image from "next/image";
+import { motion } from "framer-motion";
 
 export function DiscoverPreviewSection() {
-  const featuredProfile = { id: 1, name: "Aditi", age: 28, city: "Mumbai", profession: "Architect", highlight: "Family-Oriented", verified: true };
-  const secondaryProfiles = [
-    { id: 2, name: "Rohan", age: 31, city: "Bengaluru", profession: "Software Engineer", highlight: "Shared Values", verified: true },
-    { id: 3, name: "Priya", age: 27, city: "Delhi", profession: "Doctor", highlight: "Similar Interests", verified: true },
-  ];
-  const gridProfiles = [
-    { id: 4, name: "Vikram", age: 33, city: "Pune", profession: "Professor", highlight: "Common Languages", verified: true },
-    { id: 5, name: "Meera", age: 29, city: "Chennai", profession: "Designer", highlight: "Family-Oriented", verified: true },
-    { id: 6, name: "Karan", age: 30, city: "Hyderabad", profession: "Lawyer", highlight: "Shared Values", verified: true },
+  const portraits = [
+    { id: 1, name: "Ananya", age: 28, city: "Mumbai", src: "/images/placeholders/woman-1.jpg", size: "large", rotation: "-2deg" },
+    { id: 2, name: "Karan", age: 31, city: "Delhi", src: "/images/placeholders/man-1.jpg", size: "medium", rotation: "1deg" },
+    { id: 3, name: "Rohan", age: 29, city: "Pune", src: "/images/placeholders/man-2.jpg", size: "medium", rotation: "-1deg" },
   ];
 
   return (
-    <section className="relative w-full h-full flex flex-col items-center justify-center px-6 text-center overflow-hidden bg-[#FAFAFA]">
-      {/* Lighting System: Editorial studio daylight (soft, neutral diffusion from above) */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[60%] bg-[radial-gradient(ellipse_at_top,_rgba(255,255,255,1)_0%,_transparent_80%)] pointer-events-none z-0 blur-3xl" />
-
-      <div className="relative z-10 max-w-6xl mx-auto flex flex-col items-center space-y-20 w-full pt-12">
-        <div className="space-y-6">
-          <h2 className="text-4xl md:text-5xl text-[var(--color-text-primary)] font-display tracking-tight">
-            Meet Thoughtful Individuals
-          </h2>
-          <p className="text-md md:text-lg text-[var(--color-text-secondary)] max-w-[640px] mx-auto leading-relaxed">
-            Every profile emphasizes authenticity, shared values, and meaningful compatibility.
-          </p>
-        </div>
-        
-        {/* Editorial Layout: Hierarchical, structured, magazine-like */}
-        <div className="flex flex-col space-y-8 w-full">
-          
-          {/* Top Row: 1 Featured, 2 Secondary */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 w-full">
-            {/* Featured Profile */}
-            <div className="lg:col-span-6 group relative flex flex-col items-start text-left rounded-[var(--radius-xl)] bg-transparent">
-              <div className="w-full h-96 bg-neutral-200/50 rounded-[var(--radius-lg)] mb-6 overflow-hidden relative">
-                <div className="w-full h-full flex items-center justify-center text-neutral-400 mix-blend-multiply">Authentic Photography</div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-[var(--animate-slow)]" />
-              </div>
-              <div className="flex items-center justify-between w-full mb-2">
-                <h3 className="text-3xl font-display text-[var(--color-text-primary)]">{featuredProfile.name}, {featuredProfile.age}</h3>
-                <div className="px-4 py-1.5 bg-white shadow-sm border border-black/[0.03] rounded-full text-xs font-medium text-[var(--color-text-secondary)]">
-                  {featuredProfile.highlight}
-                </div>
-              </div>
-              <p className="text-md text-[var(--color-text-secondary)] tracking-wide">{featuredProfile.profession} • {featuredProfile.city}</p>
-            </div>
-
-            {/* Secondary Profiles */}
-            <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-8">
-              {secondaryProfiles.map(profile => (
-                <div key={profile.id} className="group relative flex flex-col items-start text-left rounded-[var(--radius-xl)] bg-transparent">
-                  <div className="w-full h-64 bg-neutral-200/40 rounded-[var(--radius-lg)] mb-5 overflow-hidden">
-                    <div className="w-full h-full flex items-center justify-center text-neutral-400 text-sm mix-blend-multiply">Photography</div>
-                  </div>
-                  <h3 className="text-xl font-medium text-[var(--color-text-primary)] mb-1">{profile.name}, {profile.age}</h3>
-                  <p className="text-sm text-[var(--color-text-secondary)] mb-3">{profile.profession} • {profile.city}</p>
-                  <div className="text-xs text-[var(--color-text-secondary)] font-medium border-b border-border pb-1">{profile.highlight}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Bottom Row: Balanced Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 w-full pt-8 border-t border-black/[0.03]">
-            {gridProfiles.map(profile => (
-              <div key={profile.id} className="group flex items-center gap-4 text-left">
-                <div className="w-20 h-20 bg-neutral-200/40 rounded-[var(--radius-md)] flex-shrink-0 flex items-center justify-center text-neutral-400 text-xs mix-blend-multiply">Photo</div>
-                <div className="flex flex-col">
-                  <h3 className="text-md font-medium text-[var(--color-text-primary)]">{profile.name}, {profile.age}</h3>
-                  <p className="text-xs text-[var(--color-text-secondary)] mb-1">{profile.profession}</p>
-                  <span className="text-[10px] uppercase tracking-widest text-[var(--color-primary-600)]">{profile.highlight}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="pt-12">
-          <Button variant="secondary" size="lg" className="px-12 bg-white/60 backdrop-blur-md">Explore Profiles</Button>
-        </div>
+    <section className="relative w-full min-h-screen flex flex-col bg-[#F4F1EA]">
+      
+      {/* 
+        ENVIRONMENT: The Portrait Hall (Top 50%)
+        Completely unobstructed photograph. 
+      */}
+      <div className="w-full h-[50vh] relative">
+        <Image 
+          src="/images/architecture/discover.jpg"
+          alt="Vivaha Portrait Gallery"
+          fill
+          className="object-cover object-center"
+        />
       </div>
 
-      {/* Continuity Transition: Editorial studio transitions into the warm golden living space */}
-      <div className="absolute bottom-0 left-0 w-full h-48 bg-gradient-to-t from-[#FFFDF9] to-transparent z-0 pointer-events-none" />
+      {/* 
+        ARCHITECTURAL SURFACE: The Display Table (Bottom 50%)
+        A solid, opaque cream surface. Typography and portraits rest physically here, overlapping the edge.
+      */}
+      <div className="relative w-full bg-[#F4F1EA] pt-32 pb-24 px-6 z-10 border-t border-[#8C7A6B]/20">
+        
+        <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col md:flex-row items-start justify-between gap-16">
+          
+          {/* Surface Typography (Left) */}
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+            className="w-full md:w-1/3 space-y-8"
+          >
+            <h2 className="text-4xl md:text-5xl text-[#2A2621] font-display tracking-tight leading-[1.1]">
+              Discover<br />meaningful<br />profiles.
+            </h2>
+            <p className="text-sm text-[#5A534B] font-medium leading-relaxed">
+              Curated profiles. Real people. Shared values. Explore the gallery of those seeking authentic partnership.
+            </p>
+            
+            <button className="text-[#2A2621] font-bold transition-colors duration-500 flex items-center gap-2 group tracking-widest uppercase text-xs border-b border-[#2A2621]/30 hover:border-[#2A2621] pb-1">
+              Explore Gallery 
+              <span className="opacity-60 transition-transform duration-300 group-hover:translate-x-1">→</span>
+            </button>
+          </motion.div>
+
+          {/* Physical Portraits Resting on the Table (Right) 
+              We use negative top margin to make them physically lean against the top photograph
+          */}
+          <div className="w-full md:w-2/3 relative h-[400px] flex items-end justify-center -mt-64">
+            {portraits.map((portrait, idx) => (
+              <motion.div
+                key={portrait.id}
+                initial={{ opacity: 0, y: 30, rotate: 0 }}
+                whileInView={{ opacity: 1, y: 0, rotate: portrait.rotation }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 1.2, delay: idx * 0.2, ease: [0.22, 1, 0.36, 1] }}
+                className={`absolute flex flex-col bg-[#FDFBF7] p-3 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3),_inset_0_2px_4px_rgba(255,255,255,1)] border border-[#8C7A6B]/15 ${
+                  portrait.size === "large" ? "w-[280px] h-[380px] z-20 bottom-0 left-1/2 -translate-x-1/2" : 
+                  idx === 1 ? "w-[200px] h-[280px] z-10 left-[10%] bottom-[40px]" : 
+                  "w-[200px] h-[280px] z-10 right-[10%] bottom-[40px]"
+                }`}
+              >
+                <div className="relative w-full flex-1 overflow-hidden bg-[#D9D0C5]">
+                  <div className="absolute inset-0 bg-[#3A352D]/5" />
+                </div>
+                <div className="pt-4 flex justify-between items-end px-1">
+                  <div>
+                    <h3 className="text-base font-display text-[#2A2621] tracking-tight">{portrait.name}, {portrait.age}</h3>
+                    <p className="text-[10px] text-[#8C7A6B] font-medium uppercase tracking-widest">{portrait.city}</p>
+                  </div>
+                  <div className="w-5 h-5 rounded-full border border-[#8C7A6B]/30 flex items-center justify-center text-[#8C7A6B]">
+                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 6L9 17l-5-5"/></svg>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+        </div>
+      </div>
     </section>
   );
 }

@@ -1,5 +1,7 @@
-import { Button } from "@/shared/ui";
-import { Check } from "lucide-react";
+"use client";
+
+import Image from "next/image";
+import { motion } from "framer-motion";
 
 export function MembershipSection() {
   const plans = [
@@ -8,90 +10,100 @@ export function MembershipSection() {
       desc: "Begin your journey thoughtfully.",
       price: "Free",
       features: ["Verified Profile", "Profile Discovery", "Interest Requests", "Secure Messaging"],
-      recommended: false,
+      rotation: "-2deg",
+      zIndex: 10,
     },
     {
       name: "Premium",
       desc: "Enhanced tools for meaningful discovery.",
       price: "₹2,499",
-      period: "monthly",
-      features: ["Everything in Basic", "Advanced Filters", "Priority Discovery", "Read Receipts"],
-      recommended: true,
+      features: ["Everything in Basic", "Advanced Filters", "Priority Discovery", "Read Receipts", "Profile Insights"],
+      rotation: "0deg",
+      zIndex: 20,
+      featured: true,
     },
     {
       name: "Elite",
       desc: "Dedicated support for your family.",
       price: "₹9,999",
-      period: "monthly",
-      features: ["Everything in Premium", "Relationship Consultant", "Priority Verification", "Dedicated Support"],
-      recommended: false,
+      features: ["Everything in Premium", "Relationship Consultant", "Priority Verification", "Dedicated Support", "Exclusive Events"],
+      rotation: "1deg",
+      zIndex: 10,
     }
   ];
 
   return (
-    <section className="relative w-full h-full flex flex-col items-center justify-center px-6 text-center bg-[#FDFBF7] overflow-hidden">
-      {/* Material Suggestion: Thick handcrafted paper texture */}
-      <div 
-        className="absolute inset-0 opacity-[0.03] mix-blend-multiply pointer-events-none z-0" 
-        style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")' }}
-      />
-
-      {/* Lighting System: Warm invitation table lighting */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[60%] h-[60%] bg-[radial-gradient(circle_at_top,_rgba(255,248,235,0.8)_0%,_transparent_70%)] pointer-events-none z-0 blur-3xl" />
-
-      <div className="relative z-10 max-w-6xl mx-auto flex flex-col items-center space-y-20 w-full pt-12">
-        <div className="space-y-6">
-          <h2 className="text-4xl md:text-5xl text-[var(--color-text-primary)] font-display tracking-tight">
-            Membership That Respects Your Journey.
-          </h2>
-          <p className="text-md md:text-lg text-[var(--color-text-secondary)] max-w-[640px] mx-auto leading-relaxed">
-            Every person can begin their journey. Membership simply provides additional convenience and support without artificial limitations.
-          </p>
-        </div>
-
-        {/* Elegant Comparison - Apple-style pricing presentation over SaaS cards */}
-        <div className="w-full flex flex-col md:flex-row items-stretch justify-center gap-px bg-black/[0.03] p-px rounded-[var(--radius-xl)] overflow-hidden max-w-5xl">
-          {plans.map((plan, idx) => (
-            <div 
-              key={plan.name}
-              className={`flex-1 flex flex-col text-left p-10 bg-[#FDFBF7] relative ${plan.recommended ? 'md:z-10' : ''}`}
-            >
-              {/* Subtle highlight gradient for recommended plan */}
-              {plan.recommended && (
-                <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-primary-50)]/50 to-transparent pointer-events-none" />
-              )}
-              
-              <div className="relative z-10 flex flex-col h-full">
-                <h3 className="text-2xl font-display text-[var(--color-text-primary)] mb-2">{plan.name}</h3>
-                <p className="text-sm text-[var(--color-text-secondary)] mb-8 h-10">{plan.desc}</p>
-                
-                <div className="flex items-baseline gap-2 mb-10 pb-10 border-b border-black/[0.05]">
-                  <span className="text-3xl font-display text-[var(--color-text-primary)]">{plan.price}</span>
-                  {plan.period && <span className="text-sm text-[var(--color-text-secondary)]">/ {plan.period}</span>}
-                </div>
-
-                <div className="space-y-5 mb-12 flex-grow">
-                  {plan.features.map((feature, fIdx) => (
-                    <div key={fIdx} className="flex items-start gap-4">
-                      <div className="mt-0.5">
-                        <Check className="w-4 h-4 text-[var(--color-text-secondary)] opacity-50" strokeWidth={1.5} />
-                      </div>
-                      <span className="text-sm text-[var(--color-text-primary)] leading-relaxed">{feature}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <Button variant={plan.recommended ? "primary" : "secondary"} className={`w-full bg-white border border-black/[0.05] shadow-sm ${plan.recommended ? 'bg-[var(--color-text-primary)] text-white hover:bg-black/80' : ''}`}>
-                  Choose {plan.name}
-                </Button>
-              </div>
-            </div>
-          ))}
-        </div>
+    <section className="relative w-full min-h-screen flex flex-col bg-[#FDFBF7]">
+      
+      {/* 
+        ENVIRONMENT: The Desk (Top 35%)
+        Completely unobstructed photograph. 
+      */}
+      <div className="w-full h-[35vh] relative">
+        <Image 
+          src="/images/architecture/membership.jpg"
+          alt="Vivaha Desk"
+          fill
+          className="object-cover object-center"
+        />
       </div>
 
-      {/* Continuity Transition: Invitation room transitions into the soft printed FAQ booklet */}
-      <div className="absolute bottom-0 left-0 w-full h-48 bg-gradient-to-t from-[#F8F7F4] to-transparent z-0 pointer-events-none" />
+      {/* 
+        ARCHITECTURAL SURFACE: The Massive Ivory Card (Bottom 65%)
+        A solid, opaque paper surface containing the memberships.
+      */}
+      <div className="relative w-full bg-[#FDFBF7] flex flex-col items-center pt-24 pb-32 px-6 z-10 shadow-[0_-30px_60px_rgba(0,0,0,0.15)] border-t border-[#EBE6DF]">
+        
+        <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center">
+          
+          <div className="space-y-4 text-center mb-16">
+            <h2 className="text-3xl md:text-4xl text-[#2A2621] font-display tracking-tight">
+              Membership that respects your journey.
+            </h2>
+          </div>
+          
+          {/* Individual Physical Paper Invitations resting on the main card surface */}
+          <div className="flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-8 w-full pt-8">
+            {plans.map((plan, idx) => (
+              <motion.div 
+                key={plan.name}
+                initial={{ opacity: 0, y: 30, rotate: 0 }}
+                whileInView={{ opacity: 1, y: 0, rotate: plan.rotation }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 1.2, delay: idx * 0.15, ease: [0.22, 1, 0.36, 1] }}
+                className={`relative flex flex-col items-center text-center p-10 ${plan.featured ? 'w-[320px] lg:w-[340px] lg:-translate-y-8 bg-[#F4F1EA]' : 'w-[280px] lg:w-[300px] bg-[#FAF8F5]'}`}
+                style={{
+                  zIndex: plan.zIndex,
+                  borderRadius: "1px",
+                  border: "1px solid rgba(139,121,105,0.15)",
+                  boxShadow: plan.featured 
+                    ? "0 30px 50px -10px rgba(20,18,15,0.1), inset 0 2px 4px rgba(255,255,255,1)" 
+                    : "0 15px 30px -10px rgba(20,18,15,0.05), inset 0 2px 4px rgba(255,255,255,0.8)",
+                }}
+              >
+                <div className="space-y-3 mb-8">
+                  <h3 className="text-2xl font-display text-[#2A2621] tracking-tight">{plan.name}</h3>
+                  <p className="text-xs text-[#8C7A6B] font-serif italic max-w-[160px] mx-auto">{plan.desc}</p>
+                  <div className="text-3xl font-display text-[#2A2621] pt-4">{plan.price}</div>
+                </div>
+                
+                <ul className="space-y-4 text-sm text-[#5A534B] w-full text-left font-medium mb-12">
+                  {plan.features.map((feature, i) => (
+                    <li key={i} className="flex items-center gap-3">
+                      <span className="text-[#8C7A6B] text-xs font-bold">✓</span>
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                
+                <button className="mt-auto text-xs font-bold text-[#2A2621] uppercase tracking-widest border-b border-[#2A2621]/30 pb-1 hover:border-[#2A2621] transition-colors">
+                  Select {plan.name}
+                </button>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

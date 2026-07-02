@@ -1,78 +1,75 @@
-import Link from "next/link";
+"use client";
+
+import Image from "next/image";
 
 export function FooterSection() {
   return (
-    <footer className="relative w-full bg-[#F2F1EC] pt-24 pb-12 px-6 z-10 overflow-hidden">
-      {/* Lighting System: Evening courtyard lighting (warm, soft ambient glow from below) */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] h-[50%] bg-[radial-gradient(ellipse_at_bottom,_rgba(255,248,235,0.4)_0%,_transparent_70%)] pointer-events-none z-0 blur-3xl" />
+    <footer className="relative w-full flex flex-col bg-[#0A1015]">
+      
+      {/* 
+        ENVIRONMENT: The Garden Exit (Top 50%)
+        Untouched blue hour photograph.
+      */}
+      <div className="w-full h-[50vh] relative">
+        <Image 
+          src="/images/architecture/footer.jpg"
+          alt="Vivaha Garden Evening"
+          fill
+          className="object-cover object-center"
+        />
+      </div>
 
-      {/* Material Suggestion: Warm stone/taupe architecture */}
-      <div 
-        className="absolute inset-0 opacity-[0.02] mix-blend-multiply pointer-events-none z-0" 
-        style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.6%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")' }}
-      />
-
-      <div className="relative z-10 max-w-7xl mx-auto flex flex-col space-y-20">
+      {/* 
+        ARCHITECTURAL SURFACE: The Stone Wall (Bottom 50%)
+        A solid, opaque, dark stone wall holding the navigation.
+      */}
+      <div className="relative w-full bg-[#0A1015] flex flex-col items-center pt-24 pb-16 px-8 md:px-16 z-10 shadow-[0_-20px_40px_rgba(0,0,0,0.5)] border-t border-white/5">
         
-        {/* Top: Brand & Navigation */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8">
+        <div className="relative z-10 w-full max-w-7xl mx-auto flex flex-col md:flex-row items-start justify-between gap-16 border-b border-white/10 pb-16">
           
           {/* Brand */}
-          <div className="lg:col-span-5 flex flex-col space-y-6">
-            <Link href="/" className="text-3xl font-display text-[var(--color-text-primary)] tracking-tight">
+          <div className="space-y-6 max-w-[280px]">
+            <div className="text-2xl font-display text-[#FDFBF7] tracking-widest uppercase">
               Vivaha
-            </Link>
-            <p className="text-md text-[var(--color-text-secondary)] max-w-sm leading-relaxed">
-              Helping individuals and families build meaningful lifelong relationships through trust, respect and thoughtful matchmaking.
+            </div>
+            <p className="text-sm text-[#FDFBF7]/60 font-medium leading-relaxed">
+              Building meaningful relationships with trust, respect, and family values at the heart.
             </p>
           </div>
 
-          {/* Navigation Columns */}
-          <div className="lg:col-span-7 grid grid-cols-2 md:grid-cols-4 gap-10">
-            <div className="flex flex-col space-y-5">
-              <h4 className="text-xs font-semibold text-[var(--color-text-primary)] uppercase tracking-widest">Platform</h4>
-              <Link href="#" className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-primary-700)] transition-colors">How It Works</Link>
-              <Link href="#" className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-primary-700)] transition-colors">Membership</Link>
-              <Link href="#" className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-primary-700)] transition-colors">Success Stories</Link>
+          {/* Links naturally existing on the wall */}
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-12 w-full md:w-auto">
+            <div className="space-y-6">
+              <h4 className="text-xs font-bold text-white/40 tracking-widest uppercase">Company</h4>
+              <ul className="space-y-4">
+                {['About Us', 'Our Story', 'Careers'].map(link => (
+                  <li key={link}><a href="#" className="text-sm text-white/70 hover:text-white transition-colors">{link}</a></li>
+                ))}
+              </ul>
             </div>
-            
-            <div className="flex flex-col space-y-5">
-              <h4 className="text-xs font-semibold text-[var(--color-text-primary)] uppercase tracking-widest">Company</h4>
-              <Link href="#" className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-primary-700)] transition-colors">About Us</Link>
-              <Link href="#" className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-primary-700)] transition-colors">Careers</Link>
-              <Link href="#" className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-primary-700)] transition-colors">Press</Link>
+            <div className="space-y-6">
+              <h4 className="text-xs font-bold text-white/40 tracking-widest uppercase">Support</h4>
+              <ul className="space-y-4">
+                {['Help Center', 'Safety Tips', 'Privacy Policy'].map(link => (
+                  <li key={link}><a href="#" className="text-sm text-white/70 hover:text-white transition-colors">{link}</a></li>
+                ))}
+              </ul>
             </div>
-
-            <div className="flex flex-col space-y-5">
-              <h4 className="text-xs font-semibold text-[var(--color-text-primary)] uppercase tracking-widest">Support</h4>
-              <Link href="#" className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-primary-700)] transition-colors">Help Centre</Link>
-              <Link href="#" className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-primary-700)] transition-colors">Contact Us</Link>
-            </div>
-
-            <div className="flex flex-col space-y-5">
-              <h4 className="text-xs font-semibold text-[var(--color-text-primary)] uppercase tracking-widest">Legal</h4>
-              <Link href="#" className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-primary-700)] transition-colors">Privacy Policy</Link>
-              <Link href="#" className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-primary-700)] transition-colors">Terms of Service</Link>
+            <div className="space-y-6">
+              <h4 className="text-xs font-bold text-white/40 tracking-widest uppercase">Connect</h4>
+              <ul className="space-y-4">
+                {['Instagram', 'Twitter', 'LinkedIn'].map(link => (
+                  <li key={link}><a href="#" className="text-sm text-white/70 hover:text-white transition-colors">{link}</a></li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
-
-        {/* Bottom: Trust & Copyright */}
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between pt-8 border-t border-black/[0.04] gap-6">
-          <div className="flex flex-wrap items-center gap-4 text-xs text-[var(--color-text-secondary)] font-medium tracking-wide">
-            <span>Verified Profiles</span>
-            <span className="w-1 h-1 rounded-full bg-black/10"></span>
-            <span>Privacy First</span>
-            <span className="w-1 h-1 rounded-full bg-black/10"></span>
-            <span>Secure Conversations</span>
-            <span className="w-1 h-1 rounded-full bg-black/10"></span>
-            <span>Family Friendly</span>
-          </div>
-          <p className="text-xs text-[var(--color-text-secondary)] font-medium">
-            © {new Date().getFullYear()} Vivaha. All rights reserved.
-          </p>
+        
+        <div className="relative z-10 w-full max-w-7xl mx-auto pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/30 font-bold uppercase tracking-widest">
+          <p>© 2026 Vivaha. All rights reserved.</p>
+          <p>A Thoughtfully Designed Space.</p>
         </div>
-
       </div>
     </footer>
   );
