@@ -1,7 +1,6 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { CanvasParticles } from "@/features/landing/components/experience/canvas-particles"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 
@@ -19,7 +18,6 @@ export function AuthLayout({ children, quote, author }: { children: React.ReactN
           {/* Subtle atmospheric glow */}
           <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2" />
           <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-[150px] translate-x-1/4 translate-y-1/4" />
-          <CanvasParticles />
         </div>
 
         <div className="relative z-10 flex items-center gap-4">

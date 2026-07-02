@@ -137,10 +137,11 @@ export default function SupportClient({ userEmail }: { userEmail: string }) {
             </button>
             {openFaq === i && (
               <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                className="px-5 pb-5"
+                initial={{ opacity: 0, scaleY: 0 }}
+                animate={{ opacity: 1, scaleY: 1 }}
+                exit={{ opacity: 0, scaleY: 0 }}
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                className="px-5 pb-5 origin-top"
               >
                 <p className="text-sm text-white/60 leading-relaxed">{item.a}</p>
               </motion.div>

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { createClient } from "@/shared/lib/supabase/client"
+import { useReducedMotion } from "@/shared/animations"
 import { 
   LayoutDashboard, Compass, Users, MessageSquare, 
   Bookmark, Bell, ShieldCheck, User, Settings, 
@@ -38,6 +39,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [isSearchOpen, setIsSearchOpen] = React.useState(false)
   const [isSearching, setIsSearching] = React.useState(false)
   const searchInputRef = React.useRef<HTMLInputElement>(null)
+  const reducedMotion = useReducedMotion()
 
   React.useEffect(() => {
     async function loadUser() {
@@ -119,16 +121,16 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const AmbientBackground = () => (
     <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
       <div className="absolute inset-0 bg-zinc-950" />
-      <motion.div 
-        animate={{ 
+      <motion.div
+        animate={reducedMotion ? {} : {
           opacity: [0.1, 0.3, 0.1],
           scale: [1, 1.1, 1],
         }}
         transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
         className="absolute top-0 left-1/4 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] mix-blend-screen"
       />
-      <motion.div 
-        animate={{ 
+      <motion.div
+        animate={reducedMotion ? {} : {
           opacity: [0.1, 0.2, 0.1],
           scale: [1, 1.2, 1],
         }}

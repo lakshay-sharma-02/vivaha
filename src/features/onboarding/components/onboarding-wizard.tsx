@@ -11,6 +11,7 @@ import { Camera, ShieldCheck, UploadCloud, CheckCircle2, Search, Heart, MapPin, 
 import { saveOnboardingData } from "@/app/actions/onboarding"
 import { createClient } from "@/shared/lib/supabase/client"
 import { toast } from "sonner"
+import { useReducedMotion } from "@/shared/animations"
 
 const STEPS = [
   { id: "welcome", title: "Welcome" },
@@ -158,26 +159,31 @@ export function OnboardingWizard() {
     })
   }
 
+  const reducedMotion = useReducedMotion()
+
   const variants: Variants = {
     enter: (direction: number) => ({
       y: direction > 0 ? 30 : -30,
       opacity: 0,
       scale: 0.98,
-      filter: "blur(8px)"
     }),
     center: {
       y: 0,
       opacity: 1,
       scale: 1,
-      filter: "blur(0px)",
-      transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] }
+      transition: {
+        duration: reducedMotion ? 0.01 : 0.7,
+        ease: [0.22, 1, 0.36, 1]
+      }
     },
     exit: (direction: number) => ({
       y: direction < 0 ? 30 : -30,
       opacity: 0,
       scale: 0.98,
-      filter: "blur(8px)",
-      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
+      transition: {
+        duration: reducedMotion ? 0.01 : 0.5,
+        ease: [0.22, 1, 0.36, 1]
+      }
     })
   }
 
@@ -185,13 +191,13 @@ export function OnboardingWizard() {
     <div className="flex-1 flex flex-col items-center justify-center relative overflow-hidden h-screen w-full">
       {/* Cinematic Backgrounds */}
       <div className="absolute inset-0 bg-black pointer-events-none">
-        <motion.div 
-          animate={{ opacity: [0.2, 0.4, 0.2], scale: [1, 1.05, 1] }}
+        <motion.div
+          animate={reducedMotion ? {} : { opacity: [0.2, 0.4, 0.2], scale: [1, 1.05, 1] }}
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
           className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px]"
         />
-        <motion.div 
-          animate={{ opacity: [0.1, 0.3, 0.1], scale: [1, 1.1, 1] }}
+        <motion.div
+          animate={reducedMotion ? {} : { opacity: [0.1, 0.3, 0.1], scale: [1, 1.1, 1] }}
           transition={{ duration: 15, repeat: Infinity, ease: "easeInOut", delay: 2 }}
           className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-[150px]"
         />

@@ -112,11 +112,11 @@ export default function DashboardClient({ userProfile, recommendedMatches, compl
                 </div>
                 {/* Beautiful Progress Bar */}
                 <div className="h-2 w-full bg-black/50 rounded-full overflow-hidden border border-white/5">
-                  <motion.div 
-                    initial={{ width: 0 }}
-                    animate={{ width: `${completionScore}%` }}
+                  <motion.div
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: completionScore / 100 }}
                     transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay: 0.5 }}
-                    className="h-full bg-gradient-to-r from-primary/50 to-primary rounded-full relative"
+                    className="h-full bg-gradient-to-r from-primary/50 to-primary rounded-full relative origin-left"
                   >
                     <div className="absolute top-0 right-0 bottom-0 w-20 bg-gradient-to-r from-transparent to-white/30" />
                   </motion.div>
