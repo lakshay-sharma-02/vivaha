@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef, useMemo, useEffect } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
+import { MeshTransmissionMaterial } from "@react-three/drei";
 import * as THREE from "three";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -10,53 +11,248 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// 1. Light Streams (Emotion: Unknown -> Curiosity)
-function LightStreams() {
-  const light1Ref = useRef<THREE.Group>(null);
-  const light2Ref = useRef<THREE.Group>(null);
+// 1. Phase 1: Massive Crystalline Monolith
+function CrystallineMonolith({ scrollCurrent }: { scrollCurrent: React.MutableRefObject<number> }) {
+  const meshRef = useRef<THREE.Mesh>(null);
+  const { mouse } = useThree();
 
   useFrame((state) => {
+    if (!meshRef.current) return;
     const t = state.clock.getElapsedTime();
-    if (light1Ref.current) {
-      light1Ref.current.position.x = Math.sin(t * 0.2) * 4;
-      light1Ref.current.position.y = Math.cos(t * 0.3) * 2;
-      light1Ref.current.position.z = Math.sin(t * 0.1) * 3 - 5;
-    }
-    if (light2Ref.current) {
-      light2Ref.current.position.x = Math.cos(t * 0.25) * 4;
-      light2Ref.current.position.y = Math.sin(t * 0.35) * 2;
-      light2Ref.current.position.z = Math.cos(t * 0.15) * 3 - 5;
-    }
+    const p = scrollCurrent.current;
+
+    // Fade out / move away as we scroll past phase 1 (0 to 0.3)
+    const phaseProgress = Math.min(1, p / 0.3);
+    
+    // Inertial mouse rotation & idle breathing
+    const targetRotX = (mouse.y * 0.2) + (t * 0.1);
+    const targetRotY = (mouse.x * 0.2) + (t * 0.05);
+    
+    meshRef.current.rotation.x += (targetRotX - meshRef.current.rotation.x) * 0.05;
+    meshRef.current.rotation.y += (targetRotY - meshRef.current.rotation.y) * 0.05;
+
+    // Move out of view dynamically based on scroll
+    meshRef.current.position.y = THREE.MathUtils.lerp(0, 15, phaseProgress);
+    meshRef.current.position.z = THREE.MathUtils.lerp(0, -10, phaseProgress);
+    
+    // Scale down slightly as it leaves
+    const scale = THREE.MathUtils.lerp(2, 1, phaseProgress);
+    meshRef.current.scale.setScalar(scale);
   });
 
   return (
-    <>
-      <group ref={light1Ref}>
-        <pointLight color="#ffffff" intensity={2} distance={10} decay={2} />
-        <mesh>
-          <sphereGeometry args={[0.05, 16, 16]} />
-          <meshBasicMaterial color="#ffffff" transparent opacity={0.8} />
-        </mesh>
-      </group>
-      
-      <group ref={light2Ref}>
-        <pointLight color="#e8cfa6" intensity={2} distance={10} decay={2} />
-        <mesh>
-          <sphereGeometry args={[0.05, 16, 16]} />
-          <meshBasicMaterial color="#e8cfa6" transparent opacity={0.8} />
-        </mesh>
-      </group>
-    </>
+    <mesh ref={meshRef} position={[0, 0, 0]} scale={2}>
+      {/* A complex, fractured monolith shape */}
+      <icosahedronGeometry args={[1, 1]} />
+      <MeshTransmissionMaterial 
+        background={new THREE.Color("#040405")}
+        thickness={2.5}
+        roughness={0.15}
+        transmission={1}
+        ior={1.5}
+        chromaticAberration={0.08}
+        anisotropy={0.4}
+        color="#ffffff"
+        distortion={0.2}
+        distortionScale={0.5}
+      />
+    </mesh>
   );
 }
 
-// 2. Particle Constellations: The Signature Moment
-function ParticleConstellations() {
-  const count = 3000;
+// 2. Phase 2: Fragmented Rings Assembling
+function FragmentedRings({ scrollCurrent }: { scrollCurrent: React.MutableRefObject<number> }) {
+  const groupRef = useRef<THREE.Group>(null);
+  const meshRefs = useRef<(THREE.Mesh | null)[]>([]);
+  const { mouse } = useThree();
+
+  const count = 40;
+  const fragments = useMemo(() => {
+    const frags = [];
+    for (let i = 0; i < count; i++) {
+      const theta = (i / count) * Math.PI * 2;
+      const ringR = 2.5;
+      
+      // Target (assembled mobius/ring)
+      const targetX = Math.cos(theta) * ringR;
+      const targetY = Math.sin(theta * 2) * 0.5; // Slight wave
+      const targetZ = Math.sin(theta) * ringR;
+      const targetRotX = Math.PI / 2;
+      const targetRotY = -theta;
+      const targetRotZ = Math.sin(theta) * Math.PI;
+
+      // Chaos (shattered floating)
+      const chaosX = (Math.random() - 0.5) * 20;
+      const chaosY = (Math.random() - 0.5) * 20 - 10; // Start below
+      const chaosZ = (Math.random() - 0.5) * 20;
+      const chaosRotX = Math.random() * Math.PI * 2;
+      const chaosRotY = Math.random() * Math.PI * 2;
+      const chaosRotZ = Math.random() * Math.PI * 2;
+
+      frags.push({
+        targetX, targetY, targetZ, targetRotX, targetRotY, targetRotZ,
+        chaosX, chaosY, chaosZ, chaosRotX, chaosRotY, chaosRotZ,
+        delay: Math.random() * 0.2 // staggering
+      });
+    }
+    return frags;
+  }, [count]);
+
+  useFrame((state) => {
+    const p = scrollCurrent.current;
+    
+    // Assemble from 0.2 to 0.5. At 0.5 it's perfect. Then at 0.6 it moves up.
+    let assembleProgress = 0;
+    if (p > 0.15 && p < 0.6) {
+      assembleProgress = Math.min(1, (p - 0.15) / 0.35);
+    } else if (p >= 0.6) {
+      assembleProgress = 1;
+    }
+    
+    // Smooth step easing
+    const ease = assembleProgress * assembleProgress * (3 - 2 * assembleProgress);
+
+    // Group movement and mouse parallax
+    if (groupRef.current) {
+      // Enter from below, exit top
+      let yOffset = -15 * (1 - ease);
+      if (p > 0.55) {
+         yOffset += (p - 0.55) * 40; // move up and out
+      }
+      groupRef.current.position.y = yOffset;
+      
+      const t = state.clock.getElapsedTime();
+      groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, mouse.y * 0.3 + Math.sin(t * 0.2) * 0.2, 0.05);
+      groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, mouse.x * 0.3 + t * 0.1, 0.05);
+      groupRef.current.rotation.z = Math.cos(t * 0.1) * 0.1;
+    }
+
+    // Apply interpolated positions to each fragment
+    fragments.forEach((frag, i) => {
+      const mesh = meshRefs.current[i];
+      if (!mesh) return;
+      
+      const individualEase = Math.max(0, Math.min(1, (ease - frag.delay) / (1 - frag.delay)));
+      const cubicEase = individualEase * individualEase * (3 - 2 * individualEase);
+
+      mesh.position.x = THREE.MathUtils.lerp(frag.chaosX, frag.targetX, cubicEase);
+      mesh.position.y = THREE.MathUtils.lerp(frag.chaosY, frag.targetY, cubicEase);
+      mesh.position.z = THREE.MathUtils.lerp(frag.chaosZ, frag.targetZ, cubicEase);
+
+      mesh.rotation.x = THREE.MathUtils.lerp(frag.chaosRotX, frag.targetRotX, cubicEase);
+      mesh.rotation.y = THREE.MathUtils.lerp(frag.chaosRotY, frag.targetRotY, cubicEase);
+      mesh.rotation.z = THREE.MathUtils.lerp(frag.chaosRotZ, frag.targetRotZ, cubicEase);
+    });
+  });
+
+  return (
+    <group ref={groupRef}>
+      {fragments.map((_, i) => (
+        <mesh 
+          key={i} 
+          ref={(el) => { meshRefs.current[i] = el; }}
+        >
+          <boxGeometry args={[1.2, 0.15, 0.3]} />
+          <meshStandardMaterial 
+            color="#d4af37" 
+            metalness={1} 
+            roughness={0.2} 
+            envMapIntensity={2}
+          />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
+// 3. Phase 3: Volumetric Fluid Threads
+function VolumetricThreads({ scrollCurrent }: { scrollCurrent: React.MutableRefObject<number> }) {
   const meshRef = useRef<THREE.InstancedMesh>(null);
+  const count = 3000;
+  const { mouse } = useThree();
+  const dummy = useMemo(() => new THREE.Object3D(), []);
+
+  const particles = useMemo(() => {
+    const arr = [];
+    for (let i = 0; i < count; i++) {
+      const theta = Math.random() * Math.PI * 2;
+      const r = Math.random() * 2 + 0.5;
+      const y = (Math.random() - 0.5) * 20;
+      const phase = Math.random() * Math.PI * 2;
+      const speed = 0.5 + Math.random() * 1.2;
+      arr.push({ theta, r, y, phase, speed });
+    }
+    return arr;
+  }, [count]);
+
+  useFrame((state) => {
+    if (!meshRef.current) return;
+    const t = state.clock.getElapsedTime();
+    const p = scrollCurrent.current;
+
+    // Reveal thread system in the second half of scroll
+    let presence = 0;
+    if (p > 0.45) {
+      presence = Math.min(1, (p - 0.45) / 0.35);
+    }
+    presence = presence * presence * (3 - 2 * presence); // smoothstep
+
+    particles.forEach((particle, i) => {
+      // Dynamic weaving
+      const radiusOffset = Math.sin(particle.phase + t * particle.speed) * 0.5;
+      const currentR = particle.r + radiusOffset;
+      const x = Math.cos(particle.theta + t * 0.2) * currentR;
+      const z = Math.sin(particle.theta + t * 0.2) * currentR;
+      const y = particle.y + Math.cos(particle.phase + t * particle.speed * 0.5) * 1.5;
+
+      // Mouse repulsion physics
+      const dx = x - mouse.x * 6;
+      const dy = y - mouse.y * 6;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      const repulsion = Math.max(0, 2 - dist) * 0.8;
+      
+      const finalX = x + dx * repulsion;
+      const finalY = y + dy * repulsion;
+
+      // Hide them deep in Z until presence builds up, then bring them right to the camera
+      const hiddenZ = z - 25;
+      const revealedZ = z + Math.sin(t * 0.5 + particle.phase) * 1.5; // breathing z
+      const finalZ = THREE.MathUtils.lerp(hiddenZ, revealedZ, presence);
+
+      dummy.position.set(finalX, finalY, finalZ);
+      
+      // Scale based on presence and time
+      const s = presence * (0.6 + Math.abs(Math.sin(particle.phase + t * 2)) * 0.4);
+      dummy.scale.setScalar(s);
+      
+      // Orient capsule along motion (approximate by looking at center)
+      dummy.lookAt(0, finalY, 0);
+      dummy.updateMatrix();
+
+      meshRef.current!.setMatrixAt(i, dummy.matrix);
+    });
+    meshRef.current.instanceMatrix.needsUpdate = true;
+  });
+
+  return (
+    <instancedMesh ref={meshRef} args={[undefined, undefined, count]} position={[0, 0, 0]}>
+      {/* Capsule shape makes it look like fluid strands/threads */}
+      <capsuleGeometry args={[0.015, 0.4, 4, 8]} />
+      <meshStandardMaterial 
+        color="#e8cfa6" 
+        emissive="#d4af37" 
+        emissiveIntensity={0.6} 
+        roughness={0.3} 
+        metalness={0.9} 
+      />
+    </instancedMesh>
+  );
+}
+
+export function SymbolicEntities() {
   const scrollTarget = useRef(0);
   const scrollCurrent = useRef(0);
-  
+
   useEffect(() => {
     const trigger = ScrollTrigger.create({
       trigger: document.body,
@@ -66,167 +262,19 @@ function ParticleConstellations() {
         scrollTarget.current = self.progress;
       },
     });
-
-    return () => {
-      trigger.kill();
-    };
+    return () => { trigger.kill(); };
   }, []);
-  
-  const dummy = useMemo(() => new THREE.Object3D(), []);
-  
-  // Pre-calculate chaotic and structured states
-  const particles = useMemo(() => {
-    const temp = [];
-    for (let i = 0; i < count; i++) {
-      // State A: Chaotic Drift (Unknown / Isolation)
-      const chaoticX = (Math.random() - 0.5) * 40;
-      const chaoticY = (Math.random() - 0.5) * 40;
-      const chaoticZ = (Math.random() - 0.5) * 40;
-      
-      // State B: Structured Convergence (Double Helix for Compatibility)
-      const t_helix = i / count;
-      const theta = t_helix * Math.PI * 40; // 20 turns
-      const r = 1.5 + (Math.random() * 0.4); // Thin, elegant ribbon
-      const height = (t_helix - 0.5) * 30;
-      const isStrand1 = i % 2 === 0;
-      
-      const targetX = Math.cos(theta + (isStrand1 ? 0 : Math.PI)) * r;
-      const targetY = height;
-      const targetZ = Math.sin(theta + (isStrand1 ? 0 : Math.PI)) * r;
 
-      const speed = 0.01 + Math.random() * 0.02;
-      const factor = Math.random() * 100;
-      
-      temp.push({ chaoticX, chaoticY, chaoticZ, targetX, targetY, targetZ, speed, factor });
-    }
-    return temp;
-  }, [count]);
-
-  useFrame((state, delta) => {
-    if (!meshRef.current) return;
-    
-    // Exponential decay dampening for scroll
+  useFrame((_, delta) => {
     const lambda = 5;
     scrollCurrent.current += (scrollTarget.current - scrollCurrent.current) * (1 - Math.exp(-lambda * delta));
-
-    const t = state.clock.getElapsedTime();
-    const p = scrollCurrent.current;
-    
-    // Convergence logic: Map scroll [0.35 to 0.75] to [0 to 1]
-    let convergence = 0;
-    if (p > 0.35) {
-      convergence = Math.min(1, (p - 0.35) / 0.40);
-    }
-    // Smoothstep easing for organic magnetic pull
-    convergence = convergence * convergence * (3 - 2 * convergence);
-    
-    particles.forEach((particle, i) => {
-      const { chaoticX, chaoticY, chaoticZ, targetX, targetY, targetZ, speed, factor } = particle;
-      
-      // Drift is active mostly in the chaotic state, diminishing as they lock in
-      const driftMult = 1 - convergence;
-      // Multi-frequency drift
-      const xDrift = (Math.sin(t * speed + factor) + 0.5 * Math.sin(t * speed * 2.5 + factor)) * 2 * driftMult;
-      const yDrift = (Math.cos(t * speed + factor) + 0.5 * Math.cos(t * speed * 2.1 + factor)) * 2 * driftMult;
-      const zDrift = (Math.sin(t * speed + factor) + 0.5 * Math.sin(t * speed * 1.8 + factor)) * 2 * driftMult;
-      
-      // Interpolate between Chaos and Structure
-      const currentX = THREE.MathUtils.lerp(chaoticX + xDrift, targetX, convergence);
-      const currentY = THREE.MathUtils.lerp(chaoticY + yDrift, targetY, convergence);
-      const currentZ = THREE.MathUtils.lerp(chaoticZ + zDrift, targetZ, convergence);
-      
-      dummy.position.set(currentX, currentY, currentZ);
-      
-      // Subtle scale pulse when aligned
-      const alignmentPulse = convergence * (Math.sin(t * speed * 5 + factor) * 0.2);
-      const s = 1 + Math.sin(t * speed * 2 + factor) * 0.3 + alignmentPulse;
-      dummy.scale.set(s, s, s);
-      dummy.updateMatrix();
-      
-      meshRef.current!.setMatrixAt(i, dummy.matrix);
-    });
-    meshRef.current.instanceMatrix.needsUpdate = true;
   });
 
-  return (
-    <instancedMesh ref={meshRef} args={[undefined, undefined, count]} position={[0, 0, 0]}>
-      <sphereGeometry args={[0.015, 8, 8]} />
-      <meshBasicMaterial color="#ffffff" transparent opacity={0.6} />
-    </instancedMesh>
-  );
-}
-
-// 3. Golden Threads (Emotion: Hope -> Commitment)
-function GoldenThreads() {
-  const groupRef = useRef<THREE.Group>(null);
-  const scrollProgress = useRef(0);
-  const stRef = useRef<gsap.core.Timeline>(null);
-
-  useEffect(() => {
-    stRef.current = gsap.timeline({
-      scrollTrigger: {
-        trigger: document.body,
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 1.5,
-      },
-    });
-    stRef.current.to(scrollProgress, { current: 1, ease: "none" });
-    return () => {
-      if (stRef.current) {
-        stRef.current.scrollTrigger?.kill();
-        stRef.current.kill();
-      }
-    };
-  }, []);
-
-  useFrame((state) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y = state.clock.getElapsedTime() * 0.05;
-      groupRef.current.rotation.x = state.clock.getElapsedTime() * 0.02;
-      
-      // Threads only become fully visible at the end
-      const p = scrollProgress.current;
-      let opacity = 0;
-      if (p > 0.7) {
-        opacity = Math.min(1, (p - 0.7) / 0.2);
-      }
-      groupRef.current.scale.setScalar(0.5 + opacity * 0.5);
-    }
-  });
-
-  return (
-    <group ref={groupRef} position={[0, 0, -12]}>
-      <mesh>
-        <torusGeometry args={[8, 0.02, 16, 100]} />
-        <meshStandardMaterial 
-          color="#d4af37" 
-          metalness={1}
-          roughness={0.2}
-          transparent
-          opacity={0.3} // Base opacity, manipulated by scale above for reveal
-        />
-      </mesh>
-      <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[8.5, 0.01, 16, 100]} />
-        <meshStandardMaterial 
-          color="#d4af37" 
-          metalness={1}
-          roughness={0.3}
-          transparent
-          opacity={0.15}
-        />
-      </mesh>
-    </group>
-  );
-}
-
-export function SymbolicEntities() {
   return (
     <group>
-      <LightStreams />
-      <ParticleConstellations />
-      <GoldenThreads />
+      <CrystallineMonolith scrollCurrent={scrollCurrent} />
+      <FragmentedRings scrollCurrent={scrollCurrent} />
+      <VolumetricThreads scrollCurrent={scrollCurrent} />
     </group>
   );
 }
