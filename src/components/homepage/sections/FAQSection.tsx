@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import { Button } from "@/shared/ui";
 
 const questions = [
   {
@@ -26,18 +25,6 @@ const questions = [
     q: "How does Vivaha recommend profiles?",
     a: "We emphasize thoughtful compatibility based on shared values, lifestyle preferences, and relationship goals, allowing you to discover profiles that align with what truly matters to you.",
   },
-  {
-    q: "Can I cancel my membership anytime?",
-    a: "Yes. If you choose to upgrade to a paid membership, you can cancel your subscription at any time through your account settings with complete transparency and no hidden fees.",
-  },
-  {
-    q: "How do conversations begin?",
-    a: "Conversations unlock only when there is mutual interest. Once an interest request is accepted, both individuals can communicate respectfully within our secure messaging platform.",
-  },
-  {
-    q: "How can I contact support?",
-    a: "Our dedicated support team is available via email and phone. You can find our contact details in the footer or visit our comprehensive Help Centre for immediate assistance.",
-  },
 ];
 
 export function FAQSection() {
@@ -48,37 +35,46 @@ export function FAQSection() {
   };
 
   return (
-    <section className="w-full h-full flex flex-col items-center justify-center px-6 text-center bg-surface-secondary">
-      <div className="max-w-4xl mx-auto flex flex-col items-center space-y-12 w-full">
-        <div className="space-y-4">
-          <h2 className="text-3xl md:text-5xl text-text-primary">
+    <section className="relative w-full h-full flex flex-col items-center justify-center px-6 text-center bg-[#F8F7F4] overflow-hidden">
+      {/* Material Suggestion: Printed wedding invitation booklet (fine paper texture) */}
+      <div 
+        className="absolute inset-0 opacity-[0.03] mix-blend-multiply pointer-events-none z-0" 
+        style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%221.2%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")' }}
+      />
+
+      <div className="relative z-10 max-w-3xl mx-auto flex flex-col items-center space-y-16 w-full pt-12">
+        <div className="space-y-6">
+          <h2 className="text-4xl md:text-5xl text-[var(--color-text-primary)] font-display tracking-tight">
             Questions We Often Hear.
           </h2>
-          <p className="text-md md:text-lg text-text-secondary max-w-[680px] mx-auto">
+          <p className="text-md md:text-lg text-[var(--color-text-secondary)] max-w-[500px] mx-auto leading-relaxed">
             We've answered the questions most visitors ask before beginning their journey.
           </p>
         </div>
 
-        <div className="w-full text-left space-y-4">
+        {/* Editorial Accordion - No heavy boxes, just elegant typography and fine lines */}
+        <div className="w-full text-left">
           {questions.map((faq, index) => {
             const isOpen = openIndex === index;
             return (
               <div 
                 key={index} 
-                className="bg-surface rounded-[var(--radius-lg)] shadow-[var(--shadow-low)] overflow-hidden transition-shadow duration-[var(--animate-fast)] hover:shadow-[var(--shadow-medium)]"
+                className="border-b border-black/[0.06] last:border-0"
               >
                 <button
                   onClick={() => toggleQuestion(index)}
-                  className="w-full flex items-center justify-between p-6 text-left focus-visible:outline-none focus-visible:bg-surface-secondary"
+                  className="w-full flex items-center justify-between py-8 text-left focus-visible:outline-none group"
                   aria-expanded={isOpen}
                 >
-                  <span className="text-lg font-medium text-text-primary">{faq.q}</span>
+                  <span className="text-xl font-display text-[var(--color-text-primary)] group-hover:text-[var(--color-primary-700)] transition-colors pr-8">
+                    {faq.q}
+                  </span>
                   <motion.div
                     animate={{ rotate: isOpen ? 180 : 0 }}
-                    transition={{ duration: 0.2, ease: "easeInOut" }}
-                    className="text-text-secondary shrink-0 ml-4"
+                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                    className="text-[var(--color-text-secondary)] shrink-0"
                   >
-                    <ChevronDown className="w-5 h-5" />
+                    <ChevronDown className="w-5 h-5 stroke-[1.5]" />
                   </motion.div>
                 </button>
                 
@@ -88,9 +84,10 @@ export function FAQSection() {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.2, ease: "easeInOut" }}
+                      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                      className="overflow-hidden"
                     >
-                      <div className="px-6 pb-6 text-text-secondary text-md leading-relaxed border-t border-border mt-2 pt-4">
+                      <div className="pb-8 text-[var(--color-text-secondary)] text-md leading-relaxed max-w-[600px]">
                         {faq.a}
                       </div>
                     </motion.div>
@@ -100,11 +97,10 @@ export function FAQSection() {
             );
           })}
         </div>
-
-        <div className="pt-4">
-          <Button variant="ghost" size="lg">Still Have Questions?</Button>
-        </div>
       </div>
+
+      {/* Continuity Transition: Fades into the warm courtyard stone of the footer */}
+      <div className="absolute bottom-0 left-0 w-full h-48 bg-gradient-to-t from-[#F2F1EC] to-transparent z-0 pointer-events-none" />
     </section>
   );
 }

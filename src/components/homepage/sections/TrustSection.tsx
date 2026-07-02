@@ -1,35 +1,70 @@
 export function TrustSection() {
+  const trustItems = [
+    {
+      id: "01",
+      title: "Government ID",
+      desc: "Every profile requires official identification.",
+    },
+    {
+      id: "02",
+      title: "Education Proof",
+      desc: "Academic credentials are independently verified.",
+    },
+    {
+      id: "03",
+      title: "Family Trust",
+      desc: "Designed to include families in the journey.",
+    },
+  ];
+
   return (
-    <section className="w-full h-full flex flex-col items-center justify-center px-6 text-center bg-surface">
-      <div className="max-w-4xl mx-auto flex flex-col items-center space-y-12">
-        <div className="space-y-4">
-          <h2 className="text-3xl md:text-5xl text-text-primary">
+    <section className="relative w-full h-full flex flex-col items-center justify-center px-6 text-center overflow-hidden bg-[#FBFBF9]">
+      {/* Material Suggestion: Inherits the noise texture from the Hero */}
+      <div 
+        className="absolute inset-0 opacity-[0.02] mix-blend-multiply pointer-events-none z-0" 
+        style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")' }}
+      />
+
+      {/* Lighting System: Soft overhead gallery lighting, inheriting warmth from Hero */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[60%] bg-[radial-gradient(ellipse_at_top,_rgba(255,252,245,0.8)_0%,_transparent_70%)] pointer-events-none z-0 blur-3xl" />
+
+      <div className="relative z-10 max-w-5xl mx-auto flex flex-col items-center space-y-20">
+        <div className="space-y-6">
+          <h2 className="text-4xl md:text-5xl text-[var(--color-text-primary)] font-display tracking-tight">
             Verified. Authentic. Secure.
           </h2>
-          <p className="text-md md:text-lg text-text-secondary max-w-[680px] mx-auto">
+          <p className="text-md md:text-lg text-[var(--color-text-secondary)] max-w-[640px] mx-auto leading-relaxed">
             We believe that every introduction should be genuine. Our comprehensive verification process ensures that you spend time connecting with real people, not algorithms.
           </p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-5xl">
-          {/* Trust Cards will go here. Scaffolded for now. */}
-          <div className="p-8 rounded-[var(--radius-lg)] bg-background shadow-[var(--shadow-low)] transition-all duration-[var(--animate-fast)] hover:shadow-[var(--shadow-medium)] flex flex-col items-center text-center space-y-4">
-            <div className="w-12 h-12 rounded-full bg-primary-100 flex items-center justify-center text-primary-700 font-medium">1</div>
-            <h3 className="text-xl font-semibold text-text-primary">Government ID</h3>
-            <p className="text-sm text-text-secondary">Every profile requires official identification.</p>
-          </div>
-          <div className="p-8 rounded-[var(--radius-lg)] bg-background shadow-[var(--shadow-low)] transition-all duration-[var(--animate-fast)] hover:shadow-[var(--shadow-medium)] flex flex-col items-center text-center space-y-4">
-            <div className="w-12 h-12 rounded-full bg-primary-100 flex items-center justify-center text-primary-700 font-medium">2</div>
-            <h3 className="text-xl font-semibold text-text-primary">Education Proof</h3>
-            <p className="text-sm text-text-secondary">Academic credentials are independently verified.</p>
-          </div>
-          <div className="p-8 rounded-[var(--radius-lg)] bg-background shadow-[var(--shadow-low)] transition-all duration-[var(--animate-fast)] hover:shadow-[var(--shadow-medium)] flex flex-col items-center text-center space-y-4">
-            <div className="w-12 h-12 rounded-full bg-primary-100 flex items-center justify-center text-primary-700 font-medium">3</div>
-            <h3 className="text-xl font-semibold text-text-primary">Family Trust</h3>
-            <p className="text-sm text-text-secondary">Designed to include families in the journey.</p>
-          </div>
+          {trustItems.map((item) => (
+            <div 
+              key={item.id}
+              className="relative p-10 rounded-[var(--radius-xl)] bg-white/40 backdrop-blur-md border border-black/[0.02] shadow-[0_8px_30px_-4px_rgba(0,0,0,0.02)] transition-all duration-[var(--animate-slow)] hover:shadow-[0_12px_40px_-4px_rgba(0,0,0,0.04)] hover:-translate-y-1 flex flex-col items-center text-center space-y-6 group"
+            >
+              {/* Subtle gallery spotlight hit on the pedestal hover */}
+              <div className="absolute inset-0 bg-gradient-to-b from-white/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[var(--radius-xl)] pointer-events-none" />
+              
+              <div className="relative z-10 space-y-4 flex flex-col items-center">
+                <div className="text-sm font-medium text-[var(--color-primary-600)] tracking-widest opacity-80">
+                  {item.id}
+                </div>
+                <h3 className="text-xl font-semibold text-[var(--color-text-primary)] tracking-tight">
+                  {item.title}
+                </h3>
+                <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed max-w-[200px]">
+                  {item.desc}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
+
+      {/* Continuity Transition: Gallery stone transitions into the open pathway of the next section */}
+      <div className="absolute bottom-0 left-0 w-full h-48 bg-gradient-to-t from-[#F9F8F6] to-transparent z-0 pointer-events-none" />
     </section>
   );
 }
