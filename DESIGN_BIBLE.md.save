@@ -1,0 +1,14519 @@
+CHAPTER 1
+Brand Philosophy
+1.1 Purpose
+
+Vivaha is not a dating application.
+
+Vivaha is not a wedding planner.
+
+Vivaha is not a social network.
+
+Vivaha exists to help people make one of the most important decisions of their lives with confidence, trust, and dignity.
+
+Every feature, interaction, animation, illustration, and line of copy must reinforce that purpose.
+
+The platform should never encourage impulsive behavior.
+
+It should encourage thoughtful, respectful, and meaningful connections.
+
+The experience should feel calm rather than addictive.
+
+Vivaha is designed for commitment, not endless engagement.
+
+1.2 Mission
+
+To help individuals and families discover meaningful lifelong relationships through trust, thoughtful technology, and beautifully crafted experiences.
+
+Technology exists only to reduce friction.
+
+It never replaces human judgment.
+
+1.3 Vision
+
+To become the most trusted matrimonial platform in the region by creating an experience that combines modern technology with timeless human values.
+
+Success is not measured by daily active users.
+
+Success is measured by meaningful introductions, successful marriages, satisfied families, and long-term trust.
+
+1.4 Core Values
+Trust Above Everything
+
+If a design decision improves aesthetics but reduces trust, it is rejected.
+
+Trust always wins.
+
+Examples:
+
+Clear verification indicators
+Transparent privacy controls
+Honest messaging
+No deceptive UI
+No manipulative urgency
+Human Before Technology
+
+AI is a supporting character.
+
+The people using Vivaha are the protagonists.
+
+Technology should quietly assist without demanding attention.
+
+The platform should celebrate stories, personalities, and values rather than algorithms.
+
+Elegance Through Simplicity
+
+Luxury is not decoration.
+
+Luxury is restraint.
+
+The interface should remove unnecessary complexity while presenting information with exceptional clarity.
+
+Every element should earn its place.
+
+Warmth Without Excess
+
+Vivaha should never feel cold or corporate.
+
+At the same time, it should avoid excessive ornamentation.
+
+Warmth comes from light, typography, spacing, photography, and thoughtful interactions—not visual clutter.
+
+Respect for Tradition and Individual Choice
+
+Vivaha recognizes that relationships often involve families while also respecting personal agency.
+
+The platform should never visually favor one over the other.
+
+Design decisions should reflect balance.
+
+1.5 Brand Personality
+
+Imagine Vivaha as a person.
+
+Not a company.
+
+Not an app.
+
+If Vivaha welcomed guests into its home, it would be:
+
+Graceful.
+
+Calm.
+
+Patient.
+
+Well spoken.
+
+Thoughtful.
+
+Confident.
+
+Trustworthy.
+
+Warm.
+
+Never loud.
+
+Never boastful.
+
+Never trying too hard.
+
+1.6 Brand Voice
+
+Vivaha speaks with quiet confidence.
+
+It never exaggerates.
+
+It never shouts.
+
+It never pressures users.
+
+Instead of saying:
+
+The Best Matrimonial Platform
+
+Vivaha says:
+
+A place where meaningful relationships begin.
+
+Instead of:
+
+AI Powered Compatibility Engine
+
+Vivaha says:
+
+Understanding people beyond profiles.
+
+The language should always feel conversational, respectful, and emotionally intelligent.
+
+1.7 Emotional Goals
+
+The emotional journey is carefully designed.
+
+Arrival
+
+"I feel welcomed."
+
+Exploration
+
+"This platform feels different."
+
+Discovery
+
+"They care about more than appearances."
+
+Trust
+
+"I feel safe sharing my information here."
+
+Connection
+
+"I can imagine meeting someone meaningful."
+
+Confidence
+
+"I would recommend this platform to my family."
+
+Commitment
+
+"I'm ready to begin."
+
+If any page does not support this emotional progression, it should be reconsidered.
+
+1.8 What Vivaha Is Not
+
+To maintain a consistent identity, the following directions are intentionally avoided.
+
+Vivaha is not:
+
+A dating application
+A social media platform
+A wedding planning service
+A banquet hall website
+An event management company
+A luxury fashion brand
+A technology startup homepage
+An AI showcase
+An award-focused experimental website
+
+These comparisons help define the boundaries of the design language.
+
+1.9 Design Philosophy
+
+The guiding philosophy is:
+
+Design for the first conversation, not the first click.
+
+Every design decision should help users feel comfortable enough to take the next meaningful step.
+
+Visual beauty is important.
+
+Trust is essential.
+
+Emotion is intentional.
+
+Usability is non-negotiable.
+
+1.10 The Creative Metaphor
+
+Every strong brand has a central metaphor.
+
+For Vivaha, that metaphor is:
+
+The Garden of Beginnings
+
+A garden is carefully nurtured.
+
+It grows over time.
+
+It welcomes people.
+
+It is peaceful rather than overwhelming.
+
+It is full of possibility.
+
+Different paths lead to different destinations.
+
+Growth happens naturally.
+
+This metaphor influences every part of the design system.
+
+Light should feel natural.
+
+Movement should feel organic.
+
+Floral elements should frame rather than dominate.
+
+Whitespace should feel like open pathways.
+
+Typography should feel calm.
+
+Interactions should unfold gently.
+
+The interface should never feel rushed.
+
+Visitors should feel as though they are walking through a peaceful place where meaningful journeys begin.
+
+1.11 Design Commandments
+
+These principles are absolute.
+
+Trust is always more important than aesthetics.
+Simplicity is always more powerful than decoration.
+Motion must explain, not entertain.
+Flowers should frame, never overwhelm.
+Light is a design material.
+Whitespace is a luxury.
+Every interaction should reduce anxiety.
+Every screen should encourage respect.
+AI should assist quietly.
+The experience should feel timeless rather than trendy.
+End of Chapter 1
+
+📖 Vivaha Design Bible v2.0
+Volume I — Foundation
+Chapter 2 — User Psychology
+2.1 Philosophy
+
+People don't come to Vivaha because they're bored.
+
+They don't come to "browse."
+
+They come with hope.
+
+Sometimes excitement.
+
+Sometimes pressure.
+
+Sometimes uncertainty.
+
+Sometimes expectations from family.
+
+Sometimes after years of unsuccessful searching.
+
+Sometimes after a painful relationship.
+
+Sometimes because their parents asked them.
+
+Sometimes because they finally feel ready.
+
+Unlike social media, Vivaha deals with one of life's highest emotional investments.
+
+Therefore every design decision should reduce stress instead of increasing engagement.
+
+2.2 Our Users
+
+Vivaha does not have one user.
+
+It has an ecosystem.
+
+We design for multiple people participating in one journey.
+
+Persona A
+The Independent Professional
+
+Age
+
+24–35
+
+Examples
+
+Software Engineer
+
+Doctor
+
+Lawyer
+
+Designer
+
+Entrepreneur
+
+Government Employee
+
+Psychology
+
+Busy.
+
+Career-focused.
+
+Values privacy.
+
+Wants genuine people.
+
+Hates wasting time.
+
+Doesn't trust fake profiles.
+
+Needs confidence before messaging.
+
+Design Implications
+
+Fast interface.
+
+Professional look.
+
+Minimal clutter.
+
+Rich profiles.
+
+Verification visible.
+
+Clear compatibility.
+
+No gimmicks.
+
+Persona B
+Family Assisted User
+
+Age
+
+22–30
+
+Usually
+
+Parents participate.
+
+Sometimes siblings.
+
+Family expectations matter.
+
+Psychology
+
+Wants independence.
+
+Still values family approval.
+
+Needs balance.
+
+Design Implications
+
+Respect tradition.
+
+Don't force individual-only decisions.
+
+Support sharing.
+
+Support family visibility.
+
+Never make parents feel excluded.
+
+Persona C
+Parents
+
+Age
+
+45–65
+
+Goals
+
+Find trustworthy matches.
+
+Protect children.
+
+Understand family background.
+
+Value verification.
+
+Psychology
+
+Less interested in animations.
+
+Much more interested in safety.
+
+Transparency.
+
+Trust.
+
+Family values.
+
+Design Implications
+
+Larger typography.
+
+Simple navigation.
+
+Clear labels.
+
+Very obvious trust indicators.
+
+Readable layouts.
+
+Persona D
+Returning User
+
+Already searched elsewhere.
+
+Maybe disappointed.
+
+Maybe frustrated.
+
+Psychology
+
+Skeptical.
+
+Doesn't believe marketing.
+
+Needs proof.
+
+Needs transparency.
+
+Needs hope.
+
+Design Implications
+
+Don't exaggerate.
+
+Avoid buzzwords.
+
+Show authenticity.
+
+Use real stories.
+
+Explain why Vivaha is different.
+
+2.3 Emotional Timeline
+
+Every visitor experiences emotional stages.
+
+Our interface should respond accordingly.
+
+Stage 1
+
+Arrival
+
+Thoughts
+
+"Is this another fake matrimonial website?"
+
+Design Goal
+
+Instant trust.
+
+Clean design.
+
+Professional photography.
+
+Verification visible.
+
+Calm atmosphere.
+
+Stage 2
+
+Exploration
+
+Thoughts
+
+"Can I find someone here?"
+
+Design Goal
+
+Show quality over quantity.
+
+Beautiful profiles.
+
+Stories.
+
+Shared values.
+
+Not endless lists.
+
+Stage 3
+
+Profile Creation
+
+Thoughts
+
+"What if people judge me?"
+
+Design Goal
+
+Encouragement.
+
+Progress.
+
+Helpful guidance.
+
+Positive feedback.
+
+Never shame incomplete profiles.
+
+Stage 4
+
+Discovery
+
+Thoughts
+
+"Do these matches actually fit me?"
+
+Design Goal
+
+Explain compatibility.
+
+Show reasoning.
+
+Transparency.
+
+Confidence.
+
+Stage 5
+
+First Message
+
+Thoughts
+
+"What should I say?"
+
+Design Goal
+
+Comfort.
+
+Conversation starters.
+
+Gentle suggestions.
+
+Warm interface.
+
+Stage 6
+
+Long-term Use
+
+Thoughts
+
+"I trust this platform."
+
+Design Goal
+
+Consistency.
+
+Reliability.
+
+Respect.
+
+No surprises.
+
+2.4 Trust Psychology
+
+Trust is built through hundreds of tiny signals.
+
+Not one giant feature.
+
+Vivaha should continuously reinforce trust.
+
+Examples
+
+Verified badges.
+
+Professional typography.
+
+Consistent spacing.
+
+Realistic photography.
+
+Readable forms.
+
+Clear privacy.
+
+No clickbait.
+
+No countdown timers.
+
+No fake urgency.
+
+No exaggerated claims.
+
+2.5 Cognitive Load
+
+Marriage decisions already create mental effort.
+
+The interface should never add unnecessary complexity.
+
+Rules
+
+Never overload screens.
+
+Avoid large blocks of text.
+
+Limit primary actions.
+
+Keep navigation obvious.
+
+Show progress clearly.
+
+Reduce decision fatigue.
+
+2.6 Decision Making
+
+Users rarely choose a partner based on one attribute.
+
+Instead they gradually build confidence.
+
+The UI should support this.
+
+Examples
+
+Personality
+
+↓
+
+Values
+
+↓
+
+Lifestyle
+
+↓
+
+Family
+
+↓
+
+Career
+
+↓
+
+Communication
+
+↓
+
+Photos
+
+↓
+
+Compatibility
+
+↓
+
+Conversation
+
+↓
+
+Trust
+
+Design should encourage progressive discovery rather than immediate judgment.
+
+2.7 Families
+
+Families should never feel like secondary users.
+
+At the same time
+
+Individuals should never feel controlled.
+
+Vivaha should create harmony.
+
+Examples
+
+Allow profile sharing.
+
+Support discussions.
+
+Display family information elegantly.
+
+Avoid making parents navigate complicated interfaces.
+
+2.8 Color Psychology
+
+Every color influences emotion.
+
+Vivaha should primarily communicate
+
+Calm
+
+Warmth
+
+Purity
+
+Growth
+
+Trust
+
+Hope
+
+Avoid colors that communicate
+
+Aggression
+
+Urgency
+
+Competition
+
+Entertainment
+
+Luxury for its own sake
+
+2.9 Motion Psychology
+
+Motion affects emotion.
+
+Fast movement creates excitement.
+
+Slow movement creates calm.
+
+Vivaha should prefer calm.
+
+Animations should reassure rather than impress.
+
+Nothing should feel rushed.
+
+2.10 Photography Psychology
+
+Never show perfect models.
+
+Instead show believable happiness.
+
+Natural smiles.
+
+Eye contact.
+
+Families together.
+
+Everyday moments.
+
+People should think
+
+"That could be me."
+
+Not
+
+"That's a photoshoot."
+
+2.11 The Three Emotional Questions
+
+Every visitor unconsciously asks three questions.
+
+Can I trust this place?
+
+Design answers through
+
+Verification
+
+Transparency
+
+Professionalism
+
+Consistency
+
+Can I imagine myself here?
+
+Design answers through
+
+Real stories
+
+Warm imagery
+
+Relatable people
+
+Meaningful profiles
+
+Will this help me find the right person?
+
+Design answers through
+
+Thoughtful matching
+
+Compatibility explanations
+
+Guided discovery
+
+Real success stories
+
+2.12 The Psychology of Luxury
+
+Luxury is often misunderstood.
+
+Luxury is not expensive decoration.
+
+Luxury is the absence of friction.
+
+Luxury means
+
+Everything feels effortless.
+
+Typography is readable.
+
+Buttons are obvious.
+
+Forms are enjoyable.
+
+Animations never interrupt.
+
+Navigation feels natural.
+
+Spacing allows breathing.
+
+Nothing competes for attention.
+
+This is the feeling Vivaha should create.
+
+2.13 Psychological Anti-Patterns
+
+Never create anxiety.
+
+Avoid
+
+❌ Popups asking users to upgrade immediately
+
+❌ Fake notifications
+
+❌ "Only 2 profiles left"
+
+❌ Endless red badges
+
+❌ Flashing animations
+
+❌ Pressure tactics
+
+❌ Fear-based messaging
+
+❌ Fake online indicators
+
+❌ Dark patterns
+
+Users should feel respected, not manipulated.
+
+2.14 Design Review Checklist
+
+Every screen should be reviewed using these questions:
+
+✅ Does this screen reduce anxiety?
+
+✅ Does it build trust?
+
+✅ Is the next action obvious?
+
+✅ Is the content easy to understand?
+
+✅ Would a parent feel comfortable using it?
+
+✅ Would a first-time user feel welcomed?
+
+✅ Does the interface feel calm?
+
+✅ Does it encourage thoughtful decisions instead of impulsive actions?
+
+If any answer is "No," the screen needs refinement.
+
+End of Chapter 2
+
+📖 Vivaha Design Bible v2.0
+Volume I — Foundation
+Chapter 3 — Creative Direction
+3.1 Philosophy
+
+Creative Direction is the soul of Vivaha.
+
+It defines what people feel before they consciously read a single word.
+
+This chapter governs every future design decision.
+
+No screen should be designed without following this direction.
+
+3.2 Core Creative Vision
+
+Vivaha should feel like stepping into a beautifully designed place where new journeys begin.
+
+Not a website.
+
+Not a wedding venue.
+
+Not an application.
+
+A place.
+
+Visitors should experience calm confidence.
+
+The interface should feel as though it has existed for years, refined through patience rather than trends.
+
+Every element should communicate permanence.
+
+Nothing should feel temporary.
+
+3.3 Creative Metaphor
+
+Vivaha is inspired by the idea of
+
+"The Garden of Beginnings."
+
+A garden represents growth.
+
+Growth requires patience.
+
+Trust.
+
+Care.
+
+Time.
+
+Every relationship begins as something small before becoming something lasting.
+
+This metaphor influences:
+
+Architecture
+
+Light
+
+Motion
+
+Spacing
+
+Floral elements
+
+Photography
+
+Copywriting
+
+Interaction
+
+3.4 Visual Atmosphere
+
+The overall atmosphere should feel:
+
+Warm.
+
+Natural.
+
+Elegant.
+
+Peaceful.
+
+Refined.
+
+Hopeful.
+
+Bright.
+
+Open.
+
+Grounded.
+
+Human.
+
+Avoid creating excitement.
+
+Create anticipation.
+
+Avoid creating spectacle.
+
+Create comfort.
+
+3.5 Architectural Language
+
+The interface should borrow ideas from architecture rather than graphic design.
+
+Design with:
+
+Framing.
+
+Alignment.
+
+Balance.
+
+Perspective.
+
+Natural pathways.
+
+Open spaces.
+
+Vertical rhythm.
+
+Structured composition.
+
+Large breathing spaces.
+
+Everything should feel constructed rather than decorated.
+
+3.6 Hospitality Inspiration
+
+Vivaha should feel closer to luxury hospitality than technology.
+
+Borrow from:
+
+Luxury hotel lobbies.
+
+Private lounges.
+
+Boutique resorts.
+
+Elegant courtyards.
+
+Contemporary homes.
+
+Gallery spaces.
+
+Calm waiting areas.
+
+Never imitate office software.
+
+Never imitate dashboards.
+
+3.7 Wedding Inspiration
+
+Wedding inspiration must remain subtle.
+
+Use wedding aesthetics as emotional accents.
+
+Not as decoration.
+
+Allowed inspiration:
+
+Fresh flowers.
+
+Soft drapery.
+
+Warm lights.
+
+Elegant invitations.
+
+Fine fabrics.
+
+Natural celebration.
+
+Traditional craftsmanship.
+
+Avoid:
+
+Heavy floral overload.
+
+Gold overload.
+
+Decorative arches everywhere.
+
+Stage design.
+
+Banquet hall aesthetics.
+
+Overly ceremonial layouts.
+
+3.8 Nature Inspiration
+
+Nature should be present throughout the interface.
+
+Nature creates calm.
+
+Use inspiration from:
+
+Morning gardens.
+
+Fresh leaves.
+
+Soft petals.
+
+Natural sunlight.
+
+Open courtyards.
+
+Gentle water reflections.
+
+Moving branches.
+
+Seasonal flowers.
+
+Nature should never dominate.
+
+It should quietly support the experience.
+
+3.9 Interior Design Inspiration
+
+Reference environments should include:
+
+Luxury residences.
+
+Boutique hotels.
+
+Minimal temples.
+
+Modern libraries.
+
+Art galleries.
+
+Wedding invitation studios.
+
+Premium cafés.
+
+Elegant reception spaces.
+
+Every environment should feel inhabitable.
+
+3.10 Material Language
+
+Every digital surface should feel inspired by physical materials.
+
+Primary materials:
+
+Handmade paper.
+
+Fine linen.
+
+Natural cotton.
+
+Ivory silk.
+
+Light marble.
+
+Soft stone.
+
+Brushed brass.
+
+Champagne gold.
+
+Matte ceramic.
+
+Warm wood.
+
+Avoid:
+
+Plastic.
+
+Chrome.
+
+High gloss.
+
+Neon.
+
+Carbon fiber.
+
+Futuristic metal.
+
+3.11 Emotional Lighting
+
+Lighting becomes part of storytelling.
+
+Preferred lighting:
+
+Morning sunlight.
+
+Golden hour.
+
+Window light.
+
+Warm chandeliers.
+
+Soft reflections.
+
+Ambient glows.
+
+Diffused daylight.
+
+Avoid:
+
+Blue light.
+
+Harsh white.
+
+High contrast.
+
+Artificial neon.
+
+Cold environments.
+
+Every page should feel naturally illuminated.
+
+3.12 Decorative Philosophy
+
+Decoration exists to frame content.
+
+Never replace content.
+
+Rules:
+
+Flowers frame.
+
+Whitespace breathes.
+
+Light guides.
+
+Typography leads.
+
+Decoration never competes.
+
+Users should remember the experience.
+
+Not the decorations.
+
+3.13 Spatial Philosophy
+
+The interface should never feel crowded.
+
+Imagine walking through a peaceful building.
+
+There is room to pause.
+
+Every screen should include intentional empty space.
+
+Whitespace is not emptiness.
+
+Whitespace is luxury.
+
+Whitespace improves trust.
+
+Whitespace improves readability.
+
+Whitespace improves confidence.
+
+3.14 Visual Hierarchy
+
+Every page should immediately communicate:
+
+Primary focus.
+
+↓
+
+Supporting information.
+
+↓
+
+Secondary actions.
+
+↓
+
+Additional details.
+
+Nothing should compete equally.
+
+Everything must have hierarchy.
+
+3.15 Brand Temperature
+
+Vivaha should feel emotionally warm.
+
+Not visually loud.
+
+Warmth comes from:
+
+Light.
+
+Typography.
+
+Photography.
+
+Spacing.
+
+Copy.
+
+Human moments.
+
+Not from excessive decoration.
+
+3.16 Time
+
+The interface should feel timeless.
+
+Ask before every design decision:
+
+"Will this still look beautiful five years from now?"
+
+If the answer is uncertain,
+
+remove it.
+
+Avoid:
+
+Design trends.
+
+Popular animations.
+
+Temporary aesthetics.
+
+Trend-driven layouts.
+
+3.17 Texture Philosophy
+
+Textures should be nearly invisible.
+
+They should only be noticed subconsciously.
+
+Use:
+
+Paper grain.
+
+Fabric weave.
+
+Marble veins.
+
+Stone softness.
+
+Fine canvas.
+
+Subtle brush textures.
+
+Never allow textures to interfere with readability.
+
+3.18 Motion Philosophy
+
+Motion is environmental.
+
+Not theatrical.
+
+Examples:
+
+Light slowly changing.
+
+Leaves gently moving.
+
+Curtains responding softly.
+
+Shadows shifting.
+
+Dust floating.
+
+Petals drifting occasionally.
+
+Everything should feel alive.
+
+Nothing should demand attention.
+
+3.19 Human Presence
+
+People should exist naturally.
+
+Avoid posed studio photography.
+
+Instead show:
+
+Walking.
+
+Reading.
+
+Talking.
+
+Laughing.
+
+Cooking.
+
+Travelling.
+
+Drinking tea.
+
+Visiting parents.
+
+Working.
+
+Living.
+
+Relationships are built through life.
+
+Not photoshoots.
+
+3.20 Symbolism
+
+Vivaha should avoid cliché romantic symbols.
+
+Avoid:
+
+Large hearts.
+
+Cupid.
+
+Rings everywhere.
+
+Roses everywhere.
+
+Instead use:
+
+Threads.
+
+Paths.
+
+Light.
+
+Gardens.
+
+Windows.
+
+Doorways.
+
+Open spaces.
+
+Growth.
+
+These symbols communicate relationships more elegantly.
+
+3.21 Consistency
+
+Every screen should belong to the same world.
+
+If a component looks like it belongs to another product,
+
+it should be redesigned.
+
+The user should never feel they have left Vivaha.
+
+3.22 Creative Review Questions
+
+Before approving any screen, ask:
+
+Does it feel peaceful?
+
+Does it build trust?
+
+Would this age gracefully?
+
+Is decoration supporting content?
+
+Can typography breathe?
+
+Does lighting feel natural?
+
+Would this still feel premium without animations?
+
+If all animations disappeared,
+
+would the design still be beautiful?
+
+If not,
+
+the design is relying on effects rather than quality.
+
+3.23 Anti-Patterns
+
+Never create:
+
+Corporate dashboards.
+
+AI startup aesthetics.
+
+Overly futuristic interfaces.
+
+Glassmorphism overload.
+
+Dark cyberpunk themes.
+
+Banquet hall replicas.
+
+Wedding invitation copies.
+
+Floral wallpaper.
+
+Luxury for the sake of luxury.
+
+Anything that distracts from meaningful human connection.
+
+End of Chapter 3
+
+# 📖 Vivaha Design Bible v2.0
+
+# Volume I — Foundation
+
+# Chapter 4 — Design Principles
+
+---
+
+# 4.1 Purpose
+
+Design Principles are the non-negotiable rules that govern every screen, every interaction, every animation, and every component within Vivaha.
+
+These principles are permanent.
+
+Trends change.
+
+Technology changes.
+
+Frameworks change.
+
+Design Principles remain.
+
+Whenever uncertainty arises, these principles take precedence over personal preference.
+
+---
+
+# 4.2 Principle One
+
+# Trust Before Beauty
+
+The purpose of the interface is not to impress.
+
+Its purpose is to earn trust.
+
+A beautiful interface without credibility is failure.
+
+Examples
+
+✔ Clear profile verification
+
+✔ Honest messaging
+
+✔ Predictable navigation
+
+✔ Professional spacing
+
+✔ Transparent privacy
+
+✔ Consistent visual language
+
+Avoid
+
+Decorative effects that reduce readability.
+
+Animations that delay actions.
+
+Artificial urgency.
+
+Visual tricks designed only to attract attention.
+
+---
+
+# 4.3 Principle Two
+
+# Simplicity is Luxury
+
+Luxury does not mean adding more.
+
+Luxury means removing everything unnecessary.
+
+Every screen should contain only what is needed.
+
+Questions to ask:
+
+Can this element be removed?
+
+Does it improve understanding?
+
+Does it reduce anxiety?
+
+Does it support the primary task?
+
+If the answer is no,
+
+remove it.
+
+---
+
+# 4.4 Principle Three
+
+# Guide, Never Push
+
+Vivaha assists.
+
+It never pressures.
+
+The interface should encourage thoughtful decisions.
+
+Never manipulate users.
+
+Avoid
+
+Limited-time pressure
+
+Fake scarcity
+
+Countdown timers
+
+Aggressive upgrade prompts
+
+Emotional manipulation
+
+Preferred alternatives
+
+Gentle guidance
+
+Contextual suggestions
+
+Meaningful recommendations
+
+Transparent explanations
+
+---
+
+# 4.5 Principle Four
+
+# Content Leads Design
+
+Visual design exists to support content.
+
+Typography communicates.
+
+Images support.
+
+Decoration frames.
+
+Animation reinforces.
+
+Nothing should compete with the message.
+
+Users should always understand the content before noticing visual effects.
+
+---
+
+# 4.6 Principle Five
+
+# Calm is Powerful
+
+Calm interfaces create confidence.
+
+Fast does not mean frantic.
+
+Elegant does not mean complicated.
+
+Every interaction should reduce cognitive effort.
+
+Examples
+
+Gentle transitions
+
+Predictable layouts
+
+Large spacing
+
+Clear hierarchy
+
+Comfortable typography
+
+Minimal distractions
+
+---
+
+# 4.7 Principle Six
+
+# Every Pixel Has Purpose
+
+No decorative element exists without reason.
+
+Every icon.
+
+Every divider.
+
+Every shadow.
+
+Every corner radius.
+
+Every animation.
+
+Every illustration.
+
+Every photograph.
+
+Every color.
+
+Everything must justify its existence.
+
+---
+
+# 4.8 Principle Seven
+
+# Consistency Creates Confidence
+
+Users should never wonder how something works.
+
+Buttons should behave consistently.
+
+Cards should behave consistently.
+
+Forms should behave consistently.
+
+Motion should behave consistently.
+
+Spacing should behave consistently.
+
+Consistency is a trust signal.
+
+---
+
+# 4.9 Principle Eight
+
+# Reduce Decision Fatigue
+
+Marriage already involves many decisions.
+
+The interface should simplify choices.
+
+Guidelines
+
+Limit primary actions.
+
+Group related information.
+
+Progressively disclose complexity.
+
+Avoid presenting everything at once.
+
+Present information in logical order.
+
+---
+
+# 4.10 Principle Nine
+
+# Human Stories Over Data
+
+Data informs.
+
+Stories connect.
+
+Instead of emphasizing statistics,
+
+highlight meaningful moments.
+
+Instead of
+
+"95% Compatibility"
+
+Prefer
+
+"You both value spending weekends with family."
+
+Design should reveal people rather than numbers.
+
+---
+
+# 4.11 Principle Ten
+
+# Motion Explains
+
+Motion should answer questions.
+
+Examples
+
+Where did this panel come from?
+
+Where did this image go?
+
+What changed?
+
+What should I focus on?
+
+Motion should never exist purely for entertainment.
+
+---
+
+# 4.12 Principle Eleven
+
+# Respect Attention
+
+Attention is valuable.
+
+Never interrupt unnecessarily.
+
+Avoid
+
+Unexpected popups
+
+Automatic carousels
+
+Forced videos
+
+Blinking elements
+
+Notification overload
+
+Allow users to remain in control.
+
+---
+
+# 4.13 Principle Twelve
+
+# Accessibility Is Premium
+
+Accessibility is not an optional feature.
+
+Accessibility is part of quality.
+
+Every user deserves the same thoughtful experience.
+
+Requirements
+
+Keyboard navigation
+
+Readable typography
+
+High contrast
+
+Clear focus states
+
+Screen reader compatibility
+
+Reduced motion support
+
+Responsive layouts
+
+---
+
+# 4.14 Principle Thirteen
+
+# Design for Real Life
+
+Design should reflect real human behaviour.
+
+Users may
+
+Pause
+
+Leave midway
+
+Return later
+
+Ask parents
+
+Compare profiles
+
+Read slowly
+
+Use mobile outdoors
+
+Design should support these realities.
+
+---
+
+# 4.15 Principle Fourteen
+
+# Reveal Progressively
+
+Do not overwhelm users.
+
+Information should unfold naturally.
+
+Instead of showing everything immediately,
+
+allow discovery.
+
+Examples
+
+Basic profile
+
+↓
+
+Lifestyle
+
+↓
+
+Values
+
+↓
+
+Family
+
+↓
+
+Goals
+
+↓
+
+Compatibility
+
+↓
+
+Conversation
+
+Each layer builds confidence.
+
+---
+
+# 4.16 Principle Fifteen
+
+# Beauty Through Precision
+
+Quality is found in details.
+
+Alignment.
+
+Spacing.
+
+Typography.
+
+Motion.
+
+Contrast.
+
+Padding.
+
+Border radius.
+
+Microcopy.
+
+These details create premium experiences.
+
+---
+
+# 4.17 Principle Sixteen
+
+# Build Emotional Safety
+
+Users should feel safe.
+
+Not only technically.
+
+Emotionally.
+
+Examples
+
+Friendly empty states
+
+Encouraging onboarding
+
+Positive error messages
+
+Helpful guidance
+
+Clear privacy explanations
+
+No judgment
+
+---
+
+# 4.18 Principle Seventeen
+
+# Design for Families
+
+Remember that multiple generations may interact with Vivaha.
+
+The interface should feel approachable.
+
+Never assume high technical literacy.
+
+Never sacrifice clarity for aesthetics.
+
+---
+
+# 4.19 Principle Eighteen
+
+# Technology Should Disappear
+
+Users should notice outcomes.
+
+Not technology.
+
+They should think
+
+"This platform understands me."
+
+Not
+
+"Interesting AI."
+
+Technology remains invisible.
+
+---
+
+# 4.20 Principle Nineteen
+
+# Timeless Over Trendy
+
+Avoid visual trends that age quickly.
+
+Avoid
+
+Extreme glassmorphism
+
+Neomorphism
+
+Cyber aesthetics
+
+Excessive gradients
+
+Trend-driven typography
+
+Instead create designs that remain beautiful for years.
+
+---
+
+# 4.21 Principle Twenty
+
+# Finish What You Start
+
+Incomplete experiences reduce trust.
+
+Every interaction should have
+
+Beginning
+
+Middle
+
+End
+
+Buttons respond.
+
+Forms confirm.
+
+Messages send.
+
+Uploads complete.
+
+Animations resolve.
+
+Nothing should feel abandoned.
+
+---
+
+# 4.22 Decision Framework
+
+When evaluating any feature, ask these questions in order.
+
+Does it increase trust?
+
+↓
+
+Does it improve usability?
+
+↓
+
+Does it reduce anxiety?
+
+↓
+
+Does it fit our design language?
+
+↓
+
+Does it improve accessibility?
+
+↓
+
+Does it maintain performance?
+
+↓
+
+Does it add emotional value?
+
+If the answer is "No" to any of the first three questions, reconsider the feature.
+
+---
+
+# 4.23 Review Checklist
+
+Every completed screen must satisfy all of the following.
+
+□ Trustworthy
+
+□ Calm
+
+□ Elegant
+
+□ Accessible
+
+□ Responsive
+
+□ Performant
+
+□ Consistent
+
+□ Understandable
+
+□ Human
+
+□ Timeless
+
+No screen may proceed to development without passing this review.
+
+---
+
+# 4.24 Anti-Patterns
+
+Reject any design that includes:
+
+Artificial urgency
+
+Dark patterns
+
+Visual clutter
+
+Over-decoration
+
+Confusing navigation
+
+Hidden actions
+
+Unnecessary animations
+
+Meaningless illustrations
+
+Marketing-first messaging
+
+Technology-first storytelling
+
+Trend-driven design
+
+Poor accessibility
+
+Every rejected pattern weakens trust.
+
+Trust remains the highest design priority.
+
+---
+
+# End of Chapter 4
+
+---
+
+**Current direction emerging:** After four chapters, Vivaha is clearly evolving into **a digital hospitality experience inspired by timeless architecture, human relationships, and quiet luxury**—not a SaaS product, not a wedding venue, and not a decorative matrimonial website. The foundation is now established. The next chapters will translate this philosophy into a concrete visual system.
+
+# 📖 Vivaha Design Bible v2.0
+
+# Volume II — Visual Language
+
+# Chapter 5 — Color System
+
+---
+
+# 5.1 Philosophy
+
+Color is not decoration.
+
+Color communicates emotion before typography, imagery, or interaction.
+
+The Vivaha color system is intentionally restrained.
+
+Luxury is achieved through harmony rather than saturation.
+
+Every color should contribute to one of the following emotional responses:
+
+* Trust
+* Warmth
+* Calm
+* Purity
+* Celebration
+* Growth
+* Hope
+
+If a color creates unnecessary excitement, urgency, or distraction, it should not be used.
+
+---
+
+# 5.2 Design Philosophy
+
+The Vivaha palette is inspired by:
+
+* Handmade wedding invitations
+* Ivory silk
+* Fresh white flowers
+* Morning sunlight
+* Champagne gold
+* Sandstone architecture
+* Premium paper
+* Natural greenery
+* Warm marble
+
+The palette must feel:
+
+Timeless.
+
+Sophisticated.
+
+Natural.
+
+Bright.
+
+Elegant.
+
+---
+
+# 5.3 Brand Color Palette
+
+## Primary Background
+
+**Warm Ivory**
+
+```text
+HEX: #FAF7F2
+RGB: 250,247,242
+```
+
+Purpose
+
+Primary application background.
+
+Large content areas.
+
+Sections.
+
+Cards.
+
+Creates warmth without feeling yellow.
+
+Usage
+
+≈ 40%
+
+---
+
+## Secondary Background
+
+**Pearl White**
+
+```text
+HEX: #FFFDFC
+RGB: 255,253,252
+```
+
+Purpose
+
+Cards.
+
+Forms.
+
+Dialogs.
+
+Navigation.
+
+Light containers.
+
+Usage
+
+≈ 20%
+
+---
+
+## Surface Background
+
+**Soft Linen**
+
+```text
+HEX: #F5F1EB
+```
+
+Purpose
+
+Secondary surfaces.
+
+Panels.
+
+Section alternation.
+
+Subtle visual separation.
+
+---
+
+## Accent Gold
+
+**Champagne Gold**
+
+```text
+HEX: #C7A86D
+```
+
+Purpose
+
+Highlights.
+
+Premium indicators.
+
+Borders.
+
+Icons.
+
+Buttons.
+
+Small decorative accents.
+
+Never use for large surfaces.
+
+Usage
+
+≤ 5%
+
+---
+
+## Secondary Accent
+
+**Antique Gold**
+
+```text
+HEX: #B89255
+```
+
+Purpose
+
+Hover states.
+
+Focus rings.
+
+Premium memberships.
+
+Luxury highlights.
+
+---
+
+## Primary Text
+
+**Charcoal**
+
+```text
+HEX: #2B2B2B
+```
+
+Purpose
+
+Headings.
+
+Primary body text.
+
+Navigation.
+
+Buttons.
+
+Maximum readability.
+
+---
+
+## Secondary Text
+
+**Stone Gray**
+
+```text
+HEX: #66615A
+```
+
+Purpose
+
+Descriptions.
+
+Captions.
+
+Metadata.
+
+Supporting content.
+
+---
+
+## Muted Text
+
+**Ash Gray**
+
+```text
+HEX: #98938B
+```
+
+Purpose
+
+Hints.
+
+Disabled text.
+
+Optional information.
+
+---
+
+# 5.4 Nature Palette
+
+These colors exist only as supporting accents.
+
+---
+
+### Sage
+
+```text
+#8B9D83
+```
+
+Represents
+
+Growth.
+
+Balance.
+
+Calm.
+
+Applications
+
+Leaves.
+
+Icons.
+
+Illustrations.
+
+Success states.
+
+---
+
+### Olive
+
+```text
+#75805F
+```
+
+Used sparingly.
+
+Supports floral illustrations.
+
+---
+
+### Moss
+
+```text
+#607054
+```
+
+Reserved for
+
+Illustrations.
+
+Background artwork.
+
+Decorative graphics.
+
+---
+
+# 5.5 Floral Palette
+
+Flowers should remain soft.
+
+Never saturated.
+
+---
+
+Blush
+
+```text
+#EFD7D7
+```
+
+Ivory Rose
+
+```text
+#F8EFEA
+```
+
+Soft Peach
+
+```text
+#F4E2D2
+```
+
+Cream
+
+```text
+#FBF8F2
+```
+
+These colors should only appear in illustrations, photography, or decorative accents.
+
+Never use them for buttons.
+
+---
+
+# 5.6 Celebration Palette
+
+Reserved for wedding moments.
+
+Not everyday UI.
+
+Gold Light
+
+```text
+#D8BE84
+```
+
+Champagne
+
+```text
+#E7D8B6
+```
+
+Soft Candle
+
+```text
+#F7EFD8
+```
+
+Used only for:
+
+Success stories.
+
+Celebration pages.
+
+Engagement.
+
+Wedding timeline.
+
+---
+
+# 5.7 Functional Colors
+
+Success
+
+```text
+#4F7A58
+```
+
+Warning
+
+```text
+#B68B38
+```
+
+Error
+
+```text
+#A54A4A
+```
+
+Info
+
+```text
+#5E819B
+```
+
+These colors should be slightly muted.
+
+Avoid bright greens.
+
+Avoid bright reds.
+
+Avoid bright yellows.
+
+---
+
+# 5.8 Color Hierarchy
+
+The interface should approximately follow:
+
+```text
+Warm Ivory
+
+40%
+
+Pearl White
+
+20%
+
+Charcoal
+
+20%
+
+Stone Gray
+
+10%
+
+Champagne Gold
+
+5%
+
+Natural Greens
+
+3%
+
+Celebration Colors
+
+2%
+```
+
+Gold should never dominate.
+
+White space should dominate.
+
+---
+
+# 5.9 Contrast Rules
+
+Minimum WCAG AA.
+
+Large text:
+
+4.5 : 1
+
+Body text:
+
+7 : 1 preferred.
+
+Gold should never be used for body text.
+
+Light backgrounds should always use charcoal text.
+
+---
+
+# 5.10 Gradients
+
+Gradients should be nearly invisible.
+
+Preferred
+
+```text
+Warm Ivory
+
+↓
+
+Pearl White
+```
+
+or
+
+```text
+Morning Cream
+
+↓
+
+Soft Linen
+```
+
+Avoid
+
+Rainbow gradients.
+
+Purple gradients.
+
+Blue gradients.
+
+Tech gradients.
+
+High contrast gradients.
+
+---
+
+# 5.11 Gold Rules
+
+Gold represents craftsmanship.
+
+Not wealth.
+
+Never use:
+
+Gold shadows.
+
+Gold backgrounds.
+
+Large gold buttons.
+
+Gold typography blocks.
+
+Use gold only for:
+
+Icons.
+
+Borders.
+
+Premium indicators.
+
+Small highlights.
+
+Micro interactions.
+
+---
+
+# 5.12 Background Rules
+
+Backgrounds should feel layered.
+
+Example
+
+```text
+Layer 1
+
+Warm Ivory
+
+↓
+
+Layer 2
+
+Soft Linen Texture
+
+↓
+
+Layer 3
+
+Light Shadow
+
+↓
+
+Layer 4
+
+Ambient Glow
+
+↓
+
+Layer 5
+
+Content
+```
+
+No flat white pages.
+
+No busy backgrounds.
+
+---
+
+# 5.13 Component Colors
+
+Buttons
+
+Ivory + Gold
+
+Primary CTA
+
+Warm Gold
+
+Secondary CTA
+
+White with Gold Border
+
+Inputs
+
+White
+
+Hover
+
+Soft Linen
+
+Disabled
+
+Warm Gray
+
+Cards
+
+Pearl White
+
+Hover
+
+Soft Linen
+
+Navigation
+
+Pearl White
+
+Footer
+
+Warm Ivory
+
+---
+
+# 5.14 Seasonal Variations
+
+The core palette remains unchanged.
+
+Only decorative illustrations may adapt.
+
+Spring
+
+More greens.
+
+Summer
+
+Brighter sunlight.
+
+Monsoon
+
+Cooler ambient light.
+
+Autumn
+
+Slightly warmer gold.
+
+Winter
+
+Cream tones.
+
+Users should barely notice these changes.
+
+---
+
+# 5.15 Color Anti-Patterns
+
+Never use
+
+Pure Black
+
+Pure White
+
+Bright Red
+
+Neon Green
+
+Electric Blue
+
+Purple Gradients
+
+Hot Pink
+
+Cyber Cyan
+
+Orange Alerts
+
+Unless absolutely necessary for accessibility.
+
+---
+
+# 5.16 Accessibility Rules
+
+Never communicate information using color alone.
+
+Pair colors with:
+
+Icons.
+
+Labels.
+
+Typography.
+
+Patterns.
+
+Motion.
+
+Example
+
+Verification
+
+✓ icon
+
+Green accent
+
+Label
+
+Not color alone.
+
+---
+
+# 5.17 Color Tokens
+
+```css
+--color-bg-primary
+
+--color-bg-secondary
+
+--color-surface
+
+--color-card
+
+--color-border
+
+--color-gold
+
+--color-gold-dark
+
+--color-text
+
+--color-text-secondary
+
+--color-text-muted
+
+--color-success
+
+--color-warning
+
+--color-error
+
+--color-info
+
+--color-sage
+
+--color-olive
+
+--color-blush
+
+--color-cream
+```
+
+Never hardcode colors.
+
+All components must consume tokens.
+
+---
+
+# 5.18 Color Usage Examples
+
+Hero
+
+Warm Ivory
+
+↓
+
+Typography
+
+Charcoal
+
+↓
+
+CTA
+
+Champagne Gold
+
+↓
+
+Decorative Flowers
+
+Blush + Sage
+
+---
+
+Profile Card
+
+Pearl White
+
+↓
+
+Charcoal Text
+
+↓
+
+Muted Metadata
+
+↓
+
+Gold Verification Badge
+
+---
+
+Success Story
+
+Cream
+
+↓
+
+Gold Accent
+
+↓
+
+Soft Photography
+
+↓
+
+Minimal Decoration
+
+---
+
+# 5.19 Review Checklist
+
+Before approving any design:
+
+□ Does the page feel warm?
+
+□ Is gold restrained?
+
+□ Is readability excellent?
+
+□ Does the palette feel timeless?
+
+□ Are colors emotionally calm?
+
+□ Are decorative colors supporting rather than dominating?
+
+□ Could someone immediately identify Vivaha from the palette alone?
+
+If any answer is "No", revise the color usage.
+
+---
+
+# End of Chapter 5
+
+# 📖 Vivaha Design Bible v2.0
+
+# Volume II — Visual Language
+
+# Chapter 6 — Typography System
+
+---
+
+# 6.1 Philosophy
+
+Typography is the voice of Vivaha.
+
+Before users interact with buttons, animations, or imagery, they read.
+
+Typography determines whether Vivaha feels:
+
+Trustworthy.
+
+Elegant.
+
+Warm.
+
+Professional.
+
+Or generic.
+
+The typography system should feel inspired by premium wedding invitations, luxury publishing, and editorial design—not technology products.
+
+Typography must communicate confidence without becoming ornamental.
+
+---
+
+# 6.2 Typography Principles
+
+Typography should always prioritize:
+
+Readability
+
+↓
+
+Hierarchy
+
+↓
+
+Rhythm
+
+↓
+
+Elegance
+
+↓
+
+Emotion
+
+↓
+
+Decoration
+
+Decoration should never compromise readability.
+
+---
+
+# 6.3 Font Families
+
+Vivaha uses only **two font families**.
+
+No third font is permitted.
+
+---
+
+## Display Typeface
+
+Purpose
+
+Large headings.
+
+Hero.
+
+Editorial titles.
+
+Quotes.
+
+Celebration moments.
+
+Characteristics
+
+Elegant.
+
+Sophisticated.
+
+High contrast.
+
+Classic.
+
+Timeless.
+
+Recommended
+
+* Cormorant Garamond
+* Canela (Premium)
+* EB Garamond
+* Libre Baskerville
+
+Primary Recommendation
+
+**Cormorant Garamond**
+
+---
+
+## Interface Typeface
+
+Purpose
+
+Body text.
+
+Navigation.
+
+Forms.
+
+Buttons.
+
+Labels.
+
+Cards.
+
+Descriptions.
+
+Characteristics
+
+Highly readable.
+
+Modern.
+
+Neutral.
+
+Friendly.
+
+Recommended
+
+* Inter
+* Geist
+* Manrope
+* Plus Jakarta Sans
+
+Primary Recommendation
+
+**Inter**
+
+---
+
+# 6.4 Typography Personality
+
+Display Typeface should feel
+
+Elegant.
+
+Expressive.
+
+Romantic.
+
+Literary.
+
+Timeless.
+
+Interface Typeface should feel
+
+Reliable.
+
+Professional.
+
+Comfortable.
+
+Quiet.
+
+Invisible.
+
+The interface font should never draw attention to itself.
+
+---
+
+# 6.5 Font Weight System
+
+Display
+
+300
+
+400
+
+500
+
+Never use 700+
+
+Interface
+
+400
+
+500
+
+600
+
+700
+
+Avoid ultra-bold headings.
+
+Luxury typography relies on spacing, not weight.
+
+---
+
+# 6.6 Heading Scale
+
+## Display XXL
+
+Hero Title
+
+```text
+72px
+Desktop
+
+56px
+Laptop
+
+44px
+Tablet
+
+36px
+Mobile
+```
+
+---
+
+## Display XL
+
+Major Sections
+
+```text
+56px
+
+48px
+
+40px
+
+32px
+```
+
+---
+
+## Display Large
+
+Editorial Sections
+
+```text
+44px
+
+40px
+
+34px
+
+28px
+```
+
+---
+
+## Heading 1
+
+```text
+36px
+
+32px
+
+28px
+
+24px
+```
+
+---
+
+## Heading 2
+
+```text
+30px
+
+28px
+
+24px
+
+22px
+```
+
+---
+
+## Heading 3
+
+```text
+24px
+
+22px
+
+20px
+
+18px
+```
+
+---
+
+## Heading 4
+
+```text
+20px
+
+18px
+
+18px
+
+16px
+```
+
+---
+
+# 6.7 Body Scale
+
+Large
+
+20px
+
+Regular
+
+18px
+
+Normal
+
+16px
+
+Small
+
+14px
+
+Caption
+
+12px
+
+Never use body text smaller than 14px.
+
+---
+
+# 6.8 Line Heights
+
+Display
+
+110%
+
+Editorial
+
+120%
+
+Body
+
+160%
+
+Captions
+
+150%
+
+Buttons
+
+100%
+
+Forms
+
+150%
+
+Good typography breathes.
+
+---
+
+# 6.9 Letter Spacing
+
+Display
+
+-0.03em
+
+Headings
+
+-0.02em
+
+Body
+
+0
+
+Buttons
+
+0.02em
+
+Uppercase Labels
+
+0.12em
+
+Luxury typography is achieved through spacing, not boldness.
+
+---
+
+# 6.10 Paragraph Width
+
+Maximum reading width
+
+```text
+70 characters
+```
+
+Ideal
+
+```text
+55–65 characters
+```
+
+Never allow large blocks of text stretching across the screen.
+
+Reading comfort increases trust.
+
+---
+
+# 6.11 Text Alignment
+
+Default
+
+Left
+
+Hero
+
+Centered (Desktop)
+
+Left (Mobile)
+
+Quotes
+
+Centered
+
+Forms
+
+Left
+
+Never justify text.
+
+Never mix alignment unnecessarily.
+
+---
+
+# 6.12 Hierarchy Rules
+
+One page should contain:
+
+One H1
+
+↓
+
+Several H2
+
+↓
+
+Supporting H3
+
+↓
+
+Body
+
+↓
+
+Captions
+
+Avoid using multiple display headings on one screen.
+
+Hierarchy should be immediately obvious.
+
+---
+
+# 6.13 Hero Typography
+
+Hero should prioritize emotion.
+
+Example hierarchy
+
+```text
+Display XXL
+
+↓
+
+Supporting paragraph
+
+↓
+
+Primary CTA
+
+↓
+
+Secondary CTA
+```
+
+Never overload the hero with text.
+
+Maximum
+
+Headline
+
+2 lines
+
+Supporting paragraph
+
+3 lines
+
+---
+
+# 6.14 Navigation Typography
+
+Navigation must be understated.
+
+16px
+
+Medium
+
+No uppercase.
+
+No excessive spacing.
+
+Professional.
+
+---
+
+# 6.15 Button Typography
+
+Buttons communicate action.
+
+Weight
+
+600
+
+Size
+
+16px
+
+Letter spacing
+
+0.02em
+
+Avoid oversized buttons.
+
+Avoid tiny labels.
+
+---
+
+# 6.16 Form Typography
+
+Labels
+
+14px
+
+Medium
+
+Input
+
+16px
+
+Placeholder
+
+16px
+
+Muted
+
+Helper Text
+
+14px
+
+Error
+
+14px
+
+Readable forms reduce anxiety.
+
+---
+
+# 6.17 Card Typography
+
+Profile Name
+
+24px
+
+Display
+
+Occupation
+
+16px
+
+Metadata
+
+14px
+
+Values
+
+16px
+
+Bio
+
+16px
+
+Everything should feel balanced.
+
+---
+
+# 6.18 Quotes
+
+Quotes should use Display Typeface.
+
+Centered.
+
+Large quotation marks.
+
+Generous whitespace.
+
+No decorative borders.
+
+Example
+
+> "Meaningful relationships begin with understanding."
+
+---
+
+# 6.19 Numbers
+
+Use tabular numbers where appropriate.
+
+Statistics
+
+Memberships
+
+Payments
+
+Profile completion
+
+Age
+
+Distance
+
+Dates
+
+Numbers should align correctly.
+
+---
+
+# 6.20 Emphasis Rules
+
+Prefer emphasis using
+
+Weight
+
+Spacing
+
+Hierarchy
+
+Color
+
+Avoid
+
+Underline
+
+Excessive italics
+
+Bold paragraphs
+
+Multiple emphasis styles together
+
+---
+
+# 6.21 Capitalization Rules
+
+Navigation
+
+Title Case
+
+Buttons
+
+Title Case
+
+Headings
+
+Sentence Case
+
+Forms
+
+Sentence Case
+
+Errors
+
+Sentence Case
+
+Avoid ALL CAPS except small labels.
+
+---
+
+# 6.22 Typography Rhythm
+
+Spacing between headings and paragraphs should follow a consistent rhythm.
+
+Example
+
+```text
+H1
+
+↓
+
+32px
+
+↓
+
+Paragraph
+
+↓
+
+24px
+
+↓
+
+Button
+
+↓
+
+64px
+
+↓
+
+Next Section
+```
+
+Rhythm creates elegance.
+
+---
+
+# 6.23 White Space Around Text
+
+Never crowd typography.
+
+Every heading requires breathing room.
+
+Every paragraph requires visual separation.
+
+Every section begins with generous whitespace.
+
+Whitespace improves perceived quality.
+
+---
+
+# 6.24 Typography in Motion
+
+Text animations should feel refined.
+
+Allowed
+
+Fade
+
+Rise
+
+Opacity
+
+Small blur
+
+Very subtle tracking changes
+
+Forbidden
+
+Bounce
+
+Spin
+
+Rotate
+
+Explode
+
+Elastic text
+
+Typing every heading
+
+Text should never become entertainment.
+
+---
+
+# 6.25 Accessibility
+
+Minimum body size
+
+16px preferred
+
+14px minimum
+
+Contrast
+
+WCAG AA minimum
+
+Selectable text
+
+Always enabled
+
+Zoom
+
+200%
+
+Typography should remain readable.
+
+---
+
+# 6.26 Typography Anti-Patterns
+
+Never use
+
+More than two fonts
+
+Outlined text
+
+Gradient text
+
+Glow text
+
+Drop-shadow text
+
+Compressed fonts
+
+Decorative script fonts
+
+Wedding invitation calligraphy
+
+All caps headings
+
+Tiny captions
+
+Typography should remain timeless.
+
+---
+
+# 6.27 Typography Tokens
+
+```css
+--font-display
+
+--font-body
+
+--font-size-display-xxl
+
+--font-size-display-xl
+
+--font-size-h1
+
+--font-size-h2
+
+--font-size-h3
+
+--font-size-body-lg
+
+--font-size-body
+
+--font-size-small
+
+--font-size-caption
+
+--line-height-display
+
+--line-height-body
+
+--tracking-display
+
+--tracking-body
+```
+
+Every component must use tokens.
+
+Hardcoded font sizes are prohibited.
+
+---
+
+# 6.28 Typography Review Checklist
+
+Before approving typography:
+
+□ Is the hierarchy immediately obvious?
+
+□ Can the page be scanned in under five seconds?
+
+□ Is the body text comfortable to read?
+
+□ Is there enough whitespace?
+
+□ Are only two font families used?
+
+□ Is emphasis restrained?
+
+□ Does the typography feel timeless?
+
+□ Would this still look elegant if all colors became grayscale?
+
+If the answer to any question is "No," revise the typography.
+
+---
+
+# End of Chapter 6
+
+# 📖 Vivaha Design Bible v2.0
+
+# Volume II — Visual Language
+
+# Chapter 7 — Layout & Spatial System
+
+---
+
+# 7.1 Philosophy
+
+The layout system is the invisible architecture of Vivaha.
+
+Users rarely notice good layouts.
+
+They immediately notice poor ones.
+
+A premium experience is not created through decoration.
+
+It is created through proportion.
+
+Alignment.
+
+Rhythm.
+
+Balance.
+
+Breathing room.
+
+Every screen should feel as though it was designed by an architect rather than assembled by a developer.
+
+---
+
+# 7.2 The Architectural Grid
+
+Vivaha follows a **12-column responsive grid**.
+
+Desktop
+
+```text
+12 Columns
+80px Gutters
+Max Width: 1440px
+```
+
+Laptop
+
+```text
+12 Columns
+64px Gutters
+Max Width: 1280px
+```
+
+Tablet
+
+```text
+8 Columns
+32px Gutters
+```
+
+Mobile
+
+```text
+4 Columns
+20px Gutters
+```
+
+The grid is never visible but always respected.
+
+---
+
+# 7.3 Container Widths
+
+Extra Small
+
+480px
+
+Small
+
+640px
+
+Medium
+
+768px
+
+Large
+
+1024px
+
+XL
+
+1280px
+
+2XL
+
+1440px
+
+Never allow content to stretch endlessly.
+
+Reading comfort always takes priority.
+
+---
+
+# 7.4 Vertical Rhythm
+
+Every page follows a consistent vertical rhythm.
+
+Small Section
+
+80px
+
+Medium Section
+
+120px
+
+Large Section
+
+180px
+
+Hero
+
+Minimum 100vh
+
+Luxury is often defined by generous spacing.
+
+Never compress sections simply to reduce scrolling.
+
+---
+
+# 7.5 Spatial Hierarchy
+
+Each page consists of four layers.
+
+Layer One
+
+Background
+
+↓
+
+Layer Two
+
+Architecture
+
+↓
+
+Layer Three
+
+Content
+
+↓
+
+Layer Four
+
+Interaction
+
+These layers should never compete.
+
+---
+
+# 7.6 Page Composition
+
+Every screen should follow this order.
+
+Navigation
+
+↓
+
+Hero / Title
+
+↓
+
+Primary Content
+
+↓
+
+Supporting Content
+
+↓
+
+Call To Action
+
+↓
+
+Footer
+
+Avoid random ordering.
+
+Users should always know where they are.
+
+---
+
+# 7.7 Alignment Rules
+
+Everything aligns.
+
+Cards.
+
+Buttons.
+
+Images.
+
+Headings.
+
+Inputs.
+
+Icons.
+
+Alignment is one of the strongest signals of craftsmanship.
+
+Never align elements "by eye."
+
+Use the grid.
+
+---
+
+# 7.8 The Rule of Three
+
+Every screen should establish three visual levels.
+
+Primary Focus
+
+↓
+
+Supporting Content
+
+↓
+
+Background Context
+
+If everything is equally important,
+
+nothing is important.
+
+---
+
+# 7.9 Whitespace Philosophy
+
+Whitespace is an active design element.
+
+Whitespace creates:
+
+Trust
+
+Luxury
+
+Readability
+
+Focus
+
+Calm
+
+Never treat empty space as unused space.
+
+Whitespace is intentional.
+
+---
+
+# 7.10 Margins
+
+Desktop Outer Margin
+
+80px
+
+Laptop
+
+64px
+
+Tablet
+
+40px
+
+Mobile
+
+20px
+
+No content should touch the edge of the viewport.
+
+---
+
+# 7.11 Section Spacing
+
+Between Major Sections
+
+160px
+
+Between Minor Sections
+
+96px
+
+Between Cards
+
+32px
+
+Between Text Blocks
+
+24px
+
+Between Labels and Inputs
+
+12px
+
+Consistency creates rhythm.
+
+---
+
+# 7.12 Card Layout
+
+Every card follows a consistent internal spacing system.
+
+Padding
+
+32px
+
+Gap Between Elements
+
+16px
+
+Image Radius
+
+20px
+
+Content Width
+
+Comfortable reading line
+
+Cards should feel like carefully designed printed pieces.
+
+Not containers.
+
+---
+
+# 7.13 Image Placement
+
+Images should support layout.
+
+Not dominate it.
+
+Preferred Ratios
+
+16:9
+
+4:3
+
+3:4
+
+Square
+
+Avoid unusual crops.
+
+Never stretch images.
+
+---
+
+# 7.14 Hero Layout
+
+The hero is not another section.
+
+It is an introduction.
+
+Structure
+
+```text
+Navigation
+
+↓
+
+Atmosphere
+
+↓
+
+Headline
+
+↓
+
+Supporting Text
+
+↓
+
+Primary CTA
+
+↓
+
+Secondary CTA
+
+↓
+
+Subtle Visual Cue
+```
+
+No more than two CTAs.
+
+No information overload.
+
+---
+
+# 7.15 Content Width
+
+Maximum paragraph width
+
+680px
+
+Maximum hero width
+
+760px
+
+Maximum article width
+
+720px
+
+Never create walls of text.
+
+---
+
+# 7.16 Symmetry vs Asymmetry
+
+Vivaha primarily uses balanced asymmetry.
+
+Perfect symmetry feels ceremonial.
+
+Extreme asymmetry feels chaotic.
+
+The goal is controlled balance.
+
+---
+
+# 7.17 Flow
+
+Every page should guide the eye naturally.
+
+Top
+
+↓
+
+Headline
+
+↓
+
+Visual
+
+↓
+
+Supporting Information
+
+↓
+
+Primary Action
+
+↓
+
+Next Section
+
+Users should never wonder where to look next.
+
+---
+
+# 7.18 Layering
+
+Layers create depth.
+
+Background
+
+↓
+
+Soft Lighting
+
+↓
+
+Decorative Elements
+
+↓
+
+Cards
+
+↓
+
+Interactive Components
+
+↓
+
+Floating Elements
+
+Never exceed six visual layers.
+
+Complexity reduces clarity.
+
+---
+
+# 7.19 Component Density
+
+Vivaha is intentionally spacious.
+
+Preferred density
+
+Low
+
+This creates calm.
+
+Avoid packing multiple controls into one area.
+
+Users should never feel rushed.
+
+---
+
+# 7.20 Corner Radius System
+
+Small
+
+8px
+
+Medium
+
+12px
+
+Large
+
+20px
+
+Extra Large
+
+28px
+
+Never mix arbitrary radii.
+
+Rounded corners should feel soft but mature.
+
+Avoid pill-shaped components unless specifically required.
+
+---
+
+# 7.21 Elevation System
+
+Vivaha uses restrained elevation.
+
+Level 0
+
+Flat
+
+Level 1
+
+Soft Border
+
+Level 2
+
+Very Soft Shadow
+
+Level 3
+
+Card Hover
+
+Level 4
+
+Dialog
+
+No dramatic floating effects.
+
+Elevation should feel natural.
+
+---
+
+# 7.22 Section Identity
+
+Every section should have its own atmosphere.
+
+Not by changing layout.
+
+But by changing:
+
+Light
+
+Material
+
+Illustration
+
+Photography
+
+Color temperature
+
+Spacing
+
+Never by changing overall structure.
+
+Consistency comes first.
+
+---
+
+# 7.23 Responsive Philosophy
+
+Responsive design is not resizing.
+
+It is redesigning.
+
+Desktop
+
+Immersive.
+
+Tablet
+
+Focused.
+
+Mobile
+
+Essential.
+
+Every breakpoint should feel intentionally designed.
+
+---
+
+# 7.24 Visual Anchors
+
+Each screen should contain one visual anchor.
+
+Examples
+
+A photograph.
+
+An illustration.
+
+A profile.
+
+A quote.
+
+A meaningful object.
+
+Never allow multiple competing anchors.
+
+---
+
+# 7.25 Scroll Rhythm
+
+Scrolling should feel like walking.
+
+Not flipping pages.
+
+Every major section should introduce one new idea.
+
+Avoid abrupt transitions.
+
+Use visual continuity.
+
+---
+
+# 7.26 Decorative Placement
+
+Decorative elements belong at the edges.
+
+Examples
+
+Top corners
+
+Bottom corners
+
+Margins
+
+Section transitions
+
+Never place decoration directly behind important text.
+
+---
+
+# 7.27 Background Architecture
+
+Backgrounds should consist of multiple subtle layers.
+
+Example
+
+```text
+Ambient Light
+
+↓
+
+Soft Texture
+
+↓
+
+Decorative Illustration
+
+↓
+
+Content Surface
+
+↓
+
+Content
+```
+
+Avoid flat colors.
+
+Avoid busy imagery.
+
+---
+
+# 7.28 Empty States
+
+Empty states deserve as much attention as populated screens.
+
+Every empty state should include
+
+Illustration
+
+Message
+
+Guidance
+
+Primary Action
+
+Never leave users facing blank pages.
+
+---
+
+# 7.29 Scroll Breaks
+
+Every 2–3 viewport heights, introduce a visual reset.
+
+Examples
+
+A quote.
+
+A full-width image.
+
+A meaningful story.
+
+A transition.
+
+This prevents visual fatigue.
+
+---
+
+# 7.30 Layout Anti-Patterns
+
+Never use
+
+Full-width paragraphs
+
+Random spacing
+
+Misaligned cards
+
+Inconsistent gutters
+
+Floating components without purpose
+
+Tiny margins
+
+Edge-to-edge text
+
+Overlapping sections for decoration
+
+Uneven rhythm
+
+Broken grids
+
+Every layout decision should strengthen order.
+
+---
+
+# 7.31 Layout Tokens
+
+```css
+--container-xs
+
+--container-sm
+
+--container-md
+
+--container-lg
+
+--container-xl
+
+--container-2xl
+
+--space-4
+
+--space-8
+
+--space-12
+
+--space-16
+
+--space-24
+
+--space-32
+
+--space-48
+
+--space-64
+
+--space-96
+
+--space-128
+
+--radius-sm
+
+--radius-md
+
+--radius-lg
+
+--radius-xl
+```
+
+All spacing and sizing must reference tokens.
+
+No arbitrary values.
+
+---
+
+# 7.32 Layout Review Checklist
+
+Before approving any layout:
+
+□ Is the visual hierarchy immediately clear?
+
+□ Is whitespace being used intentionally?
+
+□ Does the layout follow the grid?
+
+□ Are all alignments precise?
+
+□ Is there only one visual anchor?
+
+□ Is scrolling comfortable?
+
+□ Does the page feel calm?
+
+□ Does the page breathe?
+
+□ Does every section have enough room?
+
+□ Does the layout still work without images?
+
+If any answer is "No," revise the layout before implementation.
+
+---
+
+# End of Chapter 7
+
+# 📖 Vivaha Design Bible v2.0
+
+# Volume II — Visual Language
+
+# Chapter 8 — Material & Surface Language
+
+---
+
+# 8.1 Philosophy
+
+A digital interface has no physical weight.
+
+Yet the human brain constantly interprets digital objects as physical materials.
+
+Vivaha deliberately borrows from tactile materials because they evoke familiarity, warmth, craftsmanship, and permanence.
+
+The interface should never feel like pixels floating on a screen.
+
+It should feel as though every surface has been carefully crafted.
+
+Every material exists to communicate trust.
+
+---
+
+# 8.2 Material Hierarchy
+
+Vivaha uses six primary materials.
+
+They appear in a strict hierarchy.
+
+1. Handmade Paper
+2. Fine Linen
+3. Soft Marble
+4. Warm Stone
+5. Brushed Champagne Metal
+6. Clear Glass
+
+No additional material language should be introduced without expanding this document.
+
+---
+
+# 8.3 Handmade Paper
+
+Paper represents beginnings.
+
+Letters.
+
+Invitations.
+
+Stories.
+
+Commitment.
+
+It becomes the emotional foundation of Vivaha.
+
+Applications
+
+* Hero backgrounds
+* Large content sections
+* Editorial layouts
+* Storytelling pages
+* Success stories
+
+Characteristics
+
+Very subtle grain.
+
+Almost invisible.
+
+Warm.
+
+Matte.
+
+Never glossy.
+
+Never textured enough to interfere with readability.
+
+---
+
+# 8.4 Fine Linen
+
+Linen communicates elegance without extravagance.
+
+Applications
+
+Cards
+
+Forms
+
+Authentication
+
+Profile summaries
+
+Dialogs
+
+Properties
+
+Soft.
+
+Natural.
+
+Light.
+
+Comfortable.
+
+Never patterned.
+
+Never decorative.
+
+---
+
+# 8.5 Marble
+
+Marble represents permanence.
+
+It should appear only during meaningful moments.
+
+Examples
+
+Premium Membership
+
+Wedding Journey
+
+Celebration
+
+Major Success States
+
+Certificates
+
+Avoid using marble everywhere.
+
+Too much marble destroys exclusivity.
+
+---
+
+# 8.6 Natural Stone
+
+Stone represents trust.
+
+Grounding.
+
+Longevity.
+
+Architecture.
+
+Stone should influence:
+
+Section backgrounds.
+
+Large illustrations.
+
+Structural framing.
+
+Never decorative ornaments.
+
+---
+
+# 8.7 Champagne Metal
+
+Metal communicates craftsmanship.
+
+Not wealth.
+
+It replaces traditional "gold."
+
+Applications
+
+Borders
+
+Icons
+
+Premium badges
+
+Buttons
+
+Navigation highlights
+
+Focus rings
+
+Avoid
+
+Large metallic gradients.
+
+Shiny gold surfaces.
+
+Mirror effects.
+
+Heavy reflections.
+
+---
+
+# 8.8 Glass
+
+Glass should feel invisible.
+
+Its purpose is to separate.
+
+Not decorate.
+
+Allowed
+
+Navigation
+
+Dialogs
+
+Dropdowns
+
+Floating menus
+
+Search overlay
+
+Profile quick previews
+
+Avoid
+
+Glass cards everywhere.
+
+Glass buttons.
+
+Glass forms.
+
+Glass overload.
+
+Vivaha is not a glassmorphism product.
+
+---
+
+# 8.9 Fabric
+
+Fabric inspiration comes from:
+
+Silk
+
+Cotton
+
+Wedding drapery
+
+Curtains
+
+Not because fabric should be visible,
+
+but because spacing should feel soft.
+
+Fabric influences
+
+Movement.
+
+Spacing.
+
+Corners.
+
+Transitions.
+
+Not textures.
+
+---
+
+# 8.10 Wood
+
+Wood appears sparingly.
+
+It represents home.
+
+Family.
+
+Warmth.
+
+Applications
+
+Illustrations.
+
+Photography.
+
+Background environments.
+
+Never UI controls.
+
+---
+
+# 8.11 Ceramic
+
+Ceramic represents calm domestic life.
+
+Coffee cups.
+
+Dinner plates.
+
+Family dining.
+
+Morning routines.
+
+Ceramic appears only in photography and illustrations.
+
+Never interface elements.
+
+---
+
+# 8.12 Floral Materials
+
+Flowers are not decorative objects.
+
+Flowers communicate celebration.
+
+Freshness.
+
+Growth.
+
+Hope.
+
+Flowers should always appear fresh.
+
+Never artificial.
+
+Preferred flowers
+
+White Roses
+
+Jasmine
+
+Baby's Breath
+
+Hydrangea
+
+White Orchids
+
+Peonies
+
+Avoid
+
+Bright marigold overload.
+
+Artificial bouquets.
+
+Heavy garlands.
+
+Festival decoration.
+
+---
+
+# 8.13 Surface Hierarchy
+
+Every page follows this surface order.
+
+```text
+Environment
+
+↓
+
+Architecture
+
+↓
+
+Primary Surface
+
+↓
+
+Secondary Surface
+
+↓
+
+Interactive Surface
+
+↓
+
+Floating Surface
+```
+
+Each layer should remain visually distinct.
+
+---
+
+# 8.14 Primary Surface
+
+Purpose
+
+Main content.
+
+Background.
+
+Large sections.
+
+Characteristics
+
+Warm.
+
+Flat.
+
+Paper inspired.
+
+Very low contrast.
+
+---
+
+# 8.15 Secondary Surface
+
+Purpose
+
+Cards.
+
+Forms.
+
+Containers.
+
+Characteristics
+
+Slight elevation.
+
+Minimal border.
+
+Soft shadow.
+
+Never floating dramatically.
+
+---
+
+# 8.16 Floating Surface
+
+Purpose
+
+Menus.
+
+Dialogs.
+
+Dropdowns.
+
+Notifications.
+
+Characteristics
+
+Slight glass.
+
+Blur.
+
+Very soft shadow.
+
+Maximum elevation level.
+
+Used sparingly.
+
+---
+
+# 8.17 Border Philosophy
+
+Borders should almost disappear.
+
+Preferred
+
+1px
+
+Low opacity.
+
+Warm gray.
+
+Champagne.
+
+Never
+
+Dark borders.
+
+Heavy outlines.
+
+Black strokes.
+
+---
+
+# 8.18 Shadow Philosophy
+
+Vivaha uses ambient shadows.
+
+Not dramatic shadows.
+
+Level 1
+
+Almost invisible.
+
+Level 2
+
+Card.
+
+Level 3
+
+Hover.
+
+Level 4
+
+Dialog.
+
+No layer should appear to float unrealistically.
+
+Shadows create depth.
+
+Not spectacle.
+
+---
+
+# 8.19 Corner Philosophy
+
+Corners should feel crafted.
+
+Small components
+
+8px
+
+Cards
+
+16px
+
+Dialogs
+
+20px
+
+Large panels
+
+24px
+
+Never exceed 32px.
+
+Avoid circular UI everywhere.
+
+---
+
+# 8.20 Surface Temperature
+
+Every material should feel warm.
+
+Even white should feel warm.
+
+Avoid
+
+Cool whites.
+
+Blue grays.
+
+Cold neutrals.
+
+Harsh black.
+
+Warmth builds trust.
+
+---
+
+# 8.21 Environmental Surfaces
+
+The background environment changes subtly throughout the experience.
+
+Morning
+
+Soft ivory.
+
+Noon
+
+Bright linen.
+
+Evening
+
+Champagne warmth.
+
+Celebration
+
+Warm marble.
+
+Never dramatic color shifts.
+
+Only atmospheric changes.
+
+---
+
+# 8.22 Texture Rules
+
+Textures should remain subconscious.
+
+Users should notice them only after extended observation.
+
+Maximum opacity
+
+4%
+
+Preferred
+
+2%
+
+Avoid
+
+Visible repeating patterns.
+
+Noise overlays.
+
+Paper scans.
+
+Heavy grain.
+
+---
+
+# 8.23 Reflection Rules
+
+Reflections should imitate natural light.
+
+Allowed
+
+Soft edge reflections.
+
+Warm highlights.
+
+Window light.
+
+Avoid
+
+Mirror reflections.
+
+Chrome effects.
+
+Artificial lens flares.
+
+---
+
+# 8.24 Decorative Metal
+
+Champagne metal should appear only where craftsmanship matters.
+
+Examples
+
+Premium badge.
+
+Verified badge.
+
+Buttons.
+
+Section dividers.
+
+Navigation underline.
+
+Never decorate entire layouts with metallic effects.
+
+---
+
+# 8.25 Surface Motion
+
+Materials should react naturally.
+
+Examples
+
+Light shifting.
+
+Very subtle highlight movement.
+
+Ambient reflection.
+
+Soft hover elevation.
+
+No exaggerated movement.
+
+Materials should feel alive.
+
+Not animated.
+
+---
+
+# 8.26 Surface Aging
+
+Every surface should appear timeless.
+
+Avoid textures or effects that feel trendy.
+
+Ask
+
+Would this still look premium in ten years?
+
+If uncertain,
+
+simplify it.
+
+---
+
+# 8.27 Accessibility
+
+Material effects must never reduce readability.
+
+Blur
+
+Never below accessibility thresholds.
+
+Textures
+
+Must not interfere with text.
+
+Shadows
+
+Must never reduce contrast.
+
+Glass
+
+Must always preserve readability.
+
+---
+
+# 8.28 Material Anti-Patterns
+
+Never use
+
+Chrome
+
+Mirror glass
+
+Liquid glass
+
+Heavy frosted glass
+
+Plastic gradients
+
+Neon reflections
+
+Glossy cards
+
+Carbon fiber
+
+Carbon textures
+
+Leather textures
+
+Wood UI
+
+Heavy embossing
+
+Excessive bevels
+
+Luxury is achieved through restraint.
+
+---
+
+# 8.29 Material Tokens
+
+```css
+--surface-primary
+
+--surface-secondary
+
+--surface-floating
+
+--surface-premium
+
+--material-paper
+
+--material-linen
+
+--material-marble
+
+--material-stone
+
+--material-metal
+
+--shadow-1
+
+--shadow-2
+
+--shadow-3
+
+--shadow-4
+
+--border-subtle
+
+--border-premium
+```
+
+Every component must consume material tokens.
+
+Never hardcode shadows or borders.
+
+---
+
+# 8.30 Material Review Checklist
+
+Before approving any design:
+
+□ Does every surface feel intentional?
+
+□ Is warmth maintained?
+
+□ Are textures subtle?
+
+□ Are shadows restrained?
+
+□ Does the interface avoid looking artificial?
+
+□ Is glass used only where appropriate?
+
+□ Does every material support trust?
+
+□ Could this design exist as a beautifully crafted physical object?
+
+If any answer is "No,"
+
+the material system requires refinement.
+
+---
+
+# End of Chapter 8
+
+# 📖 Vivaha Design Bible v2.0
+
+# Volume II — Visual Language
+
+# Chapter 9 — Floral Language System
+
+---
+
+# 9.1 Philosophy
+
+Flowers are one of the oldest symbols of celebration.
+
+However, within Vivaha they are **not decoration**.
+
+They are part of the visual language.
+
+Flowers represent:
+
+New beginnings.
+
+Hope.
+
+Growth.
+
+Purity.
+
+Blessings.
+
+Grace.
+
+They should never dominate the interface.
+
+Flowers should feel like architecture.
+
+Not wallpaper.
+
+---
+
+# 9.2 Core Principle
+
+Flowers should **frame experiences**.
+
+They should never become the experience.
+
+A visitor should remember
+
+the story,
+
+the profile,
+
+the typography,
+
+the interaction.
+
+Not the flowers.
+
+---
+
+# 9.3 Floral Density
+
+Vivaha follows a Floral Density Scale.
+
+Level 0
+
+No flowers.
+
+Level 1
+
+Tiny botanical accents.
+
+Level 2
+
+Corner compositions.
+
+Level 3
+
+Section framing.
+
+Level 4
+
+Celebration pages only.
+
+The homepage should mostly remain between Level 1 and Level 2.
+
+Only special experiences may reach Level 3.
+
+Level 4 is reserved for engagement or wedding success stories.
+
+---
+
+# 9.4 Floral Placement
+
+Flowers belong only in architectural positions.
+
+Preferred
+
+Top corners.
+
+Bottom corners.
+
+Side framing.
+
+Section dividers.
+
+Large empty backgrounds.
+
+Illustrations.
+
+Avoid
+
+Behind paragraphs.
+
+Behind buttons.
+
+Behind forms.
+
+Behind profile information.
+
+Behind navigation.
+
+Around cards.
+
+Flowers must never interfere with usability.
+
+---
+
+# 9.5 Botanical Palette
+
+Preferred flowers
+
+White Rose
+
+Baby's Breath
+
+Jasmine
+
+Peony
+
+Hydrangea
+
+White Orchid
+
+Tulip
+
+Magnolia
+
+Lotus (very limited)
+
+Preferred leaves
+
+Eucalyptus
+
+Olive
+
+Soft Fern
+
+Sage
+
+Avoid
+
+Bright marigolds.
+
+Red roses everywhere.
+
+Festival garlands.
+
+Heavy floral walls.
+
+Artificial bouquets.
+
+Large colorful arrangements.
+
+---
+
+# 9.6 Color Rules
+
+Flowers should always remain desaturated.
+
+Preferred colors
+
+Ivory
+
+Cream
+
+Soft blush
+
+Warm white
+
+Dusty pink
+
+Muted peach
+
+Very light lavender
+
+Muted sage
+
+Never use
+
+Neon flowers.
+
+Bright reds.
+
+Hot pink.
+
+Orange-heavy palettes.
+
+Artificial saturation.
+
+---
+
+# 9.7 Illustration Style
+
+Floral illustrations should feel
+
+Handcrafted.
+
+Watercolor-inspired.
+
+Minimal.
+
+Organic.
+
+Elegant.
+
+Never
+
+Cartoon.
+
+Clipart.
+
+Vector sticker.
+
+Emoji-like.
+
+The illustration style should resemble artwork printed on premium wedding stationery.
+
+---
+
+# 9.8 Photography Rules
+
+When photography includes flowers
+
+Flowers should support people.
+
+Not replace them.
+
+Preferred
+
+Bouquet on table.
+
+Window flowers.
+
+Garden path.
+
+Soft floral arrangements.
+
+Single flower.
+
+Avoid
+
+Massive flower walls.
+
+Wedding stage flowers.
+
+Artificial decoration.
+
+Balloon flowers.
+
+---
+
+# 9.9 Botanical Motion
+
+Flowers should move naturally.
+
+Examples
+
+Gentle sway.
+
+Very slow breathing.
+
+Light response.
+
+Tiny petal movement.
+
+Never
+
+Bounce.
+
+Rotate.
+
+Float endlessly.
+
+Explode.
+
+Spin.
+
+Motion should imitate wind.
+
+---
+
+# 9.10 Petals
+
+Petals are used sparingly.
+
+Only during
+
+Landing Hero.
+
+Major celebrations.
+
+Success stories.
+
+Special transitions.
+
+Maximum
+
+3–6 visible petals.
+
+Never create "petal rain."
+
+Avoid movie-style dramatic effects.
+
+---
+
+# 9.11 Vines
+
+Vines replace ordinary dividers.
+
+Instead of
+
+────────────
+
+Vivaha may use
+
+Very thin botanical lines.
+
+Minimal vines.
+
+Elegant curves.
+
+Never thick branches.
+
+Never decorative vines covering the interface.
+
+---
+
+# 9.12 Floral Architecture
+
+Flowers should create spatial framing.
+
+Example
+
+```text
+╭ 🌿                    🌿 ╮
+
+         Content
+
+╰ 🌿                    🌿 ╯
+```
+
+Not
+
+```text
+🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸
+
+TEXT
+
+🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸🌸
+```
+
+Whitespace remains dominant.
+
+---
+
+# 9.13 Seasonal Behaviour
+
+Spring
+
+More blossoms.
+
+Summer
+
+More greenery.
+
+Monsoon
+
+Deeper leaves.
+
+Autumn
+
+Warmer petals.
+
+Winter
+
+Minimal flowers.
+
+Only decorative illustrations should adapt.
+
+The interface itself remains consistent.
+
+---
+
+# 9.14 Floral Identity
+
+Flowers should become part of the Vivaha brand.
+
+Not random assets.
+
+Every flower illustration should follow one illustration language.
+
+One brush style.
+
+One stroke weight.
+
+One color system.
+
+Consistency is mandatory.
+
+---
+
+# 9.15 Hero Usage
+
+Hero flowers should frame.
+
+Never cover.
+
+Recommended
+
+Top corners.
+
+Bottom edges.
+
+Soft depth.
+
+Light overlap.
+
+The hero headline must remain visually dominant.
+
+---
+
+# 9.16 Profile Pages
+
+Profiles should contain almost no flowers.
+
+Reason
+
+Profiles represent people.
+
+Flowers should never distract from them.
+
+Allowed
+
+Tiny divider.
+
+Small botanical accent.
+
+Verification illustration.
+
+Nothing more.
+
+---
+
+# 9.17 Authentication
+
+Authentication pages should remain calm.
+
+One botanical illustration.
+
+Large whitespace.
+
+No decorative overload.
+
+Focus remains on trust.
+
+---
+
+# 9.18 Celebration Pages
+
+These pages may use the highest floral density.
+
+Examples
+
+Engagement.
+
+Wedding.
+
+Anniversary.
+
+Success Story.
+
+Even here,
+
+flowers should frame,
+
+not consume.
+
+---
+
+# 9.19 Empty States
+
+Instead of generic illustrations,
+
+empty states may use
+
+Tiny botanical sketches.
+
+Example
+
+A single branch.
+
+A flower bud.
+
+Growing leaves.
+
+This communicates hope rather than emptiness.
+
+---
+
+# 9.20 Section Dividers
+
+Flowers should occasionally become transitions.
+
+Example
+
+```text
+─────────────
+
+🌿
+
+─────────────
+```
+
+Or
+
+Soft botanical curves.
+
+Never use flowers on every divider.
+
+---
+
+# 9.21 Decorative Limits
+
+Every page should ask
+
+How many flowers are currently visible?
+
+If the answer exceeds
+
+approximately 15% of the visible area,
+
+reduce them.
+
+Flowers support.
+
+They never dominate.
+
+---
+
+# 9.22 Backgrounds
+
+Backgrounds may include
+
+Very subtle botanical silhouettes.
+
+Opacity
+
+1–3%
+
+Never visible enough to compete with typography.
+
+---
+
+# 9.23 Accessibility
+
+Decorative flowers must
+
+Never reduce contrast.
+
+Never overlap interactive components.
+
+Never interfere with keyboard focus.
+
+Never block screen readers.
+
+Botanical decoration is always ignored by assistive technologies.
+
+---
+
+# 9.24 Floral Anti-Patterns
+
+Reject immediately
+
+Wedding stage replicas.
+
+Heavy floral arches.
+
+Banquet hall decoration.
+
+Clipart flowers.
+
+Animated bouquets.
+
+Rose petals everywhere.
+
+Repeating floral wallpaper.
+
+Symmetrical floral borders.
+
+Bright red romance imagery.
+
+Artificial flower PNGs.
+
+Excessive botanical shadows.
+
+Anything that resembles invitation templates from the early 2000s.
+
+---
+
+# 9.25 Floral Review Checklist
+
+Before approving any design
+
+□ Are flowers supporting the interface?
+
+□ Is whitespace still dominant?
+
+□ Is typography unobstructed?
+
+□ Are flowers restrained?
+
+□ Does the page still work without flowers?
+
+□ Are flowers communicating elegance rather than decoration?
+
+□ Would the page still feel premium if floral elements were reduced by half?
+
+If the answer is "No" to any question,
+
+the floral language needs refinement.
+
+---
+
+# End of Chapter 9
+
+# 📖 Vivaha Design Bible v2.0
+
+# Volume II — Visual Language
+
+# Chapter 10 — Light, Atmosphere & Environmental Design
+
+---
+
+# 10.1 Philosophy
+
+Light is the most important visual material in Vivaha.
+
+Before users notice typography, colors, flowers, or animations, they subconsciously perceive light.
+
+Light determines emotional temperature.
+
+It communicates:
+
+Hope.
+
+Warmth.
+
+Safety.
+
+Elegance.
+
+New beginnings.
+
+Every screen should appear naturally illuminated.
+
+Never artificially lit.
+
+---
+
+# 10.2 The Role of Light
+
+Light is never decoration.
+
+Light performs four functions.
+
+Guide attention.
+
+↓
+
+Create depth.
+
+↓
+
+Build atmosphere.
+
+↓
+
+Support emotion.
+
+If light does not perform one of these functions,
+
+it should be removed.
+
+---
+
+# 10.3 Natural Light
+
+Vivaha always prefers natural light.
+
+Reference sources
+
+Morning sunlight
+
+Window light
+
+Golden hour
+
+Soft skylight
+
+Open courtyard lighting
+
+Filtered daylight
+
+Never imitate
+
+Studio flash
+
+Nightclub lighting
+
+LED strips
+
+Neon
+
+Sci-fi glows
+
+Artificial spotlights
+
+---
+
+# 10.4 Emotional Lighting
+
+Every page should communicate one emotional temperature.
+
+Arrival
+
+Hope
+
+↓
+
+Discovery
+
+Warm curiosity
+
+↓
+
+Profiles
+
+Clarity
+
+↓
+
+Messages
+
+Comfort
+
+↓
+
+Success
+
+Celebration
+
+↓
+
+Footer
+
+Peace
+
+Lighting should evolve gently throughout the journey.
+
+---
+
+# 10.5 Time of Day
+
+Vivaha exists in an eternal golden morning.
+
+Not sunrise.
+
+Not sunset.
+
+A calm morning.
+
+This creates optimism without drama.
+
+Characteristics
+
+Soft shadows.
+
+Warm whites.
+
+Long light gradients.
+
+Gentle highlights.
+
+Fresh atmosphere.
+
+---
+
+# 10.6 Color Temperature
+
+Preferred
+
+3200K–4500K
+
+Warm neutral.
+
+Avoid
+
+Cold blue lighting.
+
+Pure white.
+
+Overly orange lighting.
+
+The interface should never feel sterile.
+
+---
+
+# 10.7 Direction of Light
+
+Primary light should always originate from above.
+
+Prefer
+
+Upper left
+
+Upper center
+
+Window lighting
+
+Avoid
+
+Multiple competing directions.
+
+Conflicting shadows.
+
+Inconsistent highlights.
+
+Consistency creates realism.
+
+---
+
+# 10.8 Shadow Philosophy
+
+Shadows are caused by light.
+
+Not decoration.
+
+Every shadow should suggest
+
+Distance.
+
+Weight.
+
+Depth.
+
+Hierarchy.
+
+Avoid decorative shadows.
+
+---
+
+# 10.9 Ambient Glow
+
+Ambient glow replaces excessive gradients.
+
+Characteristics
+
+Large.
+
+Soft.
+
+Diffused.
+
+Invisible edges.
+
+Low opacity.
+
+Purpose
+
+Create atmosphere.
+
+Not attention.
+
+---
+
+# 10.10 Background Illumination
+
+Backgrounds should never appear flat.
+
+Preferred layering
+
+```text id="yd1qyb"
+Ambient Light
+
+↓
+
+Soft Gradient
+
+↓
+
+Paper Texture
+
+↓
+
+Architecture
+
+↓
+
+Content
+```
+
+Each layer should remain subtle.
+
+---
+
+# 10.11 Hero Lighting
+
+The hero should feel like standing near a large window.
+
+Characteristics
+
+Bright center.
+
+Soft corners.
+
+Natural highlights.
+
+Comfortable contrast.
+
+Never use spotlight effects.
+
+The hero should invite,
+
+not perform.
+
+---
+
+# 10.12 Section Lighting
+
+Every major section has its own atmosphere.
+
+Story Section
+
+Soft daylight.
+
+Discovery
+
+Warm ivory.
+
+Profiles
+
+Balanced neutral.
+
+Families
+
+Indoor warmth.
+
+Celebration
+
+Golden glow.
+
+Footer
+
+Evening warmth.
+
+Transitions should remain subtle.
+
+---
+
+# 10.13 Glass Lighting
+
+Whenever glass appears,
+
+its lighting should imitate real glass.
+
+Characteristics
+
+Soft edge highlights.
+
+Subtle reflections.
+
+Blur.
+
+Warm transparency.
+
+Never
+
+Mirror reflections.
+
+Chrome.
+
+Sharp glare.
+
+---
+
+# 10.14 Metallic Highlights
+
+Champagne accents should catch light naturally.
+
+Examples
+
+Navigation underline.
+
+Premium badge.
+
+Buttons.
+
+Icons.
+
+The highlight should be visible only when needed.
+
+Avoid permanent shine.
+
+---
+
+# 10.15 Illustration Lighting
+
+All illustrations must follow one lighting system.
+
+Single light source.
+
+Soft shadows.
+
+Warm palette.
+
+Consistent direction.
+
+No conflicting illumination.
+
+---
+
+# 10.16 Photography Lighting
+
+Photography should feel naturally lit.
+
+Preferred
+
+Window light.
+
+Golden hour.
+
+Cloudy daylight.
+
+Open shade.
+
+Soft interiors.
+
+Avoid
+
+Flash photography.
+
+High contrast studio lighting.
+
+Artificial HDR.
+
+Oversaturated editing.
+
+---
+
+# 10.17 Motion of Light
+
+Light itself may move.
+
+Very slowly.
+
+Examples
+
+Morning light drifting.
+
+Window reflection changing.
+
+Sunlight passing through fabric.
+
+Tiny environmental changes.
+
+Motion duration
+
+20–60 seconds.
+
+Almost imperceptible.
+
+---
+
+# 10.18 Environmental Depth
+
+Depth is created through light.
+
+Not blur.
+
+Layer order
+
+Foreground
+
+↓
+
+Interactive Layer
+
+↓
+
+Content
+
+↓
+
+Architecture
+
+↓
+
+Light
+
+↓
+
+Background
+
+Never fake depth using excessive shadows.
+
+---
+
+# 10.19 Reflection Rules
+
+Reflections should imitate physical reality.
+
+Allowed
+
+Window reflection.
+
+Soft metallic edge.
+
+Very subtle glass reflection.
+
+Forbidden
+
+Lens flare.
+
+Mirror reflection.
+
+Animated glare.
+
+Rainbow reflections.
+
+---
+
+# 10.20 Atmospheric Particles
+
+Particles are environmental.
+
+Examples
+
+Tiny dust.
+
+Floating pollen.
+
+Very small petals.
+
+Maximum density
+
+Extremely low.
+
+Users should notice them only after spending time on the page.
+
+Never use particles for spectacle.
+
+---
+
+# 10.21 Seasonal Atmosphere
+
+Spring
+
+More daylight.
+
+Summer
+
+Slightly brighter.
+
+Monsoon
+
+Softer light.
+
+Autumn
+
+Warmer tones.
+
+Winter
+
+Creamy interiors.
+
+Changes should remain almost invisible.
+
+---
+
+# 10.22 Environmental Motion
+
+The environment should breathe.
+
+Curtains.
+
+Light.
+
+Leaves.
+
+Reflections.
+
+Shadows.
+
+Nothing else.
+
+Avoid excessive movement.
+
+Stillness communicates confidence.
+
+---
+
+# 10.23 Weather
+
+Vivaha should always feel pleasant.
+
+Never introduce
+
+Storms.
+
+Heavy rain.
+
+Snow.
+
+Lightning.
+
+Fog.
+
+Dark clouds.
+
+Weather should never influence usability.
+
+---
+
+# 10.24 Darkness
+
+Darkness exists only to create contrast.
+
+Never create dark emotional experiences.
+
+Dark elements should support readability,
+
+not mood.
+
+Vivaha is fundamentally a light product.
+
+---
+
+# 10.25 Performance
+
+Environmental lighting must remain inexpensive.
+
+Prefer
+
+CSS gradients.
+
+Layered backgrounds.
+
+Opacity transitions.
+
+Transform animations.
+
+Avoid
+
+Canvas lighting.
+
+Real-time rendering.
+
+Heavy particle engines.
+
+Expensive blur filters.
+
+Luxury should not compromise performance.
+
+---
+
+# 10.26 Accessibility
+
+Lighting should never reduce readability.
+
+Background illumination must always maintain contrast.
+
+Decorative glows must never interfere with text.
+
+Motion must respect reduced-motion preferences.
+
+---
+
+# 10.27 Light Anti-Patterns
+
+Reject
+
+Blue glows.
+
+Neon.
+
+Cyber lighting.
+
+Lens flare.
+
+Laser effects.
+
+Spotlights.
+
+Artificial halos.
+
+Animated sunshine.
+
+High-intensity bloom.
+
+Overexposed backgrounds.
+
+Movie-style dramatic lighting.
+
+Vivaha is not cinematic.
+
+It is atmospheric.
+
+---
+
+# 10.28 Lighting Tokens
+
+```css id="zyr1ik"
+--ambient-light
+
+--ambient-light-warm
+
+--ambient-light-soft
+
+--shadow-soft
+
+--shadow-medium
+
+--shadow-dialog
+
+--highlight-metal
+
+--highlight-glass
+
+--glow-subtle
+
+--glow-premium
+```
+
+All lighting values must use tokens.
+
+No arbitrary shadows or glow values.
+
+---
+
+# 10.29 Review Checklist
+
+Before approving any environment
+
+□ Does the lighting feel natural?
+
+□ Is there only one primary light source?
+
+□ Does the page feel warm?
+
+□ Is atmosphere subtle?
+
+□ Are shadows believable?
+
+□ Does light improve hierarchy?
+
+□ Would the page still feel elegant without animations?
+
+□ Does lighting support trust?
+
+□ Is performance preserved?
+
+If any answer is "No,"
+
+the environmental design requires refinement.
+
+---
+
+# End of Chapter 10
+
+# 📖 Vivaha Design Bible v2.0
+
+# Volume II — Visual Language
+
+# Chapter 11 — Iconography & Symbol System
+
+---
+
+# 11.1 Philosophy
+
+Icons exist to improve understanding.
+
+They are not decoration.
+
+An icon should never require explanation.
+
+If an icon is confusing,
+
+replace it.
+
+Vivaha uses icons to reduce cognitive load, reinforce meaning, and improve scanning—not to decorate the interface.
+
+---
+
+# 11.2 Icon Personality
+
+Vivaha icons should feel:
+
+Elegant.
+
+Minimal.
+
+Human.
+
+Timeless.
+
+Quiet.
+
+Confident.
+
+Professional.
+
+Avoid icons that feel:
+
+Playful.
+
+Corporate.
+
+Gaming-inspired.
+
+Futuristic.
+
+Cartoonish.
+
+Aggressive.
+
+---
+
+# 11.3 Icon Style
+
+Vivaha follows a **single icon language** throughout the product.
+
+Preferred style:
+
+Outlined icons.
+
+Rounded joins.
+
+Rounded line caps.
+
+Simple geometry.
+
+Minimal detail.
+
+No excessive curves.
+
+No sharp edges.
+
+Recommended icon libraries:
+
+* Lucide
+* Phosphor (Regular only)
+* Remix Icons (Outlined subset)
+
+Primary Recommendation:
+
+**Lucide**
+
+---
+
+# 11.4 Stroke Rules
+
+Desktop
+
+2px
+
+Mobile
+
+1.75px
+
+Never mix stroke widths.
+
+Every icon should appear visually balanced regardless of size.
+
+---
+
+# 11.5 Corner Geometry
+
+Corners should be:
+
+Rounded.
+
+Soft.
+
+Friendly.
+
+Avoid geometric perfection.
+
+Human-made objects feel more trustworthy than mathematically perfect objects.
+
+---
+
+# 11.6 Icon Sizes
+
+Extra Small
+
+16px
+
+Small
+
+20px
+
+Default
+
+24px
+
+Large
+
+32px
+
+Hero
+
+48px
+
+Decorative
+
+64px
+
+Avoid arbitrary sizing.
+
+---
+
+# 11.7 Icon Spacing
+
+Icons never touch text.
+
+Minimum spacing
+
+12px
+
+Preferred spacing
+
+16px
+
+Icon alignment should always follow the baseline of accompanying text.
+
+---
+
+# 11.8 Icon Colors
+
+Default
+
+Charcoal
+
+Muted
+
+Stone Gray
+
+Hover
+
+Champagne Gold
+
+Disabled
+
+Ash Gray
+
+Success
+
+Muted Green
+
+Error
+
+Muted Red
+
+Icons should never become colorful illustrations.
+
+---
+
+# 11.9 Interactive Icons
+
+Interactive icons should provide subtle feedback.
+
+Allowed
+
+Opacity
+
+Color
+
+Small scale (1.05x)
+
+Tiny rotation (≤2° only when meaningful)
+
+Forbidden
+
+Bounce
+
+Spin
+
+Explosion
+
+Elastic motion
+
+Large scaling
+
+Interaction should feel tactile.
+
+Not playful.
+
+---
+
+# 11.10 Decorative Icons
+
+Decorative icons should be rare.
+
+Examples
+
+Quote marks.
+
+Tiny botanical separator.
+
+Small sparkle.
+
+Divider ornament.
+
+Maximum size
+
+24px
+
+Decorative icons must never compete with content.
+
+---
+
+# 11.11 Navigation Icons
+
+Navigation icons should prioritize clarity.
+
+Examples
+
+Home
+
+Discover
+
+Messages
+
+Matches
+
+Profile
+
+Settings
+
+Notifications
+
+Every navigation icon should remain recognizable at 20px.
+
+---
+
+# 11.12 Action Icons
+
+Common actions
+
+Search
+
+Filter
+
+Bookmark
+
+Share
+
+Edit
+
+Delete
+
+Report
+
+Block
+
+Upload
+
+Download
+
+Verify
+
+Every action icon should have an accessible text label where appropriate.
+
+Never rely on icons alone.
+
+---
+
+# 11.13 Status Icons
+
+Success
+
+✓
+
+Pending
+
+Clock
+
+Verified
+
+Shield Check
+
+Warning
+
+Triangle
+
+Error
+
+Circle Alert
+
+Premium
+
+Sparkle or Crown (very restrained)
+
+Avoid using stars for verification.
+
+Verification should feel authoritative.
+
+---
+
+# 11.14 Profile Icons
+
+Profile-related icons should communicate lifestyle rather than decoration.
+
+Examples
+
+Location
+
+Education
+
+Profession
+
+Religion
+
+Languages
+
+Family
+
+Children
+
+Pets
+
+Travel
+
+Interests
+
+Values
+
+Icons should always support text.
+
+Never replace it.
+
+---
+
+# 11.15 Communication Icons
+
+Messages
+
+Phone
+
+Video
+
+Voice
+
+Attachment
+
+Emoji
+
+These should remain understated.
+
+Messaging is about conversation,
+
+not interface.
+
+---
+
+# 11.16 AI Icons
+
+Avoid
+
+Robot.
+
+Brain.
+
+Circuit.
+
+Chip.
+
+Magic wand.
+
+Instead use
+
+Compass.
+
+Thread.
+
+Constellation.
+
+Light.
+
+Connection.
+
+Growth.
+
+AI should feel like thoughtful guidance,
+
+not machinery.
+
+---
+
+# 11.17 Verification Symbol
+
+Verification is one of Vivaha's most important trust signals.
+
+Preferred
+
+Shield with checkmark.
+
+Not
+
+Blue social media checkmarks.
+
+The verification symbol should communicate safety,
+
+not popularity.
+
+---
+
+# 11.18 Premium Symbol
+
+Premium is represented through craftsmanship.
+
+Preferred
+
+Small champagne sparkle.
+
+Minimal crown.
+
+Elegant geometric mark.
+
+Avoid
+
+Large crowns.
+
+Diamonds.
+
+Coins.
+
+Money icons.
+
+Luxury should feel quiet.
+
+---
+
+# 11.19 Notification Symbol
+
+Notifications should never feel alarming.
+
+Default
+
+Bell
+
+Active
+
+Bell with subtle indicator.
+
+Avoid flashing badges.
+
+Notification counts should remain understated.
+
+---
+
+# 11.20 Empty State Symbols
+
+Instead of generic boxes,
+
+use meaningful objects.
+
+Example
+
+No Messages
+
+Envelope.
+
+No Matches
+
+Two threads not yet connected.
+
+No Notifications
+
+Small bell.
+
+No Saved Profiles
+
+Bookmark.
+
+Every empty state should remain hopeful.
+
+---
+
+# 11.21 Symbol Language
+
+Vivaha avoids cliché relationship symbols.
+
+Forbidden
+
+Large Hearts
+
+Cupid
+
+Love Arrows
+
+Broken Hearts
+
+Wedding Rings
+
+Kissing Couples
+
+Allowed
+
+Threads
+
+Pathways
+
+Doorways
+
+Windows
+
+Lanterns
+
+Trees
+
+Gardens
+
+Leaves
+
+Light
+
+Books
+
+Letters
+
+Home
+
+Conversation
+
+Growth
+
+These symbols communicate relationships more maturely.
+
+---
+
+# 11.22 Brand Symbols
+
+The recurring symbols throughout Vivaha should include:
+
+Thread
+
+Primary brand symbol.
+
+Represents connection.
+
+Doorway
+
+Represents beginnings.
+
+Garden Path
+
+Represents journey.
+
+Lantern
+
+Represents guidance.
+
+Window
+
+Represents openness.
+
+Tree
+
+Represents growth.
+
+Letter
+
+Represents meaningful communication.
+
+These motifs should subtly appear in illustrations, onboarding, and storytelling—not necessarily as UI icons.
+
+---
+
+# 11.23 Illustration vs Icon
+
+Icons explain.
+
+Illustrations inspire.
+
+Never confuse them.
+
+Icons remain functional.
+
+Illustrations remain emotional.
+
+---
+
+# 11.24 Accessibility
+
+Icons must never communicate meaning alone.
+
+Every important icon requires:
+
+Label
+
+Tooltip
+
+Supporting text
+
+Or clear context.
+
+Minimum touch target
+
+44 × 44px
+
+Keyboard focus must remain visible.
+
+---
+
+# 11.25 Icon Anti-Patterns
+
+Reject
+
+Emoji-style icons.
+
+3D icons.
+
+Gradient icons.
+
+Filled icons mixed with outlined icons.
+
+Multiple icon styles.
+
+Overly detailed icons.
+
+Animated icons everywhere.
+
+Corporate enterprise icons.
+
+Technology symbols for AI.
+
+Visual inconsistency destroys trust.
+
+---
+
+# 11.26 Icon Tokens
+
+```css
+--icon-xs: 16px;
+
+--icon-sm: 20px;
+
+--icon-md: 24px;
+
+--icon-lg: 32px;
+
+--icon-xl: 48px;
+
+--icon-color-default;
+
+--icon-color-muted;
+
+--icon-color-hover;
+
+--icon-color-success;
+
+--icon-color-warning;
+
+--icon-color-error;
+
+--icon-stroke-width;
+```
+
+No component may define icon sizes independently.
+
+---
+
+# 11.27 Review Checklist
+
+Before approving iconography:
+
+□ Does every icon improve understanding?
+
+□ Is only one icon family used?
+
+□ Are strokes consistent?
+
+□ Are icons accessible?
+
+□ Are icons secondary to content?
+
+□ Are symbols mature rather than cliché?
+
+□ Does AI avoid robotic symbolism?
+
+□ Does verification communicate trust?
+
+□ Could every icon still make sense without color?
+
+If any answer is "No,"
+
+revise the icon system.
+
+---
+
+# End of Chapter 11
+
+Absolutely. In fact, I'd like to **raise the quality** from here.
+
+The first 11 chapters established the philosophy. Now we're entering the chapters that will directly affect how Vivaha looks and feels. I'll write them with the depth of an actual design system used by a professional product team.
+
+---
+
+# 📖 Vivaha Design Bible v2.0
+
+# Volume II — Visual Language
+
+# Chapter 12 — Photography & Imagery System
+
+---
+
+# 12.1 Philosophy
+
+Photography is the emotional heartbeat of Vivaha.
+
+Before users trust technology, they trust people.
+
+Photography exists to communicate authenticity.
+
+Not perfection.
+
+Not aspiration.
+
+Not fantasy.
+
+Every photograph should answer one silent question:
+
+> **"Could this genuinely be someone's life?"**
+
+If the answer is no,
+
+the photograph should not be used.
+
+Vivaha never presents idealized romance.
+
+Vivaha presents believable human connection.
+
+---
+
+# 12.2 The Role of Photography
+
+Photography has five responsibilities.
+
+Establish trust.
+
+↓
+
+Create emotional connection.
+
+↓
+
+Provide cultural familiarity.
+
+↓
+
+Support storytelling.
+
+↓
+
+Humanize technology.
+
+Photography should never exist merely to fill empty space.
+
+Every image must communicate something meaningful.
+
+---
+
+# 12.3 Emotional Tone
+
+Every photograph should evoke one or more of the following emotions.
+
+Hope.
+
+Comfort.
+
+Belonging.
+
+Respect.
+
+Warmth.
+
+Joy.
+
+Calm.
+
+Confidence.
+
+Partnership.
+
+Never
+
+Urgency.
+
+Excitement.
+
+Luxury for its own sake.
+
+Loneliness.
+
+Perfection.
+
+Fantasy.
+
+---
+
+# 12.4 Authenticity
+
+The people shown should feel real.
+
+They should resemble people users encounter in everyday life.
+
+Different ages.
+
+Different professions.
+
+Different lifestyles.
+
+Different personalities.
+
+Different family structures.
+
+Different regions.
+
+Authenticity builds trust far more effectively than perfection.
+
+---
+
+# 12.5 Representation
+
+Vivaha should respectfully represent the diversity of the communities it serves.
+
+Photography should include people with different:
+
+Skin tones.
+
+Professions.
+
+Cities.
+
+Educational backgrounds.
+
+Family structures.
+
+Aspirations.
+
+Lifestyle choices.
+
+Representation should feel natural.
+
+Never forced.
+
+Never tokenistic.
+
+---
+
+# 12.6 Lifestyle Over Romance
+
+The platform is not selling weddings.
+
+It is helping people imagine life together.
+
+Therefore prioritize photography showing:
+
+Morning tea.
+
+Cooking together.
+
+Walking in parks.
+
+Reading books.
+
+Travelling.
+
+Visiting parents.
+
+Working from home.
+
+Laughing naturally.
+
+Preparing meals.
+
+Festival gatherings.
+
+Weekend hobbies.
+
+Conversations.
+
+Relationships are built through shared moments.
+
+Not cinematic poses.
+
+---
+
+# 12.7 Expressions
+
+Preferred expressions
+
+Natural smile.
+
+Quiet happiness.
+
+Comfortable eye contact.
+
+Conversation.
+
+Laughter.
+
+Thoughtfulness.
+
+Curiosity.
+
+Avoid
+
+Exaggerated smiles.
+
+Fashion poses.
+
+Perfect symmetry.
+
+Magazine expressions.
+
+Over-directed emotion.
+
+People should appear relaxed.
+
+---
+
+# 12.8 Camera Angles
+
+Preferred
+
+Eye level.
+
+Slightly above eye level.
+
+Natural perspective.
+
+Environmental framing.
+
+Avoid
+
+Extreme close-ups.
+
+Extreme wide angles.
+
+Drone shots.
+
+Dutch angles.
+
+Fashion editorial compositions.
+
+Photography should feel like an observer.
+
+Not a director.
+
+---
+
+# 12.9 Lighting
+
+Preferred
+
+Window light.
+
+Morning light.
+
+Golden hour.
+
+Open shade.
+
+Soft interior light.
+
+Diffused daylight.
+
+Avoid
+
+Flash.
+
+Harsh sunlight.
+
+Nightclub lighting.
+
+Artificial HDR.
+
+Heavy color grading.
+
+The image should feel naturally illuminated.
+
+---
+
+# 12.10 Color Grading
+
+Photography should share a unified color language.
+
+Characteristics
+
+Warm.
+
+Neutral.
+
+Slightly desaturated.
+
+Soft contrast.
+
+Natural whites.
+
+Muted greens.
+
+Gentle gold.
+
+Avoid
+
+Oversaturated colors.
+
+Instagram filters.
+
+Cool blue edits.
+
+Heavy orange tones.
+
+High HDR processing.
+
+Every photograph should appear timeless.
+
+---
+
+# 12.11 Depth of Field
+
+Preferred
+
+Moderate depth.
+
+Soft background separation.
+
+Readable subjects.
+
+Avoid
+
+Extremely blurred backgrounds.
+
+Artificial portrait effects.
+
+Heavy computational blur.
+
+The environment should remain part of the story.
+
+---
+
+# 12.12 Background Selection
+
+Backgrounds should support human stories.
+
+Examples
+
+Homes.
+
+Libraries.
+
+Gardens.
+
+Courtyards.
+
+Cafés.
+
+Bookstores.
+
+Parks.
+
+Studios.
+
+Mountains.
+
+Architecture.
+
+Avoid
+
+Blank studio walls.
+
+Wedding stages.
+
+Luxury cars.
+
+Private jets.
+
+Artificial sets.
+
+The background should tell part of the story.
+
+---
+
+# 12.13 Composition
+
+Preferred compositions
+
+Rule of thirds.
+
+Negative space.
+
+Architectural framing.
+
+Natural leading lines.
+
+Open environments.
+
+Avoid
+
+Crowded images.
+
+Centered portraits everywhere.
+
+Busy backgrounds.
+
+Visual clutter.
+
+Every photograph should breathe.
+
+---
+
+# 12.14 Family Photography
+
+Families should appear genuine.
+
+Examples
+
+Cooking together.
+
+Tea conversations.
+
+Festival preparation.
+
+Parents smiling naturally.
+
+Shared meals.
+
+Celebrating milestones.
+
+Avoid
+
+Formal family portraits.
+
+Everyone looking directly at camera.
+
+Artificial posing.
+
+Families should feel lived-in.
+
+---
+
+# 12.15 Couple Photography
+
+Avoid obvious romance.
+
+Preferred
+
+Conversation.
+
+Walking.
+
+Reading together.
+
+Travelling.
+
+Cooking.
+
+Laughing.
+
+Shared hobbies.
+
+Looking at scenery.
+
+Quiet companionship.
+
+Avoid
+
+Forehead touching.
+
+Heart poses.
+
+Holding roses.
+
+Forced intimacy.
+
+Cinematic wedding shoots.
+
+The relationship should feel authentic.
+
+---
+
+# 12.16 Individual Portraits
+
+Profile photography should communicate personality.
+
+Users should be encouraged to upload photographs showing
+
+Travel.
+
+Profession.
+
+Reading.
+
+Sports.
+
+Music.
+
+Cooking.
+
+Pets.
+
+Art.
+
+Community.
+
+Rather than only posed portraits.
+
+---
+
+# 12.17 Environmental Storytelling
+
+Objects often communicate personality more effectively than expressions.
+
+Examples
+
+Books.
+
+Plants.
+
+Sketchbooks.
+
+Musical instruments.
+
+Travel bags.
+
+Tea cups.
+
+Cameras.
+
+Paint brushes.
+
+Running shoes.
+
+Maps.
+
+Letters.
+
+Use environments to tell stories.
+
+---
+
+# 12.18 Cropping Rules
+
+Never crop:
+
+Foreheads.
+
+Hands during gestures.
+
+Important contextual objects.
+
+Maintain generous breathing room.
+
+Portraits should feel comfortable.
+
+Not compressed.
+
+---
+
+# 12.19 Photography Hierarchy
+
+The largest photograph on a page should represent the page's emotional purpose.
+
+Secondary images provide supporting context.
+
+No page should contain multiple competing hero photographs.
+
+---
+
+# 12.20 Image Treatments
+
+Allowed
+
+Soft fade.
+
+Subtle vignette.
+
+Warm overlay (≤5%).
+
+Very light paper grain.
+
+Forbidden
+
+Heavy blur.
+
+Glow.
+
+Gradient overlays.
+
+Colored filters.
+
+Glass overlays.
+
+Lens effects.
+
+Photography should remain honest.
+
+---
+
+# 12.21 Motion
+
+Photography may contain subtle movement.
+
+Examples
+
+Slow zoom.
+
+Ambient parallax.
+
+Tiny environmental movement.
+
+Soft fade transitions.
+
+Never
+
+Fast slideshow.
+
+Carousel autoplay.
+
+Ken Burns exaggeration.
+
+Motion should remain invisible.
+
+---
+
+# 12.22 AI Generated Images
+
+If AI-generated imagery is used,
+
+it must satisfy the same quality standards as real photography.
+
+Avoid
+
+Plastic skin.
+
+Perfect faces.
+
+Artificial smiles.
+
+Unnatural fingers.
+
+Fantasy architecture.
+
+Impossible lighting.
+
+If an AI image appears artificial,
+
+it must not be used.
+
+Authenticity always wins.
+
+---
+
+# 12.23 Illustration vs Photography
+
+Photography communicates
+
+Reality.
+
+Illustrations communicate
+
+Ideas.
+
+Never replace meaningful photography with illustrations.
+
+Illustrations should complement.
+
+Not substitute.
+
+---
+
+# 12.24 Accessibility
+
+Every photograph requires meaningful alternative text.
+
+Decorative images should be ignored by assistive technologies.
+
+Essential imagery must never be the sole method of communicating information.
+
+---
+
+# 12.25 Anti-Patterns
+
+Reject immediately
+
+Wedding stage photography.
+
+Stock couples staring at the camera.
+
+Business handshake imagery.
+
+Corporate office stock photos.
+
+People holding coffee while laughing at laptops.
+
+Luxury fashion poses.
+
+Drone wedding shots.
+
+Perfect Instagram aesthetics.
+
+Artificial romance.
+
+Visible watermark photography.
+
+Anything that feels staged rather than lived.
+
+---
+
+# 12.26 Photography Asset Library
+
+The Vivaha asset library should be categorized by moments, not subjects.
+
+Morning Routines
+
+Family Moments
+
+Conversations
+
+Travel
+
+Reading
+
+Cooking
+
+Celebrations
+
+Festivals
+
+Work
+
+Nature
+
+Home
+
+Community
+
+Pets
+
+Rather than
+
+Men
+
+Women
+
+Couples
+
+Families
+
+This reinforces storytelling throughout the product.
+
+---
+
+# 12.27 Photography Review Checklist
+
+Before approving any image:
+
+□ Does this image feel authentic?
+
+□ Could this genuinely be someone's real life?
+
+□ Does it communicate warmth?
+
+□ Is the lighting natural?
+
+□ Is the composition calm?
+
+□ Does it support trust?
+
+□ Does it avoid stereotypes?
+
+□ Does it tell a story without words?
+
+□ Would this image still feel timeless ten years from now?
+
+□ Is it supporting the interface rather than competing with it?
+
+If any answer is "No,"
+
+the photograph should be replaced.
+
+---
+
+# 12.28 Final Principle
+
+Photography is not used to make Vivaha beautiful.
+
+Photography is used to make Vivaha believable.
+
+When users trust the people they see,
+
+they begin trusting the platform itself.
+
+---
+
+# End of Chapter 12
+
+# 📖 Vivaha Design Bible v2.0
+
+# Volume III — Motion & Interaction
+
+# Chapter 13 — Motion Language & Choreography
+
+---
+
+# 13.1 Philosophy
+
+Motion is not animation.
+
+Motion is communication.
+
+Every movement inside Vivaha must answer one question:
+
+**"Why is this moving?"**
+
+If there is no meaningful answer,
+
+the motion should not exist.
+
+Users should rarely notice animations.
+
+Instead, they should simply feel that the interface behaves naturally.
+
+The greatest compliment is not
+
+> "That animation is amazing."
+
+It is
+
+> "Everything feels effortless."
+
+---
+
+# 13.2 Motion Objectives
+
+Motion exists to accomplish five goals.
+
+Guide Attention
+
+↓
+
+Maintain Context
+
+↓
+
+Provide Feedback
+
+↓
+
+Reduce Cognitive Load
+
+↓
+
+Create Emotional Comfort
+
+Motion never exists to entertain.
+
+Motion never exists to show technical capability.
+
+---
+
+# 13.3 Motion Personality
+
+Vivaha moves like a thoughtful host.
+
+Never hurried.
+
+Never delayed.
+
+Never dramatic.
+
+The movement should feel:
+
+Elegant.
+
+Gentle.
+
+Confident.
+
+Organic.
+
+Refined.
+
+Patient.
+
+Purposeful.
+
+Avoid movement that feels:
+
+Playful.
+
+Aggressive.
+
+Mechanical.
+
+Elastic.
+
+Chaotic.
+
+Gamified.
+
+---
+
+# 13.4 Motion Hierarchy
+
+Not every animation deserves equal attention.
+
+Motion should follow this hierarchy.
+
+Level 1
+
+Micro Feedback
+
+↓
+
+Level 2
+
+Component Transition
+
+↓
+
+Level 3
+
+Page Transition
+
+↓
+
+Level 4
+
+Environmental Motion
+
+↓
+
+Level 5
+
+Celebration Motion
+
+Higher levels occur less frequently.
+
+---
+
+# 13.5 Environmental Motion
+
+The environment should always feel alive.
+
+Almost imperceptibly.
+
+Allowed
+
+Changing sunlight.
+
+Soft drifting shadows.
+
+Curtains reacting gently.
+
+Leaves moving.
+
+Floating dust.
+
+Ambient reflections.
+
+Forbidden
+
+Moving backgrounds.
+
+Constant floating objects.
+
+Flying decorations.
+
+Heavy particles.
+
+Rotating ornaments.
+
+The environment breathes.
+
+It never performs.
+
+---
+
+# 13.6 User Motion
+
+User-triggered interactions always take priority over environmental motion.
+
+Whenever the user interacts,
+
+background motion should visually "step back."
+
+The interface should respond to the user.
+
+Not compete with them.
+
+---
+
+# 13.7 Timing Philosophy
+
+Motion should feel physically believable.
+
+Recommended durations
+
+Tiny Feedback
+
+100–150ms
+
+Hover
+
+150–200ms
+
+Cards
+
+200–250ms
+
+Dialogs
+
+250–300ms
+
+Page Transition
+
+400–600ms
+
+Environmental
+
+20–60 seconds
+
+Never create animations longer than necessary.
+
+Waiting should never become part of the experience.
+
+---
+
+# 13.8 Easing
+
+Vivaha uses natural easing.
+
+Preferred
+
+Ease Out
+
+Ease In-Out
+
+Spring (soft)
+
+Forbidden
+
+Linear
+
+Bounce
+
+Elastic
+
+Overshoot
+
+Back
+
+Cartoon easing
+
+Motion should end gently.
+
+Never snap.
+
+---
+
+# 13.9 Entrance Motion
+
+New elements should enter naturally.
+
+Preferred
+
+Fade
+
+Rise
+
+Slight Scale
+
+Opacity
+
+Soft Blur
+
+Maximum movement
+
+24px
+
+Never allow components to fly across the screen.
+
+---
+
+# 13.10 Exit Motion
+
+Objects should leave respectfully.
+
+Fade.
+
+Shrink slightly.
+
+Reduce opacity.
+
+Slide minimally.
+
+Never disappear instantly.
+
+Never explode.
+
+Never spin away.
+
+---
+
+# 13.11 Hover Philosophy
+
+Hover communicates availability.
+
+Not excitement.
+
+Allowed
+
+Shadow increase.
+
+Slight elevation.
+
+Color refinement.
+
+Border highlight.
+
+Tiny scale (≤1.02).
+
+Forbidden
+
+Large scaling.
+
+Glow.
+
+Rotation.
+
+Bounce.
+
+Hover should feel tactile.
+
+---
+
+# 13.12 Button Motion
+
+Buttons respond immediately.
+
+Sequence
+
+Hover
+
+↓
+
+Press
+
+↓
+
+Release
+
+↓
+
+Confirmation
+
+Button presses should feel physical.
+
+Not digital.
+
+The user should feel they pressed something.
+
+---
+
+# 13.13 Card Motion
+
+Cards should respond as objects.
+
+Hover
+
+Small elevation.
+
+Tiny shadow increase.
+
+Border refinement.
+
+Optional
+
+1–2° perspective shift.
+
+Nothing more.
+
+Cards never float dramatically.
+
+---
+
+# 13.14 Navigation Motion
+
+Navigation should remain stable.
+
+Scrolling
+
+Smooth appearance.
+
+Hover
+
+Simple highlight.
+
+Active state
+
+Elegant underline.
+
+Never animate navigation excessively.
+
+Navigation represents stability.
+
+---
+
+# 13.15 Scroll Motion
+
+Scrolling should resemble walking through spaces.
+
+Not flipping slides.
+
+Every section introduces one new concept.
+
+Transitions should overlap gently.
+
+Avoid abrupt scene changes.
+
+---
+
+# 13.16 Progressive Reveal
+
+Content should reveal itself progressively.
+
+Preferred sequence
+
+Headline
+
+↓
+
+Supporting Text
+
+↓
+
+Illustration
+
+↓
+
+Primary CTA
+
+↓
+
+Secondary Elements
+
+This creates reading rhythm.
+
+---
+
+# 13.17 Loading Motion
+
+Loading should reassure.
+
+Preferred
+
+Skeletons.
+
+Soft shimmer.
+
+Progress indicators.
+
+Meaningful placeholders.
+
+Avoid
+
+Infinite spinners.
+
+Flashy loaders.
+
+Complex loading scenes.
+
+Users should always know the system is working.
+
+---
+
+# 13.18 Success Motion
+
+Success deserves recognition.
+
+Not celebration.
+
+Examples
+
+Checkmark draw.
+
+Soft glow.
+
+Gentle expansion.
+
+Brief color transition.
+
+Avoid
+
+Confetti.
+
+Fireworks.
+
+Explosions.
+
+Users completed a task.
+
+They did not win a game.
+
+---
+
+# 13.19 Error Motion
+
+Errors should educate.
+
+Not punish.
+
+Examples
+
+Tiny horizontal shift.
+
+Soft color change.
+
+Helpful explanation.
+
+Avoid
+
+Violent shaking.
+
+Flashing red.
+
+Loud animations.
+
+The interface remains calm.
+
+Even during mistakes.
+
+---
+
+# 13.20 Modal Motion
+
+Dialogs emerge from the current context.
+
+Never appear from nowhere.
+
+Preferred
+
+Background softens.
+
+Dialog rises slightly.
+
+Focus transfers naturally.
+
+Closing returns attention.
+
+The user should never lose orientation.
+
+---
+
+# 13.21 Form Motion
+
+Forms should guide completion.
+
+Focused field
+
+↓
+
+Validation
+
+↓
+
+Confirmation
+
+↓
+
+Next field
+
+Avoid overwhelming users with simultaneous animations.
+
+---
+
+# 13.22 Notification Motion
+
+Notifications should arrive quietly.
+
+Slide.
+
+Fade.
+
+Small elevation.
+
+Disappear naturally.
+
+Never interrupt primary work.
+
+---
+
+# 13.23 Motion Density
+
+No more than three independent animations should occur simultaneously within the viewport.
+
+If more than three are visible,
+
+reduce motion.
+
+Luxury values restraint.
+
+---
+
+# 13.24 Motion and Performance
+
+All motion must remain GPU accelerated.
+
+Preferred properties
+
+Transform.
+
+Opacity.
+
+Filter (minimal).
+
+Avoid animating
+
+Width.
+
+Height.
+
+Top.
+
+Left.
+
+Box-shadow continuously.
+
+Layout properties.
+
+Motion should never reduce responsiveness.
+
+---
+
+# 13.25 Reduced Motion
+
+Vivaha fully respects user preferences.
+
+When reduced motion is enabled
+
+Remove environmental movement.
+
+Replace transitions with fades.
+
+Remove decorative animation.
+
+Preserve usability.
+
+Accessibility overrides aesthetics.
+
+---
+
+# 13.26 Motion Rhythm
+
+Every screen should establish rhythm.
+
+Interaction.
+
+↓
+
+Pause.
+
+↓
+
+Interaction.
+
+↓
+
+Pause.
+
+↓
+
+Transition.
+
+Avoid constant movement.
+
+Stillness increases perceived quality.
+
+---
+
+# 13.27 Choreography
+
+Multiple components should move together.
+
+Never randomly.
+
+Example
+
+Heading
+
+↓
+
+Image
+
+↓
+
+CTA
+
+↓
+
+Supporting content
+
+Everything enters with intention.
+
+Like musicians following the same conductor.
+
+---
+
+# 13.28 Emotional Motion
+
+Every animation should reinforce one emotion.
+
+Welcome.
+
+Comfort.
+
+Discovery.
+
+Understanding.
+
+Confirmation.
+
+Hope.
+
+If an animation cannot be assigned one of these emotions,
+
+remove it.
+
+---
+
+# 13.29 Motion Anti-Patterns
+
+Reject immediately
+
+Bounce.
+
+Elastic.
+
+Rubber band.
+
+Spinning cards.
+
+Rotating buttons.
+
+Parallax overload.
+
+Continuous floating.
+
+Particle storms.
+
+Confetti.
+
+Fireworks.
+
+Gaming effects.
+
+Attention-seeking motion.
+
+Motion that delays interaction.
+
+Motion that blocks interaction.
+
+Motion that exists only because it "looks cool."
+
+---
+
+# 13.30 Motion Tokens
+
+```css
+--duration-instant: 100ms;
+
+--duration-fast: 150ms;
+
+--duration-normal: 250ms;
+
+--duration-slow: 400ms;
+
+--duration-page: 600ms;
+
+--ease-standard;
+
+--ease-soft;
+
+--ease-enter;
+
+--ease-exit;
+
+--motion-hover-scale;
+
+--motion-card-elevation;
+
+--motion-dialog-offset;
+```
+
+Every component must use shared motion tokens.
+
+No custom durations.
+
+No arbitrary easing.
+
+---
+
+# 13.31 Motion Review Checklist
+
+Before approving any interaction
+
+□ Does every animation have a purpose?
+
+□ Does motion improve understanding?
+
+□ Is movement physically believable?
+
+□ Does the animation finish quickly?
+
+□ Does it respect reduced-motion preferences?
+
+□ Is performance preserved?
+
+□ Does the interface remain calm?
+
+□ Is there unnecessary movement?
+
+□ Does motion support trust?
+
+□ Would the interface still feel premium with half as much animation?
+
+If the answer to the last question is "No,"
+
+the motion system is too dependent on effects.
+
+---
+
+# 13.32 The Final Rule
+
+The best motion is the motion users remember emotionally,
+
+not visually.
+
+Users should leave Vivaha thinking
+
+> "Everything felt smooth."
+
+Never
+
+> "Everything was animated."
+
+---
+
+# End of Chapter 13
+
+# 📖 Vivaha Design Bible v2.0
+
+# Volume III — Motion & Interaction
+
+# Chapter 14 — Microinteractions & Emotional Feedback
+
+---
+
+# 14.1 Philosophy
+
+Microinteractions are the moments that make Vivaha feel human.
+
+They are not animations.
+
+They are conversations between the interface and the user.
+
+Every click.
+
+Every hover.
+
+Every validation.
+
+Every confirmation.
+
+Every transition.
+
+These tiny moments collectively define how trustworthy the product feels.
+
+The user should never consciously admire them.
+
+They should simply feel understood.
+
+---
+
+# 14.2 Purpose
+
+Every microinteraction must achieve at least one of the following:
+
+Provide feedback.
+
+↓
+
+Reduce uncertainty.
+
+↓
+
+Guide the next action.
+
+↓
+
+Reinforce trust.
+
+↓
+
+Reward completion.
+
+If it does none of these,
+
+it should not exist.
+
+---
+
+# 14.3 The Four Stages
+
+Every interaction follows four emotional stages.
+
+**Anticipation**
+
+↓
+
+**Action**
+
+↓
+
+**Response**
+
+↓
+
+**Resolution**
+
+No interaction should stop halfway.
+
+Every action deserves closure.
+
+---
+
+# 14.4 Cursor Language
+
+The cursor is the user's first conversation with the interface.
+
+Rules
+
+Clickable elements respond immediately.
+
+Disabled elements clearly communicate inactivity.
+
+Interactive cards subtly acknowledge presence.
+
+Never surprise the user.
+
+Cursor feedback should always be immediate.
+
+---
+
+# 14.5 Hover States
+
+Hover should communicate
+
+"I am available."
+
+Not
+
+"Look at me."
+
+Allowed changes
+
+Opacity
+
+Border refinement
+
+Shadow refinement
+
+Tiny elevation
+
+Very small scale (1.01–1.02)
+
+Gentle light shift
+
+Forbidden
+
+Rotation
+
+Glow
+
+Large scaling
+
+Bounce
+
+Color explosions
+
+Hover should remain elegant.
+
+---
+
+# 14.6 Press States
+
+Buttons should feel physical.
+
+Sequence
+
+Finger touches
+
+↓
+
+Surface compresses slightly
+
+↓
+
+Shadow softens
+
+↓
+
+Color deepens
+
+↓
+
+Action executes
+
+↓
+
+Button returns naturally
+
+The user should subconsciously perceive resistance.
+
+---
+
+# 14.7 Focus States
+
+Focus communicates confidence.
+
+Preferred
+
+Warm champagne outline.
+
+Soft shadow.
+
+Subtle elevation.
+
+Visible but elegant.
+
+Never remove focus outlines.
+
+Keyboard users deserve the same premium experience.
+
+---
+
+# 14.8 Form Validation
+
+Validation should encourage.
+
+Never criticize.
+
+Incorrect
+
+❌ Invalid Name
+
+Preferred
+
+✓ Please enter your full name.
+
+Incorrect
+
+❌ Wrong Password
+
+Preferred
+
+✓ That password doesn't match our records.
+
+Try again.
+
+Language reduces anxiety.
+
+---
+
+# 14.9 Input Behaviour
+
+Inputs should respond gradually.
+
+Empty
+
+↓
+
+Hover
+
+↓
+
+Focused
+
+↓
+
+Typing
+
+↓
+
+Validated
+
+↓
+
+Completed
+
+Each stage should feel connected.
+
+Avoid abrupt transitions.
+
+---
+
+# 14.10 Successful Actions
+
+Every successful action deserves acknowledgement.
+
+Examples
+
+Bookmark saved.
+
+Profile updated.
+
+Message delivered.
+
+Payment completed.
+
+Verification submitted.
+
+Feedback
+
+Small checkmark.
+
+Gentle color transition.
+
+Soft confirmation message.
+
+Never interrupt workflow.
+
+---
+
+# 14.11 Error Behaviour
+
+Errors should teach.
+
+Not punish.
+
+Sequence
+
+Highlight field.
+
+↓
+
+Explain issue.
+
+↓
+
+Suggest correction.
+
+↓
+
+Return focus.
+
+Never
+
+Shake violently.
+
+Flash red.
+
+Display technical language.
+
+---
+
+# 14.12 Loading Feedback
+
+Waiting creates anxiety.
+
+Always communicate progress.
+
+Examples
+
+Skeleton layout.
+
+Button loading.
+
+Image placeholder.
+
+Message placeholder.
+
+Profile placeholder.
+
+Users should always know the system is working.
+
+---
+
+# 14.13 Progressive Completion
+
+Long processes should celebrate progress.
+
+Examples
+
+Profile Completion
+
+15%
+
+↓
+
+40%
+
+↓
+
+75%
+
+↓
+
+100%
+
+Every milestone deserves subtle encouragement.
+
+Never guilt users for incomplete profiles.
+
+---
+
+# 14.14 Toggle Behaviour
+
+Toggles should imitate physical switches.
+
+Movement
+
+Short.
+
+Purposeful.
+
+Immediate.
+
+State should always be obvious.
+
+---
+
+# 14.15 Checkbox Behaviour
+
+Checkboxes represent certainty.
+
+Animation
+
+Outline
+
+↓
+
+Fill
+
+↓
+
+Checkmark
+
+Duration
+
+150ms
+
+No bounce.
+
+No flourish.
+
+---
+
+# 14.16 Radio Buttons
+
+Radio buttons should clearly indicate exclusivity.
+
+Selection should feel calm.
+
+Not competitive.
+
+Transition
+
+Border
+
+↓
+
+Fill
+
+↓
+
+Center indicator
+
+---
+
+# 14.17 Sliders
+
+Sliders should feel tactile.
+
+Handle follows pointer naturally.
+
+Movement remains precise.
+
+Values update continuously.
+
+Never lag.
+
+---
+
+# 14.18 Dropdowns
+
+Dropdowns emerge naturally.
+
+Sequence
+
+Click
+
+↓
+
+Expand
+
+↓
+
+Focus
+
+↓
+
+Selection
+
+↓
+
+Collapse
+
+Never teleport.
+
+Never fade without movement.
+
+---
+
+# 14.19 Search
+
+Search should encourage exploration.
+
+Focus
+
+↓
+
+Placeholder fades
+
+↓
+
+Typing begins
+
+↓
+
+Suggestions appear
+
+↓
+
+Selection
+
+↓
+
+Results
+
+Every transition should feel instantaneous.
+
+---
+
+# 14.20 Profile Cards
+
+When hovering over profiles
+
+Increase depth slightly.
+
+Reveal additional information.
+
+Never dramatically transform the card.
+
+The person remains the focus.
+
+---
+
+# 14.21 Save Interaction
+
+Saving should feel reassuring.
+
+Bookmark
+
+↓
+
+Fill
+
+↓
+
+Confirmation
+
+↓
+
+Return to resting state
+
+Avoid persistent animations.
+
+---
+
+# 14.22 Message Sending
+
+Messages should communicate reliability.
+
+User types
+
+↓
+
+Send
+
+↓
+
+Bubble appears
+
+↓
+
+Delivered
+
+↓
+
+Read
+
+Every state transition should remain subtle.
+
+---
+
+# 14.23 Notifications
+
+Arrival
+
+Gentle slide.
+
+↓
+
+Visible
+
+↓
+
+Pause
+
+↓
+
+Fade
+
+Users should never feel interrupted.
+
+---
+
+# 14.24 Image Loading
+
+Images should never suddenly appear.
+
+Preferred
+
+Blur-up.
+
+Opacity.
+
+Soft fade.
+
+Never
+
+Flash.
+
+Pop.
+
+Scale dramatically.
+
+---
+
+# 14.25 Scrolling Feedback
+
+Scrolling should reveal progress naturally.
+
+Avoid sticky elements competing for attention.
+
+Navigation may gently adapt.
+
+Nothing should jump unexpectedly.
+
+---
+
+# 14.26 Empty States
+
+Empty states should encourage action.
+
+Never disappointment.
+
+Instead of
+
+"No Matches."
+
+Prefer
+
+"Your journey has just begun.
+
+Let's help you discover meaningful connections."
+
+Every empty state should create hope.
+
+---
+
+# 14.27 Achievement Moments
+
+Vivaha rarely celebrates.
+
+When it does,
+
+it celebrates quietly.
+
+Examples
+
+Profile verified.
+
+First conversation.
+
+Profile completed.
+
+Membership activated.
+
+Visual language
+
+Light.
+
+Warmth.
+
+Small illustration.
+
+Gentle motion.
+
+Never confetti.
+
+---
+
+# 14.28 Recovery
+
+Undo should exist wherever practical.
+
+Deleting.
+
+Unsaving.
+
+Archiving.
+
+Blocking.
+
+Users should feel safe making mistakes.
+
+---
+
+# 14.29 Emotional Consistency
+
+Every interaction should leave the user feeling
+
+Respected.
+
+Guided.
+
+Confident.
+
+Supported.
+
+Never
+
+Pressured.
+
+Judged.
+
+Confused.
+
+Overwhelmed.
+
+---
+
+# 14.30 Timing Harmony
+
+Interactions should share timing.
+
+Hover
+
+≈150ms
+
+Validation
+
+≈200ms
+
+Success
+
+≈250ms
+
+Dialogs
+
+≈300ms
+
+Consistency creates subconscious confidence.
+
+---
+
+# 14.31 Sound
+
+Vivaha is designed to function silently.
+
+No interface sounds.
+
+No clicks.
+
+No notification chimes.
+
+No success sounds.
+
+Silence respects users.
+
+Future accessibility options may optionally introduce sound.
+
+---
+
+# 14.32 Haptics
+
+Mobile devices may use gentle haptic feedback.
+
+Allowed
+
+Successful save.
+
+Successful payment.
+
+Profile verification.
+
+Message sent.
+
+Avoid
+
+Continuous vibration.
+
+Heavy haptics.
+
+Game-like feedback.
+
+---
+
+# 14.33 Emotional Scale
+
+Every interaction should score high in
+
+Clarity.
+
+Comfort.
+
+Predictability.
+
+Warmth.
+
+Respect.
+
+And low in
+
+Surprise.
+
+Urgency.
+
+Excitement.
+
+Drama.
+
+---
+
+# 14.34 Anti-Patterns
+
+Reject immediately
+
+Hover explosions.
+
+Button morphing.
+
+Elastic inputs.
+
+Shaking dialogs.
+
+Aggressive validation.
+
+Floating buttons.
+
+Auto-opening panels.
+
+Unexpected modals.
+
+Forced onboarding.
+
+Gamification.
+
+Attention-seeking interactions.
+
+Microinteractions should disappear into the experience.
+
+---
+
+# 14.35 Design Tokens
+
+```css
+--hover-duration
+
+--press-duration
+
+--focus-duration
+
+--validation-duration
+
+--success-duration
+
+--loading-duration
+
+--hover-shadow
+
+--hover-scale
+
+--press-scale
+
+--focus-ring
+
+--success-color
+
+--error-color
+
+--warning-color
+```
+
+Every interaction must use shared tokens.
+
+---
+
+# 14.36 Review Checklist
+
+Before approving any interaction
+
+□ Does the user receive immediate feedback?
+
+□ Does the interaction reduce uncertainty?
+
+□ Is the motion subtle?
+
+□ Is the language encouraging?
+
+□ Is accessibility preserved?
+
+□ Does the interaction finish naturally?
+
+□ Is there an opportunity to undo destructive actions?
+
+□ Does the interaction feel human?
+
+□ Does it reduce anxiety?
+
+□ Would this still feel premium if the animation duration were cut in half?
+
+If any answer is "No,"
+
+the microinteraction requires refinement.
+
+---
+
+# 14.37 Final Principle
+
+A beautiful interface is remembered.
+
+A thoughtful interface is trusted.
+
+Vivaha should strive for trust above admiration.
+
+Every microinteraction is an opportunity to quietly reassure the user that they are in the right place.
+
+---
+
+# End of Chapter 14
+
+# 📖 Vivaha Design Bible v2.0
+
+# Volume III — Motion & Interaction
+
+# Chapter 15 — Scroll Experience & Narrative Flow
+
+---
+
+# 15.1 Philosophy
+
+Scrolling is not navigation.
+
+Scrolling is storytelling.
+
+Every scroll should feel like walking through a carefully designed physical space.
+
+Users should never feel like they are moving through disconnected sections.
+
+Instead,
+
+they should experience one continuous journey.
+
+The page should unfold naturally,
+
+revealing new ideas only when the user is ready.
+
+---
+
+# 15.2 Narrative Structure
+
+Every long page follows the same storytelling rhythm.
+
+Welcome
+
+↓
+
+Curiosity
+
+↓
+
+Understanding
+
+↓
+
+Confidence
+
+↓
+
+Connection
+
+↓
+
+Action
+
+↓
+
+Reflection
+
+↓
+
+Completion
+
+No section should interrupt this emotional progression.
+
+---
+
+# 15.3 Scroll Pace
+
+Vivaha values deliberate pacing.
+
+The interface should never feel rushed.
+
+Users should feel invited to continue.
+
+Not pushed.
+
+Scrolling should resemble walking through
+
+a quiet museum,
+
+a botanical garden,
+
+or a thoughtfully designed home.
+
+Never an infinite social feed.
+
+---
+
+# 15.4 Viewport Rule
+
+Every viewport should communicate exactly one primary idea.
+
+Examples
+
+Hero
+
+↓
+
+Mission
+
+↓
+
+Profiles
+
+↓
+
+Success Stories
+
+↓
+
+Trust
+
+↓
+
+Call To Action
+
+Never introduce multiple competing messages within the same viewport.
+
+---
+
+# 15.5 Section Identity
+
+Each section should feel unique.
+
+Not through different layouts.
+
+But through
+
+Light.
+
+Spacing.
+
+Photography.
+
+Illustration.
+
+Content.
+
+Material.
+
+Motion.
+
+Users should always know they have entered a new chapter.
+
+Without feeling they left the product.
+
+---
+
+# 15.6 Scroll Hierarchy
+
+Every section should follow this order.
+
+Section Marker
+
+↓
+
+Headline
+
+↓
+
+Supporting Copy
+
+↓
+
+Visual
+
+↓
+
+Primary Action
+
+↓
+
+Transition
+
+Consistency allows users to predict the interface.
+
+Prediction builds confidence.
+
+---
+
+# 15.7 Scroll Rhythm
+
+Alternating rhythm creates comfort.
+
+Example
+
+Visual Left
+
+↓
+
+Visual Right
+
+↓
+
+Centered Story
+
+↓
+
+Grid
+
+↓
+
+Full Width
+
+↓
+
+Editorial Layout
+
+↓
+
+CTA
+
+Avoid repeating identical layouts continuously.
+
+Variation should remain controlled.
+
+---
+
+# 15.8 Entry Transitions
+
+Sections should appear before they become active.
+
+Preferred
+
+Fade.
+
+Rise.
+
+Opacity.
+
+Small translation.
+
+Maximum movement
+
+32px.
+
+Users should never feel content suddenly appears.
+
+---
+
+# 15.9 Exit Transitions
+
+Sections should leave gracefully.
+
+Opacity decreases.
+
+Motion softens.
+
+The next section begins appearing before the previous fully disappears.
+
+This overlap creates continuity.
+
+---
+
+# 15.10 Hero Scroll
+
+The Hero introduces the journey.
+
+As users scroll,
+
+the Hero should slowly surrender attention.
+
+Headline remains readable.
+
+Background shifts subtly.
+
+Lighting changes naturally.
+
+Nothing dramatic occurs.
+
+The user simply continues forward.
+
+---
+
+# 15.11 Reading Behaviour
+
+Most users scan before reading.
+
+Therefore,
+
+each section should communicate its purpose within three seconds.
+
+Use
+
+Clear headings.
+
+Meaningful imagery.
+
+Generous spacing.
+
+Short supporting paragraphs.
+
+---
+
+# 15.12 Visual Anchors
+
+Every major section contains one visual anchor.
+
+Examples
+
+Portrait.
+
+Illustration.
+
+Architecture.
+
+Quote.
+
+Profile.
+
+Story.
+
+Visual anchors guide attention naturally.
+
+Never use multiple competing anchors.
+
+---
+
+# 15.13 Layer Progression
+
+Scroll should gradually reveal depth.
+
+Beginning
+
+Open.
+
+Bright.
+
+Simple.
+
+Middle
+
+Richer information.
+
+Greater interaction.
+
+Ending
+
+Reflection.
+
+Confidence.
+
+Invitation.
+
+Never reveal maximum complexity immediately.
+
+---
+
+# 15.14 Momentum
+
+Scrolling should preserve momentum.
+
+Avoid
+
+Sudden stopping.
+
+Unexpected carousels.
+
+Scroll hijacking.
+
+Forced animations.
+
+Users remain in control.
+
+Always.
+
+---
+
+# 15.15 Long Pages
+
+Long pages should feel shorter.
+
+Methods
+
+Meaningful rhythm.
+
+Alternating compositions.
+
+Storytelling.
+
+Visual resets.
+
+Comfortable spacing.
+
+Never compress content simply to reduce page length.
+
+---
+
+# 15.16 Transitional Spaces
+
+Every transition deserves breathing room.
+
+Whitespace acts as a hallway between rooms.
+
+Transitions should never feel abrupt.
+
+Examples
+
+Soft gradient.
+
+Quote.
+
+Illustration.
+
+Ambient light.
+
+Botanical divider.
+
+These moments allow users to mentally reset.
+
+---
+
+# 15.17 Visual Resets
+
+Every three to four sections,
+
+introduce a slower moment.
+
+Examples
+
+Editorial quote.
+
+Single photograph.
+
+Minimal illustration.
+
+Personal story.
+
+This prevents visual fatigue.
+
+---
+
+# 15.18 Scroll Velocity
+
+Design must remain beautiful regardless of scrolling speed.
+
+Whether users scroll quickly or slowly,
+
+the experience should remain coherent.
+
+Never rely on users moving at a specific speed.
+
+---
+
+# 15.19 Sticky Elements
+
+Sticky elements should remain minimal.
+
+Allowed
+
+Navigation.
+
+Progress indicator.
+
+Contextual filter.
+
+Forbidden
+
+Persistent banners.
+
+Sticky advertisements.
+
+Floating promotions.
+
+Competing sticky panels.
+
+The screen belongs to the content.
+
+---
+
+# 15.20 Horizontal Motion
+
+Horizontal movement should be rare.
+
+Allowed
+
+Image galleries.
+
+Profile comparisons.
+
+Timelines.
+
+Forbidden
+
+Entire page transitions.
+
+Horizontal storytelling.
+
+Unexpected sideways movement.
+
+Vertical scrolling remains primary.
+
+---
+
+# 15.21 Parallax
+
+Parallax should remain almost invisible.
+
+Maximum movement
+
+10–20px.
+
+Purpose
+
+Depth.
+
+Not spectacle.
+
+If users notice parallax,
+
+it is probably excessive.
+
+---
+
+# 15.22 Progress Indicators
+
+Users should always know where they are.
+
+Examples
+
+Section markers.
+
+Timeline.
+
+Step indicators.
+
+Subtle navigation highlights.
+
+Avoid
+
+Large progress bars dominating the screen.
+
+---
+
+# 15.23 Narrative Sequencing
+
+Information should unfold naturally.
+
+Never explain everything immediately.
+
+Example
+
+Who we are
+
+↓
+
+How we help
+
+↓
+
+Why trust us
+
+↓
+
+Meet people
+
+↓
+
+Success stories
+
+↓
+
+Join Vivaha
+
+Every section answers a question created by the previous one.
+
+---
+
+# 15.24 Scroll Memory
+
+Users returning to the page should immediately regain orientation.
+
+Provide
+
+Consistent landmarks.
+
+Recognizable sections.
+
+Stable navigation.
+
+Predictable structure.
+
+Never randomize layouts.
+
+---
+
+# 15.25 Interactive Moments
+
+Interactive moments should interrupt scrolling only when valuable.
+
+Examples
+
+Profile preview.
+
+Compatibility calculator.
+
+Story reveal.
+
+Values exploration.
+
+Avoid interactions that block progress.
+
+---
+
+# 15.26 Performance
+
+Scroll performance is sacred.
+
+Target
+
+60 FPS.
+
+Never sacrifice smoothness for visual effects.
+
+Prefer
+
+Transform.
+
+Opacity.
+
+CSS variables.
+
+Avoid
+
+Heavy JavaScript.
+
+Continuous layout recalculation.
+
+Expensive filters.
+
+Large canvas scenes.
+
+The smoothness of scrolling contributes more to perceived quality than complex animations.
+
+---
+
+# 15.27 Mobile Scroll
+
+Mobile receives special consideration.
+
+Thumb zones.
+
+Natural momentum.
+
+Comfortable spacing.
+
+No tiny interactive targets.
+
+One-handed operation should remain comfortable.
+
+---
+
+# 15.28 Accessibility
+
+Scrolling should never hide information.
+
+Respect
+
+Reduced motion.
+
+Keyboard navigation.
+
+Screen readers.
+
+Anchor links.
+
+Focus order.
+
+Users must remain in control.
+
+---
+
+# 15.29 Scroll Anti-Patterns
+
+Reject
+
+Scroll hijacking.
+
+Forced snap scrolling.
+
+Long pinned sections.
+
+Storytelling that traps users.
+
+Unexpected horizontal movement.
+
+Continuous animations tied to scroll.
+
+Large video backgrounds.
+
+Overly cinematic experiences.
+
+Infinite decorative effects.
+
+Users came to find meaningful relationships,
+
+not to watch a presentation.
+
+---
+
+# 15.30 Scroll Tokens
+
+```css
+--section-gap-sm: 80px;
+
+--section-gap-md: 120px;
+
+--section-gap-lg: 180px;
+
+--scroll-reveal-offset: 24px;
+
+--scroll-parallax-depth: 12px;
+
+--transition-duration-section: 400ms;
+
+--transition-ease-section: var(--ease-soft);
+
+--max-content-width: 1440px;
+
+--reading-width: 680px;
+```
+
+All page layouts should consume these shared tokens.
+
+---
+
+# 15.31 Homepage Narrative Blueprint
+
+The homepage should follow this exact emotional sequence.
+
+```text
+Arrival
+│
+▼
+A Place of Calm
+│
+▼
+Why Vivaha Exists
+│
+▼
+How We Help
+│
+▼
+Meet Genuine People
+│
+▼
+Families & Values
+│
+▼
+Stories of New Beginnings
+│
+▼
+Trust & Verification
+│
+▼
+Your Journey Starts Here
+│
+▼
+Footer
+```
+
+Every section should naturally invite the next.
+
+No abrupt changes in tone.
+
+No disconnected blocks.
+
+The homepage should feel like reading a beautifully designed story.
+
+---
+
+# 15.32 Final Principle
+
+A visitor should never remember
+
+how they scrolled.
+
+They should remember
+
+how the journey made them feel.
+
+The highest compliment is not
+
+> "The scrolling was impressive."
+
+It is
+
+> "The experience flowed naturally."
+
+---
+
+# End of Chapter 15
+
+# 📖 Vivaha Design Bible v2.0
+
+# Volume III — Motion & Interaction
+
+# Chapter 16 — Accessibility & Inclusive Experience
+
+---
+
+# 16.1 Philosophy
+
+Accessibility is not a compliance checklist.
+
+Accessibility is respect.
+
+Vivaha exists to help people through one of the most meaningful decisions of their lives.
+
+No person should feel excluded because of age, ability, technology, or circumstance.
+
+Accessibility is therefore considered a core quality attribute of the product, equal in importance to usability, security, and performance.
+
+Every feature must be designed for everyone before it is designed for anyone.
+
+---
+
+# 16.2 Design Principle
+
+The interface should never assume that users:
+
+Have perfect vision.
+
+Have perfect hearing.
+
+Use a mouse.
+
+Use a keyboard.
+
+Use the latest device.
+
+Have fast internet.
+
+Understand technology.
+
+Can perceive color differences.
+
+Accessibility begins by removing assumptions.
+
+---
+
+# 16.3 Inclusive Audience
+
+Vivaha serves multiple generations.
+
+Young professionals.
+
+Parents.
+
+Grandparents.
+
+Users with temporary injuries.
+
+Users with permanent disabilities.
+
+Users in bright sunlight.
+
+Users using old mobile devices.
+
+Users on unstable internet.
+
+Every one of these situations deserves equal consideration.
+
+---
+
+# 16.4 Accessibility Standards
+
+Minimum target
+
+WCAG 2.2 AA
+
+Preferred
+
+WCAG AAA wherever practical.
+
+Compliance is considered the minimum.
+
+Usability remains the real objective.
+
+---
+
+# 16.5 Readability
+
+Text should never become difficult to read.
+
+Requirements
+
+Minimum body size
+
+16px preferred.
+
+14px minimum.
+
+Maximum paragraph width
+
+70 characters.
+
+Comfortable line height.
+
+High contrast.
+
+No justified paragraphs.
+
+Readable typography is one of the strongest trust signals.
+
+---
+
+# 16.6 Color Independence
+
+Color must never be the only method of communication.
+
+Incorrect
+
+Green means success.
+
+Red means error.
+
+Correct
+
+Color
+
+*
+
+Icon
+
+*
+
+Text
+
+*
+
+Context
+
+Every important state must remain understandable in grayscale.
+
+---
+
+# 16.7 Contrast
+
+Minimum contrast
+
+WCAG AA.
+
+Preferred
+
+7:1
+
+Decorative backgrounds must never reduce readability.
+
+Typography always wins over aesthetics.
+
+---
+
+# 16.8 Keyboard Navigation
+
+Every interactive element must be reachable using only the keyboard.
+
+Navigation order must remain logical.
+
+Focus must never become trapped.
+
+Escape should close overlays.
+
+Enter should confirm actions where appropriate.
+
+Space should activate controls.
+
+Users should never need a mouse.
+
+---
+
+# 16.9 Focus Visibility
+
+Keyboard focus must remain visible.
+
+Focus indicators should feel premium.
+
+Preferred
+
+Warm champagne outline.
+
+Soft shadow.
+
+Subtle elevation.
+
+Never remove browser focus styles without replacing them with something better.
+
+---
+
+# 16.10 Screen Readers
+
+Every meaningful component must expose semantic information.
+
+Buttons.
+
+Links.
+
+Inputs.
+
+Images.
+
+Dialogs.
+
+Menus.
+
+Navigation.
+
+Progress indicators.
+
+Decorative elements should remain hidden from assistive technologies.
+
+---
+
+# 16.11 Images
+
+Every meaningful image requires descriptive alternative text.
+
+Descriptions should explain purpose.
+
+Not appearance.
+
+Incorrect
+
+"A smiling man."
+
+Correct
+
+"Profile photograph of Rajesh standing in a garden."
+
+Decorative imagery should use empty alt text.
+
+---
+
+# 16.12 Motion Preferences
+
+Respect
+
+prefers-reduced-motion
+
+Immediately.
+
+Remove
+
+Environmental animation.
+
+Parallax.
+
+Floating elements.
+
+Decorative transitions.
+
+Retain
+
+Essential feedback.
+
+Focus movement.
+
+Navigation transitions.
+
+Usability should remain unchanged.
+
+---
+
+# 16.13 Interaction Targets
+
+Every interactive element must satisfy minimum touch size.
+
+Minimum
+
+44 × 44px
+
+Preferred
+
+48 × 48px
+
+Users should never struggle to activate controls.
+
+---
+
+# 16.14 Forms
+
+Forms should guide rather than challenge.
+
+Every input requires
+
+Visible label.
+
+Placeholder (optional).
+
+Helper text.
+
+Error explanation.
+
+Validation.
+
+Focus indication.
+
+Never rely on placeholders as labels.
+
+---
+
+# 16.15 Error Messages
+
+Errors should explain
+
+What happened.
+
+Why it happened.
+
+How to fix it.
+
+Example
+
+Incorrect
+
+"Invalid input."
+
+Preferred
+
+"Please enter a valid email address so we can contact you."
+
+---
+
+# 16.16 Success Messages
+
+Confirmation should be explicit.
+
+Examples
+
+"Profile saved."
+
+"Photo uploaded."
+
+"Verification submitted."
+
+Users should never wonder whether their action succeeded.
+
+---
+
+# 16.17 Language
+
+Write using plain language.
+
+Avoid technical terminology.
+
+Avoid internal system messages.
+
+Avoid abbreviations unless universally understood.
+
+Every sentence should feel respectful.
+
+---
+
+# 16.18 Cognitive Accessibility
+
+Reduce mental effort.
+
+Break complex processes into steps.
+
+Use predictable layouts.
+
+Maintain consistent terminology.
+
+Avoid unnecessary choices.
+
+Reduce memory load.
+
+The interface should think,
+
+so the user doesn't have to.
+
+---
+
+# 16.19 Reading Order
+
+Screen readers and visual layouts should follow the same logical order.
+
+Headings.
+
+↓
+
+Supporting text.
+
+↓
+
+Primary action.
+
+↓
+
+Secondary content.
+
+Never create conflicting reading sequences.
+
+---
+
+# 16.20 Navigation
+
+Navigation should remain predictable.
+
+Primary navigation should never move unexpectedly.
+
+Users should always know
+
+Where they are.
+
+How they arrived.
+
+How to return.
+
+Orientation reduces anxiety.
+
+---
+
+# 16.21 Dialogs
+
+Dialogs should:
+
+Receive focus immediately.
+
+Trap focus while open.
+
+Return focus after closing.
+
+Support Escape.
+
+Remain keyboard accessible.
+
+Never leave users stranded.
+
+---
+
+# 16.22 Notifications
+
+Notifications should not interrupt screen readers unnecessarily.
+
+Critical messages
+
+Announce immediately.
+
+Informational messages
+
+Announce politely.
+
+Avoid excessive announcements.
+
+---
+
+# 16.23 Authentication
+
+Authentication should remain accessible.
+
+Password visibility toggle.
+
+Clear requirements.
+
+Helpful validation.
+
+Accessible CAPTCHA alternatives.
+
+OTP inputs supporting paste.
+
+Auto-focus without trapping users.
+
+---
+
+# 16.24 Profile Cards
+
+Profile cards should remain understandable without images.
+
+Every important detail must remain available through text.
+
+Images support.
+
+They do not replace information.
+
+---
+
+# 16.25 Tables
+
+Avoid tables on mobile whenever possible.
+
+When required
+
+Responsive layout.
+
+Clear headers.
+
+Logical reading order.
+
+Screen reader support.
+
+---
+
+# 16.26 Charts
+
+Charts should never communicate information visually alone.
+
+Provide
+
+Labels.
+
+Summaries.
+
+Descriptions.
+
+Alternative formats.
+
+---
+
+# 16.27 Time Limits
+
+Never introduce unnecessary countdowns.
+
+Where timeouts exist
+
+Warn users.
+
+Allow extension.
+
+Preserve progress.
+
+Marriage decisions should never feel rushed.
+
+---
+
+# 16.28 Mobile Accessibility
+
+Design for
+
+One-handed use.
+
+Large touch targets.
+
+Visible typography.
+
+Comfortable spacing.
+
+Landscape support.
+
+Dynamic text scaling.
+
+Older devices.
+
+---
+
+# 16.29 Performance Accessibility
+
+Fast interfaces are accessible interfaces.
+
+Target
+
+First meaningful interaction
+
+<2 seconds.
+
+Input latency
+
+<100ms.
+
+Scrolling
+
+60 FPS.
+
+Accessibility includes responsiveness.
+
+---
+
+# 16.30 Network Conditions
+
+Support
+
+Slow 3G.
+
+Offline interruptions.
+
+Temporary failures.
+
+Retry actions.
+
+Graceful degradation.
+
+Users should never lose important information.
+
+---
+
+# 16.31 Emotional Accessibility
+
+Accessibility includes emotional experience.
+
+Avoid
+
+Judgmental language.
+
+Blame.
+
+Pressure.
+
+Urgency.
+
+Embarrassment.
+
+Prefer
+
+Encouragement.
+
+Guidance.
+
+Patience.
+
+Support.
+
+Respect.
+
+---
+
+# 16.32 Internationalization
+
+All interface components must support
+
+Longer text.
+
+Right-to-left layouts.
+
+Unicode.
+
+Variable font rendering.
+
+Different date formats.
+
+Different number systems.
+
+Future localization must never require redesign.
+
+---
+
+# 16.33 Accessibility Testing
+
+Every release should include
+
+Keyboard testing.
+
+Screen reader testing.
+
+Color blindness testing.
+
+Contrast verification.
+
+Zoom testing.
+
+Reduced motion testing.
+
+Touch testing.
+
+Responsive testing.
+
+Accessibility is tested continuously.
+
+Not once.
+
+---
+
+# 16.34 Accessibility Anti-Patterns
+
+Reject immediately
+
+Tiny buttons.
+
+Placeholder-only forms.
+
+Low contrast text.
+
+Keyboard traps.
+
+Hover-only interactions.
+
+Color-only status indicators.
+
+Autoplay media.
+
+Unexpected focus changes.
+
+Inaccessible modals.
+
+Complex CAPTCHA.
+
+Decorative text images.
+
+Accessibility exceptions for aesthetics.
+
+---
+
+# 16.35 Accessibility Tokens
+
+```css
+--focus-ring-color;
+
+--focus-ring-width;
+
+--touch-target-min;
+
+--contrast-high;
+
+--contrast-medium;
+
+--contrast-low;
+
+--motion-enabled;
+
+--motion-reduced;
+
+--text-scale-small;
+
+--text-scale-normal;
+
+--text-scale-large;
+```
+
+Accessibility values must remain centralized.
+
+Never hardcode accessibility behavior inside individual components.
+
+---
+
+# 16.36 Accessibility Review Checklist
+
+Before approving any feature
+
+□ Can every task be completed using only the keyboard?
+
+□ Does every image have appropriate alternative text?
+
+□ Is every state understandable without color?
+
+□ Is typography readable at 200% zoom?
+
+□ Does reduced motion preserve usability?
+
+□ Are touch targets large enough?
+
+□ Can screen readers understand the interface?
+
+□ Is every error understandable?
+
+□ Does the interface remain usable on slow devices?
+
+□ Would a first-time user over the age of 60 feel comfortable using this screen?
+
+If any answer is "No,"
+
+the feature is not production-ready.
+
+---
+
+# 16.37 The Final Principle
+
+Accessibility is not designing for edge cases.
+
+It is designing for reality.
+
+When Vivaha becomes easier for someone with limited vision, slower internet, reduced mobility, or little technical experience,
+
+it becomes a better product for everyone.
+
+---
+
+# End of Chapter 16
+
+# 📖 Vivaha Design Bible v2.0
+
+# Volume IV — Design System Components
+
+# Chapter 17 — Component Philosophy & Design Tokens
+
+---
+
+# 17.1 Philosophy
+
+Components are not reusable pieces of UI.
+
+They are reusable expressions of the Vivaha philosophy.
+
+Every button.
+
+Every card.
+
+Every input.
+
+Every modal.
+
+Every badge.
+
+Every menu.
+
+Every interaction.
+
+Must feel as though it belongs to the same carefully designed ecosystem.
+
+Users should never feel that individual pages were designed by different people.
+
+The design system exists to create visual consistency, engineering consistency, and emotional consistency.
+
+---
+
+# 17.2 The Atomic Philosophy
+
+Vivaha follows an atomic hierarchy.
+
+```text
+Design Tokens
+        │
+        ▼
+Foundations
+        │
+        ▼
+Atoms
+        │
+        ▼
+Molecules
+        │
+        ▼
+Organisms
+        │
+        ▼
+Templates
+        │
+        ▼
+Pages
+```
+
+No page should introduce unique visual rules.
+
+Every page is assembled from the system.
+
+Never designed independently.
+
+---
+
+# 17.3 Design Token Philosophy
+
+Tokens are the single source of truth.
+
+No developer should ever hardcode
+
+Colors.
+
+Spacing.
+
+Radius.
+
+Animation.
+
+Typography.
+
+Shadows.
+
+Opacity.
+
+Border width.
+
+Anything that may change belongs inside tokens.
+
+---
+
+# 17.4 The Five Foundations
+
+Every component is built from only five foundations.
+
+Typography
+
+↓
+
+Spacing
+
+↓
+
+Color
+
+↓
+
+Motion
+
+↓
+
+Material
+
+Nothing else.
+
+Whenever a new component is proposed,
+
+it must reuse these foundations.
+
+---
+
+# 17.5 Component DNA
+
+Every Vivaha component shares these characteristics.
+
+Soft corners.
+
+Comfortable spacing.
+
+Warm colors.
+
+Restrained shadows.
+
+Natural motion.
+
+Excellent accessibility.
+
+Predictable behaviour.
+
+Every component should feel handcrafted.
+
+Not generated.
+
+---
+
+# 17.6 Component Hierarchy
+
+Every component belongs to one category.
+
+Primitive
+
+Examples
+
+Button
+
+Input
+
+Icon
+
+Checkbox
+
+Radio
+
+Divider
+
+---
+
+Composite
+
+Examples
+
+Search Bar
+
+Navigation
+
+Card
+
+Dropdown
+
+Toast
+
+Modal
+
+---
+
+Complex
+
+Examples
+
+Profile Card
+
+Match Card
+
+Hero
+
+Chat Window
+
+Dashboard Panel
+
+Timeline
+
+Never blur these boundaries.
+
+---
+
+# 17.7 Component Naming
+
+Every component follows one naming convention.
+
+Examples
+
+Button
+
+ButtonGroup
+
+ProfileCard
+
+HeroSection
+
+SearchInput
+
+NotificationItem
+
+VerificationBadge
+
+ConversationCard
+
+Avoid vague names.
+
+Examples to avoid
+
+Card2
+
+NewCard
+
+HeroUpdated
+
+ButtonV3
+
+Names should describe purpose.
+
+Not history.
+
+---
+
+# 17.8 Variants
+
+Every component may have variants.
+
+Example
+
+Button
+
+Primary
+
+Secondary
+
+Ghost
+
+Text
+
+Danger
+
+Premium
+
+Every variant must inherit from one parent component.
+
+Never duplicate components.
+
+---
+
+# 17.9 States
+
+Every interactive component supports
+
+Default
+
+Hover
+
+Focused
+
+Pressed
+
+Disabled
+
+Loading
+
+Success (when applicable)
+
+Error (when applicable)
+
+No state may be forgotten.
+
+---
+
+# 17.10 Component Anatomy
+
+Every component must document
+
+Purpose
+
+Structure
+
+Spacing
+
+Typography
+
+States
+
+Accessibility
+
+Animation
+
+Responsive behaviour
+
+Usage examples
+
+Anti-patterns
+
+Engineering notes
+
+No undocumented component enters production.
+
+---
+
+# 17.11 Internal Spacing
+
+All internal spacing uses the spacing scale.
+
+Never invent values.
+
+Preferred scale
+
+```text
+4
+
+8
+
+12
+
+16
+
+24
+
+32
+
+48
+
+64
+```
+
+Everything derives from this rhythm.
+
+---
+
+# 17.12 Corner Radius
+
+Every component consumes radius tokens.
+
+Examples
+
+Buttons
+
+12px
+
+Cards
+
+20px
+
+Dialogs
+
+24px
+
+Inputs
+
+14px
+
+Never mix arbitrary radii.
+
+---
+
+# 17.13 Elevation
+
+Every component belongs to one elevation level.
+
+Level 0
+
+Flat
+
+Level 1
+
+Input
+
+Level 2
+
+Card
+
+Level 3
+
+Dropdown
+
+Level 4
+
+Dialog
+
+Level 5
+
+Global Overlay
+
+Elevation communicates hierarchy.
+
+Nothing else.
+
+---
+
+# 17.14 Borders
+
+Borders remain subtle.
+
+Preferred
+
+1px
+
+Warm Gray
+
+Very low opacity.
+
+Avoid
+
+Dark borders.
+
+Multiple borders.
+
+Double outlines.
+
+Heavy strokes.
+
+---
+
+# 17.15 Motion Consistency
+
+Every component follows the Motion Language defined earlier.
+
+No component introduces unique easing.
+
+No component introduces unique duration.
+
+Every transition uses motion tokens.
+
+---
+
+# 17.16 Interaction Philosophy
+
+Components respond immediately.
+
+Feedback begins within
+
+100 milliseconds.
+
+The user should never wonder
+
+"Did my click work?"
+
+---
+
+# 17.17 Responsive Behaviour
+
+Components are responsive by design.
+
+Not by scaling.
+
+Desktop
+
+Comfortable.
+
+Tablet
+
+Focused.
+
+Mobile
+
+Essential.
+
+Each breakpoint is intentionally designed.
+
+---
+
+# 17.18 Accessibility Contract
+
+Every interactive component guarantees
+
+Keyboard support.
+
+Visible focus.
+
+Screen reader compatibility.
+
+Touch targets.
+
+Reduced motion.
+
+Semantic HTML.
+
+No exceptions.
+
+---
+
+# 17.19 Component Relationships
+
+Components should compose naturally.
+
+Example
+
+```text
+Card
+
+├── Avatar
+
+├── Typography
+
+├── Badge
+
+├── Button
+
+├── Divider
+
+└── Metadata
+```
+
+Never rebuild primitives inside larger components.
+
+Reuse.
+
+---
+
+# 17.20 Empty States
+
+Every complex component documents
+
+Loading.
+
+Empty.
+
+Error.
+
+Offline.
+
+Disabled.
+
+Success.
+
+Every possible experience must be intentionally designed.
+
+---
+
+# 17.21 Error Philosophy
+
+Components fail gracefully.
+
+Missing image
+
+↓
+
+Placeholder.
+
+Failed request
+
+↓
+
+Retry.
+
+Invalid input
+
+↓
+
+Explanation.
+
+No component should collapse unexpectedly.
+
+---
+
+# 17.22 Component Lifespan
+
+Every component should remain useful for years.
+
+Ask
+
+"Will this component still feel correct after five years?"
+
+If uncertain,
+
+simplify it.
+
+---
+
+# 17.23 Theme Support
+
+The design system should support future themes.
+
+Current
+
+Vivaha Light.
+
+Future
+
+Festive.
+
+Wedding.
+
+Accessibility.
+
+Dark (if ever introduced).
+
+Themes change tokens.
+
+Never component logic.
+
+---
+
+# 17.24 Documentation Standard
+
+Every component receives its own documentation page.
+
+Required sections
+
+Purpose
+
+Usage
+
+Variants
+
+Properties
+
+States
+
+Accessibility
+
+Examples
+
+Code
+
+Do
+
+Don't
+
+Future Improvements
+
+Components without documentation are considered incomplete.
+
+---
+
+# 17.25 Component Testing
+
+Every component must pass
+
+Visual tests.
+
+Accessibility tests.
+
+Responsive tests.
+
+Interaction tests.
+
+Keyboard tests.
+
+Reduced motion tests.
+
+Regression tests.
+
+Quality is part of the component.
+
+Not an afterthought.
+
+---
+
+# 17.26 Performance Budget
+
+Each component should render efficiently.
+
+Goals
+
+Minimal re-renders.
+
+GPU-friendly animations.
+
+Lazy loading when appropriate.
+
+Small bundle size.
+
+Tree-shakeable imports.
+
+No unnecessary dependencies.
+
+A beautiful component that harms performance is a failed component.
+
+---
+
+# 17.27 Engineering Rules
+
+Every component should
+
+Be composable.
+
+Be predictable.
+
+Be reusable.
+
+Be testable.
+
+Be accessible.
+
+Be typed.
+
+Be documented.
+
+Avoid side effects.
+
+Keep business logic outside presentation whenever possible.
+
+---
+
+# 17.28 Anti-Patterns
+
+Never create
+
+One-off buttons.
+
+One-off cards.
+
+Page-specific components.
+
+Hardcoded colors.
+
+Hardcoded spacing.
+
+Inline animation values.
+
+Custom shadows.
+
+Random border radii.
+
+Every deviation weakens the design system.
+
+---
+
+# 17.29 Global Design Tokens
+
+```css
+/* Colors */
+
+--color-primary
+
+--color-secondary
+
+--color-accent
+
+--color-surface
+
+--color-background
+
+--color-border
+
+/* Typography */
+
+--font-display
+
+--font-body
+
+--font-size-xs
+
+--font-size-sm
+
+--font-size-md
+
+--font-size-lg
+
+--font-size-xl
+
+/* Spacing */
+
+--space-4
+
+--space-8
+
+--space-12
+
+--space-16
+
+--space-24
+
+--space-32
+
+--space-48
+
+--space-64
+
+--space-96
+
+--space-128
+
+/* Radius */
+
+--radius-sm
+
+--radius-md
+
+--radius-lg
+
+--radius-xl
+
+/* Elevation */
+
+--shadow-1
+
+--shadow-2
+
+--shadow-3
+
+--shadow-4
+
+/* Motion */
+
+--duration-fast
+
+--duration-normal
+
+--duration-slow
+
+--ease-standard
+
+--ease-soft
+```
+
+These tokens are immutable foundations.
+
+Components consume them.
+
+They never redefine them.
+
+---
+
+# 17.30 Component Review Checklist
+
+Before approving any new component
+
+□ Does it solve a real problem?
+
+□ Can an existing component solve this instead?
+
+□ Does it follow every design token?
+
+□ Is it accessible?
+
+□ Is it responsive?
+
+□ Is it documented?
+
+□ Is it reusable?
+
+□ Does it follow the motion language?
+
+□ Does it feel like it belongs to Vivaha?
+
+□ Could another engineer understand and extend it six months from now?
+
+If any answer is "No,"
+
+the component is not ready for inclusion in the design system.
+
+---
+
+# 17.31 The Golden Rule
+
+**A component should never express its own personality.**
+
+It should express the personality of **Vivaha**.
+
+When hundreds of components work together with restraint and consistency,
+
+the interface disappears,
+
+and what remains is trust.
+
+---
+
+# End of Chapter 17
+
+# 📖 Vivaha Design Bible v2.0
+
+# Volume IV — Design System Components
+
+# Chapter 18 — Button System
+
+---
+
+# 18.1 Philosophy
+
+Buttons are promises.
+
+Every button tells the user:
+
+> "If you trust me with this action, I will do exactly what I say."
+
+Buttons are therefore the highest-trust interactive component in Vivaha.
+
+They should never create uncertainty.
+
+They should never surprise.
+
+They should never compete with one another.
+
+A button exists to communicate confidence.
+
+Not urgency.
+
+---
+
+# 18.2 Core Principles
+
+Every button must satisfy six principles.
+
+Clear
+
+↓
+
+Predictable
+
+↓
+
+Accessible
+
+↓
+
+Comfortable
+
+↓
+
+Elegant
+
+↓
+
+Immediate
+
+If any principle is compromised,
+
+the button should be redesigned.
+
+---
+
+# 18.3 Button Hierarchy
+
+Vivaha contains only six button types.
+
+No additional styles are permitted without updating this Design Bible.
+
+---
+
+## Primary Button
+
+Purpose
+
+The single most important action on the screen.
+
+Examples
+
+Create Profile
+
+Continue
+
+Send Interest
+
+Start Conversation
+
+Save Changes
+
+Only one Primary Button should exist within a major viewport.
+
+---
+
+## Secondary Button
+
+Purpose
+
+Supporting action.
+
+Examples
+
+Learn More
+
+View Details
+
+Preview Profile
+
+Save for Later
+
+---
+
+## Ghost Button
+
+Purpose
+
+Low-emphasis actions.
+
+Examples
+
+Cancel
+
+Back
+
+Skip
+
+Close
+
+Ghost buttons should never visually compete with Primary Buttons.
+
+---
+
+## Text Button
+
+Purpose
+
+Inline navigation.
+
+Examples
+
+Forgot Password
+
+View All
+
+Read Story
+
+See More
+
+---
+
+## Danger Button
+
+Purpose
+
+Destructive actions.
+
+Examples
+
+Delete Account
+
+Block User
+
+Remove Photo
+
+Cancel Membership
+
+Danger buttons should appear rarely.
+
+---
+
+## Premium Button
+
+Purpose
+
+Premium membership actions.
+
+Examples
+
+Upgrade Membership
+
+Unlock Premium
+
+View Premium Benefits
+
+Reserved exclusively for monetization.
+
+---
+
+# 18.4 Visual Identity
+
+Primary
+
+Warm Champagne
+
+↓
+
+Soft Shadow
+
+↓
+
+Rounded Corners
+
+↓
+
+White Typography
+
+Secondary
+
+White Surface
+
+↓
+
+Champagne Border
+
+↓
+
+Charcoal Typography
+
+Ghost
+
+Transparent
+
+↓
+
+Minimal Hover
+
+↓
+
+No Border
+
+Premium
+
+Subtle Metallic Gradient
+
+↓
+
+Champagne Highlight
+
+↓
+
+Very Restrained Glow
+
+Danger
+
+Muted Red
+
+↓
+
+Soft Border
+
+↓
+
+No Bright Red
+
+---
+
+# 18.5 Dimensions
+
+Small
+
+Height
+
+40px
+
+Default
+
+48px
+
+Large
+
+56px
+
+Hero
+
+64px
+
+Never exceed
+
+64px.
+
+Buttons should feel refined.
+
+Not oversized.
+
+---
+
+# 18.6 Corner Radius
+
+Small
+
+10px
+
+Default
+
+14px
+
+Large
+
+18px
+
+Hero
+
+20px
+
+Buttons should echo the softness of architecture,
+
+not the roundness of toys.
+
+---
+
+# 18.7 Padding
+
+Small
+
+12 × 20
+
+Default
+
+16 × 28
+
+Large
+
+18 × 36
+
+Hero
+
+22 × 44
+
+Padding should create comfortable touch targets.
+
+Not visual bulk.
+
+---
+
+# 18.8 Typography
+
+Font
+
+Inter
+
+Weight
+
+600
+
+Letter Spacing
+
+0.02em
+
+Case
+
+Title Case
+
+Never use ALL CAPS.
+
+Buttons should speak politely.
+
+---
+
+# 18.9 Icons
+
+Buttons may include icons.
+
+Placement
+
+Leading
+
+or
+
+Trailing
+
+Never both.
+
+Icon spacing
+
+12px
+
+Icons should remain secondary to text.
+
+---
+
+# 18.10 States
+
+Every button supports
+
+Default
+
+↓
+
+Hover
+
+↓
+
+Pressed
+
+↓
+
+Focused
+
+↓
+
+Loading
+
+↓
+
+Disabled
+
+↓
+
+Success (optional)
+
+↓
+
+Error (optional)
+
+Every state must be intentionally designed.
+
+---
+
+# 18.11 Hover
+
+Hover communicates readiness.
+
+Allowed
+
+Slight elevation.
+
+Border refinement.
+
+Tiny brightness shift.
+
+Small shadow increase.
+
+Forbidden
+
+Glow.
+
+Rotation.
+
+Bounce.
+
+Large scaling.
+
+Hover should never distract.
+
+---
+
+# 18.12 Press
+
+Press should feel physical.
+
+Sequence
+
+Shadow softens.
+
+↓
+
+Surface compresses
+
+(≈0.98 scale)
+
+↓
+
+Color deepens slightly.
+
+↓
+
+Action executes.
+
+↓
+
+Surface returns naturally.
+
+---
+
+# 18.13 Focus
+
+Focus remains visible.
+
+Appearance
+
+Champagne outline.
+
+Soft shadow.
+
+4px offset.
+
+Keyboard users should feel equally welcomed.
+
+---
+
+# 18.14 Disabled
+
+Disabled buttons should communicate
+
+Unavailable.
+
+Not broken.
+
+Characteristics
+
+Reduced opacity.
+
+No hover.
+
+No shadow.
+
+No motion.
+
+Readable label.
+
+Avoid extremely faded buttons.
+
+---
+
+# 18.15 Loading
+
+Loading buttons prevent duplicate actions.
+
+Sequence
+
+Label
+
+↓
+
+Spinner appears
+
+↓
+
+Button width remains unchanged
+
+↓
+
+Action completes
+
+↓
+
+Original label returns
+
+Never allow button resizing.
+
+Layout should remain stable.
+
+---
+
+# 18.16 Success
+
+Certain actions deserve confirmation.
+
+Examples
+
+Profile Saved
+
+Interest Sent
+
+Verification Submitted
+
+Payment Successful
+
+Feedback
+
+Checkmark replaces spinner.
+
+Gentle fade.
+
+No confetti.
+
+No fireworks.
+
+---
+
+# 18.17 Width Rules
+
+Buttons should size according to content.
+
+Preferred
+
+Intrinsic width.
+
+Full-width only when
+
+Mobile forms.
+
+Authentication.
+
+Checkout.
+
+Critical onboarding.
+
+Avoid unnecessarily wide buttons.
+
+---
+
+# 18.18 Hero Buttons
+
+Hero buttons communicate beginnings.
+
+Primary
+
+Start Your Journey
+
+Secondary
+
+Learn More
+
+Maximum
+
+Two hero actions.
+
+Never more.
+
+---
+
+# 18.19 Button Groups
+
+Primary always appears first.
+
+Desktop
+
+Horizontal
+
+Mobile
+
+Vertical
+
+Spacing
+
+16px
+
+Hierarchy must remain obvious.
+
+---
+
+# 18.20 Destructive Actions
+
+Danger buttons should always require confirmation.
+
+Examples
+
+Delete Profile.
+
+Remove Account.
+
+Block User.
+
+Delete Conversation.
+
+Confirmation should explain consequences.
+
+---
+
+# 18.21 Premium Button
+
+Premium buttons should communicate craftsmanship.
+
+Never greed.
+
+Characteristics
+
+Subtle champagne gradient.
+
+Fine metallic border.
+
+Warm highlight.
+
+No aggressive shine.
+
+Premium should feel aspirational.
+
+Not flashy.
+
+---
+
+# 18.22 Motion
+
+Buttons follow the global Motion Language.
+
+Hover
+
+150ms
+
+Press
+
+100ms
+
+Release
+
+150ms
+
+Loading
+
+Continuous but subtle.
+
+No component-specific timing.
+
+---
+
+# 18.23 Accessibility
+
+Minimum touch target
+
+48 × 48px
+
+Readable labels.
+
+Keyboard accessible.
+
+Visible focus.
+
+Screen reader support.
+
+Never rely on icon-only buttons without accessible labels.
+
+---
+
+# 18.24 Copywriting
+
+Button labels begin with verbs.
+
+Preferred
+
+Continue
+
+Save Profile
+
+View Matches
+
+Start Conversation
+
+Verify Identity
+
+Avoid
+
+Click Here
+
+Go
+
+Submit
+
+Okay
+
+Yes
+
+Labels should communicate outcomes.
+
+---
+
+# 18.25 Mobile Behaviour
+
+Buttons remain easy to reach.
+
+Important actions should stay within the natural thumb zone.
+
+Avoid placing primary actions at unreachable screen edges.
+
+---
+
+# 18.26 Engineering Specification
+
+Buttons expose
+
+Variant
+
+Size
+
+State
+
+Leading Icon
+
+Trailing Icon
+
+Loading
+
+Disabled
+
+Full Width
+
+Type
+
+No page-specific button implementations are permitted.
+
+---
+
+# 18.27 CSS Tokens
+
+```css
+/* Heights */
+
+--button-height-sm: 40px;
+
+--button-height-md: 48px;
+
+--button-height-lg: 56px;
+
+--button-height-xl: 64px;
+
+/* Padding */
+
+--button-padding-sm;
+
+--button-padding-md;
+
+--button-padding-lg;
+
+/* Radius */
+
+--button-radius;
+
+/* Motion */
+
+--button-duration-hover;
+
+--button-duration-press;
+
+/* Shadows */
+
+--button-shadow-default;
+
+--button-shadow-hover;
+
+--button-shadow-active;
+
+/* Colors */
+
+--button-primary-bg;
+
+--button-primary-text;
+
+--button-secondary-bg;
+
+--button-secondary-border;
+
+--button-danger-bg;
+
+--button-premium-bg;
+```
+
+Buttons consume tokens.
+
+Buttons never define visual values themselves.
+
+---
+
+# 18.28 Anti-Patterns
+
+Reject immediately
+
+Buttons with gradients spanning multiple colors.
+
+Neon buttons.
+
+Pill-shaped buttons.
+
+Oversized floating CTAs.
+
+Animated glowing buttons.
+
+Multiple primary buttons.
+
+Tiny touch targets.
+
+Uppercase labels.
+
+Icon-only primary buttons.
+
+Buttons with more than one animation.
+
+Buttons that shift surrounding layout during loading.
+
+---
+
+# 18.29 Review Checklist
+
+Before approving any button
+
+□ Is its purpose immediately obvious?
+
+□ Does it follow the correct hierarchy?
+
+□ Is there only one primary button per viewport?
+
+□ Does it communicate trust?
+
+□ Is it accessible?
+
+□ Is the loading state stable?
+
+□ Does the copy describe the outcome?
+
+□ Does it follow the motion language?
+
+□ Could this button exist in every part of Vivaha without redesign?
+
+□ Would it still feel elegant in five years?
+
+If any answer is "No,"
+
+the button requires refinement.
+
+---
+
+# 18.30 The Final Principle
+
+A great button does not ask users to click.
+
+It gives them the confidence to do so.
+
+Every button in Vivaha should feel like a courteous invitation—
+
+never a demand.
+
+---
+
+# End of Chapter 18
+
+# 📖 Vivaha Design Bible v2.0
+
+# Volume IV — Design System Components
+
+# Chapter 19 — Input System & Form Experience
+
+---
+
+# 19.1 Philosophy
+
+Forms are conversations.
+
+Not paperwork.
+
+Every input field represents a question Vivaha asks with respect.
+
+Users should never feel interrogated.
+
+They should feel guided.
+
+Every field should reduce uncertainty rather than create it.
+
+Completing a form should feel like talking to a thoughtful person—not filling out a government document.
+
+---
+
+# 19.2 Purpose
+
+The Input System exists to accomplish five objectives.
+
+Collect Information
+
+↓
+
+Reduce Friction
+
+↓
+
+Build Trust
+
+↓
+
+Prevent Errors
+
+↓
+
+Encourage Completion
+
+If an input creates anxiety,
+
+it has failed its purpose.
+
+---
+
+# 19.3 Form Personality
+
+Vivaha forms should feel
+
+Patient.
+
+Supportive.
+
+Professional.
+
+Warm.
+
+Encouraging.
+
+Never
+
+Corporate.
+
+Cold.
+
+Technical.
+
+Mechanical.
+
+Forms should feel like someone helping,
+
+not someone judging.
+
+---
+
+# 19.4 Input Hierarchy
+
+Vivaha supports only these input primitives.
+
+Text Input
+
+Email Input
+
+Password Input
+
+Search Input
+
+Textarea
+
+Dropdown
+
+Autocomplete
+
+Date Picker
+
+Phone Number
+
+OTP Input
+
+Checkbox
+
+Radio
+
+Switch
+
+Slider
+
+File Upload
+
+No additional input type should be invented unless absolutely necessary.
+
+---
+
+# 19.5 Anatomy
+
+Every input consists of
+
+```text
+Label
+
+↓
+
+Helper Text (optional)
+
+↓
+
+Input Field
+
+↓
+
+Validation Message
+
+↓
+
+Supporting Hint (optional)
+```
+
+Every layer has a purpose.
+
+Nothing is decorative.
+
+---
+
+# 19.6 Labels
+
+Labels are mandatory.
+
+Never replace labels with placeholders.
+
+Preferred
+
+Full Name
+
+Email Address
+
+Profession
+
+Religion
+
+Current City
+
+Avoid
+
+Name
+
+Mail
+
+Job
+
+Location
+
+Labels should remove ambiguity.
+
+---
+
+# 19.7 Helper Text
+
+Helper text explains.
+
+Not repeats.
+
+Example
+
+Height
+
+"Used only to improve match recommendations."
+
+Good helper text reduces hesitation.
+
+---
+
+# 19.8 Placeholder Text
+
+Placeholders provide examples.
+
+Not instructions.
+
+Correct
+
+"e.g. Software Engineer"
+
+Incorrect
+
+"Enter your profession"
+
+Never rely on placeholders for accessibility.
+
+---
+
+# 19.9 Input Dimensions
+
+Small
+
+44px
+
+Default
+
+52px
+
+Large
+
+60px
+
+Touch targets should always remain comfortable.
+
+---
+
+# 19.10 Border Philosophy
+
+Default
+
+1px Warm Gray
+
+Hover
+
+Champagne Border
+
+Focused
+
+Champagne Outline
+
+Error
+
+Muted Red
+
+Success
+
+Muted Green
+
+Borders communicate state.
+
+Not decoration.
+
+---
+
+# 19.11 Corner Radius
+
+Text Inputs
+
+14px
+
+Dropdowns
+
+16px
+
+Search
+
+18px
+
+Textarea
+
+16px
+
+OTP
+
+12px
+
+All inputs belong to the same family.
+
+---
+
+# 19.12 Typography
+
+Label
+
+14px
+
+Medium
+
+Input
+
+16px
+
+Regular
+
+Helper
+
+14px
+
+Caption
+
+12px
+
+Forms should always prioritize readability.
+
+---
+
+# 19.13 Focus Behaviour
+
+Focus should feel welcoming.
+
+Sequence
+
+Border refines.
+
+↓
+
+Outline appears.
+
+↓
+
+Shadow softens.
+
+↓
+
+Cursor becomes active.
+
+Nothing should jump.
+
+Nothing should flash.
+
+---
+
+# 19.14 Validation
+
+Validation should happen intelligently.
+
+Preferred
+
+After field completion.
+
+After pause.
+
+On submission.
+
+Avoid validating while users are actively typing.
+
+Interruptions increase frustration.
+
+---
+
+# 19.15 Success States
+
+Completed fields communicate confidence.
+
+Examples
+
+✓ Email verified
+
+✓ Username available
+
+✓ Phone number confirmed
+
+Feedback should remain subtle.
+
+Never celebratory.
+
+---
+
+# 19.16 Error States
+
+Every error explains three things.
+
+What happened.
+
+↓
+
+Why.
+
+↓
+
+How to fix it.
+
+Example
+
+Incorrect
+
+"Invalid Phone Number"
+
+Preferred
+
+"Please enter a valid 10-digit mobile number."
+
+---
+
+# 19.17 Required Fields
+
+Required fields use
+
+Small asterisk.
+
+or
+
+"(Required)"
+
+Never use bright red.
+
+The form should remain calm.
+
+---
+
+# 19.18 Optional Fields
+
+Optional fields should be clearly identified.
+
+Example
+
+Bio
+
+(Optional)
+
+Users should never wonder whether something is mandatory.
+
+---
+
+# 19.19 Search Field
+
+Search deserves special treatment.
+
+Features
+
+Instant focus.
+
+Recent searches.
+
+Suggested searches.
+
+Clear button.
+
+Keyboard shortcuts.
+
+Search should encourage exploration.
+
+Not precision.
+
+---
+
+# 19.20 Password Field
+
+Features
+
+Visibility toggle.
+
+Strength indicator.
+
+Requirements.
+
+Confirmation.
+
+Paste allowed.
+
+Never block password managers.
+
+---
+
+# 19.21 OTP Input
+
+OTP should support
+
+Paste.
+
+Auto-advance.
+
+Backspace navigation.
+
+Mobile autofill.
+
+No unnecessary animation.
+
+Verification should feel effortless.
+
+---
+
+# 19.22 Date Picker
+
+Dates should remain human-friendly.
+
+Examples
+
+15 March 2000
+
+Not
+
+2000-03-15
+
+Calendar navigation should be simple.
+
+Touch-friendly.
+
+Keyboard accessible.
+
+---
+
+# 19.23 Dropdowns
+
+Dropdowns should prioritize discovery.
+
+Features
+
+Search (when long).
+
+Grouping.
+
+Keyboard navigation.
+
+Clear selection.
+
+No scrolling fatigue.
+
+---
+
+# 19.24 Autocomplete
+
+Suggestions should feel helpful.
+
+Not intrusive.
+
+Ranking
+
+Recent.
+
+Relevant.
+
+Nearby.
+
+Popular.
+
+Alphabetical.
+
+Never random.
+
+---
+
+# 19.25 File Upload
+
+Uploading photographs should feel reassuring.
+
+Sequence
+
+Choose.
+
+↓
+
+Preview.
+
+↓
+
+Upload.
+
+↓
+
+Processing.
+
+↓
+
+Complete.
+
+Never upload silently.
+
+Users deserve visibility.
+
+---
+
+# 19.26 Image Upload
+
+Photo upload should include
+
+Preview.
+
+Crop.
+
+Rotate.
+
+Replace.
+
+Delete.
+
+Progress.
+
+Guidance.
+
+Users should always know which image becomes primary.
+
+---
+
+# 19.27 Long Forms
+
+Long forms should become journeys.
+
+Break into logical sections.
+
+Example
+
+Basic Information
+
+↓
+
+Education
+
+↓
+
+Profession
+
+↓
+
+Family
+
+↓
+
+Lifestyle
+
+↓
+
+Preferences
+
+↓
+
+Review
+
+Progress reduces anxiety.
+
+---
+
+# 19.28 Auto Save
+
+Whenever possible,
+
+forms should save automatically.
+
+Visual confirmation
+
+"Saved"
+
+should appear quietly.
+
+Users should never fear losing progress.
+
+---
+
+# 19.29 Multi-Step Forms
+
+Every step should answer
+
+Where am I?
+
+↓
+
+What remains?
+
+↓
+
+What happens next?
+
+Users should never feel lost.
+
+---
+
+# 19.30 Keyboard Experience
+
+Forms should support
+
+Tab.
+
+Shift + Tab.
+
+Enter.
+
+Arrow keys.
+
+Escape.
+
+Paste.
+
+Autocomplete.
+
+Professional users expect efficient keyboard workflows.
+
+---
+
+# 19.31 Mobile Forms
+
+Mobile receives special optimisation.
+
+Large fields.
+
+Comfortable spacing.
+
+Appropriate keyboard types.
+
+Sticky Continue button (only during onboarding).
+
+Avoid zoom caused by tiny text.
+
+---
+
+# 19.32 Accessibility
+
+Every field requires
+
+Label.
+
+Programmatic association.
+
+Error announcement.
+
+Focus visibility.
+
+Touch target.
+
+Semantic HTML.
+
+No exceptions.
+
+---
+
+# 19.33 Emotional Language
+
+Instead of
+
+"Tell us your religion."
+
+Prefer
+
+"Help us understand what matters to you."
+
+Instead of
+
+"Upload documents."
+
+Prefer
+
+"Help us verify your profile so others can trust it."
+
+Language changes emotional perception.
+
+---
+
+# 19.34 Empty Form Philosophy
+
+An empty form should feel full of possibility.
+
+Not work.
+
+Visual hierarchy.
+
+Helpful copy.
+
+Progress.
+
+Examples.
+
+Encouragement.
+
+Forms should invite completion.
+
+---
+
+# 19.35 Engineering Contract
+
+Every input exposes
+
+Variant
+
+Value
+
+Disabled
+
+Required
+
+Invalid
+
+Helper Text
+
+Label
+
+Placeholder
+
+Prefix
+
+Suffix
+
+Loading
+
+Readonly
+
+Size
+
+No component should implement its own validation visuals.
+
+---
+
+# 19.36 Design Tokens
+
+```css
+/* Heights */
+
+--input-height-sm;
+
+--input-height-md;
+
+--input-height-lg;
+
+/* Radius */
+
+--input-radius;
+
+/* Borders */
+
+--input-border;
+
+--input-border-hover;
+
+--input-border-focus;
+
+--input-border-error;
+
+--input-border-success;
+
+/* Colors */
+
+--input-bg;
+
+--input-text;
+
+--input-placeholder;
+
+--input-helper;
+
+--input-label;
+
+/* Motion */
+
+--input-duration-focus;
+
+--input-duration-hover;
+```
+
+Every input consumes shared tokens.
+
+No visual values are hardcoded.
+
+---
+
+# 19.37 Anti-Patterns
+
+Reject immediately
+
+Placeholder-only forms.
+
+Floating labels.
+
+Tiny inputs.
+
+Aggressive validation.
+
+Bright red error messages.
+
+Tiny dropdown arrows.
+
+Confusing date pickers.
+
+Multiple field styles.
+
+Different border radii.
+
+Dark input backgrounds.
+
+Glass inputs.
+
+Inputs without labels.
+
+Unclear required fields.
+
+---
+
+# 19.38 Review Checklist
+
+Before approving any form
+
+□ Does every field have a clear purpose?
+
+□ Are labels always visible?
+
+□ Can the form be completed using only the keyboard?
+
+□ Is validation helpful?
+
+□ Does the form reduce anxiety?
+
+□ Is progress obvious?
+
+□ Does auto-save protect user effort?
+
+□ Is mobile comfortable?
+
+□ Does every field follow the design system?
+
+□ Would someone over 60 complete this form without confusion?
+
+If any answer is "No,"
+
+the form is not ready for production.
+
+---
+
+# 19.39 The Final Principle
+
+A great form does not feel like data collection.
+
+It feels like the beginning of a relationship.
+
+Every question Vivaha asks should make users feel understood,
+
+never evaluated.
+
+---
+
+# End of Chapter 19
+
+
