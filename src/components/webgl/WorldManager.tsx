@@ -10,7 +10,7 @@ import { SymbolicEntities } from "./SymbolicEntities";
 
 export function WorldManager() {
   return (
-    <div className="fixed inset-0 z-0 bg-[#040405] pointer-events-none">
+    <div className="fixed inset-0 z-0 bg-[#040405]">
       <Canvas
         camera={{ position: [0, 0, 10], fov: 35 }}
         gl={{ 
