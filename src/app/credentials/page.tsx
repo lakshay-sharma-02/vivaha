@@ -131,10 +131,10 @@ export default function CredentialsPage() {
   );
 
   return (
-    <main className="relative w-full h-[100svh] flex flex-col md:flex-row bg-[#FDFBF7] overflow-hidden">
+    <main className="w-full min-h-screen grid grid-cols-1 md:grid-cols-2 bg-[#FDFBF7]">
       
-      {/* ENVIRONMENT: The Architecture (Left 50%) */}
-      <div className="w-full md:w-1/2 h-[35vh] md:h-full relative shrink-0">
+      {/* ENVIRONMENT: The Architecture */}
+      <div className="relative w-full h-[35vh] md:h-screen">
         {/* We reuse the register image here due to image generation quotas, but it perfectly fits the secure desk aesthetic */}
         <Image 
           src="/images/architecture/register.jpg"
@@ -145,9 +145,9 @@ export default function CredentialsPage() {
         />
       </div>
 
-      {/* ARCHITECTURAL SURFACE: The Document Canvas (Right 50%) */}
-      <div className="w-full md:w-1/2 flex-1 md:h-full flex flex-col px-6 sm:px-12 md:px-16 lg:px-24 py-8 md:py-24 z-10 bg-[#FDFBF7] relative shadow-[-20px_0_40px_rgba(0,0,0,0.05)] overflow-y-auto">
-        <div className="w-full max-w-md mx-auto flex flex-col min-h-full justify-center py-4">
+      {/* ARCHITECTURAL SURFACE: The Document Canvas */}
+      <div className="w-full min-h-[65vh] md:h-screen flex flex-col px-6 py-12 md:p-12 lg:p-24 bg-[#FDFBF7] relative shadow-[-20px_0_40px_rgba(0,0,0,0.05)] overflow-y-auto">
+        <div className="w-full max-w-md mx-auto flex flex-col min-h-full justify-center">
           
           {/* Header */}
           <div className="mb-16">
