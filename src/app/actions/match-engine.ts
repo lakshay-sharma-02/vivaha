@@ -132,7 +132,7 @@ export async function generateRecommendations(targetUserId?: string) {
 
       // -- Location Match --
       let locationScore = 0;
-      if (userPrefs?.preferred_cities?.includes(candidate.city_id)) {
+      if (candidate.city_id && userPrefs?.preferred_cities?.includes(candidate.city_id)) {
         locationScore = WEIGHTS.LOCATION_MATCH;
       } else if (candidate.country_id === userProfile.country_id) {
         locationScore = WEIGHTS.LOCATION_MATCH * 0.5;
