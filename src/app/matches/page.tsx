@@ -211,10 +211,17 @@ export default function BrowseMatchesPage() {
     <div className="min-h-screen bg-[#FBF9F6] text-[#2A2621] font-sans selection:bg-[#E5D9CC]/50 relative overflow-hidden">
       {/* --- Immersive Environment --- */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        {/* Paper texture overlay */}
-        <div className="absolute inset-0 opacity-[0.015] mix-blend-multiply" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }}></div>
-        {/* Vignette */}
-        <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-[#F0EBE1]/40 mix-blend-multiply"></div>
+        {/* Generated luxury floral backdrop */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-[0.45] mix-blend-multiply"
+          style={{ backgroundImage: 'url("/images/luxury_floral_backdrop.jpg")' }}
+        />
+        {/* Soft paper texture overlay for premium feel */}
+        <div className="absolute inset-0 opacity-[0.02] mix-blend-multiply" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }}></div>
+        {/* Vignette to focus attention center */}
+        <div className="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-[#E6D5C3]/40 mix-blend-multiply"></div>
+        {/* White soft fade at the bottom to ensure content remains readable */}
+        <div className="absolute bottom-0 left-0 w-full h-[50vh] bg-gradient-to-t from-[#FBF9F6] to-transparent"></div>
       </div>
       
       <SunlightRays />
