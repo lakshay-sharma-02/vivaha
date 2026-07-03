@@ -13,50 +13,7 @@ import {
   Filter,
 } from "lucide-react";
 import Image from "next/image";
-
-// Mock Data
-const MOCK_MATCHES = [
-  {
-    id: 1,
-    firstName: "Aanya",
-    age: 27,
-    city: "Mumbai, India",
-    profession: "Architect",
-    compatibility: 94,
-    verified: true,
-    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800&auto=format&fit=crop",
-  },
-  {
-    id: 2,
-    firstName: "Priya",
-    age: 26,
-    city: "London, UK",
-    profession: "Investment Banker",
-    compatibility: 89,
-    verified: true,
-    image: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=800&auto=format&fit=crop",
-  },
-  {
-    id: 3,
-    firstName: "Riya",
-    age: 28,
-    city: "New York, USA",
-    profession: "Software Engineer",
-    compatibility: 91,
-    verified: true,
-    image: "https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?q=80&w=800&auto=format&fit=crop",
-  },
-  {
-    id: 4,
-    firstName: "Meera",
-    age: 25,
-    city: "Delhi, India",
-    profession: "Doctor",
-    compatibility: 87,
-    verified: false,
-    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop",
-  }
-];
+import { fetchDiscoverProfiles } from "@/app/actions/discover";
 
 const FILTERS = ["Age", "Religion", "Community", "City", "Profession", "Education", "Height"];
 
@@ -189,11 +146,26 @@ export default function BrowseMatchesPage() {
   const [showPremiumModal, setShowPremiumModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilters, setActiveFilters] = useState<string[]>([]);
+  const [matches, setMatches] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   const { scrollY } = useScroll();
   const yParallax = useTransform(scrollY, [0, 800], [0, 100]);
   const opacityFade = useTransform(scrollY, [0, 300], [1, 0]);
 
-  const displayedMatches = MOCK_MATCHES.filter(match => match.firstName.toLowerCase().includes(searchQuery.toLowerCase()));
+  useEffect(() => {
+    async function loadMatches() {
+      setIsLoading(true);
+      const result = await fetchDiscoverProfiles(1);
+      if (result.success) {
+        setMatches(result.profiles || []);
+      }
+      setIsLoading(false);
+    }
+    loadMatches();
+  }, []);
+
+  const displayedMatches = matches.filter(match => match.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
   return (
     <div className="min-h-screen bg-[#F7F5EF] text-[#2A2621] font-sans selection:bg-[#E5D9CC]/50 relative overflow-x-hidden">
@@ -332,7 +304,11 @@ export default function BrowseMatchesPage() {
 
         {/* PROFILE GRID */}
         <section className="max-w-[1400px] mx-auto px-8 relative z-40 bg-[#F7F5EF]">
-          {displayedMatches.length > 0 ? (
+          {isLoading ? (
+            <div className="flex justify-center items-center py-20">
+              <div className="w-10 h-10 border-2 border-[#E6D5C3] border-t-[#8C7A6B] rounded-full animate-spin"></div>
+            </div>
+          ) : displayedMatches.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
               {displayedMatches.map((match, idx) => (
                 <motion.div key={match.id} initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.1 * idx, ease: "easeOut" }}>
@@ -367,7 +343,7 @@ function MatchCard({ match, onUnlock }: { match: any; onUnlock: () => void }) {
 
       {/* Image Section */}
       <div className="relative h-[380px] overflow-hidden bg-[#F0EBE1] m-2 rounded-xl">
-        <Image src={match.image} alt={match.firstName} fill className="object-cover object-center blur-[4px] scale-105 group-hover:scale-110 group-hover:blur-[2px] transition-all duration-1000 ease-out" />
+        <Image src={match.image || "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800&auto=format&fit=crop"} alt={match.name} fill className="object-cover object-center blur-[4px] scale-105 group-hover:scale-110 group-hover:blur-[2px] transition-all duration-1000 ease-out" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#2A2621]/60 via-transparent to-transparent pointer-events-none" />
         
         {/* Compatibility Ring */}
@@ -389,13 +365,13 @@ function MatchCard({ match, onUnlock }: { match: any; onUnlock: () => void }) {
         {/* Typography inside Image */}
         <div className="absolute bottom-0 left-0 w-full p-5 z-20 text-white">
           <h2 className="font-serif text-2xl font-light tracking-wide flex items-center gap-2 drop-shadow-md">
-            {match.firstName}, {match.age}
+            {match.name.split(' ')[0]}, {match.age}
             {match.verified && <CheckCircle size={16} className="text-[#FDF5E6]" fill="none" strokeWidth={1.5} />}
           </h2>
           <div className="flex items-center gap-3 mt-1.5 text-[#FDF5E6] text-xs font-light tracking-wider opacity-90">
             <span>{match.profession}</span>
             <span className="w-1 h-1 rounded-full bg-white/40"></span>
-            <span>{match.city}</span>
+            <span>{match.location}</span>
           </div>
         </div>
       </div>
