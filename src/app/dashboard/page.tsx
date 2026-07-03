@@ -98,9 +98,9 @@ export default async function DashboardHome() {
               <div key={intro.id} className="group flex flex-col bg-white shadow-sm border border-[#2A2621]/5 hover:shadow-md transition-all cursor-pointer">
                 {/* Image Surface */}
                 <div className="relative w-full aspect-[4/5] bg-[#E8E3D9] overflow-hidden">
-                  {intro.image_url ? (
+                  {intro.image ? (
                     <Image 
-                      src={intro.image_url} 
+                      src={intro.image} 
                       alt={intro.name}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
