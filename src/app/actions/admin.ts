@@ -2,6 +2,7 @@
 
 import { createClient } from "@/shared/lib/supabase/server"
 import { revalidatePath } from "next/cache"
+import { triggerNotification } from "./notifications"
 
 // Simple admin check - can be enhanced with proper role management
 const ADMIN_EMAILS = process.env.ADMIN_EMAILS?.split(',') || []
@@ -29,6 +30,7 @@ export async function getPendingVerifications() {
   }
 
   // Fetch verification documents
+  // @ts-ignore
   const { data: documents, error: docsError } = await supabase
     .from('verification_documents')
     .select('id, profile_id, document_type, bucket_path, status, submitted_at')
@@ -75,6 +77,7 @@ export async function approveVerification(documentId: string, profileId: string)
   }
 
   // Update document status
+  // @ts-ignore
   const { error: docError } = await supabase
     .from('verification_documents')
     .update({
@@ -98,6 +101,15 @@ export async function approveVerification(documentId: string, profileId: string)
     console.error('Error updating profile:', profileError)
     return { success: false, error: profileError.message }
   }
+
+  await triggerNotification({
+    userId: profileId,
+    type: 'verification',
+    title: 'Profile Verified!',
+    body: 'Your professional identity has been verified. You can now fully interact with the Vivaha community.',
+    actionUrl: '/dashboard',
+    priority: 'high'
+  })
 
   revalidatePath('/admin/verification')
 
@@ -139,6 +151,7 @@ export async function rejectVerification(documentId: string, profileId: string, 
 
   // Optionally log rejection reason in admin_notes
   if (reason) {
+    // @ts-ignore
     await supabase
       .from('admin_notes')
       .insert({
@@ -147,6 +160,15 @@ export async function rejectVerification(documentId: string, profileId: string, 
         note: reason
       })
   }
+
+  await triggerNotification({
+    userId: profileId,
+    type: 'verification',
+    title: 'Verification Update',
+    body: `Your verification requires attention. ${reason ? `Reason: ${reason}` : 'Please re-upload clearer documents.'}`,
+    actionUrl: '/dashboard/settings',
+    priority: 'high'
+  })
 
   revalidatePath('/admin/verification')
 

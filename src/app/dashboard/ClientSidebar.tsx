@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
@@ -10,10 +10,11 @@ import {
   Heart, 
   MessageCircle, 
   Bookmark, 
-  Settings,
+  ShieldAlert,
   Crown
 } from "lucide-react";
 import { NotificationBell } from "@/shared/components/NotificationBell";
+import { checkIsAdmin } from "@/app/actions/admin";
 
 const NAV_ITEMS = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -26,6 +27,16 @@ const NAV_ITEMS = [
 
 export default function ClientSidebar() {
   const pathname = usePathname();
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  React.useEffect(() => {
+    checkIsAdmin().then(res => setIsAdmin(res.isAdmin));
+  }, []);
+
+  const items = [...NAV_ITEMS];
+  if (isAdmin) {
+    items.push({ label: "Admin Queue", href: "/dashboard/admin/verifications", icon: ShieldAlert });
+  }
 
   return (
     <aside className="w-64 h-screen sticky top-0 border-r border-[#E6D5C3]/60 bg-[#FBF9F6]/80 backdrop-blur-xl flex flex-col justify-between py-10 z-40">
@@ -43,8 +54,8 @@ export default function ClientSidebar() {
         </div>
 
         <nav className="space-y-3">
-          {NAV_ITEMS.map((item) => {
-            const isActive = pathname === item.href;
+          {items.map((item) => {
+            const isActive = pathname === item.href || (pathname.startsWith(item.href) && item.href !== "/dashboard");
             const Icon = item.icon;
             return (
               <Link key={item.href} href={item.href} className="relative flex items-center gap-4 px-4 py-3 rounded-xl group overflow-hidden">
