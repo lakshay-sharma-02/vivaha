@@ -58,8 +58,8 @@ export async function getDashboardData() {
       profile_media (bucket_path)
     `)
     .neq("id", user.id)
-    .eq("is_active", true)
-    .eq("is_paused", false)
+    .neq("is_paused", true)
+    .neq("is_active", false)
     .limit(2);
 
   return {
@@ -90,7 +90,9 @@ export async function getDashboardData() {
         city: rec.city?.name || "Unknown",
         compatibility: Math.floor(Math.random() * 15) + 80, // Mock compatibility since it requires deep match logic
         // @ts-ignore
-        image: rec.profile_media?.[0]?.bucket_path || "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=800&auto=format&fit=crop"
+        image: rec.profile_media?.[0]?.bucket_path 
+          ? supabase.storage.from('profile_media').getPublicUrl(rec.profile_media[0].bucket_path).data.publicUrl
+          : "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=800&auto=format&fit=crop"
       }
     }) || []
   };

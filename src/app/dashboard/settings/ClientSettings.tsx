@@ -286,7 +286,7 @@ function PhotosSection({ media, onSave }: { media: any[], onSave: () => void }) 
         <div className="grid grid-cols-3 gap-4">
           {media.length > 0 ? media.map((m, i) => (
             <div key={m.id} className="aspect-[3/4] bg-[#FBF9F6] rounded-xl border border-[#E6D5C3] relative overflow-hidden group">
-              <Image src={m.bucket_path} alt="Gallery" fill className="object-cover" />
+              <Image src={m.publicUrl || m.bucket_path} alt="Gallery" fill className="object-cover" />
               <div className="absolute inset-0 bg-[#2A2621]/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
                 <button onClick={() => handleDelete(m.id, m.bucket_path)} className="w-10 h-10 rounded-full bg-white text-[#8C7A6B] flex items-center justify-center hover:text-red-500 shadow-xl transition-colors"><Trash2 size={16} /></button>
               </div>

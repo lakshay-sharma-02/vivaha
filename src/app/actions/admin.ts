@@ -61,11 +61,24 @@ export async function getPendingVerifications() {
     return { success: false, error: profilesError.message, verifications: [] }
   }
 
-  // Join documents with profiles
+  // Join documents with profiles and generate signed URLs
   const profileMap = new Map(profiles?.map((p: any) => [p.id, p]) || [])
-  const verifications = documents.map((doc: any) => ({
-    ...doc,
-    profiles: profileMap.get(doc.profile_id) || null
+  const verifications = await Promise.all(documents.map(async (doc: any) => {
+    let signedUrl = "";
+    if (doc.bucket_path) {
+      const { data } = await adminSupabase.storage
+        .from('verification_documents')
+        .createSignedUrl(doc.bucket_path, 60 * 60); // 1 hour expiry
+      if (data?.signedUrl) {
+        signedUrl = data.signedUrl;
+      }
+    }
+    
+    return {
+      ...doc,
+      profiles: profileMap.get(doc.profile_id) || null,
+      publicUrl: signedUrl
+    };
   }))
 
   return { success: true, verifications }

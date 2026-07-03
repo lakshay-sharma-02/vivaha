@@ -153,6 +153,8 @@ export async function saveOnboardingData(formData: OnboardingData) {
         university: formData.university || null,
         company: formData.company || null,
         income_range: formData.income || null,
+        is_active: true,
+        is_paused: false,
       } as any, { onConflict: 'id' });
 
     if (profileError) {

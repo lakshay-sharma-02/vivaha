@@ -106,11 +106,7 @@ export default function ClientVerifications() {
               const isRejecting = rejectingId === item.id;
               
               // Resolve image URL
-              let imageUrl = "";
-              if (item.bucket_path) {
-                const { data } = supabase.storage.from("verification_documents").getPublicUrl(item.bucket_path);
-                imageUrl = data.publicUrl;
-              }
+              let imageUrl = item.publicUrl || "";
 
               return (
                 <motion.div

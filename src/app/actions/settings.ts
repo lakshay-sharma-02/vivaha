@@ -16,6 +16,12 @@ export async function getSettingsData() {
     const { data: family } = await supabase.from("family_details").select("*").eq("profile_id", user.id).single();
     const { data: media } = await supabase.from("profile_media").select("*").eq("profile_id", user.id).order('display_order', { ascending: true });
     const { data: membership } = await supabase.from("memberships").select("*").eq("profile_id", user.id).single();
+    
+    // Transform media to include public URLs
+    const transformedMedia = media?.map(m => ({
+      ...m,
+      publicUrl: supabase.storage.from('profile_media').getPublicUrl(m.bucket_path).data.publicUrl
+    })) || [];
     const { data: notificationPrefs } = await (supabase as any).from("notification_preferences").select("*").eq("profile_id", user.id).single();
 
     return { 
@@ -24,7 +30,7 @@ export async function getSettingsData() {
         profile: profile || {},
         preferences: preferences || {},
         family: family || {},
-        media: media || [],
+        media: transformedMedia,
         membership: membership || {},
         notificationPrefs: notificationPrefs || {
           email_enabled: true,
