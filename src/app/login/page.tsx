@@ -13,6 +13,8 @@ import { useState } from "react";
 export default function LoginPage() {
   const router = useRouter();
   const [authError, setAuthError] = useState<string | null>(null);
+  const [loginMethod, setLoginMethod] = useState<"password" | "magic_link">("password");
+  const [magicLinkSent, setMagicLinkSent] = useState(false);
 
   const {
     register,
@@ -26,16 +28,31 @@ export default function LoginPage() {
     setAuthError(null);
     const supabase = createClient();
     
-    const { error } = await supabase.auth.signInWithPassword({
-      email: data.email,
-      password: data.password,
-    });
+    if (loginMethod === "password") {
+      const { error } = await supabase.auth.signInWithPassword({
+        email: data.email,
+        password: data.password,
+      });
 
-    if (error) {
-      setAuthError("Incorrect email or password. Please try again.");
+      if (error) {
+        setAuthError("Incorrect email or password. Please try again.");
+      } else {
+        router.push("/dashboard");
+        router.refresh();
+      }
     } else {
-      router.push("/dashboard");
-      router.refresh();
+      const { error } = await supabase.auth.signInWithOtp({
+        email: data.email,
+        options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
+        },
+      });
+
+      if (error) {
+        setAuthError(error.message);
+      } else {
+        setMagicLinkSent(true);
+      }
     }
   };
 
@@ -78,14 +95,51 @@ export default function LoginPage() {
             </p>
           </motion.div>
 
-          <motion.form 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1.2, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            onSubmit={handleSubmit(onSubmit)} 
-            className="space-y-10"
-          >
-            {/* Email */}
+          {magicLinkSent ? (
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="space-y-8"
+            >
+              <div className="bg-[#FDF5E6] border border-[#E6D5C3] p-6 rounded-xl">
+                <p className="text-sm text-[#2A2621] font-light leading-relaxed">
+                  A magic link has been sent to your email. Click the link to instantly securely log into your account.
+                </p>
+              </div>
+              <button 
+                onClick={() => setMagicLinkSent(false)}
+                className="inline-block text-xs font-bold text-[#2A2621] uppercase tracking-[0.2em] border-b border-[#2A2621]/30 pb-1 hover:border-[#2A2621] transition-colors"
+              >
+                Use a different method
+              </button>
+            </motion.div>
+          ) : (
+            <motion.form 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1.2, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              onSubmit={handleSubmit(onSubmit)} 
+              className="space-y-10"
+            >
+              {/* Login Method Toggle */}
+              <div className="flex gap-4 border-b border-[#2A2621]/10 pb-4">
+                <button
+                  type="button"
+                  onClick={() => setLoginMethod("password")}
+                  className={`text-[10px] uppercase tracking-widest font-bold transition-colors ${loginMethod === "password" ? "text-[#2A2621]" : "text-[#8C7A6B]/50 hover:text-[#8C7A6B]"}`}
+                >
+                  Password
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setLoginMethod("magic_link")}
+                  className={`text-[10px] uppercase tracking-widest font-bold transition-colors ${loginMethod === "magic_link" ? "text-[#2A2621]" : "text-[#8C7A6B]/50 hover:text-[#8C7A6B]"}`}
+                >
+                  Magic Link
+                </button>
+              </div>
+
+              {/* Email */}
             <div className="space-y-2">
               <label htmlFor="email" className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-[0.2em]">Email Address</label>
               <input 
@@ -101,24 +155,26 @@ export default function LoginPage() {
             </div>
 
             {/* Password */}
-            <div className="space-y-2">
-              <div className="flex justify-between items-center">
-                <label htmlFor="password" className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-[0.2em]">Secure Password</label>
-                <Link href="#" className="text-[9px] font-bold text-[#8C7A6B]/70 hover:text-[#2A2621] uppercase tracking-widest transition-colors">
-                  Lost Key?
-                </Link>
-              </div>
-              <input 
-                id="password"
-                type="password" 
-                {...register("password")}
-                className="block w-full bg-transparent border-b border-[#2A2621]/20 pb-2 text-sm text-[#2A2621] font-medium placeholder-[#8C7A6B]/40 focus:outline-none focus:border-[#2A2621] transition-colors"
-                placeholder="••••••••"
-              />
-              {errors.password && (
-                <p className="text-[10px] text-red-900/60 font-medium italic pt-1">{errors.password.message}</p>
-              )}
-            </div>
+            {loginMethod === "password" && (
+              <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <label htmlFor="password" className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-[0.2em]">Secure Password</label>
+                  <Link href="/forgot-password" className="text-[9px] font-bold text-[#8C7A6B]/70 hover:text-[#2A2621] uppercase tracking-widest transition-colors">
+                    Lost Key?
+                  </Link>
+                </div>
+                <input 
+                  id="password"
+                  type="password" 
+                  {...register("password", { required: loginMethod === "password" })}
+                  className="block w-full bg-transparent border-b border-[#2A2621]/20 pb-2 text-sm text-[#2A2621] font-medium placeholder-[#8C7A6B]/40 focus:outline-none focus:border-[#2A2621] transition-colors"
+                  placeholder="••••••••"
+                />
+                {errors.password && loginMethod === "password" && (
+                  <p className="text-[10px] text-red-900/60 font-medium italic pt-1">{errors.password.message}</p>
+                )}
+              </motion.div>
+            )}
 
             {/* Submit Button */}
             <div className="pt-8 space-y-4">
@@ -149,6 +205,7 @@ export default function LoginPage() {
               </div>
             </div>
           </motion.form>
+          )}
           
         </div>
       </div>
