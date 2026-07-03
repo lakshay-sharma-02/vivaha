@@ -38,7 +38,6 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
       .from("notifications")
       .select("*")
       .eq("user_id", user.id)
-      .is("deleted_at", null)
       .order("created_at", { ascending: false })
       .limit(50);
       

@@ -92,7 +92,6 @@ export async function fetchNotifications(page = 1, limit = 20) {
       .from('notifications')
       .select('*', { count: 'exact' })
       .eq('user_id', user.id)
-      .is('deleted_at', null)
       .order('created_at', { ascending: false })
       .range(offset, offset + limit - 1);
 
@@ -151,10 +150,9 @@ export async function archiveNotification(notificationId: string) {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return { success: false };
 
-    // @ts-ignore
-    await (supabase as any)
+    const { error } = await (supabase as any)
       .from('notifications')
-      .update({ deleted_at: new Date().toISOString() })
+      .delete()
       .eq('id', notificationId)
       .eq('user_id', user.id);
 
