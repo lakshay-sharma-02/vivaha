@@ -33,7 +33,7 @@ export async function POST(req: Request) {
     // 4. Initialize Razorpay
     if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
       console.error("Razorpay keys missing from environment.")
-      return NextResponse.json({ error: "Payment gateway misconfigured." }, { status: 500 })
+      return NextResponse.json({ error: "Payment gateway misconfigured: Keys missing." }, { status: 500 })
     }
 
     const razorpay = new Razorpay({
@@ -45,7 +45,7 @@ export async function POST(req: Request) {
     const options = {
       amount: amountInPaise,
       currency: "INR",
-      receipt: `receipt_${user.id}_${Date.now()}`,
+      receipt: `rcpt_${user.id.substring(0, 8)}_${Date.now()}`,
       notes: {
         userId: user.id,
         planId: planId || "premium_lifetime",
@@ -64,7 +64,7 @@ export async function POST(req: Request) {
   } catch (err) {
     console.error("Razorpay Order Creation Error:", (err as Error).message)
     return NextResponse.json(
-      { error: "Failed to initialize payment gateway." },
+      { error: "Failed to initialize payment gateway.", details: (err as Error).message },
       { status: 500 }
     )
   }

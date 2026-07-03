@@ -189,7 +189,8 @@ export default function PremiumMembershipPage() {
       const data = await res.json();
       
       if (!res.ok) {
-        alert(data.error || "Payment initialization failed.");
+        console.error("Payment API Error Details:", data.details);
+        alert(data.error + (data.details ? `\nDetails: ${data.details}` : ""));
         setIsProcessing(false);
         return;
       }
