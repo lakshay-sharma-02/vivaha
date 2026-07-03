@@ -8,19 +8,19 @@ export const metadata: Metadata = {
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen bg-[#F5F2EB] text-[#2A2621] font-sans selection:bg-[#8C7A6B]/30 relative">
+    <div className="min-h-screen bg-[#F1EFE7] text-[#2A2621] font-sans selection:bg-[#8C7A6B]/30 relative overflow-hidden">
       {/* 
-        Quiet Navigation Bar 
-        Drop-shadow ensures it stays visible over the image (top)
+        The Nav rests delicately on the travertine surface.
+        No drop shadows, just pure ink on stone.
       */}
-      <header className="absolute top-0 w-full z-20 px-6 py-8 flex justify-between items-center text-[#F5F2EB]">
+      <header className="absolute top-0 w-full z-20 px-12 py-10 flex justify-between items-center text-[#2A2621]">
         <Link 
           href="/dashboard" 
-          className="font-serif text-2xl tracking-wide opacity-90 hover:opacity-100 transition-opacity drop-shadow-md"
+          className="font-serif text-2xl tracking-wide opacity-80 hover:opacity-100 transition-opacity"
         >
           Vivaha
         </Link>
-        <nav className="flex gap-8 text-[11px] font-bold tracking-[0.2em] uppercase opacity-90 drop-shadow-md">
+        <nav className="flex gap-12 text-[10px] font-bold tracking-[0.25em] uppercase opacity-70">
           <Link href="/dashboard" className="hover:opacity-100 transition-opacity">Home</Link>
           <Link href="/dashboard/discover" className="hover:opacity-100 transition-opacity">Introductions</Link>
           <Link href="/dashboard/messages" className="hover:opacity-100 transition-opacity">Letters</Link>
@@ -28,8 +28,8 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         </nav>
       </header>
 
-      {/* Main Home Environment */}
-      <main className="min-h-screen">
+      {/* Main Architectural Space */}
+      <main className="min-h-screen pt-32">
         {children}
       </main>
     </div>
