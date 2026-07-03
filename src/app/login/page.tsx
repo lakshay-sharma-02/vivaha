@@ -189,7 +189,7 @@ export default function LoginPage() {
                   href="/register"
                   className="text-[10px] font-bold text-[#8C7A6B] hover:text-[#2A2621] uppercase tracking-[0.2em] transition-colors"
                 >
-                  Apply for Membership
+                  No account? Apply
                 </Link>
                 
                 <button 

@@ -9,6 +9,7 @@ import { registerSchema, RegisterFormValues } from "@/shared/validation/auth-sch
 import { useRouter } from "next/navigation";
 import { createClient } from "@/shared/lib/supabase/client";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -157,13 +158,13 @@ export default function RegisterPage() {
                 </div>
               )}
               
-              <div className="flex items-center justify-between">
-                <button 
-                  type="button" 
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 sm:gap-0">
+                <Link 
+                  href="/login" 
                   className="text-[10px] font-bold text-[#8C7A6B] hover:text-[#2A2621] uppercase tracking-[0.2em] transition-colors"
                 >
-                  Return to Estate
-                </button>
+                  Already a member?
+                </Link>
                 
                 <button 
                   type="submit" 

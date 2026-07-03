@@ -12,7 +12,9 @@ import {
   Bookmark, 
   ShieldAlert,
   Crown,
-  Settings
+  Settings,
+  Menu,
+  X
 } from "lucide-react";
 import { NotificationBell } from "@/shared/components/NotificationBell";
 import { checkIsAdmin } from "@/app/actions/admin";
@@ -39,15 +41,33 @@ export default function ClientSidebar() {
     items.push({ label: "Admin Queue", href: "/dashboard/admin/verifications", icon: ShieldAlert });
   }
 
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <aside className="w-64 h-screen sticky top-0 border-r border-[#E6D5C3]/60 bg-[#FBF9F6]/80 backdrop-blur-xl flex flex-col justify-between py-10 z-40">
+    <>
+      <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-[#FBF9F6]/90 backdrop-blur-md border-b border-[#E6D5C3]/60 z-50 flex items-center justify-between px-6">
+        <span className="font-serif text-xl tracking-[0.15em] uppercase text-[#8C7A6B]">Vivaha</span>
+        <div className="flex items-center gap-4">
+          <NotificationBell />
+          <button onClick={() => setIsOpen(!isOpen)} className="text-[#8C7A6B]">
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+      </div>
+      
+      {/* Overlay for mobile */}
+      {isOpen && (
+        <div className="md:hidden fixed inset-0 bg-[#2A2621]/40 z-40 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
+      )}
+
+      <aside className={`fixed md:sticky top-0 left-0 h-screen w-72 md:w-64 bg-[#FBF9F6]/95 md:bg-[#FBF9F6]/80 backdrop-blur-xl border-r border-[#E6D5C3]/60 flex flex-col justify-between py-10 z-50 md:z-40 transition-transform duration-500 ease-in-out ${isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}>
       <div className="absolute inset-0 opacity-[0.02] mix-blend-multiply pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }}></div>
       
       <div className="relative z-10 px-8">
-        <div className="flex items-center justify-between mb-16">
+        <div className="flex items-center justify-between mb-16 hidden md:flex">
           <Link href="/dashboard" className="flex items-center gap-3 group">
             <div className="w-10 h-10 rounded-full border border-[#8C7A6B] flex items-center justify-center relative">
-              <span className="font-serif text-[#8C7A6B] text-xl leading-none pt-1">V</span>
+               <span className="font-serif text-[#8C7A6B] text-xl leading-none pt-1">V</span>
             </div>
             <span className="font-serif text-2xl tracking-[0.15em] uppercase text-[#8C7A6B] group-hover:text-[#2A2621] transition-colors">Vivaha</span>
           </Link>
@@ -59,7 +79,12 @@ export default function ClientSidebar() {
             const isActive = pathname === item.href || (pathname.startsWith(item.href) && item.href !== "/dashboard");
             const Icon = item.icon;
             return (
-              <Link key={item.href} href={item.href} className="relative flex items-center gap-4 px-4 py-3 rounded-xl group overflow-hidden">
+              <Link 
+                key={item.href} 
+                href={item.href} 
+                onClick={() => setIsOpen(false)}
+                className="relative flex items-center gap-4 px-4 py-3 rounded-xl group overflow-hidden"
+              >
                 {isActive && (
                   <motion.div 
                     layoutId="sidebar-active"
@@ -92,5 +117,6 @@ export default function ClientSidebar() {
         </div>
       </div>
     </aside>
+    </>
   );
 }

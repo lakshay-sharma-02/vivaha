@@ -111,7 +111,7 @@ export default function ClientDashboard({ initialData }: { initialData: Dashboar
   const progressPathLength = (completionScore || 0) / 100;
 
   return (
-    <div className="min-h-screen relative px-10 py-12 pb-32">
+    <div className="min-h-screen relative px-4 md:px-10 py-8 md:py-12 pb-32">
       {/* Background Elements */}
       <div className="fixed inset-0 opacity-[0.03] mix-blend-multiply pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }}></div>
       <SunlightRays />
@@ -141,7 +141,7 @@ export default function ClientDashboard({ initialData }: { initialData: Dashboar
             {/* LARGE HERO CARD */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.1 }}
-              className="bg-gradient-to-br from-[#FBF9F6] to-[#F7F5EF] rounded-[2rem] p-10 border border-[#E6D5C3]/80 shadow-[0_20px_50px_-15px_rgba(230,213,195,0.6)] relative overflow-hidden flex flex-col md:flex-row justify-between items-center gap-8"
+              className="bg-gradient-to-br from-[#FBF9F6] to-[#F7F5EF] rounded-[2rem] p-6 md:p-10 border border-[#E6D5C3]/80 shadow-[0_20px_50px_-15px_rgba(230,213,195,0.6)] relative overflow-hidden flex flex-col md:flex-row justify-between items-center gap-8"
             >
               <div className="absolute inset-0 opacity-[0.02] mix-blend-multiply pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }}></div>
               
@@ -270,7 +270,7 @@ export default function ClientDashboard({ initialData }: { initialData: Dashboar
             {/* INTERESTS SUMMARY */}
             <motion.div 
               initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
-              className="bg-white rounded-[2rem] p-8 border border-[#E6D5C3]/60 shadow-sm relative overflow-hidden"
+              className="bg-white rounded-[2rem] p-6 md:p-8 border border-[#E6D5C3]/60 shadow-sm relative overflow-hidden"
             >
               <div className="absolute inset-0 opacity-[0.01] mix-blend-multiply pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }}></div>
               <h3 className="font-serif text-xl text-[#2A2621] tracking-wide mb-6">Interests</h3>
@@ -298,7 +298,7 @@ export default function ClientDashboard({ initialData }: { initialData: Dashboar
             {/* RECENT ACTIVITY */}
             <motion.div 
               initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.3 }}
-              className="bg-[#FBF9F6] rounded-[2rem] p-8 border border-[#E6D5C3]/60 shadow-sm relative overflow-hidden"
+              className="bg-[#FBF9F6] rounded-[2rem] p-6 md:p-8 border border-[#E6D5C3]/60 shadow-sm relative overflow-hidden"
             >
               <h3 className="font-serif text-xl text-[#2A2621] tracking-wide mb-6">Journey Timeline</h3>
               
@@ -324,7 +324,7 @@ export default function ClientDashboard({ initialData }: { initialData: Dashboar
             {/* MESSAGES PREVIEW */}
             <motion.div 
               initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.4 }}
-              className="bg-white rounded-[2rem] p-8 border border-[#E6D5C3]/60 shadow-sm relative overflow-hidden"
+              className="bg-white rounded-[2rem] p-6 md:p-8 border border-[#E6D5C3]/60 shadow-sm relative overflow-hidden"
             >
               <div className="flex justify-between items-end mb-6">
                 <h3 className="font-serif text-xl text-[#2A2621] tracking-wide">Recent Letters</h3>
