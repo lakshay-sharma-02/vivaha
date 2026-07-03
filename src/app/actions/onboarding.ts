@@ -151,7 +151,7 @@ export async function saveOnboardingData(formData: OnboardingData) {
 
     if (profileError) {
       console.error("Profile update error:", profileError)
-      return { success: false, error: `Database Error (Profiles): ${profileError.message || profileError.details || JSON.stringify(profileError)}` }
+      return { success: false, error: `Database Error (Profiles): ${profileError.message} | Details: ${JSON.stringify(profileError)}` }
     }
 
     // 3. Update Preferences
