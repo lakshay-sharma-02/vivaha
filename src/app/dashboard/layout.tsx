@@ -1,35 +1,16 @@
 import type { Metadata } from "next"
-import Link from "next/link"
 import { ReactNode } from "react"
+import ClientSidebar from "./ClientSidebar"
 
 export const metadata: Metadata = {
-  title: "Home",
+  title: "Dashboard | Vivaha",
 }
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen bg-[#F1EFE7] text-[#2A2621] font-sans selection:bg-[#8C7A6B]/30 relative overflow-hidden">
-      {/* 
-        The Nav rests delicately on the travertine surface.
-        No drop shadows, just pure ink on stone.
-      */}
-      <header className="absolute top-0 w-full z-20 px-12 py-10 flex justify-between items-center text-[#2A2621]">
-        <Link 
-          href="/dashboard" 
-          className="font-serif text-2xl tracking-wide opacity-80 hover:opacity-100 transition-opacity"
-        >
-          Vivaha
-        </Link>
-        <nav className="flex gap-12 text-[10px] font-bold tracking-[0.25em] uppercase opacity-70">
-          <Link href="/dashboard" className="hover:opacity-100 transition-opacity">Home</Link>
-          <Link href="/dashboard/discover" className="hover:opacity-100 transition-opacity">Introductions</Link>
-          <Link href="/dashboard/messages" className="hover:opacity-100 transition-opacity">Letters</Link>
-          <Link href="/dashboard/profile" className="hover:opacity-100 transition-opacity">Me</Link>
-        </nav>
-      </header>
-
-      {/* Main Architectural Space */}
-      <main className="min-h-screen pt-32">
+    <div className="min-h-screen bg-[#F7F5EF] text-[#2A2621] font-sans selection:bg-[#E5D9CC]/50 flex overflow-hidden">
+      <ClientSidebar />
+      <main className="flex-1 relative h-screen overflow-y-auto">
         {children}
       </main>
     </div>

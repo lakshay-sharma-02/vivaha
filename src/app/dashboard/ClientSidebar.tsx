@@ -1,0 +1,80 @@
+"use client";
+
+import React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
+import { 
+  LayoutDashboard, 
+  Search, 
+  Heart, 
+  MessageCircle, 
+  Bookmark, 
+  Settings,
+  Crown
+} from "lucide-react";
+
+const NAV_ITEMS = [
+  { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { label: "Browse Matches", href: "/matches", icon: Search },
+  { label: "Interests", href: "/dashboard/interests", icon: Heart },
+  { label: "Messages", href: "/dashboard/messages", icon: MessageCircle },
+  { label: "Shortlisted", href: "/dashboard/shortlisted", icon: Bookmark },
+  { label: "Settings", href: "/dashboard/settings", icon: Settings },
+];
+
+export default function ClientSidebar() {
+  const pathname = usePathname();
+
+  return (
+    <aside className="w-64 h-screen sticky top-0 border-r border-[#E6D5C3]/60 bg-[#FBF9F6]/80 backdrop-blur-xl flex flex-col justify-between py-10 z-40">
+      <div className="absolute inset-0 opacity-[0.02] mix-blend-multiply pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }}></div>
+      
+      <div className="relative z-10 px-8">
+        <Link href="/dashboard" className="flex items-center gap-3 mb-16 group">
+          <div className="w-10 h-10 rounded-full border border-[#8C7A6B] flex items-center justify-center relative">
+            <span className="font-serif text-[#8C7A6B] text-xl leading-none pt-1">V</span>
+          </div>
+          <span className="font-serif text-2xl tracking-[0.15em] uppercase text-[#8C7A6B] group-hover:text-[#2A2621] transition-colors">Vivaha</span>
+        </Link>
+
+        <nav className="space-y-3">
+          {NAV_ITEMS.map((item) => {
+            const isActive = pathname === item.href;
+            const Icon = item.icon;
+            return (
+              <Link key={item.href} href={item.href} className="relative flex items-center gap-4 px-4 py-3 rounded-xl group overflow-hidden">
+                {isActive && (
+                  <motion.div 
+                    layoutId="sidebar-active"
+                    className="absolute inset-0 bg-[#FDF5E6] border border-[#E6D5C3] rounded-xl -z-10"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  />
+                )}
+                {!isActive && (
+                  <div className="absolute inset-0 bg-[#FDF5E6] opacity-0 group-hover:opacity-50 transition-opacity duration-300 rounded-xl -z-10" />
+                )}
+                <Icon size={18} className={isActive ? "text-[#8C7A6B]" : "text-[#A3998D] group-hover:text-[#8C7A6B]"} strokeWidth={isActive ? 2 : 1.5} />
+                <span className={`text-sm tracking-wide font-medium transition-colors ${isActive ? "text-[#2A2621]" : "text-[#8C7A6B] group-hover:text-[#2A2621]"}`}>
+                  {item.label}
+                </span>
+              </Link>
+            );
+          })}
+        </nav>
+      </div>
+
+      <div className="relative z-10 px-8">
+        <div className="bg-gradient-to-b from-[#FFFFFF] to-[#FBF9F6] border border-[#E6D5C3] rounded-2xl p-5 text-center shadow-sm relative overflow-hidden">
+          <div className="absolute inset-0 opacity-[0.02] mix-blend-multiply pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }}></div>
+          <Crown size={24} className="text-[#8C7A6B] mx-auto mb-3" strokeWidth={1.5} />
+          <p className="font-serif text-[#2A2621] text-lg leading-tight mb-1">Lifetime</p>
+          <p className="text-[#8C7A6B] text-[9px] uppercase tracking-[0.2em] font-semibold mb-4">Member</p>
+          <Link href="/premium" className="block w-full py-2 bg-[#2A2621] text-white rounded-lg text-[10px] uppercase tracking-widest font-serif hover:bg-[#1A1815] transition-colors shadow-md">
+            View Benefits
+          </Link>
+        </div>
+      </div>
+    </aside>
+  );
+}
