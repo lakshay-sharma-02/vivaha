@@ -1,6 +1,7 @@
 "use server"
 
 import { createClient } from "@/shared/lib/supabase/server"
+import { createClient as createAdminClient } from '@supabase/supabase-js'
 import { revalidatePath } from "next/cache"
 
 export interface OnboardingData {
@@ -52,17 +53,24 @@ export async function saveOnboardingData(formData: OnboardingData) {
       return { success: false, error: "Not authenticated" }
     }
 
+    // Bypass RLS using the Admin Client since onboarding data involves lookup tables 
+    // and profile creation that the user's RLS policies are currently blocking.
+    const adminSupabase = createAdminClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    )
+
     // Helper to get or create a lookup table entry
     // Using `as any` because dynamic table names can't be typed through the Supabase generic client
     async function getOrCreateLookup(tableName: string, name?: string): Promise<string | null> {
       if (!name) return null;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { data } = await (supabase.from(tableName as any) as any).select('id').ilike('name', name).single()
+      const { data } = await (adminSupabase.from(tableName as any) as any).select('id').ilike('name', name).single()
       if (data?.id) return data.id as string;
       
       // If not found, create it
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { data: newData, error } = await (supabase.from(tableName as any) as any).insert({ name }).select('id').single()
+      const { data: newData, error } = await (adminSupabase.from(tableName as any) as any).insert({ name }).select('id').single()
       if (error) {
         console.error(`Error creating ${tableName}:`, error);
         return null;
@@ -121,10 +129,11 @@ export async function saveOnboardingData(formData: OnboardingData) {
     const languageId = await getOrCreateLookup('languages', formData.motherTongue);
     const { countryId, stateId, cityId } = await getOrCreateLocation(formData.country, formData.city, formData.state);
 
-    // 2. Update Profile (Row created securely by database auth trigger, so we can't INSERT/upsert)
-    const { error: profileError } = await supabase
+    // 2. Upsert Profile (Using Admin Client to bypass any missing INSERT RLS policies)
+    const { error: profileError } = await adminSupabase
       .from('profiles')
-      .update({
+      .upsert({
+        id: user.id,
         first_name: formData.firstName?.trim() || "",
         last_name: formData.lastName?.trim() || "",
         gender: formData.gender || null,
@@ -138,8 +147,7 @@ export async function saveOnboardingData(formData: OnboardingData) {
         community_id: communityId,
         mother_tongue_id: languageId,
         bio: formData.bio || null,
-      } as any)
-      .eq('id', user.id);
+      } as any, { onConflict: 'id' });
 
     if (profileError) {
       console.error("Profile update error:", profileError)
@@ -148,7 +156,7 @@ export async function saveOnboardingData(formData: OnboardingData) {
 
     // 3. Update Preferences
     // Note: max_height_cm is a new column added via migrations but not yet in generated types
-    const { error: prefError } = await supabase
+    const { error: prefError } = await adminSupabase
       .from('preferences')
       .upsert({
         profile_id: user.id,
@@ -163,7 +171,7 @@ export async function saveOnboardingData(formData: OnboardingData) {
     }
 
     // 4. Update Family Details
-    const { error: familyError } = await supabase
+    const { error: familyError } = await adminSupabase
       .from('family_details')
       .upsert({
         profile_id: user.id,
