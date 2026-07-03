@@ -11,8 +11,8 @@ export async function getSavedProfiles() {
     return { success: false, error: "Not authenticated" }
   }
 
-  const { data: savedProfiles, error } = await supabase
-    .from('saved_profiles')
+  const { data: savedProfiles, error } = await (supabase as any)
+      .from('saved_profiles')
     .select(`
       id,
       created_at,
@@ -54,8 +54,8 @@ export async function saveProfile(profileId: string) {
     return { success: false, error: "Cannot save your own profile" }
   }
 
-  const { error } = await supabase
-    .from('saved_profiles')
+  const { error } = await (supabase as any)
+      .from('saved_profiles')
     .insert({
       user_id: user.id,
       saved_profile_id: profileId
@@ -83,8 +83,8 @@ export async function unsaveProfile(profileId: string) {
     return { success: false, error: "Not authenticated" }
   }
 
-  const { error } = await supabase
-    .from('saved_profiles')
+  const { error } = await (supabase as any)
+      .from('saved_profiles')
     .delete()
     .eq('user_id', user.id)
     .eq('saved_profile_id', profileId)
@@ -108,8 +108,8 @@ export async function isSaved(profileId: string) {
     return { success: false, error: "Not authenticated", isSaved: false }
   }
 
-  const { data, error } = await supabase
-    .from('saved_profiles')
+  const { data, error } = await (supabase as any)
+      .from('saved_profiles')
     .select('id')
     .eq('user_id', user.id)
     .eq('saved_profile_id', profileId)
@@ -131,8 +131,8 @@ export async function getSavedProfileIds() {
     return { success: false, error: "Not authenticated", ids: [] }
   }
 
-  const { data, error } = await supabase
-    .from('saved_profiles')
+  const { data, error } = await (supabase as any)
+      .from('saved_profiles')
     .select('saved_profile_id')
     .eq('user_id', user.id)
 
@@ -143,6 +143,6 @@ export async function getSavedProfileIds() {
 
   return {
     success: true,
-    ids: data?.map(item => item.saved_profile_id) || []
+    ids: data?.map((item: any) => item.saved_profile_id) || []
   }
 }

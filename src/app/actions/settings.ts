@@ -16,7 +16,7 @@ export async function getSettingsData() {
     const { data: family } = await supabase.from("family_details").select("*").eq("profile_id", user.id).single();
     const { data: media } = await supabase.from("profile_media").select("*").eq("profile_id", user.id).order('display_order', { ascending: true });
     const { data: membership } = await supabase.from("memberships").select("*").eq("profile_id", user.id).single();
-    const { data: notificationPrefs } = await supabase.from("notification_preferences").select("*").eq("profile_id", user.id).single();
+    const { data: notificationPrefs } = await (supabase as any).from("notification_preferences").select("*").eq("profile_id", user.id).single();
 
     return { 
       success: true, 
@@ -96,8 +96,8 @@ export async function deactivateAccount() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { success: false, error: "Not authenticated" };
 
-  await supabase
-    .from('profiles')
+  await (supabase as any)
+      .from('profiles')
     .update({ is_paused: true })
     .eq('id', user.id);
 
@@ -109,8 +109,8 @@ export async function updateNotificationPreferences(data: any) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { success: false, error: "Not authenticated" };
 
-  const { error } = await supabase
-    .from('notification_preferences')
+  const { error } = await (supabase as any)
+      .from('notification_preferences')
     .upsert({
       profile_id: user.id,
       ...data,

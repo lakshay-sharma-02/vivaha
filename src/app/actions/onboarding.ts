@@ -190,7 +190,7 @@ export async function saveOnboardingData(formData: OnboardingData) {
     }
 
     // 5. Update Lifestyle & Compatibility
-    const { error: compatError } = await supabase
+    const { error: compatError } = await (supabase as any)
       .from('compatibility_profiles')
       .upsert({
         profile_id: user.id,

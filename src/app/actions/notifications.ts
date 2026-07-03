@@ -22,7 +22,7 @@ export async function triggerNotification(payload: NotificationPayload) {
 
     // 1. Check user preferences
     // @ts-ignore
-    const { data: prefs } = await supabase
+    const { data: prefs } = await (supabase as any)
       .from('notification_preferences')
       .select('*')
       .eq('profile_id', payload.userId)
@@ -88,7 +88,7 @@ export async function fetchNotifications(page = 1, limit = 20) {
     const offset = (page - 1) * limit;
 
     // @ts-ignore
-    const { data, error, count } = await supabase
+    const { data, error, count } = await (supabase as any)
       .from('notifications')
       .select('*', { count: 'exact' })
       .eq('user_id', user.id)
@@ -112,7 +112,7 @@ export async function markAsRead(notificationIds: string[]) {
     if (!user) return { success: false };
 
     // @ts-ignore
-    await supabase
+    await (supabase as any)
       .from('notifications')
       .update({ is_read: true })
       .in('id', notificationIds)
@@ -132,7 +132,7 @@ export async function markAllAsRead() {
     if (!user) return { success: false };
 
     // @ts-ignore
-    await supabase
+    await (supabase as any)
       .from('notifications')
       .update({ is_read: true })
       .eq('user_id', user.id)
@@ -152,7 +152,7 @@ export async function archiveNotification(notificationId: string) {
     if (!user) return { success: false };
 
     // @ts-ignore
-    await supabase
+    await (supabase as any)
       .from('notifications')
       .update({ deleted_at: new Date().toISOString() })
       .eq('id', notificationId)

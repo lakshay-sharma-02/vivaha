@@ -108,7 +108,7 @@ export async function sendInterest(receiverId: string) {
 
     // Check if interest already exists
     // @ts-ignore
-    const { data: existing } = await supabase
+    const { data: existing } = await (supabase as any)
       .from('introductions')
       .select('id')
       .or(`and(sender_id.eq.${user.id},receiver_id.eq.${receiverId}),and(sender_id.eq.${receiverId},receiver_id.eq.${user.id})`)
@@ -120,7 +120,7 @@ export async function sendInterest(receiverId: string) {
 
     // Create the interest
     // @ts-ignore
-    const { error: insertError } = await supabase
+    const { error: insertError } = await (supabase as any)
       .from('introductions')
       .insert({
         sender_id: user.id,
@@ -169,8 +169,8 @@ export async function updateInterestStatus(introductionId: string, status: "acce
     if (status === "withdrawn") {
       // Meaning sender is withdrawing
       // @ts-ignore
-      const { error } = await supabase
-        .from('introductions')
+      const { error } = await (supabase as any)
+      .from('introductions')
         .delete()
         .eq('id', introductionId)
         .eq('sender_id', user.id)
@@ -181,8 +181,8 @@ export async function updateInterestStatus(introductionId: string, status: "acce
     } else {
       // Receiver is accepting or rejecting
       // @ts-ignore
-      const { error } = await supabase
-        .from('introductions')
+      const { error } = await (supabase as any)
+      .from('introductions')
         .update({ status: status, updated_at: new Date().toISOString() })
         .eq('id', introductionId)
         .eq('receiver_id', user.id)
@@ -193,8 +193,8 @@ export async function updateInterestStatus(introductionId: string, status: "acce
       if (status === "accepted") {
          // Create a match in the matches table
          // @ts-ignore
-         const { data: introData } = await supabase
-           .from('introductions')
+         const { data: introData } = await (supabase as any)
+      .from('introductions')
            .select('sender_id, receiver_id')
            .eq('id', introductionId)
            .single();
@@ -219,8 +219,8 @@ export async function updateInterestStatus(introductionId: string, status: "acce
          }
       } else if (status === "rejected") {
          // @ts-ignore
-         const { data: introData } = await supabase
-           .from('introductions')
+         const { data: introData } = await (supabase as any)
+      .from('introductions')
            .select('sender_id')
            .eq('id', introductionId)
            .single();

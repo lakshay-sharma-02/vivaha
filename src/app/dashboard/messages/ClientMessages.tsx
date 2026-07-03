@@ -126,7 +126,7 @@ export default function ClientMessages({ initialConversations }: { initialConver
               convo.unread += 1;
             } else {
               markMessagesAsRead(newDbMsg.match_id);
-              newMsg.status = "read";
+              newMsg.status = "read" as any;
             }
 
             updated[convoIndex] = convo;

@@ -11,7 +11,8 @@ import {
   MessageCircle, 
   Bookmark, 
   ShieldAlert,
-  Crown
+  Crown,
+  Settings
 } from "lucide-react";
 import { NotificationBell } from "@/shared/components/NotificationBell";
 import { checkIsAdmin } from "@/app/actions/admin";

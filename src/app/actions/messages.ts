@@ -34,7 +34,7 @@ export async function getConversations(): Promise<{ success: boolean; data?: Con
     if (authError || !user) return { success: false, error: "Not authenticated" };
 
     // @ts-ignore
-    const { data: matches, error: matchesError } = await supabase
+    const { data: matches, error: matchesError } = await (supabase as any)
       .from('matches')
       .select(`
         id,
@@ -115,7 +115,7 @@ export async function sendMessage(matchId: string, content: string): Promise<{ s
     }
 
     // @ts-ignore
-    const { data: matchData, error: matchError } = await supabase
+    const { data: matchData, error: matchError } = await (supabase as any)
       .from("matches")
       .select("id, user_a_id, user_b_id, status")
       .eq("id", matchId)
@@ -134,7 +134,7 @@ export async function sendMessage(matchId: string, content: string): Promise<{ s
     }
 
     // @ts-ignore
-    const { data: message, error: insertError } = await supabase
+    const { data: message, error: insertError } = await (supabase as any)
       .from("messages")
       .insert({
         match_id: matchId,
@@ -184,7 +184,7 @@ export async function markMessagesAsRead(matchId: string) {
     if (!user) return { success: false, error: "Not authenticated" };
 
     // @ts-ignore
-    const { error } = await supabase
+    const { error } = await (supabase as any)
       .from('messages')
       .update({ read_at: new Date().toISOString() })
       .eq('match_id', matchId)

@@ -30,8 +30,7 @@ export async function getPendingVerifications() {
   }
 
   // Fetch verification documents
-  // @ts-ignore
-  const { data: documents, error: docsError } = await supabase
+  const { data: documents, error: docsError } = await (supabase as any)
     .from('verification_documents')
     .select('id, profile_id, document_type, bucket_path, status, submitted_at')
     .eq('status', 'pending')
@@ -47,9 +46,9 @@ export async function getPendingVerifications() {
   }
 
   // Fetch associated profiles
-  const profileIds = documents.map(d => d.profile_id)
-  const { data: profiles, error: profilesError } = await supabase
-    .from('profiles')
+  const profileIds = documents.map((d: any) => d.profile_id)
+  const { data: profiles, error: profilesError } = await (supabase as any)
+      .from('profiles')
     .select('id, first_name, last_name, verification_status, phone, date_of_birth')
     .in('id', profileIds)
 
@@ -59,8 +58,8 @@ export async function getPendingVerifications() {
   }
 
   // Join documents with profiles
-  const profileMap = new Map(profiles?.map(p => [p.id, p]) || [])
-  const verifications = documents.map(doc => ({
+  const profileMap = new Map(profiles?.map((p: any) => [p.id, p]) || [])
+  const verifications = documents.map((doc: any) => ({
     ...doc,
     profiles: profileMap.get(doc.profile_id) || null
   }))
@@ -77,8 +76,7 @@ export async function approveVerification(documentId: string, profileId: string)
   }
 
   // Update document status
-  // @ts-ignore
-  const { error: docError } = await supabase
+  const { error: docError } = await (supabase as any)
     .from('verification_documents')
     .update({
       status: 'verified',
@@ -92,8 +90,8 @@ export async function approveVerification(documentId: string, profileId: string)
   }
 
   // Update profile verification status
-  const { error: profileError } = await supabase
-    .from('profiles')
+  const { error: profileError } = await (supabase as any)
+      .from('profiles')
     .update({ verification_status: 'verified' })
     .eq('id', profileId)
 
@@ -125,7 +123,7 @@ export async function rejectVerification(documentId: string, profileId: string, 
   }
 
   // Update document status
-  const { error: docError } = await supabase
+  const { error: docError } = await (supabase as any)
     .from('verification_documents')
     .update({
       status: 'rejected',
@@ -139,8 +137,8 @@ export async function rejectVerification(documentId: string, profileId: string, 
   }
 
   // Update profile verification status
-  const { error: profileError } = await supabase
-    .from('profiles')
+  const { error: profileError } = await (supabase as any)
+      .from('profiles')
     .update({ verification_status: 'rejected' })
     .eq('id', profileId)
 
@@ -151,8 +149,7 @@ export async function rejectVerification(documentId: string, profileId: string, 
 
   // Optionally log rejection reason in admin_notes
   if (reason) {
-    // @ts-ignore
-    await supabase
+    await (supabase as any)
       .from('admin_notes')
       .insert({
         target_id: profileId,

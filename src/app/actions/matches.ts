@@ -16,7 +16,7 @@ export async function getPendingRequests() {
 
     // Fetch introductions where receiver_id is the current user and status is 'pending'
     // We also join the sender's profile data
-    const { data: requestsRaw, error } = await supabase
+    const { data: requestsRaw, error } = await (supabase as any)
       .from('introductions')
       .select('id, created_at, sender_id')
       .eq('receiver_id', user.id)
@@ -54,7 +54,7 @@ export async function getPendingRequests() {
 
     const requests = requestsRaw as RequestRow[] | null
     const senderIds = [...new Set((requests || []).map((req) => req.sender_id))]
-    const { data: sendersRaw } = await supabase
+    const { data: sendersRaw } = await (supabase as any)
       .from('profiles')
       .select('id, first_name, last_name, date_of_birth, bio, verification_status, profession_id, city_id')
       .in('id', senderIds)
@@ -125,7 +125,7 @@ export async function respondToRequest(introductionId: string, accept: boolean) 
 
     // Update the introduction status.
     // RLS policies ensure the user can only update if they are the receiver.
-    const { data: updatedRaw, error } = await supabase
+    const { data: updatedRaw, error } = await (supabase as any)
       .from('introductions')
       .update({ status: newStatus, updated_at: now } satisfies Record<string, unknown>)
       .eq('id', introductionId)

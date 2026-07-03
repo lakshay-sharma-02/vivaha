@@ -38,7 +38,7 @@ export async function getProfileById(profileId: string): Promise<{ success: bool
     }
 
     // 1. Fetch Profile Data
-    const { data: profile, error: profileError } = await supabase
+    const { data: profile, error: profileError } = await (supabase as any)
       .from("profiles")
       .select(`
         *,
@@ -54,7 +54,7 @@ export async function getProfileById(profileId: string): Promise<{ success: bool
     }
 
     // 2. Fetch Viewer Membership
-    const { data: membership } = await supabase
+    const { data: membership } = await (supabase as any)
       .from("memberships")
       .select("tier")
       .eq("profile_id", user.id)
@@ -62,7 +62,7 @@ export async function getProfileById(profileId: string): Promise<{ success: bool
     const isPremium = membership?.tier === "premium" || membership?.tier === "elite";
 
     // 3. Fetch Interaction Status (Introductions)
-    const { data: introduction } = await supabase
+    const { data: introduction } = await (supabase as any)
       .from("introductions")
       .select("status, sender_id, receiver_id")
       .or(`and(sender_id.eq.${user.id},receiver_id.eq.${profileId}),and(sender_id.eq.${profileId},receiver_id.eq.${user.id})`)
@@ -82,7 +82,7 @@ export async function getProfileById(profileId: string): Promise<{ success: bool
     }
 
     // 4. Fetch Shortlist Status
-    const { data: shortlist } = await supabase
+    const { data: shortlist } = await (supabase as any)
       .from("saved_profiles")
       .select("id")
       .eq("user_id", user.id)
@@ -106,7 +106,7 @@ export async function getProfileById(profileId: string): Promise<{ success: bool
     }
 
     // Process Images
-    const { data: media } = await supabase
+    const { data: media } = await (supabase as any)
       .from("profile_media")
       .select("bucket_path")
       .eq("profile_id", profileId)

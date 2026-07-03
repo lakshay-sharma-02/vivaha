@@ -42,7 +42,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
       .order("created_at", { ascending: false })
       .limit(50);
       
-    if (data) setNotifications(data);
+    if (data) setNotifications(data as any);
   };
 
   useEffect(() => {
@@ -96,7 +96,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
 
   const markAllAsRead = async () => {
     setNotifications((prev) => prev.map((n) => ({ ...n, is_read: true })));
-    await supabase.from("notifications").update({ is_read: true }).eq("user_id", userId).eq("is_read", false);
+    await supabase.from("notifications").update({ is_read: true }).eq("user_id", userId as string).eq("is_read", false);
   };
 
   const unreadCount = notifications.filter((n) => !n.is_read).length;

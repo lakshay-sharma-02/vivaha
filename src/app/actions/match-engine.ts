@@ -43,13 +43,13 @@ export async function generateRecommendations(targetUserId?: string) {
     }
 
     // 1. Fetch user's preferences & own profile
-    const { data: userProfile } = await supabase
+    const { data: userProfile } = await (supabase as any)
       .from('profiles')
       .select('gender, date_of_birth, religion_id, city_id, country_id')
       .eq('id', userId)
       .single();
 
-    const { data: userPrefs } = await supabase
+    const { data: userPrefs } = await (supabase as any)
       .from('preferences')
       .select('*')
       .eq('profile_id', userId)
@@ -62,7 +62,7 @@ export async function generateRecommendations(targetUserId?: string) {
 
     // 2. Fetch potential candidates (Active, Opposite Gender, Not blocked, Not already in recommendations, Not already interacted)
     // For production, this should be a robust SQL query. For now we fetch a chunk and filter.
-    const { data: candidates } = await supabase
+    const { data: candidates } = await (supabase as any)
       .from('profiles')
       .select(`
         id, 
@@ -85,17 +85,17 @@ export async function generateRecommendations(targetUserId?: string) {
     if (!candidates || candidates.length === 0) return { success: true, count: 0 };
 
     // 3. Fetch existing interactions (sent/received interests, blocks, existing recommendations) to filter out
-    const { data: existingIntros } = await supabase
+    const { data: existingIntros } = await (supabase as any)
       .from('introductions')
       .select('sender_id, receiver_id')
       .or(`sender_id.eq.${userId},receiver_id.eq.${userId}`);
       
     const interactedIds = new Set(
-      existingIntros?.map(i => i.sender_id === userId ? i.receiver_id : i.sender_id) || []
+      existingIntros?.map((i: any) => i.sender_id === userId ? i.receiver_id : i.sender_id) || []
     );
 
     // Filter candidates
-    const validCandidates = candidates.filter(c => !interactedIds.has(c.id) && c.id !== userId);
+    const validCandidates = candidates.filter((c: any) => !interactedIds.has(c.id) && c.id !== userId);
 
     // 4. Score each candidate
     const recommendationsToInsert = [];
@@ -142,7 +142,7 @@ export async function generateRecommendations(targetUserId?: string) {
 
       // -- Religion --
       let religionScore = 0;
-      if (userPrefs?.preferred_religions?.includes(candidate.religion_id)) {
+      if (candidate.religion_id && userPrefs?.preferred_religions?.includes(candidate.religion_id)) {
         religionScore = WEIGHTS.RELIGION_COMMUNITY;
       } else if (candidate.religion_id === userProfile.religion_id) {
         religionScore = WEIGHTS.RELIGION_COMMUNITY; // Implicit preference for same religion
@@ -181,7 +181,7 @@ export async function generateRecommendations(targetUserId?: string) {
     // 5. Store in DB
     if (recommendationsToInsert.length > 0) {
       // Upsert to handle updates to existing recommendations
-      const { error: insertError } = await supabase
+      const { error: insertError } = await (supabase as any)
         .from('recommendations')
         .upsert(recommendationsToInsert, { onConflict: 'user_id, recommended_profile_id' });
         
@@ -208,7 +208,7 @@ export async function getRecommendedMatches(page = 1, limit = 10) {
     const offset = (page - 1) * limit;
 
     // Fetch recommendations ordered by score
-    const { data, error } = await supabase
+    const { data, error } = await (supabase as any)
       .from('recommendations')
       .select(`
         id,

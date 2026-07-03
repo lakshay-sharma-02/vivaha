@@ -11,15 +11,15 @@ export async function getDashboardData() {
   }
 
   // 1. Fetch user profile
-  const { data: profile } = await supabase
-    .from("profiles")
+  const { data: profile } = await (supabase as any)
+      .from("profiles")
     .select("first_name, verification_status")
     .eq("id", user.id)
     .single();
 
   // 2. Fetch completion score
-  const { data: completion } = await supabase
-    .from("profile_completion")
+  const { data: completion } = await (supabase as any)
+      .from("profile_completion")
     .select("score")
     .eq("profile_id", user.id)
     .single();
@@ -32,22 +32,22 @@ export async function getDashboardData() {
   ]);
 
   // 4. Fetch Insights (Profile views)
-  const { count: viewsCount } = await supabase
-    .from("profile_views")
+  const { count: viewsCount } = await (supabase as any)
+      .from("profile_views")
     .select("*", { count: "exact", head: true })
     .eq("viewed_id", user.id);
 
   // 5. Fetch Recent Activity (Notifications)
-  const { data: notifications } = await supabase
-    .from("notifications")
+  const { data: notifications } = await (supabase as any)
+      .from("notifications")
     .select("*")
     .eq("user_id", user.id)
     .order("created_at", { ascending: false })
     .limit(3);
 
   // 6. Fetch Recommended Matches (just reuse the discover endpoint logic but limit to 2)
-  const { data: recommendations } = await supabase
-    .from("profiles")
+  const { data: recommendations } = await (supabase as any)
+      .from("profiles")
     .select(`
       id,
       first_name,
@@ -76,7 +76,7 @@ export async function getDashboardData() {
       views: viewsCount || 0
     },
     recentActivity: notifications || [],
-    recommendations: recommendations?.map(rec => {
+    recommendations: recommendations?.map((rec: any) => {
       // Calculate age simply
       const age = rec.age ? new Date().getFullYear() - new Date(rec.age).getFullYear() : 25;
       
