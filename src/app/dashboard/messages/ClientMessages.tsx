@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Search, 
@@ -21,7 +21,9 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Conversation, sendMessage } from "@/app/actions/messages";
+import { useSearchParams, useRouter } from "next/navigation";
+import { Conversation, sendMessage, markMessagesAsRead } from "@/app/actions/messages";
+import { createClient } from "@/shared/lib/supabase/client";
 
 // --- Decorative Background Elements ---
 const SunlightRays = () => (
@@ -43,13 +45,132 @@ const AbstractArch = () => (
 );
 
 export default function ClientMessages({ initialConversations }: { initialConversations: Conversation[] }) {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  
   const [conversations, setConversations] = useState<Conversation[]>(initialConversations);
-  const [activeChat, setActiveChat] = useState<string | null>(null);
+  const [activeChat, setActiveChat] = useState<string | null>(searchParams.get("match") || null);
   const [filter, setFilter] = useState("All");
   const [composerText, setComposerText] = useState("");
   const [isSending, setIsSending] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
+  
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  const supabase = createClient();
   const chat = conversations.find(c => c.id === activeChat);
+
+  // Fetch current user ID for real-time checks
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) setUserId(user.id);
+    });
+  }, [supabase.auth]);
+
+  // Handle marking messages as read when opening a chat
+  useEffect(() => {
+    if (activeChat && chat && chat.unread > 0) {
+      markMessagesAsRead(activeChat).then(() => {
+        setConversations(prev => prev.map(c => 
+          c.id === activeChat ? { 
+            ...c, 
+            unread: 0,
+            messages: c.messages.map(m => m.status === 'sent' && m.sender === 'them' ? { ...m, status: 'read' as const } : m)
+          } : c
+        ));
+      });
+    }
+  }, [activeChat, chat?.unread]);
+
+  // Supabase Real-time Subscription
+  useEffect(() => {
+    if (!userId) return;
+
+    const channel = supabase
+      .channel("chat-messages")
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "messages"
+        },
+        (payload) => {
+          const newDbMsg = payload.new;
+          
+          // Only process if it belongs to one of our conversations
+          setConversations(prev => {
+            const convoIndex = prev.findIndex(c => c.id === newDbMsg.match_id);
+            if (convoIndex === -1) return prev; // Not our conversation
+
+            // If we sent it, we already optimistically added it, skip.
+            if (newDbMsg.sender_id === userId) return prev;
+
+            const newMsg = {
+              id: newDbMsg.id,
+              sender: "them" as const,
+              text: newDbMsg.content || "",
+              time: new Date(newDbMsg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+              status: "sent" as const
+            };
+
+            const updated = [...prev];
+            const convo = { ...updated[convoIndex] };
+            
+            convo.messages = [...convo.messages, newMsg];
+            convo.lastMessage = newMsg.text;
+            convo.time = newMsg.time;
+            
+            // If it's the active chat, mark as read automatically (handled by the other useEffect when unread changes, but we can do it here too)
+            if (activeChat !== newDbMsg.match_id) {
+              convo.unread += 1;
+            } else {
+              markMessagesAsRead(newDbMsg.match_id);
+              newMsg.status = "read";
+            }
+
+            updated[convoIndex] = convo;
+            
+            // Move updated conversation to top
+            const [moved] = updated.splice(convoIndex, 1);
+            return [moved, ...updated];
+          });
+        }
+      )
+      .on(
+        "postgres_changes",
+        {
+          event: "UPDATE",
+          schema: "public",
+          table: "messages"
+        },
+        (payload) => {
+          const updatedDbMsg = payload.new;
+          // Handle read receipts
+          if (updatedDbMsg.read_at && updatedDbMsg.sender_id === userId) {
+            setConversations(prev => prev.map(c => {
+              if (c.id === updatedDbMsg.match_id) {
+                return {
+                  ...c,
+                  messages: c.messages.map(m => m.id === updatedDbMsg.id ? { ...m, status: 'read' as const } : m)
+                };
+              }
+              return c;
+            }));
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [userId, supabase, activeChat]);
+
+  // Auto-scroll to bottom
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chat?.messages]);
 
   const handleSendMessage = async () => {
     if (!composerText.trim() || !chat || isSending) return;
@@ -148,7 +269,11 @@ export default function ClientMessages({ initialConversations }: { initialConver
           {conversations.map((c) => (
             <div 
               key={c.id} 
-              onClick={() => setActiveChat(c.id)}
+              onClick={() => {
+                setActiveChat(c.id);
+                // Optionally clear the URL parameter so it's clean
+                router.replace('/dashboard/messages', { scroll: false });
+              }}
               className={`flex items-center gap-4 p-3 rounded-2xl cursor-pointer transition-all duration-300 ${activeChat === c.id ? 'bg-[#FDF5E6] shadow-sm border border-[#E6D5C3]/50' : 'hover:bg-[#FDF5E6]/50 border border-transparent'}`}
             >
               <div className="relative shrink-0">
@@ -248,6 +373,7 @@ export default function ClientMessages({ initialConversations }: { initialConver
                   );
                 })}
               </AnimatePresence>
+              <div ref={messagesEndRef} />
             </div>
 
             {/* Composer */}

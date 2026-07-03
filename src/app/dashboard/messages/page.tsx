@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ClientMessages from "./ClientMessages";
 import { getConversations } from "@/app/actions/messages";
 import { redirect } from "next/navigation";
@@ -11,6 +11,8 @@ export default async function MessagesPage() {
   }
 
   return (
-    <ClientMessages initialConversations={data || []} />
+    <Suspense fallback={<div className="h-full flex items-center justify-center">Loading The Lounge...</div>}>
+      <ClientMessages initialConversations={data || []} />
+    </Suspense>
   );
 }

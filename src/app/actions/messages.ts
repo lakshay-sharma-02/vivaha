@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/shared/lib/supabase/server";
+import { triggerNotification } from "./notifications";
 
 export type Conversation = {
   id: string; // match_id
@@ -147,6 +148,18 @@ export async function sendMessage(matchId: string, content: string): Promise<{ s
       return { success: false, error: "Failed to send message" };
     }
 
+    const receiverId = matchData.user_a_id === user.id ? matchData.user_b_id : matchData.user_a_id;
+
+    // Trigger Notification for the receiver
+    await triggerNotification({
+      userId: receiverId,
+      type: 'message',
+      title: 'New Message',
+      body: `You received a new message in The Lounge.`,
+      actionUrl: `/dashboard/messages?match=${matchId}`,
+      priority: 'high'
+    });
+
     return { success: true, message: {
       id: message.id,
       sender: "me",
@@ -158,5 +171,30 @@ export async function sendMessage(matchId: string, content: string): Promise<{ s
   } catch (err) {
     console.error("sendMessage exception:", err);
     return { success: false, error: "An unexpected error occurred" };
+  }
+}
+
+export async function markMessagesAsRead(matchId: string) {
+  try {
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return { success: false, error: "Not authenticated" };
+
+    const { error } = await supabase
+      .from('messages')
+      .update({ read_at: new Date().toISOString() })
+      .eq('match_id', matchId)
+      .neq('sender_id', user.id)
+      .is('read_at', null);
+
+    if (error) {
+       console.error("markMessagesAsRead db error:", error);
+       return { success: false };
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("markMessagesAsRead error:", error);
+    return { success: false };
   }
 }
