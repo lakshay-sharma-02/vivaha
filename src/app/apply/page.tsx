@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
 import { saveOnboardingData, OnboardingData } from "@/app/actions/onboarding";
@@ -28,8 +28,26 @@ export default function ApplyPage() {
     prefReligionChipsString?: string;
   };
 
-  const { register, handleSubmit, formState: { isSubmitting } } = useForm<FormInputs>();
+  const { register, handleSubmit, formState: { isSubmitting }, watch, reset } = useForm<FormInputs>();
 
+  // Caching mechanism for developer testing
+  useEffect(() => {
+    const saved = localStorage.getItem("vivaha-apply-cache");
+    if (saved) {
+      try {
+        reset(JSON.parse(saved));
+      } catch (e) {
+        console.error("Failed to parse cached form data");
+      }
+    }
+  }, [reset]);
+
+  useEffect(() => {
+    const subscription = watch((value) => {
+      localStorage.setItem("vivaha-apply-cache", JSON.stringify(value));
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
   const onSubmit = async (formData: FormInputs) => {
     setServerError(null);
     
