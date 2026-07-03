@@ -45,13 +45,13 @@ export default function RegisterPage() {
   };
 
   return (
-    <main className="relative w-full h-screen flex flex-col md:flex-row bg-[#FDFBF7] overflow-hidden">
+    <main className="relative w-full h-[100svh] flex flex-col md:flex-row bg-[#FDFBF7] overflow-hidden">
       
       {/* 
         ENVIRONMENT: The Registration Desk (Left 50%) 
         Untouched architectural photograph.
       */}
-      <div className="w-full md:w-1/2 h-[40vh] md:h-full relative">
+      <div className="w-full md:w-1/2 h-[35vh] md:h-full relative shrink-0">
         <Image 
           src="/images/architecture/register.jpg"
           alt="Vivaha Registration Room"
@@ -65,8 +65,8 @@ export default function RegisterPage() {
         ARCHITECTURAL SURFACE: The Application Paper (Right 50%) 
         Solid opaque surface acting as the physical document.
       */}
-      <div className="w-full md:w-1/2 h-full flex flex-col justify-center px-8 md:px-16 lg:px-24 py-16 md:py-24 z-10 bg-[#FDFBF7] relative shadow-[-20px_0_40px_rgba(0,0,0,0.05)] overflow-y-auto">
-        <div className="w-full max-w-md mx-auto">
+      <div className="w-full md:w-1/2 flex-1 md:h-full flex flex-col px-6 sm:px-12 md:px-16 lg:px-24 py-8 md:py-24 z-10 bg-[#FDFBF7] relative shadow-[-20px_0_40px_rgba(0,0,0,0.05)] overflow-y-auto">
+        <div className="w-full max-w-md mx-auto flex flex-col justify-center min-h-full py-4">
           
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
