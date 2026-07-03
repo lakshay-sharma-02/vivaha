@@ -18,7 +18,7 @@ export default function PendingVerificationPage() {
       if (!user) return;
 
       // Check profile
-      const { data: profile } = await supabase.from("profiles").select("verification_status").eq("id", user.id).single();
+      const { data: profile } = await supabase.from("profiles").select("verification_status").eq("id", user.id).maybeSingle();
       if (!profile) {
         setHasProfile(false);
         setStatus("incomplete");
@@ -26,7 +26,7 @@ export default function PendingVerificationPage() {
       }
 
       // Check docs
-      const { data: docs } = await supabase.from("verification_documents").select("status").eq("profile_id", user.id).single();
+      const { data: docs } = await supabase.from("verification_documents").select("status").eq("profile_id", user.id).maybeSingle();
       if (!docs) {
         setHasDocs(false);
         setStatus("incomplete");

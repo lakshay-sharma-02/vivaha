@@ -64,7 +64,7 @@ export async function middleware(request: NextRequest) {
 
       if (!isAdmin) {
         // Fetch user verification status
-        const { data: profile } = await supabase.from('profiles').select('verification_status').eq('id', user.id).single()
+        const { data: profile } = await supabase.from('profiles').select('verification_status').eq('id', user.id).maybeSingle()
         const status = profile?.verification_status
 
         if (status !== 'verified') {
