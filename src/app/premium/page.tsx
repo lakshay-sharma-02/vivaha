@@ -16,6 +16,8 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import Script from "next/script";
+import { useRouter } from "next/navigation";
 
 // --- Shared Decorative Elements ---
 
@@ -168,11 +170,85 @@ const FAQS = [
 // --- Page Component ---
 
 export default function PremiumMembershipPage() {
+  const router = useRouter();
   const { scrollYProgress } = useScroll();
   const yParallax = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const handlePayment = async () => {
+    try {
+      setIsProcessing(true);
+
+      // 1. Create order
+      const res = await fetch("/api/payment/create-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ planId: "premium_lifetime" }),
+      });
+      
+      const data = await res.json();
+      
+      if (!res.ok) {
+        alert(data.error || "Payment initialization failed.");
+        setIsProcessing(false);
+        return;
+      }
+
+      // 2. Open Razorpay
+      const options = {
+        key: data.keyId,
+        amount: data.amount,
+        currency: data.currency,
+        name: "Vivaha",
+        description: "Lifetime Premium Membership",
+        order_id: data.orderId,
+        handler: async function (response: any) {
+          // 3. Verify payment
+          try {
+            const verifyRes = await fetch("/api/payment/verify", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+              }),
+            });
+
+            const verifyData = await verifyRes.json();
+            
+            if (verifyRes.ok) {
+              router.push("/dashboard?upgrade=success");
+            } else {
+              alert(verifyData.error || "Payment verification failed.");
+            }
+          } catch (err) {
+            alert("Error verifying payment.");
+          } finally {
+            setIsProcessing(false);
+          }
+        },
+        theme: {
+          color: "#2A2621",
+        },
+      };
+
+      const rzp = new (window as any).Razorpay(options);
+      rzp.on('payment.failed', function (response: any){
+        alert("Payment failed: " + response.error.description);
+        setIsProcessing(false);
+      });
+      rzp.open();
+
+    } catch (err) {
+      alert("Something went wrong. Please try again.");
+      setIsProcessing(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#F7F5EF] text-[#2A2621] font-sans selection:bg-[#E5D9CC]/50 relative overflow-x-hidden">
+      <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
       
       {/* Background Texture & Elements */}
       <div className="fixed inset-0 pointer-events-none z-0">
@@ -234,10 +310,12 @@ export default function PremiumMembershipPage() {
             <motion.button 
               whileHover={{ y: -4 }}
               whileTap={{ y: 0 }}
-              className="bg-[#2A2621] text-white px-10 py-5 rounded-xl shadow-[0_20px_40px_-10px_rgba(42,38,33,0.3)] hover:shadow-[0_25px_50px_-12px_rgba(42,38,33,0.5)] hover:bg-[#1A1815] transition-all duration-500 font-serif tracking-widest uppercase text-sm flex flex-col items-center justify-center gap-1 mx-auto relative overflow-hidden group"
+              onClick={handlePayment}
+              disabled={isProcessing}
+              className="bg-[#2A2621] text-white px-10 py-5 rounded-xl shadow-[0_20px_40px_-10px_rgba(42,38,33,0.3)] hover:shadow-[0_25px_50px_-12px_rgba(42,38,33,0.5)] hover:bg-[#1A1815] transition-all duration-500 font-serif tracking-widest uppercase text-sm flex flex-col items-center justify-center gap-1 mx-auto relative overflow-hidden group disabled:opacity-70 disabled:cursor-not-allowed"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-shimmer" />
-              <span>Become a Lifetime Member</span>
+              <span>{isProcessing ? "Processing..." : "Become a Lifetime Member"}</span>
               <span className="text-[10px] text-white/60 tracking-[0.2em]">One-Time Investment • ₹5,000</span>
             </motion.button>
           </motion.div>
@@ -424,8 +502,8 @@ export default function PremiumMembershipPage() {
                 Your story deserves<br/><span className="italic font-light text-[#8C7A6B]">the right beginning.</span>
               </h2>
               
-              <button className="bg-[#2A2621] text-white px-12 py-5 rounded-xl shadow-[0_20px_40px_-10px_rgba(42,38,33,0.3)] hover:shadow-[0_25px_50px_-12px_rgba(42,38,33,0.5)] hover:bg-[#1A1815] transition-all duration-500 font-serif tracking-widest uppercase text-sm">
-                Unlock Lifetime Access
+              <button onClick={handlePayment} disabled={isProcessing} className="bg-[#2A2621] text-white px-12 py-5 rounded-xl shadow-[0_20px_40px_-10px_rgba(42,38,33,0.3)] hover:shadow-[0_25px_50px_-12px_rgba(42,38,33,0.5)] hover:bg-[#1A1815] transition-all duration-500 font-serif tracking-widest uppercase text-sm disabled:opacity-70">
+                {isProcessing ? "Processing..." : "Unlock Lifetime Access"}
               </button>
             </div>
           </motion.div>
