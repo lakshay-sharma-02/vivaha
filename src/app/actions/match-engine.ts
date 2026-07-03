@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/shared/lib/supabase/server";
+import { createClient as createAdminClient } from '@supabase/supabase-js';
 
 export type MatchRecommendation = {
   id: string; // recommendation id
@@ -180,8 +181,13 @@ export async function generateRecommendations(targetUserId?: string) {
 
     // 5. Store in DB
     if (recommendationsToInsert.length > 0) {
-      // Upsert to handle updates to existing recommendations
-      const { error: insertError } = await (supabase as any)
+      // Upsert to handle updates to existing recommendations using admin client to bypass RLS
+      const adminSupabase = createAdminClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.SUPABASE_SERVICE_ROLE_KEY!
+      );
+      
+      const { error: insertError } = await adminSupabase
         .from('recommendations')
         .upsert(recommendationsToInsert, { onConflict: 'user_id, recommended_profile_id' });
         
@@ -243,7 +249,13 @@ export async function getRecommendedMatches(page = 1, limit = 10) {
         age = new Date().getFullYear() - new Date(p.date_of_birth).getFullYear();
       }
       
-      const primaryImage = p.profile_media?.[0]?.bucket_path || "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=800&auto=format&fit=crop";
+      let primaryImage = "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=800&auto=format&fit=crop";
+      
+      const rawPath = p.profile_media?.[0]?.bucket_path;
+      if (rawPath) {
+        const { data: { publicUrl } } = supabase.storage.from('profile_media').getPublicUrl(rawPath);
+        primaryImage = publicUrl;
+      }
 
       return {
         id: rec.id,
