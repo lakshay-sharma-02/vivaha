@@ -121,7 +121,7 @@ export async function fetchDiscoverProfiles(page: number = 1) {
       const mediaArr = mediaMap.get(p.id) || [];
       const primaryMedia = mediaArr.find(m => m.is_primary) || mediaArr[0];
       const imageUrl = primaryMedia
-        ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/profile_photos/${primaryMedia.bucket_path}`
+        ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/profile_media/${primaryMedia.bucket_path}`
         : null;
 
       const tags = compatibilityMap.get(p.id) || [];
