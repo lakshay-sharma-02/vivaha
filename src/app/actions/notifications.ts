@@ -54,7 +54,7 @@ export async function triggerNotification(payload: NotificationPayload) {
 
     if (shouldSendInApp) {
       // @ts-ignore
-      const { error } = await supabase.from('notifications').insert({
+      const { error } = await ((supabase as any).from)('notifications').insert({
         user_id: payload.userId,
         type: payload.type,
         title: payload.title,

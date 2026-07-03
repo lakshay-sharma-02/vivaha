@@ -28,7 +28,7 @@ export async function getInterests(type: "received" | "sent" | "accepted" | "dec
     }
 
     // @ts-ignore
-    let query = supabase.from('introductions').select(`
+    let query = ((supabase as any).from)('introductions').select(`
       id,
       created_at,
       updated_at,
@@ -135,7 +135,7 @@ export async function sendInterest(receiverId: string) {
 
     // Remove from recommendations (since we now have an active interaction)
     // @ts-ignore
-    await supabase.from('recommendations')
+    await ((supabase as any).from)('recommendations')
       .delete()
       .eq('user_id', user.id)
       .eq('recommended_profile_id', receiverId);
@@ -200,7 +200,7 @@ export async function updateInterestStatus(introductionId: string, status: "acce
            .single();
            
          if (introData) {
-           await supabase.from('matches').insert({
+           await ((supabase as any).from)('matches').insert({
              user_a_id: introData.sender_id,
              user_b_id: introData.receiver_id,
              status: 'accepted',
