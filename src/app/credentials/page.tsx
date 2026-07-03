@@ -39,7 +39,10 @@ export default function CredentialsPage() {
           .from('profile_media')
           .upload(fileName, portraitFile);
           
-        if (uploadError) throw uploadError;
+        if (uploadError) {
+          console.error("Storage upload error:", uploadError);
+          throw new Error(`Storage Error (profile_media): ${uploadError.message}`);
+        }
         
         const { error: dbError } = await supabase.from('profile_media').insert({ 
           profile_id: user.id,
@@ -48,7 +51,10 @@ export default function CredentialsPage() {
           is_primary: true 
         });
         
-        if (dbError) throw dbError;
+        if (dbError) {
+          console.error("Database insert error:", dbError);
+          throw new Error(`Database Error (profile_media): ${dbError.message}`);
+        }
       }
 
       // 2. Upload ID to verification_documents bucket
@@ -58,9 +64,12 @@ export default function CredentialsPage() {
         
         const { data: uploadData, error: uploadError } = await supabase.storage
           .from('verification_documents')
-          .upload(`private/${fileName}`, idFile);
+          .upload(fileName, idFile); // Removed private/ subfolder
           
-        if (uploadError) throw uploadError;
+        if (uploadError) {
+          console.error("Storage upload error:", uploadError);
+          throw new Error(`Storage Error (verification_documents): ${uploadError.message}`);
+        }
         
         const { error: dbError } = await supabase.from('verification_documents').insert({ 
           profile_id: user.id,
@@ -69,7 +78,10 @@ export default function CredentialsPage() {
           status: 'pending' 
         });
         
-        if (dbError) throw dbError;
+        if (dbError) {
+          console.error("Database insert error:", dbError);
+          throw new Error(`Database Error (verification_documents): ${dbError.message}`);
+        }
       }
 
       // Redirect to dashboard (The Estate)
