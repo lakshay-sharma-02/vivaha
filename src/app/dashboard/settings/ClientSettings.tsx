@@ -8,6 +8,8 @@ import {
 } from "lucide-react";
 import { updateProfileSettings, updatePreferencesSettings, deactivateAccount } from "@/app/actions/settings";
 import Image from "next/image";
+import { createClient } from "@/shared/lib/supabase/client";
+import { useRouter } from "next/navigation";
 
 // --- Decorative Background ---
 const SunlightRays = () => (
@@ -204,6 +206,60 @@ function ProfileSection({ data, onSave }: { data: any, onSave: () => void }) {
 }
 
 function PhotosSection({ media, onSave }: { media: any[], onSave: () => void }) {
+  const [uploading, setUploading] = useState(false);
+  const router = useRouter();
+
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    try {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("Not authenticated");
+
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${user.id}-${Date.now()}.${fileExt}`;
+      
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('profile_media')
+        .upload(fileName, file);
+        
+      if (uploadError) throw new Error(uploadError.message);
+      
+      const { error: dbError } = await supabase.from('profile_media').insert({ 
+        profile_id: user.id,
+        type: 'image',
+        bucket_path: uploadData.path, 
+        is_primary: media.length === 0 
+      });
+      
+      if (dbError) throw new Error(dbError.message);
+      
+      onSave();
+      router.refresh();
+    } catch (err: any) {
+      alert("Upload failed: " + err.message);
+    } finally {
+      setUploading(false);
+      if (e.target) e.target.value = ''; // Reset input
+    }
+  };
+
+  const handleDelete = async (mediaId: string, path: string) => {
+    if (!confirm("Are you sure you want to delete this photo?")) return;
+    try {
+      const supabase = createClient();
+      await supabase.from('profile_media').delete().eq('id', mediaId);
+      await supabase.storage.from('profile_media').remove([path]);
+      onSave();
+      router.refresh();
+    } catch (err: any) {
+      alert("Delete failed: " + err.message);
+    }
+  };
+
   return (
     <div className="bg-white rounded-[2rem] p-10 border border-[#E6D5C3]/60 shadow-sm relative overflow-hidden">
       <div className="absolute inset-0 opacity-[0.02] mix-blend-multiply pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }}></div>
@@ -213,9 +269,18 @@ function PhotosSection({ media, onSave }: { media: any[], onSave: () => void }) 
             <h3 className="font-serif text-3xl text-[#2A2621] tracking-wide mb-2">Photo Gallery</h3>
             <p className="text-[#8C7A6B] font-light text-sm">Upload and arrange your portfolio. Premium members get full gallery access.</p>
           </div>
-          <button className="bg-[#FDF5E6] border border-[#E6D5C3] text-[#8C7A6B] hover:text-[#2A2621] px-5 py-2 rounded-xl text-xs uppercase tracking-widest font-semibold transition-all shadow-sm">
-            Upload Photo
-          </button>
+          <div className="relative">
+            <input 
+              type="file" 
+              accept="image/*"
+              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              onChange={handleUpload}
+              disabled={uploading}
+            />
+            <button disabled={uploading} className="bg-[#FDF5E6] border border-[#E6D5C3] text-[#8C7A6B] hover:text-[#2A2621] px-5 py-2 rounded-xl text-xs uppercase tracking-widest font-semibold transition-all shadow-sm disabled:opacity-50 pointer-events-none">
+              {uploading ? "Uploading..." : "Upload Photo"}
+            </button>
+          </div>
         </div>
 
         <div className="grid grid-cols-3 gap-4">
@@ -223,7 +288,7 @@ function PhotosSection({ media, onSave }: { media: any[], onSave: () => void }) 
             <div key={m.id} className="aspect-[3/4] bg-[#FBF9F6] rounded-xl border border-[#E6D5C3] relative overflow-hidden group">
               <Image src={m.bucket_path} alt="Gallery" fill className="object-cover" />
               <div className="absolute inset-0 bg-[#2A2621]/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
-                <button className="w-10 h-10 rounded-full bg-white text-[#8C7A6B] flex items-center justify-center hover:text-red-500 shadow-xl transition-colors"><Trash2 size={16} /></button>
+                <button onClick={() => handleDelete(m.id, m.bucket_path)} className="w-10 h-10 rounded-full bg-white text-[#8C7A6B] flex items-center justify-center hover:text-red-500 shadow-xl transition-colors"><Trash2 size={16} /></button>
               </div>
               {i === 0 && <span className="absolute top-3 left-3 bg-[#2A2621] text-white text-[9px] uppercase tracking-widest px-3 py-1 rounded-full shadow-md">Cover</span>}
             </div>

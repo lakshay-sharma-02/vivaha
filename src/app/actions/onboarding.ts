@@ -147,6 +147,12 @@ export async function saveOnboardingData(formData: OnboardingData) {
         community_id: communityId,
         mother_tongue_id: languageId,
         bio: formData.bio || null,
+        phone: formData.phone || null,
+        instagram: formData.instagram || null,
+        education: formData.highestQual || null,
+        university: formData.university || null,
+        company: formData.company || null,
+        income_range: formData.income || null,
       } as any, { onConflict: 'id' });
 
     if (profileError) {
