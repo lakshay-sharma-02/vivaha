@@ -34,11 +34,19 @@ export async function middleware(request: NextRequest) {
   // Protect internal routes — /dashboard/* and /onboarding
   const isProtectedRoute =
     request.nextUrl.pathname.startsWith('/dashboard') ||
-    request.nextUrl.pathname.startsWith('/onboarding')
+    request.nextUrl.pathname.startsWith('/onboarding') ||
+    request.nextUrl.pathname.startsWith('/matches')
 
   const isAuthRoute =
     request.nextUrl.pathname === '/login' ||
     request.nextUrl.pathname === '/register'
+
+  const isPublicRoute = 
+    request.nextUrl.pathname === '/' ||
+    isAuthRoute ||
+    request.nextUrl.pathname === '/apply' ||
+    request.nextUrl.pathname === '/credentials' ||
+    request.nextUrl.pathname === '/pending'
 
   if (isProtectedRoute && !user) {
     // Redirect unauthenticated users to login
@@ -47,11 +55,32 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
-  if (isAuthRoute && user) {
-    // Redirect already-authenticated users away from auth pages
-    const url = request.nextUrl.clone()
-    url.pathname = '/dashboard'
-    return NextResponse.redirect(url)
+  if (user) {
+    // Enforce verification constraint on protected routes
+    if (isProtectedRoute) {
+      // Check if user is an admin
+      const ADMIN_EMAILS = process.env.ADMIN_EMAILS?.split(',') || []
+      const isAdmin = ADMIN_EMAILS.includes(user.email || '')
+
+      if (!isAdmin) {
+        // Fetch user verification status
+        const { data: profile } = await supabase.from('profiles').select('verification_status').eq('id', user.id).single()
+        const status = profile?.verification_status
+
+        if (status !== 'verified') {
+          const url = request.nextUrl.clone()
+          url.pathname = '/pending'
+          return NextResponse.redirect(url)
+        }
+      }
+    }
+
+    if (isAuthRoute) {
+      // Redirect already-authenticated users away from auth pages
+      const url = request.nextUrl.clone()
+      url.pathname = '/dashboard'
+      return NextResponse.redirect(url)
+    }
   }
 
   return supabaseResponse
