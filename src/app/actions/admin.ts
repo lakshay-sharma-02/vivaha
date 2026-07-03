@@ -1,6 +1,7 @@
 "use server"
 
 import { createClient } from "@/shared/lib/supabase/server"
+import { createClient as createAdminClient } from '@supabase/supabase-js'
 import { revalidatePath } from "next/cache"
 import { triggerNotification } from "./notifications"
 
@@ -22,7 +23,10 @@ export async function checkIsAdmin() {
 }
 
 export async function getPendingVerifications() {
-  const supabase = await createClient()
+  const adminSupabase = createAdminClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
 
   const { isAdmin } = await checkIsAdmin()
   if (!isAdmin) {
@@ -30,7 +34,7 @@ export async function getPendingVerifications() {
   }
 
   // Fetch verification documents
-  const { data: documents, error: docsError } = await (supabase as any)
+  const { data: documents, error: docsError } = await (adminSupabase as any)
     .from('verification_documents')
     .select('id, profile_id, document_type, bucket_path, status, submitted_at')
     .eq('status', 'pending')
@@ -47,7 +51,7 @@ export async function getPendingVerifications() {
 
   // Fetch associated profiles
   const profileIds = documents.map((d: any) => d.profile_id)
-  const { data: profiles, error: profilesError } = await (supabase as any)
+  const { data: profiles, error: profilesError } = await (adminSupabase as any)
       .from('profiles')
     .select('id, first_name, last_name, verification_status, phone, date_of_birth')
     .in('id', profileIds)
@@ -68,7 +72,10 @@ export async function getPendingVerifications() {
 }
 
 export async function approveVerification(documentId: string, profileId: string) {
-  const supabase = await createClient()
+  const adminSupabase = createAdminClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
 
   const { isAdmin } = await checkIsAdmin()
   if (!isAdmin) {
@@ -76,7 +83,7 @@ export async function approveVerification(documentId: string, profileId: string)
   }
 
   // Update document status
-  const { error: docError } = await (supabase as any)
+  const { error: docError } = await (adminSupabase as any)
     .from('verification_documents')
     .update({
       status: 'verified',
@@ -90,7 +97,7 @@ export async function approveVerification(documentId: string, profileId: string)
   }
 
   // Update profile verification status
-  const { error: profileError } = await (supabase as any)
+  const { error: profileError } = await (adminSupabase as any)
       .from('profiles')
     .update({ verification_status: 'verified' })
     .eq('id', profileId)
@@ -115,7 +122,10 @@ export async function approveVerification(documentId: string, profileId: string)
 }
 
 export async function rejectVerification(documentId: string, profileId: string, reason?: string) {
-  const supabase = await createClient()
+  const adminSupabase = createAdminClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
 
   const { isAdmin } = await checkIsAdmin()
   if (!isAdmin) {
@@ -123,7 +133,7 @@ export async function rejectVerification(documentId: string, profileId: string, 
   }
 
   // Update document status
-  const { error: docError } = await (supabase as any)
+  const { error: docError } = await (adminSupabase as any)
     .from('verification_documents')
     .update({
       status: 'rejected',
@@ -137,7 +147,7 @@ export async function rejectVerification(documentId: string, profileId: string, 
   }
 
   // Update profile verification status
-  const { error: profileError } = await (supabase as any)
+  const { error: profileError } = await (adminSupabase as any)
       .from('profiles')
     .update({ verification_status: 'rejected' })
     .eq('id', profileId)
@@ -149,7 +159,7 @@ export async function rejectVerification(documentId: string, profileId: string, 
 
   // Optionally log rejection reason in admin_notes
   if (reason) {
-    await (supabase as any)
+    await (adminSupabase as any)
       .from('admin_notes')
       .insert({
         target_id: profileId,
