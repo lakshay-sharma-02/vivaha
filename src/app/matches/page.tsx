@@ -15,6 +15,7 @@ import {
 import Image from "next/image";
 import { fetchDiscoverProfiles } from "@/app/actions/discover";
 import { sendInterest } from "@/app/actions/interests";
+import { NotificationBell } from "@/shared/components/NotificationBell";
 
 const FILTERS = ["Age", "Religion", "Community", "City", "Profession", "Education", "Height"];
 
@@ -212,10 +213,7 @@ export default function BrowseMatchesPage() {
             <Crown size={14} className="transition-colors" />
             <span className="hidden sm:inline transition-colors">Premium</span>
           </button>
-          <button className="relative text-[#A3998D] hover:text-[#2A2621] transition-colors">
-            <Bell size={20} strokeWidth={1.5} />
-            <span className="absolute top-0 right-0 w-1.5 h-1.5 bg-[#8C7A6B] rounded-full ring-2 ring-[#F7F5EF]"></span>
-          </button>
+          <NotificationBell />
           <button className="w-10 h-10 rounded-full border border-[#E6D5C3] bg-white flex items-center justify-center text-[#A3998D] hover:text-[#2A2621] hover:shadow-md transition-all duration-300">
             <User size={18} strokeWidth={1.5} />
           </button>

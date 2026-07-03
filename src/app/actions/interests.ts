@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/shared/lib/supabase/server";
+import { triggerNotification } from "./notifications";
 
 export type InterestProfile = {
   id: string; // introduction id
@@ -135,7 +136,15 @@ export async function sendInterest(receiverId: string) {
       .eq('user_id', user.id)
       .eq('recommended_profile_id', receiverId);
 
-    // TODO: Trigger Notification
+    // Trigger Notification for the receiver
+    await triggerNotification({
+      userId: receiverId,
+      type: 'match',
+      title: 'New Interest Received',
+      body: 'Someone has expressed interest in your profile. Check your inbox!',
+      actionUrl: '/dashboard/interests',
+      priority: 'high'
+    });
 
     return { success: true };
   } catch (err) {
@@ -189,6 +198,32 @@ export async function updateInterestStatus(introductionId: string, status: "acce
              user_b_id: introData.receiver_id,
              status: 'accepted',
              action_by_id: user.id
+           });
+
+           // Notify the sender that their interest was accepted!
+           await triggerNotification({
+             userId: introData.sender_id,
+             type: 'match',
+             title: 'Interest Accepted!',
+             body: 'Your interest was accepted. You can now message them in The Lounge.',
+             actionUrl: '/dashboard/messages',
+             priority: 'high'
+           });
+         }
+      } else if (status === "rejected") {
+         const { data: introData } = await supabase
+           .from('introductions')
+           .select('sender_id')
+           .eq('id', introductionId)
+           .single();
+           
+         if (introData) {
+           await triggerNotification({
+             userId: introData.sender_id,
+             type: 'match',
+             title: 'Interest Declined',
+             body: 'An interest you sent was politely declined.',
+             priority: 'low'
            });
          }
       }

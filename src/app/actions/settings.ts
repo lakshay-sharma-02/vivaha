@@ -16,9 +16,7 @@ export async function getSettingsData() {
     const { data: family } = await supabase.from("family_details").select("*").eq("profile_id", user.id).single();
     const { data: media } = await supabase.from("profile_media").select("*").eq("profile_id", user.id).order('display_order', { ascending: true });
     const { data: membership } = await supabase.from("memberships").select("*").eq("profile_id", user.id).single();
-
-    // In a real app, privacy and notification settings might be in a separate table.
-    // For this demonstration, we'll store them in localStorage on the client, or use `is_paused` for profile visibility.
+    const { data: notificationPrefs } = await supabase.from("notification_preferences").select("*").eq("profile_id", user.id).single();
 
     return { 
       success: true, 
@@ -27,7 +25,17 @@ export async function getSettingsData() {
         preferences: preferences || {},
         family: family || {},
         media: media || [],
-        membership: membership || {}
+        membership: membership || {},
+        notificationPrefs: notificationPrefs || {
+          email_enabled: true,
+          push_enabled: true,
+          in_app_enabled: true,
+          messages_enabled: true,
+          interests_enabled: true,
+          payments_enabled: true,
+          announcements_enabled: true,
+          weekly_digest_enabled: true
+        }
       }
     };
   } catch (err) {
@@ -84,17 +92,35 @@ export async function deleteProfileMedia(mediaId: string) {
 }
 
 export async function deactivateAccount() {
-  try {
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return { success: false };
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { success: false, error: "Not authenticated" };
 
-    // Set is_paused to true
-    const { error } = await supabase.from("profiles").update({ is_paused: true }).eq("id", user.id);
-    if (error) throw error;
+  await supabase
+    .from('profiles')
+    .update({ is_paused: true })
+    .eq('id', user.id);
 
-    return { success: true };
-  } catch (err) {
-    return { success: false };
+  return { success: true };
+}
+
+export async function updateNotificationPreferences(data: any) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { success: false, error: "Not authenticated" };
+
+  const { error } = await supabase
+    .from('notification_preferences')
+    .upsert({
+      profile_id: user.id,
+      ...data,
+      updated_at: new Date().toISOString()
+    });
+
+  if (error) {
+    console.error("Error updating notification preferences:", error);
+    return { success: false, error: error.message };
   }
+
+  return { success: true };
 }

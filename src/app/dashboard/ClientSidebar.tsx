@@ -13,6 +13,7 @@ import {
   Settings,
   Crown
 } from "lucide-react";
+import { NotificationBell } from "@/shared/components/NotificationBell";
 
 const NAV_ITEMS = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -31,12 +32,15 @@ export default function ClientSidebar() {
       <div className="absolute inset-0 opacity-[0.02] mix-blend-multiply pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }}></div>
       
       <div className="relative z-10 px-8">
-        <Link href="/dashboard" className="flex items-center gap-3 mb-16 group">
-          <div className="w-10 h-10 rounded-full border border-[#8C7A6B] flex items-center justify-center relative">
-            <span className="font-serif text-[#8C7A6B] text-xl leading-none pt-1">V</span>
-          </div>
-          <span className="font-serif text-2xl tracking-[0.15em] uppercase text-[#8C7A6B] group-hover:text-[#2A2621] transition-colors">Vivaha</span>
-        </Link>
+        <div className="flex items-center justify-between mb-16">
+          <Link href="/dashboard" className="flex items-center gap-3 group">
+            <div className="w-10 h-10 rounded-full border border-[#8C7A6B] flex items-center justify-center relative">
+              <span className="font-serif text-[#8C7A6B] text-xl leading-none pt-1">V</span>
+            </div>
+            <span className="font-serif text-2xl tracking-[0.15em] uppercase text-[#8C7A6B] group-hover:text-[#2A2621] transition-colors">Vivaha</span>
+          </Link>
+          <NotificationBell />
+        </div>
 
         <nav className="space-y-3">
           {NAV_ITEMS.map((item) => {

@@ -95,7 +95,7 @@ export default function ClientSettings({ initialData }: { initialData: any }) {
               {activeTab === "photos" && <PhotosSection media={initialData.media} onSave={() => showToast("Gallery updated")} />}
               {activeTab === "preferences" && <PreferencesSection data={initialData.preferences} onSave={() => showToast("Preferences updated")} />}
               {activeTab === "privacy" && <PrivacySection isPaused={initialData.profile.is_paused} onSave={() => showToast("Privacy settings saved")} />}
-              {activeTab === "notifications" && <NotificationsSection onSave={() => showToast("Notification settings saved")} />}
+              {activeTab === "notifications" && <NotificationsSection data={initialData.notificationPrefs} onSave={() => showToast("Notification preferences updated")} />}
               {activeTab === "security" && <SecuritySection onSave={() => showToast("Security updated")} />}
               {activeTab === "membership" && <MembershipSection membership={initialData.membership} />}
               {activeTab === "verification" && <VerificationSection status={initialData.profile.verification_status} />}
@@ -328,18 +328,81 @@ function PrivacySection({ isPaused, onSave }: { isPaused: boolean, onSave: () =>
   );
 }
 
-function NotificationsSection({ onSave }: { onSave: () => void }) {
+function NotificationsSection({ data, onSave }: { data: any, onSave: () => void }) {
+  const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState({
+    email_enabled: data?.email_enabled ?? true,
+    push_enabled: data?.push_enabled ?? true,
+    in_app_enabled: data?.in_app_enabled ?? true,
+    messages_enabled: data?.messages_enabled ?? true,
+    interests_enabled: data?.interests_enabled ?? true,
+    payments_enabled: data?.payments_enabled ?? true,
+    announcements_enabled: data?.announcements_enabled ?? true,
+    weekly_digest_enabled: data?.weekly_digest_enabled ?? true,
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    const { updateNotificationPreferences } = await import("@/app/actions/settings");
+    await updateNotificationPreferences(form);
+    setLoading(false);
+    onSave();
+  };
+
+  const Toggle = ({ label, desc, field }: { label: string, desc: string, field: keyof typeof form }) => (
+    <div className="flex items-center justify-between p-4 border border-[#E6D5C3]/40 rounded-xl hover:bg-[#FDF5E6]/30 transition-colors">
+      <div>
+        <h4 className="font-serif text-[#2A2621]">{label}</h4>
+        <p className="text-[#8C7A6B] text-[10px] font-light mt-0.5 uppercase tracking-widest">{desc}</p>
+      </div>
+      <button 
+        type="button"
+        onClick={() => setForm({ ...form, [field]: !form[field] })} 
+        className={`w-12 h-6 rounded-full transition-colors flex items-center px-1 ${form[field] ? 'bg-[#2A2621]' : 'bg-[#E6D5C3]'}`}
+      >
+        <motion.div animate={{ x: form[field] ? 24 : 0 }} className="w-4 h-4 bg-white rounded-full shadow-sm" />
+      </button>
+    </div>
+  );
+
   return (
     <div className="bg-white rounded-[2rem] p-10 border border-[#E6D5C3]/60 shadow-sm relative overflow-hidden">
+      <div className="absolute inset-0 opacity-[0.02] mix-blend-multiply pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }}></div>
       <div className="relative z-10">
         <div className="mb-10 border-b border-[#E6D5C3]/40 pb-6">
           <h3 className="font-serif text-3xl text-[#2A2621] tracking-wide mb-2">Notifications</h3>
-          <p className="text-[#8C7A6B] font-light text-sm">Stay updated on your connections.</p>
+          <p className="text-[#8C7A6B] font-light text-sm">Fine-tune how and when we reach you.</p>
         </div>
-        <div className="space-y-4 text-center py-20 text-[#8C7A6B] font-light">
-          <Bell className="mx-auto text-[#E6D5C3] mb-4" size={40} />
-          <p>Email & Push notification preferences will be available soon.</p>
-        </div>
+        
+        <form onSubmit={handleSubmit} className="space-y-8">
+          
+          <div>
+            <h4 className="text-[#8C7A6B] text-[10px] uppercase tracking-[0.2em] font-semibold mb-4">Delivery Channels</h4>
+            <div className="space-y-3">
+              <Toggle label="In-App Notifications" desc="The bell icon and toasts while browsing" field="in_app_enabled" />
+              <Toggle label="Email Notifications" desc="Receive updates at your registered email" field="email_enabled" />
+              <Toggle label="Push Notifications" desc="Mobile and browser push alerts" field="push_enabled" />
+            </div>
+          </div>
+
+          <div>
+            <h4 className="text-[#8C7A6B] text-[10px] uppercase tracking-[0.2em] font-semibold mb-4">Event Types</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <Toggle label="Messages" desc="When someone writes to you" field="messages_enabled" />
+              <Toggle label="Interests" desc="New matches and accepted requests" field="interests_enabled" />
+              <Toggle label="Payments" desc="Receipts and subscription updates" field="payments_enabled" />
+              <Toggle label="System Announcements" desc="Important platform updates" field="announcements_enabled" />
+              <Toggle label="Weekly Digest" desc="Curated matches delivered every Sunday" field="weekly_digest_enabled" />
+            </div>
+          </div>
+
+          <div className="pt-6 border-t border-[#E6D5C3]/40">
+            <button disabled={loading} type="submit" className="bg-[#2A2621] text-white px-8 py-3 rounded-xl shadow-md hover:bg-[#1A1815] transition-all font-serif tracking-widest uppercase text-xs flex items-center justify-center gap-2">
+              {loading ? "Saving..." : "Save Preferences"}
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
