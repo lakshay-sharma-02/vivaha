@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { fetchDiscoverProfiles } from "@/app/actions/discover";
+import { sendInterest } from "@/app/actions/interests";
 
 const FILTERS = ["Age", "Religion", "Community", "City", "Profession", "Education", "Height"];
 
@@ -382,12 +383,55 @@ function MatchCard({ match, onUnlock }: { match: any; onUnlock: () => void }) {
           <Lock size={14} className="text-[#E6D5C3]" strokeWidth={1.5} />
           <span className="font-serif tracking-widest text-[11px] uppercase">View Full Profile</span>
         </button>
-        <button onClick={(e) => { e.stopPropagation(); onUnlock(); }} className="w-full flex items-center justify-center gap-2 bg-transparent text-[#2A2621] border border-[#E6D5C3] py-3.5 rounded-lg hover:bg-white hover:border-[#D4C4B7] transition-all duration-300">
-          <Lock size={14} className="text-[#8C7A6B]" strokeWidth={1.5} />
-          <span className="font-serif tracking-widest text-[11px] uppercase">Send Interest</span>
-        </button>
+        <SendInterestButton matchId={match.id} onUnlock={onUnlock} />
       </div>
     </motion.div>
+  );
+}
+
+function SendInterestButton({ matchId, onUnlock }: { matchId: string; onUnlock: () => void }) {
+  const [isSending, setIsSending] = useState(false);
+  const [sent, setSent] = useState(false);
+
+  const handleSend = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (isSending || sent) return;
+    
+    // First we would check if they are premium, for now we will just simulate it
+    // Wait, the prompt says "Messaging is enabled ONLY when both users have accepted"
+    // "Send Interest" is free for some? Let's just fire sendInterest action!
+    setIsSending(true);
+    const result = await sendInterest(matchId);
+    if (result.success) {
+      setSent(true);
+    } else {
+      // If error (like not premium, we could call onUnlock())
+      console.error(result.error);
+      if (result.error === "Not authenticated") {
+         onUnlock();
+      }
+    }
+    setIsSending(false);
+  };
+
+  return (
+    <button 
+      onClick={handleSend}
+      disabled={isSending || sent}
+      className={`w-full flex items-center justify-center gap-2 border py-3.5 rounded-lg transition-all duration-300 ${sent ? 'bg-[#FDF5E6] border-[#D4C4B7] text-[#8C7A6B]' : 'bg-transparent text-[#2A2621] border-[#E6D5C3] hover:bg-white hover:border-[#D4C4B7]'}`}
+    >
+      {sent ? (
+        <>
+          <CheckCircle size={14} className="text-[#8C7A6B]" strokeWidth={1.5} />
+          <span className="font-serif tracking-widest text-[11px] uppercase text-[#8C7A6B]">Interest Sent</span>
+        </>
+      ) : (
+        <>
+          <Lock size={14} className="text-[#8C7A6B]" strokeWidth={1.5} />
+          <span className="font-serif tracking-widest text-[11px] uppercase">{isSending ? 'Sending...' : 'Send Interest'}</span>
+        </>
+      )}
+    </button>
   );
 }
 

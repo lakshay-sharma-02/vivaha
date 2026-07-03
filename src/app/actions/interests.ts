@@ -96,6 +96,54 @@ export async function getInterests(type: "received" | "sent" | "accepted" | "dec
   }
 }
 
+export async function sendInterest(receiverId: string) {
+  try {
+    const supabase = await createClient();
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+
+    if (authError || !user) return { success: false, error: "Not authenticated" };
+    if (user.id === receiverId) return { success: false, error: "Cannot send interest to yourself" };
+
+    // Check if interest already exists
+    const { data: existing } = await supabase
+      .from('introductions')
+      .select('id')
+      .or(`and(sender_id.eq.${user.id},receiver_id.eq.${receiverId}),and(sender_id.eq.${receiverId},receiver_id.eq.${user.id})`)
+      .single();
+
+    if (existing) {
+      return { success: false, error: "An introduction already exists with this user." };
+    }
+
+    // Create the interest
+    const { error: insertError } = await supabase
+      .from('introductions')
+      .insert({
+        sender_id: user.id,
+        receiver_id: receiverId,
+        status: 'pending'
+      });
+
+    if (insertError) {
+      console.error("Error sending interest:", insertError);
+      return { success: false, error: "Failed to send interest." };
+    }
+
+    // Remove from recommendations (since we now have an active interaction)
+    await supabase.from('recommendations')
+      .delete()
+      .eq('user_id', user.id)
+      .eq('recommended_profile_id', receiverId);
+
+    // TODO: Trigger Notification
+
+    return { success: true };
+  } catch (err) {
+    console.error("sendInterest exception:", err);
+    return { success: false, error: "An unexpected error occurred" };
+  }
+}
+
 export async function updateInterestStatus(introductionId: string, status: "accepted" | "rejected" | "withdrawn") {
   try {
     const supabase = await createClient();
