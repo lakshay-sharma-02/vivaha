@@ -66,7 +66,7 @@ export default function LoginPage() {
         {/* We reuse the architecture asset but style it to feel like returning home */}
         <Image 
           src="/images/architecture/register.jpg"
-          alt="Vivaha Estate Foyer"
+          alt="Vivah Estate Foyer"
           fill
           className="object-cover object-center"
           priority

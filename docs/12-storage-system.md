@@ -1,7 +1,7 @@
 # 12 - Storage System
 
 ## Overview
-Vivaha relies on Supabase Storage (an abstraction over AWS S3) to handle user-generated media (avatars, verification documents, chat images).
+Vivah relies on Supabase Storage (an abstraction over AWS S3) to handle user-generated media (avatars, verification documents, chat images).
 
 ## Buckets
 1. **`avatars` (Public):** Stores profile images. Readable by anyone, writable only by the authenticated owner.

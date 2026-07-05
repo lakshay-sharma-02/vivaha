@@ -16,8 +16,8 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Vivaha",
-    default: "Vivaha - Meaningful relationships begin here",
+    template: "%s | Vivah",
+    default: "Vivah - Meaningful relationships begin here",
   },
   description: "A digital space where meaningful relationships begin through trust, thoughtful technology, and beautifully crafted experiences.",
 };

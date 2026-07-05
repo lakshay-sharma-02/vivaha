@@ -63,7 +63,7 @@ export default function ResetPasswordPage() {
       <div className="relative w-full h-[35vh] md:h-screen">
         <Image 
           src="/images/architecture/register.jpg"
-          alt="Vivaha Estate Foyer"
+          alt="Vivah Estate Foyer"
           fill
           className="object-cover object-center grayscale opacity-80"
           priority

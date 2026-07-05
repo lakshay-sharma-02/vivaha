@@ -44,7 +44,7 @@ export default function PendingVerificationPage() {
       <div className="relative w-full h-[35vh] md:h-screen">
         <Image 
           src="/images/architecture/register.jpg"
-          alt="Vivaha Estate"
+          alt="Vivah Estate"
           fill
           className="object-cover object-center"
           priority
@@ -119,7 +119,7 @@ export default function PendingVerificationPage() {
           {status === "verified" && (
             <>
               <h1 className="text-3xl text-[#2A2621] font-display tracking-tight leading-tight">
-                Welcome to Vivaha
+                Welcome to Vivah
               </h1>
               <p className="text-sm text-[#8C7A6B] leading-relaxed">
                 Your profile has been verified. You now have full access to the estate.

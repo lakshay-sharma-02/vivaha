@@ -1,7 +1,7 @@
 # 13 - Security
 
 ## Threat Model
-Vivaha handles highly sensitive PII (Personally Identifiable Information) and communication. The primary threats are:
+Vivah handles highly sensitive PII (Personally Identifiable Information) and communication. The primary threats are:
 1. **Unauthorized Data Access (BOLA/IDOR):** User A accessing User B's private preferences or chat.
 2. **Abuse/Harassment:** Malicious actors spamming or harassing users.
 3. **Financial Tampering:** Bypassing the payment gateway to grant premium access.

@@ -1,7 +1,7 @@
 # 00 - Overview
 
 ## What Exists
-The Vivaha backend is a fully realized, production-ready foundation for a premium matchmaking application. It consists of a robust PostgreSQL schema managed via Supabase, a Next.js Server Action abstraction layer, a dedicated service tier for third-party integrations, and strict validation pipelines.
+The Vivah backend is a fully realized, production-ready foundation for a premium matchmaking application. It consists of a robust PostgreSQL schema managed via Supabase, a Next.js Server Action abstraction layer, a dedicated service tier for third-party integrations, and strict validation pipelines.
 
 ## Why it Exists
 Traditional monolithic architectures struggle with the real-time demands (chat, notifications) and complex vector/geographic queries required for modern matchmaking. By decoupling the database (Supabase) from the compute layer (Next.js), we achieve:

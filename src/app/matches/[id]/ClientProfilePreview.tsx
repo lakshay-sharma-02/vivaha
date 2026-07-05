@@ -136,7 +136,7 @@ export default function ClientProfilePreview({ initialProfile }: { initialProfil
             <div className="w-8 h-8 rounded-full border border-[#8C7A6B] flex items-center justify-center relative">
               <span className="font-serif text-[#8C7A6B] text-lg leading-none pt-1">V</span>
             </div>
-            <span className="font-serif text-xl tracking-[0.2em] uppercase text-[#8C7A6B] hidden sm:block">Vivaha</span>
+            <span className="font-serif text-xl tracking-[0.2em] uppercase text-[#8C7A6B] hidden sm:block">Vivah</span>
           </div>
         </div>
         

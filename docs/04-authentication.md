@@ -1,7 +1,7 @@
 # 04 - Authentication
 
 ## Overview
-Vivaha relies on Supabase Auth (GoTrue), which provides a secure, JWT-based authentication system.
+Vivah relies on Supabase Auth (GoTrue), which provides a secure, JWT-based authentication system.
 
 ## Mechanisms
 1. **JWT (JSON Web Tokens):** Short-lived access tokens containing user identity and roles.

@@ -369,7 +369,7 @@ function PrivacySection({ isPaused, onSave }: { isPaused: boolean, onSave: () =>
       <div className="relative z-10">
         <div className="mb-10 border-b border-[#E6D5C3]/40 pb-6">
           <h3 className="font-serif text-3xl text-[#2A2621] tracking-wide mb-2">Privacy</h3>
-          <p className="text-[#8C7A6B] font-light text-sm">Control your visibility on Vivaha.</p>
+          <p className="text-[#8C7A6B] font-light text-sm">Control your visibility on Vivah.</p>
         </div>
         <div className="space-y-6">
           <div className="flex items-center justify-between p-6 border border-[#E6D5C3] rounded-xl bg-[#FBF9F6]">

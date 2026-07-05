@@ -46,7 +46,7 @@ export default function ClientSidebar() {
   return (
     <>
       <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-[#FBF9F6]/90 backdrop-blur-md border-b border-[#E6D5C3]/60 z-50 flex items-center justify-between px-6">
-        <span className="font-serif text-xl tracking-[0.15em] uppercase text-[#8C7A6B]">Vivaha</span>
+        <span className="font-serif text-xl tracking-[0.15em] uppercase text-[#8C7A6B]">Vivah</span>
         <div className="flex items-center gap-4">
           <NotificationBell />
           <button onClick={() => setIsOpen(!isOpen)} className="text-[#8C7A6B]">
@@ -69,7 +69,7 @@ export default function ClientSidebar() {
             <div className="w-10 h-10 rounded-full border border-[#8C7A6B] flex items-center justify-center relative">
                <span className="font-serif text-[#8C7A6B] text-xl leading-none pt-1">V</span>
             </div>
-            <span className="font-serif text-2xl tracking-[0.15em] uppercase text-[#8C7A6B] group-hover:text-[#2A2621] transition-colors">Vivaha</span>
+            <span className="font-serif text-2xl tracking-[0.15em] uppercase text-[#8C7A6B] group-hover:text-[#2A2621] transition-colors">Vivah</span>
           </Link>
           <NotificationBell />
         </div>

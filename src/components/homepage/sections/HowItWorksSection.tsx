@@ -22,7 +22,7 @@ export function HowItWorksSection() {
       <div className="w-full h-[55vh] relative">
         <Image 
           src="/images/architecture/how_it_works.jpg"
-          alt="Vivaha Garden Pathway"
+          alt="Vivah Garden Pathway"
           fill
           className="object-cover object-center"
         />

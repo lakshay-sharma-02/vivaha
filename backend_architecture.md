@@ -1,10 +1,10 @@
-# Vivaha Backend Architecture & Documentation
+# Vivah Backend Architecture & Documentation
 
-This document outlines the architecture, data models, and workflows for the backend of the Vivaha platform.
+This document outlines the architecture, data models, and workflows for the backend of the Vivah platform.
 
 ## 1. High-Level Architecture
 
-The Vivaha backend is built on a modern, serverless architecture utilizing:
+The Vivah backend is built on a modern, serverless architecture utilizing:
 - **Framework:** Next.js (App Router) for Server Actions and API endpoints.
 - **Database & Auth:** Supabase (PostgreSQL, GoTrue for Auth, Realtime, Storage).
 - **Validation:** Zod for strong schema validation across inputs.

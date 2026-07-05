@@ -1,7 +1,7 @@
 # 18 - Event System
 
 ## Overview
-Vivaha relies on an implicit, database-driven event system rather than a heavy message broker (like Kafka/RabbitMQ) for its current scale.
+Vivah relies on an implicit, database-driven event system rather than a heavy message broker (like Kafka/RabbitMQ) for its current scale.
 
 ## Core Mechanism: Postgres Triggers & Realtime
 State changes in the database act as the source of truth for events.

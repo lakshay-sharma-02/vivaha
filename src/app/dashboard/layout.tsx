@@ -3,7 +3,7 @@ import { ReactNode } from "react"
 import ClientSidebar from "./ClientSidebar"
 
 export const metadata: Metadata = {
-  title: "Dashboard | Vivaha",
+  title: "Dashboard | Vivah",
 }
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {

@@ -1,9 +1,9 @@
-# Vivaha Backend Engineering Knowledge Base
+# Vivah Backend Engineering Knowledge Base
 
-Welcome to the Vivaha backend documentation. This `/docs` directory serves as the definitive reference for the system's architecture, design decisions, data models, and operational workflows.
+Welcome to the Vivah backend documentation. This `/docs` directory serves as the definitive reference for the system's architecture, design decisions, data models, and operational workflows.
 
-## Purpose of Vivaha
-Vivaha is a modern, high-performance matchmaking platform designed to handle complex compatibility algorithms, real-time communication, and robust trust & safety mechanisms. The backend must securely manage highly sensitive personal data while providing low-latency responses for a premium user experience.
+## Purpose of Vivah
+Vivah is a modern, high-performance matchmaking platform designed to handle complex compatibility algorithms, real-time communication, and robust trust & safety mechanisms. The backend must securely manage highly sensitive personal data while providing low-latency responses for a premium user experience.
 
 ## Backend Philosophy
 - **Serverless & Edge-Ready:** Leverage Next.js App Router to move logic to the server edge where possible.

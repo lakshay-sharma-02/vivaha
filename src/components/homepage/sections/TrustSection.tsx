@@ -32,7 +32,7 @@ export function TrustSection() {
       <div className="w-full h-[60vh] relative">
         <Image 
           src="/images/architecture/trust_arch.jpg"
-          alt="Vivaha Trust Arch"
+          alt="Vivah Trust Arch"
           fill
           className="object-cover object-center"
         />

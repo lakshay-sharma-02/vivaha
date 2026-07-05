@@ -44,7 +44,7 @@ export function HeroSection() {
       <div className="w-full md:w-[60%] h-[50vh] md:h-full relative">
         <Image 
           src="/images/architecture/hero_entrance.jpg"
-          alt="Vivaha Estate Entrance"
+          alt="Vivah Estate Entrance"
           fill
           className="object-cover object-center"
           priority

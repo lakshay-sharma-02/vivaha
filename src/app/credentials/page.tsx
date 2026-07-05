@@ -138,7 +138,7 @@ export default function CredentialsPage() {
         {/* We reuse the register image here due to image generation quotas, but it perfectly fits the secure desk aesthetic */}
         <Image 
           src="/images/architecture/register.jpg"
-          alt="Vivaha Secure Upload"
+          alt="Vivah Secure Upload"
           fill
           className="object-cover object-center"
           priority

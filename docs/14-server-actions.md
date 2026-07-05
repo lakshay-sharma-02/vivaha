@@ -1,7 +1,7 @@
 # 14 - Server Actions
 
 ## Overview
-Server Actions (`src/app/actions/*`) are the primary mutation mechanism in Vivaha. They run securely on the server and are callable directly from React Client Components.
+Server Actions (`src/app/actions/*`) are the primary mutation mechanism in Vivah. They run securely on the server and are callable directly from React Client Components.
 
 ## Anatomy of a Server Action
 

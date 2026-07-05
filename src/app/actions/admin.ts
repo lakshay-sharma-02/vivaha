@@ -124,7 +124,7 @@ export async function approveVerification(documentId: string, profileId: string)
     userId: profileId,
     type: 'verification',
     title: 'Profile Verified!',
-    body: 'Your professional identity has been verified. You can now fully interact with the Vivaha community.',
+    body: 'Your professional identity has been verified. You can now fully interact with the Vivah community.',
     actionUrl: '/dashboard',
     priority: 'high'
   })

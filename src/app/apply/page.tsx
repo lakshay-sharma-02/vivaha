@@ -94,7 +94,7 @@ export default function ApplyPage() {
       <div className="w-full md:w-1/2 h-[20vh] md:h-full relative">
         <Image 
           src="/images/architecture/interview.jpg"
-          alt="Vivaha Study Room"
+          alt="Vivah Study Room"
           fill
           className="object-cover object-center"
           priority

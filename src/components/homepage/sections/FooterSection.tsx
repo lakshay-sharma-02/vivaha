@@ -13,7 +13,7 @@ export function FooterSection() {
       <div className="w-full h-[50vh] relative">
         <Image 
           src="/images/architecture/footer.jpg"
-          alt="Vivaha Garden Evening"
+          alt="Vivah Garden Evening"
           fill
           className="object-cover object-center"
         />
@@ -30,7 +30,7 @@ export function FooterSection() {
           {/* Brand */}
           <div className="space-y-6 max-w-[280px]">
             <div className="text-2xl font-display text-[#FDFBF7] tracking-widest uppercase">
-              Vivaha
+              Vivah
             </div>
             <p className="text-sm text-[#FDFBF7]/60 font-medium leading-relaxed">
               Building meaningful relationships with trust, respect, and family values at the heart.
@@ -67,7 +67,7 @@ export function FooterSection() {
         </div>
         
         <div className="relative z-10 w-full max-w-7xl mx-auto pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/30 font-bold uppercase tracking-widest">
-          <p>© 2026 Vivaha. All rights reserved.</p>
+          <p>© 2026 Vivah. All rights reserved.</p>
           <p>A Thoughtfully Designed Space.</p>
         </div>
       </div>

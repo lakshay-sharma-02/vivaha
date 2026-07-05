@@ -1,6 +1,6 @@
 # 02 - Folder Structure
 
-The Vivaha backend adopts a domain-driven folder structure within the Next.js App Router paradigm.
+The Vivah backend adopts a domain-driven folder structure within the Next.js App Router paradigm.
 
 ```text
 vivaha/

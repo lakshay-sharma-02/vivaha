@@ -1,6 +1,6 @@
 # 21 - Data Flow
 
-The macro data flow of the Vivaha platform demonstrates how a user moves from an anonymous visitor to an engaged, paying member.
+The macro data flow of the Vivah platform demonstrates how a user moves from an anonymous visitor to an engaged, paying member.
 
 ## The Funnel Data Flow
 

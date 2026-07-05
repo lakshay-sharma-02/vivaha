@@ -1,6 +1,6 @@
 # 25 - Development Guide
 
-Welcome to the team. This guide outlines how to build and maintain the Vivaha backend.
+Welcome to the team. This guide outlines how to build and maintain the Vivah backend.
 
 ## Project Setup
 1. **Clone the Repo.**

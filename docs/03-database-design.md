@@ -1,6 +1,6 @@
 # 03 - Database Design
 
-The database is the beating heart of Vivaha. Designed for PostgreSQL 15+, it prioritizes referential integrity and strict normalization.
+The database is the beating heart of Vivah. Designed for PostgreSQL 15+, it prioritizes referential integrity and strict normalization.
 
 ## Core Tables
 

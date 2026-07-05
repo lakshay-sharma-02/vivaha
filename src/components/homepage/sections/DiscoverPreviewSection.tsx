@@ -20,7 +20,7 @@ export function DiscoverPreviewSection() {
       <div className="w-full h-[50vh] relative">
         <Image 
           src="/images/architecture/discover.jpg"
-          alt="Vivaha Portrait Gallery"
+          alt="Vivah Portrait Gallery"
           fill
           className="object-cover object-center"
         />

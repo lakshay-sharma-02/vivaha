@@ -205,7 +205,7 @@ export default function BrowseMatchesPage() {
           <div className="w-8 h-8 rounded-full border border-[#8C7A6B] flex items-center justify-center relative">
             <span className="font-serif text-[#8C7A6B] text-lg leading-none pt-1">V</span>
           </div>
-          <span className="font-serif text-xl tracking-[0.2em] uppercase text-[#8C7A6B]">Vivaha</span>
+          <span className="font-serif text-xl tracking-[0.2em] uppercase text-[#8C7A6B]">Vivah</span>
         </motion.div>
         
         <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, delay: 0.2 }} className="flex items-center gap-8">

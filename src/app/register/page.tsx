@@ -54,7 +54,7 @@ export default function RegisterPage() {
       <div className="relative w-full h-[35vh] md:h-screen">
         <Image 
           src="/images/architecture/register.jpg"
-          alt="Vivaha Registration Room"
+          alt="Vivah Registration Room"
           fill
           className="object-cover object-center"
           priority

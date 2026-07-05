@@ -1,7 +1,7 @@
 # 16 - API Reference
 
 ## Overview
-While Vivaha uses Server Actions for 90% of internal mutations, traditional API Routes (`src/app/api`) are required for external machine-to-machine communication.
+While Vivah uses Server Actions for 90% of internal mutations, traditional API Routes (`src/app/api`) are required for external machine-to-machine communication.
 
 ## Endpoints
 

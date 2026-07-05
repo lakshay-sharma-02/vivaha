@@ -29,7 +29,7 @@ export function FAQSection() {
       <div className="w-full h-[40vh] relative">
         <Image 
           src="/images/architecture/faq.jpg"
-          alt="Vivaha Reading Lounge"
+          alt="Vivah Reading Lounge"
           fill
           className="object-cover object-center"
         />

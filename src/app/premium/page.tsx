@@ -150,7 +150,7 @@ const COMPARISON = [
 
 const FAQS = [
   {
-    q: "Why is Vivaha a single lifetime payment?",
+    q: "Why is Vivah a single lifetime payment?",
     a: "We believe the journey to finding a life partner shouldn't be monetized by the month. A single payment aligns our goals with yours: helping you find a meaningful connection without the pressure of a recurring subscription."
   },
   {
@@ -200,7 +200,7 @@ export default function PremiumMembershipPage() {
         key: data.keyId,
         amount: data.amount,
         currency: data.currency,
-        name: "Vivaha",
+        name: "Vivah",
         description: "Lifetime Premium Membership",
         order_id: data.orderId,
         handler: async function (response: any) {
@@ -280,7 +280,7 @@ export default function PremiumMembershipPage() {
             <div className="w-8 h-8 rounded-full border border-[#8C7A6B] flex items-center justify-center relative">
               <span className="font-serif text-[#8C7A6B] text-lg leading-none pt-1">V</span>
             </div>
-            <span className="font-serif text-xl tracking-[0.2em] uppercase text-[#8C7A6B] hidden sm:block">Vivaha</span>
+            <span className="font-serif text-xl tracking-[0.2em] uppercase text-[#8C7A6B] hidden sm:block">Vivah</span>
           </div>
         </div>
       </header>
@@ -434,7 +434,7 @@ export default function PremiumMembershipPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {[
               {
-                quote: "Vivaha doesn't feel like a matrimonial site. It feels like a private club where respect and privacy are actually prioritized. I found my partner within three months.",
+                quote: "Vivah doesn't feel like a matrimonial site. It feels like a private club where respect and privacy are actually prioritized. I found my partner within three months.",
                 author: "Ananya & Rohan",
                 city: "Mumbai"
               },

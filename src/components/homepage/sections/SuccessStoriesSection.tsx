@@ -14,7 +14,7 @@ export function SuccessStoriesSection() {
       <div className="w-full md:w-1/2 h-[50vh] md:h-full relative">
         <Image 
           src="/images/architecture/success_stories.jpg"
-          alt="Vivaha Success Stories Album"
+          alt="Vivah Success Stories Album"
           fill
           className="object-cover object-center"
         />

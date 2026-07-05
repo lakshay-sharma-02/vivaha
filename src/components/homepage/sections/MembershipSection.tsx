@@ -42,7 +42,7 @@ export function MembershipSection() {
       <div className="w-full h-[35vh] relative">
         <Image 
           src="/images/architecture/membership.jpg"
-          alt="Vivaha Desk"
+          alt="Vivah Desk"
           fill
           className="object-cover object-center"
         />

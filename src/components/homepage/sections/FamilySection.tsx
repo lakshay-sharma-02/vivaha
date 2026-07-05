@@ -53,7 +53,7 @@ export function FamilySection() {
       <div className="w-full md:w-1/2 h-[50vh] md:h-screen relative">
         <Image 
           src="/images/architecture/family.jpg"
-          alt="Vivaha Living Room"
+          alt="Vivah Living Room"
           fill
           className="object-cover object-center"
         />

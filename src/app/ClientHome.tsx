@@ -75,7 +75,7 @@ function HeroSection() {
             Where Meaningful<br />Journeys <span className="italic font-light text-[#8C7A6B]">Begin.</span>
           </h1>
           <p className="text-[#8C7A6B] text-[clamp(1rem,1.5vw,1.25rem)] font-light leading-relaxed mb-10 max-w-lg mx-auto md:mx-0">
-            Vivaha is an exclusive premium matrimony platform where trust, authenticity, and meaningful introductions create lifelong relationships.
+            Vivah is an exclusive premium matrimony platform where trust, authenticity, and meaningful introductions create lifelong relationships.
           </p>
           <div className="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start">
             <Link href="/register" className="w-full sm:w-auto bg-[#2A2621] text-white px-8 py-4 rounded-xl shadow-xl hover:bg-[#1A1815] hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 font-serif tracking-widest uppercase text-xs text-center flex items-center justify-center gap-2">
@@ -134,7 +134,7 @@ function PhilosophySection() {
           "We believe marriage begins long before the wedding—it begins with the right introduction."
         </h2>
         <p className="text-[#8C7A6B] font-light text-[clamp(1rem,1.2vw,1.125rem)] leading-loose max-w-3xl mx-auto">
-          In a world of fleeting connections, Vivaha stands as an institution of permanence. We meticulously curate every aspect of your journey, ensuring that your privacy is protected, your preferences are honored, and your introductions are profoundly meaningful.
+          In a world of fleeting connections, Vivah stands as an institution of permanence. We meticulously curate every aspect of your journey, ensuring that your privacy is protected, your preferences are honored, and your introductions are profoundly meaningful.
         </p>
       </motion.div>
     </section>
@@ -156,7 +156,7 @@ function JourneySection() {
     <section className="py-24 bg-[#FBF9F6] border-y border-[#E6D5C3]/40 relative z-20">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-20">
-          <h2 className="font-serif text-3xl md:text-4xl text-[#2A2621] mb-4">The Vivaha Journey</h2>
+          <h2 className="font-serif text-3xl md:text-4xl text-[#2A2621] mb-4">The Vivah Journey</h2>
           <p className="text-[#8C7A6B] font-light">A meticulous path to your lifetime partner.</p>
         </div>
 
@@ -272,7 +272,7 @@ function TrustSection() {
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         
         <div className="text-center mb-20">
-          <h2 className="font-serif text-3xl md:text-5xl text-white mb-6">Why Families Trust Vivaha</h2>
+          <h2 className="font-serif text-3xl md:text-5xl text-white mb-6">Why Families Trust Vivah</h2>
           <div className="w-16 h-[1px] bg-[#8C7A6B] mx-auto"></div>
         </div>
 
@@ -346,7 +346,7 @@ function PremiumSection() {
 
 function FAQSection() {
   const faqs = [
-    { q: "How is Vivaha different from other platforms?", a: "Vivaha is built on exclusivity, privacy, and a one-time lifetime membership model. We do not use ads or recurring subscriptions, ensuring our goals align entirely with your success." },
+    { q: "How is Vivah different from other platforms?", a: "Vivah is built on exclusivity, privacy, and a one-time lifetime membership model. We do not use ads or recurring subscriptions, ensuring our goals align entirely with your success." },
     { q: "What does the verification process involve?", a: "Every member must submit a valid government ID. Our team manually reviews each profile to ensure absolute authenticity before granting access." },
     { q: "Is my data secure?", a: "Yes. Your privacy is paramount. Premium members can completely hide their profiles and only reveal them to accepted interests." }
   ];
@@ -410,7 +410,7 @@ function Footer() {
     <footer className="bg-[#2A2621] text-[#F7F5EF] py-16 px-6 relative z-20 border-t border-[#8C7A6B]/20">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
         <div className="md:col-span-2">
-          <div className="font-serif text-2xl tracking-[0.2em] uppercase text-[#E6D5C3] mb-6">Vivaha</div>
+          <div className="font-serif text-2xl tracking-[0.2em] uppercase text-[#E6D5C3] mb-6">Vivah</div>
           <p className="text-[#8C7A6B] font-light max-w-sm leading-relaxed">
             An exclusive matrimonial estate designed for privacy, authenticity, and lifelong commitments.
           </p>
@@ -433,7 +433,7 @@ function Footer() {
         </div>
       </div>
       <div className="max-w-7xl mx-auto pt-8 border-t border-[#8C7A6B]/20 flex flex-col md:flex-row justify-between items-center gap-4">
-        <p className="text-[#8C7A6B] text-xs font-light">© {new Date().getFullYear()} Vivaha Matrimony. All rights reserved.</p>
+        <p className="text-[#8C7A6B] text-xs font-light">© {new Date().getFullYear()} Vivah Matrimony. All rights reserved.</p>
         <p className="text-[#8C7A6B] text-[10px] uppercase tracking-widest font-semibold flex items-center gap-2">Crafted with <Heart size={10}/> for Eternity</p>
       </div>
     </footer>
