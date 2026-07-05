@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import React from "react";
 import ClientDashboard from "./ClientDashboard";
 import { getDashboardData } from "@/app/actions/dashboard";

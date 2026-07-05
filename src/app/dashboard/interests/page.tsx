@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import React from "react";
 import ClientInterests from "./ClientInterests";
 import { getInterests } from "@/app/actions/interests";

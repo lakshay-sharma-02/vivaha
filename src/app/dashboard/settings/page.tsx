@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import React from "react";
 import { getSettingsData } from "@/app/actions/settings";
 import { redirect } from "next/navigation";
