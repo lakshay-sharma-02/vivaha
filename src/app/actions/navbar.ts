@@ -7,6 +7,7 @@ export async function getNavbarData() {
   
   try {
     // 1. Get Marital Status Counts (from the view if it exists, or via RPC/aggregate)
+    // @ts-ignore - types not updated yet
     const { data: viewData, error: viewError } = await supabase
       .from('navbar_stats')
       .select('*')
@@ -14,11 +15,13 @@ export async function getNavbarData() {
       
     // 2. Get Caste breakdown (Top 5 castes with most profiles)
     // For now we do a simple query. If the table is large, a grouped RPC is better.
+    // @ts-ignore - types not updated yet
     const { data: casteData } = await supabase
       .from('castes')
       .select('id, name, profiles(count)');
       
     // 3. Get State breakdown (Top 5 states)
+    // @ts-ignore - types not updated yet
     const { data: stateData } = await supabase
       .from('states')
       .select('id, name, profiles(count)');
