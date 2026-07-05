@@ -29,22 +29,22 @@ export async function getNavbarData() {
     
     // Sort and map caste data
     const castes = (casteData || [])
-      .map(c => ({
+      .map((c: any) => ({
         id: c.id,
         name: c.name,
         count: c.profiles?.[0]?.count || 0
       }))
-      .sort((a, b) => b.count - a.count)
+      .sort((a: any, b: any) => b.count - a.count)
       .slice(0, 5);
       
     // Sort and map state data
     const states = (stateData || [])
-      .map(s => ({
+      .map((s: any) => ({
         id: s.id,
         name: s.name,
         count: s.profiles?.[0]?.count || 0
       }))
-      .sort((a, b) => b.count - a.count)
+      .sort((a: any, b: any) => b.count - a.count)
       .slice(0, 5);
 
     return {
