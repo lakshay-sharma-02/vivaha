@@ -23,6 +23,7 @@ export const metadata: Metadata = {
 };
 
 import { Providers } from "./providers";
+import Navbar from "@/components/Navbar";
 
 export default function RootLayout({
   children,
@@ -32,7 +33,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <body className="antialiased bg-background text-text-primary">
-        <Providers>{children}</Providers>
+        <Providers>
+          <Navbar />
+          {children}
+        </Providers>
       </body>
     </html>
   );
