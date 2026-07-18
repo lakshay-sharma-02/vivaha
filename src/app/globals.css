@@ -1,91 +1,150 @@
 @import "tailwindcss";
 
 /* 
-  Vivah Design Tokens
-  Version 1.0 
-  Implementation of 02-FOUNDATIONS 
+  Vivah — Traditional Indian Wedding Aesthetic
+  Inspired by mandap decor, deep maroon, gold embroidery
 */
 
 @theme {
-  /* Typography Tokens */
-  --font-display: var(--font-display), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-  --font-body: var(--font-body), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* Typography */
+  --font-display: 'Yatra One', ui-serif, Georgia, serif;
+  --font-body: 'Cormorant Garamond', ui-serif, Georgia, serif;
   
-  /* Colors - Foundation */
-  --color-neutral-0: #FFFFFF;
-  --color-neutral-50: #FCFAF8; /* Handmade paper / ivory walls */
-  --color-neutral-100: #F5F1EB;
-  --color-neutral-200: #E6DFD3;
-  --color-neutral-300: #D4C9BA;
-  --color-neutral-400: #B3A492;
-  --color-neutral-500: #8C7E6C;
-  --color-neutral-600: #665C4F;
-  --color-neutral-700: #4D453C;
-  --color-neutral-800: #332E28;
-  --color-neutral-900: #1A1714;
-  
-  --color-primary-50: #F3F1EC;
-  --color-primary-100: #E1DACD;
-  --color-primary-200: #C4B59D;
-  --color-primary-300: #A8906E;
-  --color-primary-400: #937A58;
-  --color-primary-500: #7F6542; /* Soft champagne/muted metallic tone */
-  --color-primary-600: #685235;
-  --color-primary-700: #514029;
-  --color-primary-800: #3A2F1E;
-  --color-primary-900: #241D12;
-  
-  --color-success-400: #5A7E64;
-  --color-success-500: #43634B; /* Muted green */
-  --color-success-600: #2E4734;
-  
-  --color-warning-400: #D99553;
-  --color-warning-500: #C47A31; /* Warm amber */
-  --color-warning-600: #9A5E24;
-  
-  --color-error-400: #C26363;
-  --color-error-500: #A84949; /* Muted red */
-  --color-error-600: #863636;
-  
-  --color-info-400: #6B8094;
-  --color-info-500: #4A637A; /* Soft blue-gray */
-  --color-info-600: #324659;
+  /* Color Palette */
+  --color-maroon-deep: #22060a;
+  --color-maroon: #4a0e14;
+  --color-red: #8f1522;
+  --color-red-bright: #a31f22;
+  --color-gold: #d4af37;
+  --color-gold-light: #f3d889;
+  --color-cream: #f7ecd3;
+  --color-ink: #2a1408;
 
-  /* Semantic Colors */
-  --color-background: var(--color-neutral-50);
-  --color-surface: var(--color-neutral-0);
-  --color-surface-secondary: var(--color-neutral-100);
-  --color-text-primary: var(--color-neutral-900);
-  --color-text-secondary: var(--color-neutral-600);
-  --color-border: var(--color-neutral-200);
+  /* Semantic Tokens */
+  --color-background: var(--color-maroon-deep);
+  --color-surface: var(--color-cream);
+  --color-surface-secondary: var(--color-maroon);
+  --color-text-primary: var(--color-cream);
+  --color-text-secondary: var(--color-gold-light);
+  --color-border: var(--color-gold);
+  --color-border-light: var(--color-gold-light);
   
-  --color-action-primary: var(--color-primary-600);
-  --color-action-secondary: var(--color-neutral-200);
-  --color-action-hover: var(--color-primary-500);
+  --color-action-primary: var(--color-gold);
+  --color-action-secondary: var(--color-cream);
+  --color-action-hover: var(--color-gold-light);
 
-  /* Shadows (Warm gray shadows, low opacity) */
-  --shadow-low: 0 2px 8px -2px rgba(77, 69, 60, 0.05), 0 1px 2px -1px rgba(77, 69, 60, 0.03);
-  --shadow-medium: 0 8px 24px -4px rgba(77, 69, 60, 0.08), 0 4px 8px -2px rgba(77, 69, 60, 0.04);
-  --shadow-high: 0 20px 48px -8px rgba(77, 69, 60, 0.12), 0 8px 16px -4px rgba(77, 69, 60, 0.04);
+  /* Shadows — warm gold tint */
+  --shadow-low: 0 2px 8px -2px rgba(212, 175, 55, 0.08), 0 1px 2px -1px rgba(34, 6, 10, 0.1);
+  --shadow-medium: 0 8px 24px -4px rgba(212, 175, 55, 0.12), 0 4px 8px -2px rgba(34, 6, 10, 0.08);
+  --shadow-high: 0 20px 48px -8px rgba(212, 175, 55, 0.16), 0 8px 16px -4px rgba(34, 6, 10, 0.06);
 }
 
-/* Base styling adhering to typography.md */
+/* --- Marigold Garland Border Strip ---
+   Repeating circles in orange/gold for section dividers */
+.marigold-border {
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 18px,
+    #ff8c00 18px,
+    #ff8c00 20px,
+    transparent 20px,
+    transparent 38px,
+    #d4af37 38px,
+    #d4af37 40px,
+    transparent 40px,
+    transparent 58px,
+    #ffa500 58px,
+    #ffa500 60px,
+    transparent 60px,
+    transparent 78px
+  );
+  height: 12px;
+}
+
+.marigold-garland {
+  position: relative;
+  height: 20px;
+  overflow: hidden;
+  background:
+    /* Top strand */
+    radial-gradient(8px 8px at 10% 50%, #ff8c00 35%, transparent 60%),
+    radial-gradient(6px 6px at 18% 30%, #d4af37 35%, transparent 55%),
+    radial-gradient(8px 8px at 26% 60%, #ffa500 35%, transparent 60%),
+    radial-gradient(7px 7px at 34% 25%, #ff8c00 35%, transparent 55%),
+    radial-gradient(8px 8px at 42% 55%, #d4af37 35%, transparent 60%),
+    radial-gradient(6px 6px at 50% 35%, #ffa500 35%, transparent 55%),
+    radial-gradient(8px 8px at 58% 50%, #ff8c00 35%, transparent 60%),
+    radial-gradient(7px 7px at 66% 30%, #d4af37 35%, transparent 55%),
+    radial-gradient(8px 8px at 74% 55%, #ffa500 35%, transparent 60%),
+    radial-gradient(6px 6px at 82% 25%, #ff8c00 35%, transparent 55%),
+    radial-gradient(8px 8px at 90% 50%, #d4af37 35%, transparent 60%);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+/* Gold gradient hairline divider */
+.gold-hairline {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+}
+
+/* Gold gradient text fill */
+.gold-text {
+  background: linear-gradient(135deg, #d4af37 0%, #f3d889 40%, #d4af37 70%, #f3d889 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Mandap arch SVG helper */
+.mandap-arch {
+  filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.3));
+}
+
+/* Diya flame animation */
+@keyframes diya-flicker {
+  0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
+  25% { opacity: 0.85; transform: scale(1.02) rotate(-1deg); }
+  50% { opacity: 0.95; transform: scale(0.98) rotate(0.5deg); }
+  75% { opacity: 0.8; transform: scale(1.01) rotate(-0.5deg); }
+}
+
+.diya-flame {
+  transform-origin: center bottom;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .diya-group:nth-child(odd) .diya-flame {
+    animation: diya-flicker 1.8s ease-in-out infinite;
+  }
+  .diya-group:nth-child(even) .diya-flame {
+    animation: diya-flicker 2.2s ease-in-out infinite 0.5s;
+  }
+}
+
 @layer base {
   body {
     @apply bg-background text-text-primary font-body antialiased;
-    line-height: 1.6;
+    line-height: 1.7;
+    font-size: 1.0625rem;
   }
   
   h1, h2, h3, h4, h5, h6 {
     @apply font-display text-text-primary tracking-tight;
-    line-height: 1.2;
+    line-height: 1.15;
   }
-  
+
   p {
-    @apply max-w-[680px]; /* Enforces maximum readable width */
+    @apply max-w-[680px];
   }
 
   ::selection {
-    @apply bg-primary-200 text-primary-900;
+    @apply bg-gold/30 text-ink;
   }
+}
+
+/* Subhead / label utility */
+.label {
+  @apply text-[10px] font-body uppercase tracking-[0.25em] font-bold;
 }

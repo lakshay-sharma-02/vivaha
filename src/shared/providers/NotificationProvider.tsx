@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { createClient } from "@/shared/lib/supabase/client";
+import { toast } from "sonner";
 
 export type Notification = {
   id: string;
@@ -64,7 +65,12 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
         },
         (payload) => {
           setNotifications((prev) => [payload.new as Notification, ...prev]);
-          // TODO: Trigger a visual toast here using Sonner or similar if we had it
+          const n = payload.new as Notification;
+          const url = n.action_url || undefined;
+          toast(n.title, {
+            description: n.body,
+            action: url ? { label: "View", onClick: () => window.open(url, "_self") } : undefined,
+          });
         }
       )
       .on(

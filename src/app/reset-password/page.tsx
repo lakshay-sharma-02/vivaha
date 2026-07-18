@@ -43,7 +43,7 @@ export default function ResetPasswordPage() {
     setStatus("loading");
     
     const { error } = await supabase.auth.updateUser({
-      password: password
+      password: password,
     });
 
     if (error) {
@@ -58,8 +58,7 @@ export default function ResetPasswordPage() {
   };
 
   return (
-    <main className="w-full min-h-screen grid grid-cols-1 md:grid-cols-2 bg-[#FDFBF7]">
-      
+    <main className="w-full min-h-screen grid grid-cols-1 md:grid-cols-2 bg-maroon-deep">
       <div className="relative w-full h-[35vh] md:h-screen">
         <Image 
           src="/images/architecture/register.jpg"
@@ -68,23 +67,22 @@ export default function ResetPasswordPage() {
           className="object-cover object-center grayscale opacity-80"
           priority
         />
-        <div className="absolute inset-0 bg-[#2A2621]/20 mix-blend-multiply" />
+        <div className="absolute inset-0 bg-gradient-to-t from-maroon-deep via-maroon/30 to-transparent" />
       </div>
 
-      <div className="w-full min-h-[65vh] md:h-screen flex flex-col justify-center px-6 py-12 md:p-12 lg:p-24 bg-[#FDFBF7] relative shadow-[-20px_0_40px_rgba(0,0,0,0.05)] overflow-y-auto">
+      <div className="w-full min-h-[65vh] md:h-screen flex flex-col justify-center px-6 py-12 md:p-12 lg:p-24 bg-maroon-deep relative overflow-y-auto">
         <div className="w-full max-w-md mx-auto">
-          
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
             className="space-y-4 mb-16"
           >
-            <div className="w-8 h-[1px] bg-[#8C7A6B]/30 mb-6" />
-            <h1 className="text-3xl md:text-4xl text-[#2A2621] font-display tracking-tight leading-tight">
+            <div className="w-8 h-[1px] bg-gold/40 mb-6" />
+            <h1 className="text-3xl md:text-4xl font-display text-cream tracking-tight leading-tight">
               Craft a new key.
             </h1>
-            <p className="text-xs text-[#8C7A6B] font-medium tracking-widest uppercase mt-4">
+            <p className="label text-gold-light">
               Enter your new secure password below.
             </p>
           </motion.div>
@@ -95,8 +93,8 @@ export default function ResetPasswordPage() {
               animate={{ opacity: 1 }}
               className="space-y-8"
             >
-              <div className="bg-[#FDF5E6] border border-[#E6D5C3] p-6 rounded-xl">
-                <p className="text-sm text-[#2A2621] font-light leading-relaxed">
+              <div className="bg-maroon border border-gold/30 p-6 rounded-xl">
+                <p className="text-sm text-cream/80 font-body leading-relaxed italic">
                   Your password has been successfully updated. Escorting you back to the Estate...
                 </p>
               </div>
@@ -110,27 +108,27 @@ export default function ResetPasswordPage() {
               className="space-y-10"
             >
               <div className="space-y-2">
-                <label htmlFor="password" className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-[0.2em]">New Password</label>
+                <label htmlFor="password" className="label text-gold">New Password</label>
                 <input 
                   id="password"
                   type="password" 
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="block w-full bg-transparent border-b border-[#2A2621]/20 pb-2 text-sm text-[#2A2621] font-medium placeholder-[#8C7A6B]/40 focus:outline-none focus:border-[#2A2621] transition-colors"
+                  className="block w-full bg-transparent border-b border-gold/30 pb-2 text-sm text-cream font-medium placeholder-gold-light/30 focus:outline-none focus:border-gold transition-colors"
                   placeholder="••••••••"
                 />
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="confirmPassword" className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-[0.2em]">Confirm Password</label>
+                <label htmlFor="confirmPassword" className="label text-gold">Confirm Password</label>
                 <input 
                   id="confirmPassword"
                   type="password" 
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
-                  className="block w-full bg-transparent border-b border-[#2A2621]/20 pb-2 text-sm text-[#2A2621] font-medium placeholder-[#8C7A6B]/40 focus:outline-none focus:border-[#2A2621] transition-colors"
+                  className="block w-full bg-transparent border-b border-gold/30 pb-2 text-sm text-cream font-medium placeholder-gold-light/30 focus:outline-none focus:border-gold transition-colors"
                   placeholder="••••••••"
                 />
               </div>
@@ -138,11 +136,11 @@ export default function ResetPasswordPage() {
               <div className="pt-8 space-y-4">
                 {status === "error" && (
                   <div className="flex flex-col gap-4 items-center">
-                    <div className="w-full text-[10px] text-red-900/80 font-bold uppercase tracking-widest bg-red-50/50 p-3 rounded-sm border border-red-900/10 text-center">
+                    <div className="w-full text-[10px] text-cream/80 font-bold uppercase tracking-widest bg-red/20 p-3 rounded-sm border border-red/30 text-center">
                       {errorMessage}
                     </div>
                     {errorMessage.includes("expired") && (
-                       <Link href="/forgot-password" className="text-xs font-bold text-[#8C7A6B] border-b border-[#8C7A6B] pb-1 hover:text-[#2A2621] hover:border-[#2A2621] transition-colors">
+                       <Link href="/forgot-password" className="text-xs font-bold text-gold border-b border-gold pb-1 hover:text-gold-light hover:border-gold-light transition-colors">
                          Request new link
                        </Link>
                     )}
@@ -153,21 +151,19 @@ export default function ResetPasswordPage() {
                   <button 
                     type="submit" 
                     disabled={status === "loading" || !password || !confirmPassword || errorMessage.includes("expired")}
-                    className="group flex items-center gap-4 text-xs font-bold text-[#2A2621] uppercase tracking-[0.2em] transition-all duration-300 disabled:opacity-50 w-fit"
+                    className="group flex items-center gap-4 text-xs font-bold text-gold uppercase tracking-[0.2em] transition-all duration-300 disabled:opacity-50 w-fit"
                   >
-                    <span className="border-b border-[#2A2621]/30 pb-1 group-hover:border-[#2A2621] transition-colors">
-                      {status === "loading" ? 'Updating...' : 'Update Password'}
+                    <span className="border-b border-gold/30 pb-1 group-hover:border-gold transition-colors">
+                      {status === "loading" ? "Updating..." : "Update Password"}
                     </span>
-                    <span className="w-8 h-[1px] bg-[#2A2621]/30 group-hover:bg-[#2A2621] group-hover:w-12 transition-all duration-500" />
+                    <span className="w-8 h-[1px] bg-gold/30 group-hover:bg-gold group-hover:w-12 transition-all duration-500" />
                   </button>
                 </div>
               </div>
             </motion.form>
           )}
-          
         </div>
       </div>
-      
     </main>
   );
 }

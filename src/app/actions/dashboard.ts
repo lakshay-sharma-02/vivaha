@@ -46,20 +46,24 @@ export async function getDashboardData() {
     .limit(3);
 
   // 6. Fetch Recommended Matches (just reuse the discover endpoint logic but limit to 2)
-  const { data: recommendations } = await (supabase as any)
-      .from("profiles")
+  const { data: rawRecommendations } = await (supabase as any)
+      .from("recommendations")
     .select(`
       id,
-      first_name,
-      last_name,
-      age:date_of_birth,
-      profession:professions(name),
-      city:cities(name),
-      profile_media (bucket_path)
+      score,
+      recommended_profile_id,
+      profile:profiles!recommendations_recommended_profile_id_fkey(
+        id,
+        first_name,
+        last_name,
+        date_of_birth,
+        profession:professions(name),
+        city:cities(name),
+        profile_media (bucket_path)
+      )
     `)
-    .neq("id", user.id)
-    .neq("is_paused", true)
-    .neq("is_active", false)
+    .eq("user_id", user.id)
+    .order("score", { ascending: false })
     .limit(2);
 
   return {
@@ -76,24 +80,25 @@ export async function getDashboardData() {
       views: viewsCount || 0
     },
     recentActivity: notifications || [],
-    recommendations: recommendations?.map((rec: any) => {
-      // Calculate age simply
-      const age = rec.age ? new Date().getFullYear() - new Date(rec.age).getFullYear() : 25;
+    recommendations: (rawRecommendations || []).map((rec: any) => {
+      const p = rec.profile;
+      if (!p) return null;
+      const age = p.date_of_birth ? new Date().getFullYear() - new Date(p.date_of_birth).getFullYear() : 25;
       
       return {
-        id: rec.id,
-        name: rec.first_name,
+        id: p.id,
+        name: p.first_name,
         age,
         // @ts-ignore
-        profession: rec.profession?.name || "Professional",
+        profession: p.profession?.name || "Professional",
         // @ts-ignore
-        city: rec.city?.name || "Unknown",
-        compatibility: Math.floor(Math.random() * 15) + 80, // Mock compatibility since it requires deep match logic
+        city: p.city?.name || "Unknown",
+        compatibility: rec.score || 85,
         // @ts-ignore
-        image: rec.profile_media?.[0]?.bucket_path 
-          ? supabase.storage.from('profile_media').getPublicUrl(rec.profile_media[0].bucket_path).data.publicUrl
+        image: p.profile_media?.[0]?.bucket_path 
+          ? supabase.storage.from('profile_media').getPublicUrl(p.profile_media[0].bucket_path).data.publicUrl
           : "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=800&auto=format&fit=crop"
       }
-    }) || []
+    }).filter(Boolean) || []
   };
 }
