@@ -49,7 +49,7 @@ export default function RegisterPage() {
     <main className="w-full min-h-screen grid grid-cols-1 md:grid-cols-2 bg-maroon-deep">
       <div className="relative w-full h-[35vh] md:h-screen">
         <Image 
-          src="/images/architecture/register.jpg"
+          src="/images/architecture/register-new.jpg"
           alt="Vivah Registration Room"
           fill
           className="object-cover object-center"
