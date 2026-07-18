@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 const SunlightRays = () => (
   <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden flex justify-center items-start fixed">
     <motion.div 
-      className="absolute top-[-10%] w-[800px] h-[600px] bg-gradient-radial from-[#FDF5E6]/40 via-[#FDF5E6]/5 to-transparent blur-[60px]"
+      className="absolute top-[-10%] w-[800px] h-[600px] bg-gradient-radial from-maroon/40 via-maroon/5 to-transparent blur-[60px]"
       animate={{ opacity: [0.5, 0.7, 0.5], scale: [1, 1.05, 1] }}
       transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
     />
@@ -24,8 +24,8 @@ const SunlightRays = () => (
 
 const AbstractArch = () => (
   <div className="absolute top-0 right-0 w-[600px] h-[600px] pointer-events-none z-0 opacity-[0.05] flex justify-end transform translate-x-1/3 -translate-y-1/3 fixed">
-    <div className="w-full h-full border-[1.5px] border-[#8C7A6B] rounded-full relative">
-      <div className="absolute inset-4 border border-[#8C7A6B]/50 rounded-full" />
+    <div className="w-full h-full border-[1.5px] border-gold/30 rounded-full relative">
+      <div className="absolute inset-4 border border-gold/30 rounded-full" />
     </div>
   </div>
 );
@@ -54,26 +54,26 @@ export default function ClientSettings({ initialData }: { initialData: any }) {
   ];
 
   return (
-    <div className="min-h-screen bg-[#F7F5EF] text-[#2A2621] relative overflow-hidden flex flex-col md:flex-row">
+    <div className="min-h-screen bg-maroon-deep text-cream relative overflow-hidden flex flex-col md:flex-row">
       {/* Background Texture */}
       <div className="absolute inset-0 opacity-[0.03] mix-blend-multiply pointer-events-none fixed" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }}></div>
       <SunlightRays />
       <AbstractArch />
 
       {/* LEFT NAVIGATION */}
-      <nav className="w-full md:w-[280px] shrink-0 border-r border-[#E6D5C3]/60 bg-[#FBF9F6]/50 backdrop-blur-md relative z-10 p-6 md:h-screen md:sticky md:top-0 md:overflow-y-auto hidden-scrollbar">
+      <nav className="w-full md:w-[280px] shrink-0 border-r border-gold/30 bg-maroon/50 backdrop-blur-md relative z-10 p-6 md:h-screen md:sticky md:top-0 md:overflow-y-auto hidden-scrollbar">
         <div className="mb-12 pt-6">
-          <h2 className="font-serif text-2xl text-[#2A2621] tracking-wide">Settings</h2>
-          <p className="text-[#8C7A6B] text-[10px] uppercase tracking-widest font-semibold mt-2">Manage your journey</p>
+          <h2 className="font-display text-2xl text-cream tracking-wide">Settings</h2>
+          <p className="text-gold-light/70 text-[10px] uppercase tracking-widest font-semibold mt-2">Manage your journey</p>
         </div>
         <ul className="space-y-1">
           {TABS.map(tab => (
             <li key={tab.id}>
               <button
                 onClick={() => setActiveTab(tab.id)}
-                className={`w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 text-sm tracking-wide ${activeTab === tab.id ? 'bg-white shadow-sm border border-[#E6D5C3]/40 text-[#2A2621]' : 'text-[#8C7A6B] hover:bg-[#FDF5E6]/50 hover:text-[#2A2621]'}`}
+                className={`w-full flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-300 text-sm tracking-wide ${activeTab === tab.id ? 'bg-maroon shadow-sm border border-gold/30 text-cream' : 'text-gold-light/70 hover:bg-maroon/30 hover:text-cream'}`}
               >
-                <tab.icon size={18} strokeWidth={activeTab === tab.id ? 2 : 1.5} className={activeTab === tab.id ? "text-[#8C7A6B]" : ""} />
+                <tab.icon size={18} strokeWidth={activeTab === tab.id ? 2 : 1.5} className={activeTab === tab.id ? "text-gold-light/70" : ""} />
                 {tab.label}
               </button>
             </li>
@@ -113,9 +113,9 @@ export default function ClientSettings({ initialData }: { initialData: any }) {
         {toast.show && (
           <motion.div 
             initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 50 }}
-            className="fixed bottom-10 left-1/2 -translate-x-1/2 bg-[#2A2621] text-white px-6 py-3 rounded-full shadow-2xl z-50 flex items-center gap-3 font-serif text-sm tracking-widest uppercase"
+            className="fixed bottom-10 left-1/2 -translate-x-1/2 bg-[#2A2621] text-white px-6 py-3 rounded-full shadow-2xl z-50 flex items-center gap-3 font-display text-sm tracking-widest uppercase"
           >
-            <CheckCircle size={16} className="text-[#E6D5C3]" />
+            <CheckCircle size={16} className="text-gold-light/60" />
             {toast.msg}
           </motion.div>
         )}
@@ -150,52 +150,52 @@ function ProfileSection({ data, onSave }: { data: any, onSave: () => void }) {
   };
 
   return (
-    <div className="bg-white rounded-[2rem] p-10 border border-[#E6D5C3]/60 shadow-sm relative overflow-hidden">
+    <div className="bg-maroon rounded-[2rem] p-10 border border-gold/30 shadow-sm relative overflow-hidden">
       <div className="absolute inset-0 opacity-[0.02] mix-blend-multiply pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }}></div>
       <div className="relative z-10">
-        <div className="mb-10 border-b border-[#E6D5C3]/40 pb-6">
-          <h3 className="font-serif text-3xl text-[#2A2621] tracking-wide mb-2">My Profile</h3>
-          <p className="text-[#8C7A6B] font-light text-sm">Update your personal information and biography.</p>
+        <div className="mb-10 border-b border-gold/30 pb-6">
+          <h3 className="font-display text-3xl text-cream tracking-wide mb-2">My Profile</h3>
+          <p className="text-gold-light/70 font-light text-sm">Update your personal information and biography.</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-8">
           <div className="grid grid-cols-2 gap-6">
             <div>
-              <label className="block text-[#8C7A6B] text-[10px] uppercase tracking-widest font-semibold mb-2">First Name</label>
-              <input type="text" value={form.first_name} onChange={e => setForm({...form, first_name: e.target.value})} className="w-full bg-[#FBF9F6] border border-[#E6D5C3] rounded-xl px-4 py-3 text-[#2A2621] font-light focus:outline-none focus:border-[#8C7A6B] transition-colors" />
+              <label className="block text-gold-light/70 text-[10px] uppercase tracking-widest font-semibold mb-2">First Name</label>
+              <input type="text" value={form.first_name} onChange={e => setForm({...form, first_name: e.target.value})} className="w-full bg-maroon border border-gold/30 rounded-xl px-4 py-3 text-cream font-light focus:outline-none focus:border-gold/30 transition-colors" />
             </div>
             <div>
-              <label className="block text-[#8C7A6B] text-[10px] uppercase tracking-widest font-semibold mb-2">Last Name</label>
-              <input type="text" value={form.last_name} onChange={e => setForm({...form, last_name: e.target.value})} className="w-full bg-[#FBF9F6] border border-[#E6D5C3] rounded-xl px-4 py-3 text-[#2A2621] font-light focus:outline-none focus:border-[#8C7A6B] transition-colors" />
+              <label className="block text-gold-light/70 text-[10px] uppercase tracking-widest font-semibold mb-2">Last Name</label>
+              <input type="text" value={form.last_name} onChange={e => setForm({...form, last_name: e.target.value})} className="w-full bg-maroon border border-gold/30 rounded-xl px-4 py-3 text-cream font-light focus:outline-none focus:border-gold/30 transition-colors" />
             </div>
           </div>
           
           <div>
-            <label className="block text-[#8C7A6B] text-[10px] uppercase tracking-widest font-semibold mb-2">Biography</label>
-            <textarea value={form.bio} onChange={e => setForm({...form, bio: e.target.value})} rows={4} className="w-full bg-[#FBF9F6] border border-[#E6D5C3] rounded-xl px-4 py-3 text-[#2A2621] font-light focus:outline-none focus:border-[#8C7A6B] transition-colors resize-none" placeholder="Write a thoughtful introduction..."></textarea>
+            <label className="block text-gold-light/70 text-[10px] uppercase tracking-widest font-semibold mb-2">Biography</label>
+            <textarea value={form.bio} onChange={e => setForm({...form, bio: e.target.value})} rows={4} className="w-full bg-maroon border border-gold/30 rounded-xl px-4 py-3 text-cream font-light focus:outline-none focus:border-gold/30 transition-colors resize-none" placeholder="Write a thoughtful introduction..."></textarea>
           </div>
 
           <div className="grid grid-cols-2 gap-6">
             <div>
-              <label className="block text-[#8C7A6B] text-[10px] uppercase tracking-widest font-semibold mb-2">Education</label>
-              <input type="text" value={form.education} onChange={e => setForm({...form, education: e.target.value})} className="w-full bg-[#FBF9F6] border border-[#E6D5C3] rounded-xl px-4 py-3 text-[#2A2621] font-light focus:outline-none focus:border-[#8C7A6B] transition-colors" />
+              <label className="block text-gold-light/70 text-[10px] uppercase tracking-widest font-semibold mb-2">Education</label>
+              <input type="text" value={form.education} onChange={e => setForm({...form, education: e.target.value})} className="w-full bg-maroon border border-gold/30 rounded-xl px-4 py-3 text-cream font-light focus:outline-none focus:border-gold/30 transition-colors" />
             </div>
             <div>
-              <label className="block text-[#8C7A6B] text-[10px] uppercase tracking-widest font-semibold mb-2">Profession</label>
-              <input type="text" value={form.profession} onChange={e => setForm({...form, profession: e.target.value})} className="w-full bg-[#FBF9F6] border border-[#E6D5C3] rounded-xl px-4 py-3 text-[#2A2621] font-light focus:outline-none focus:border-[#8C7A6B] transition-colors" />
+              <label className="block text-gold-light/70 text-[10px] uppercase tracking-widest font-semibold mb-2">Profession</label>
+              <input type="text" value={form.profession} onChange={e => setForm({...form, profession: e.target.value})} className="w-full bg-maroon border border-gold/30 rounded-xl px-4 py-3 text-cream font-light focus:outline-none focus:border-gold/30 transition-colors" />
             </div>
             <div>
-              <label className="block text-[#8C7A6B] text-[10px] uppercase tracking-widest font-semibold mb-2">Company</label>
-              <input type="text" value={form.company} onChange={e => setForm({...form, company: e.target.value})} className="w-full bg-[#FBF9F6] border border-[#E6D5C3] rounded-xl px-4 py-3 text-[#2A2621] font-light focus:outline-none focus:border-[#8C7A6B] transition-colors" />
+              <label className="block text-gold-light/70 text-[10px] uppercase tracking-widest font-semibold mb-2">Company</label>
+              <input type="text" value={form.company} onChange={e => setForm({...form, company: e.target.value})} className="w-full bg-maroon border border-gold/30 rounded-xl px-4 py-3 text-cream font-light focus:outline-none focus:border-gold/30 transition-colors" />
             </div>
             <div>
-              <label className="block text-[#8C7A6B] text-[10px] uppercase tracking-widest font-semibold mb-2">Height (cm)</label>
-              <input type="number" value={form.height_cm} onChange={e => setForm({...form, height_cm: e.target.value})} className="w-full bg-[#FBF9F6] border border-[#E6D5C3] rounded-xl px-4 py-3 text-[#2A2621] font-light focus:outline-none focus:border-[#8C7A6B] transition-colors" />
+              <label className="block text-gold-light/70 text-[10px] uppercase tracking-widest font-semibold mb-2">Height (cm)</label>
+              <input type="number" value={form.height_cm} onChange={e => setForm({...form, height_cm: e.target.value})} className="w-full bg-maroon border border-gold/30 rounded-xl px-4 py-3 text-cream font-light focus:outline-none focus:border-gold/30 transition-colors" />
             </div>
           </div>
 
           <div className="pt-6">
-            <button disabled={loading} type="submit" className="bg-[#2A2621] text-white px-8 py-3 rounded-xl shadow-md hover:bg-[#1A1815] transition-all font-serif tracking-widest uppercase text-xs flex items-center justify-center gap-2 disabled:opacity-70">
+            <button disabled={loading} type="submit" className="bg-[#2A2621] text-white px-8 py-3 rounded-xl shadow-md hover:bg-[#1A1815] transition-all font-display tracking-widest uppercase text-xs flex items-center justify-center gap-2 disabled:opacity-70">
               {loading ? "Saving..." : "Save Changes"}
             </button>
           </div>
@@ -261,13 +261,13 @@ function PhotosSection({ media, onSave }: { media: any[], onSave: () => void }) 
   };
 
   return (
-    <div className="bg-white rounded-[2rem] p-10 border border-[#E6D5C3]/60 shadow-sm relative overflow-hidden">
+    <div className="bg-maroon rounded-[2rem] p-10 border border-gold/30 shadow-sm relative overflow-hidden">
       <div className="absolute inset-0 opacity-[0.02] mix-blend-multiply pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }}></div>
       <div className="relative z-10">
-        <div className="mb-10 border-b border-[#E6D5C3]/40 pb-6 flex justify-between items-end">
+        <div className="mb-10 border-b border-gold/30 pb-6 flex justify-between items-end">
           <div>
-            <h3 className="font-serif text-3xl text-[#2A2621] tracking-wide mb-2">Photo Gallery</h3>
-            <p className="text-[#8C7A6B] font-light text-sm">Upload and arrange your portfolio. Premium members get full gallery access.</p>
+            <h3 className="font-display text-3xl text-cream tracking-wide mb-2">Photo Gallery</h3>
+            <p className="text-gold-light/70 font-light text-sm">Upload and arrange your portfolio. Premium members get full gallery access.</p>
           </div>
           <div className="relative">
             <input 
@@ -277,7 +277,7 @@ function PhotosSection({ media, onSave }: { media: any[], onSave: () => void }) 
               onChange={handleUpload}
               disabled={uploading}
             />
-            <button disabled={uploading} className="bg-[#FDF5E6] border border-[#E6D5C3] text-[#8C7A6B] hover:text-[#2A2621] px-5 py-2 rounded-xl text-xs uppercase tracking-widest font-semibold transition-all shadow-sm disabled:opacity-50 pointer-events-none">
+            <button disabled={uploading} className="bg-maroon/60 border border-gold/30 text-gold-light/70 hover:text-cream px-5 py-2 rounded-xl text-xs uppercase tracking-widest font-semibold transition-all shadow-sm disabled:opacity-50 pointer-events-none">
               {uploading ? "Uploading..." : "Upload Photo"}
             </button>
           </div>
@@ -285,17 +285,17 @@ function PhotosSection({ media, onSave }: { media: any[], onSave: () => void }) 
 
         <div className="grid grid-cols-3 gap-4">
           {media.length > 0 ? media.map((m, i) => (
-            <div key={m.id} className="aspect-[3/4] bg-[#FBF9F6] rounded-xl border border-[#E6D5C3] relative overflow-hidden group">
+            <div key={m.id} className="aspect-[3/4] bg-maroon rounded-xl border border-gold/30 relative overflow-hidden group">
               <Image src={m.publicUrl || m.bucket_path} alt="Gallery" fill className="object-cover" />
               <div className="absolute inset-0 bg-[#2A2621]/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
-                <button onClick={() => handleDelete(m.id, m.bucket_path)} className="w-10 h-10 rounded-full bg-white text-[#8C7A6B] flex items-center justify-center hover:text-red-500 shadow-xl transition-colors"><Trash2 size={16} /></button>
+                <button onClick={() => handleDelete(m.id, m.bucket_path)} className="w-10 h-10 rounded-full bg-maroon text-gold-light/70 flex items-center justify-center hover:text-red-500 shadow-xl transition-colors"><Trash2 size={16} /></button>
               </div>
               {i === 0 && <span className="absolute top-3 left-3 bg-[#2A2621] text-white text-[9px] uppercase tracking-widest px-3 py-1 rounded-full shadow-md">Cover</span>}
             </div>
           )) : (
-            <div className="col-span-3 text-center py-20 border-2 border-dashed border-[#E6D5C3] rounded-xl bg-[#FBF9F6]">
-              <ImageIcon size={40} className="mx-auto text-[#E6D5C3] mb-4" />
-              <p className="font-serif text-lg text-[#8C7A6B]">No photos yet</p>
+            <div className="col-span-3 text-center py-20 border-2 border-dashed border-gold/30 rounded-xl bg-maroon">
+              <ImageIcon size={40} className="mx-auto text-gold-light/60 mb-4" />
+              <p className="font-display text-lg text-gold-light/70">No photos yet</p>
             </div>
           )}
         </div>
@@ -321,29 +321,29 @@ function PreferencesSection({ data, onSave }: { data: any, onSave: () => void })
   };
 
   return (
-    <div className="bg-white rounded-[2rem] p-10 border border-[#E6D5C3]/60 shadow-sm relative overflow-hidden">
+    <div className="bg-maroon rounded-[2rem] p-10 border border-gold/30 shadow-sm relative overflow-hidden">
       <div className="relative z-10">
-        <div className="mb-10 border-b border-[#E6D5C3]/40 pb-6">
-          <h3 className="font-serif text-3xl text-[#2A2621] tracking-wide mb-2">Partner Preferences</h3>
-          <p className="text-[#8C7A6B] font-light text-sm">Fine-tune your recommendations.</p>
+        <div className="mb-10 border-b border-gold/30 pb-6">
+          <h3 className="font-display text-3xl text-cream tracking-wide mb-2">Partner Preferences</h3>
+          <p className="text-gold-light/70 font-light text-sm">Fine-tune your recommendations.</p>
         </div>
         <form onSubmit={handleSubmit} className="space-y-8">
           <div className="grid grid-cols-2 gap-6">
             <div>
-              <label className="block text-[#8C7A6B] text-[10px] uppercase tracking-widest font-semibold mb-2">Min Age</label>
-              <input type="number" value={form.min_age} onChange={e => setForm({...form, min_age: Number(e.target.value)})} className="w-full bg-[#FBF9F6] border border-[#E6D5C3] rounded-xl px-4 py-3 text-[#2A2621] font-light focus:outline-none focus:border-[#8C7A6B]" />
+              <label className="block text-gold-light/70 text-[10px] uppercase tracking-widest font-semibold mb-2">Min Age</label>
+              <input type="number" value={form.min_age} onChange={e => setForm({...form, min_age: Number(e.target.value)})} className="w-full bg-maroon border border-gold/30 rounded-xl px-4 py-3 text-cream font-light focus:outline-none focus:border-gold/30" />
             </div>
             <div>
-              <label className="block text-[#8C7A6B] text-[10px] uppercase tracking-widest font-semibold mb-2">Max Age</label>
-              <input type="number" value={form.max_age} onChange={e => setForm({...form, max_age: Number(e.target.value)})} className="w-full bg-[#FBF9F6] border border-[#E6D5C3] rounded-xl px-4 py-3 text-[#2A2621] font-light focus:outline-none focus:border-[#8C7A6B]" />
+              <label className="block text-gold-light/70 text-[10px] uppercase tracking-widest font-semibold mb-2">Max Age</label>
+              <input type="number" value={form.max_age} onChange={e => setForm({...form, max_age: Number(e.target.value)})} className="w-full bg-maroon border border-gold/30 rounded-xl px-4 py-3 text-cream font-light focus:outline-none focus:border-gold/30" />
             </div>
             <div>
-              <label className="block text-[#8C7A6B] text-[10px] uppercase tracking-widest font-semibold mb-2">Min Height (cm)</label>
-              <input type="number" value={form.min_height_cm} onChange={e => setForm({...form, min_height_cm: Number(e.target.value)})} className="w-full bg-[#FBF9F6] border border-[#E6D5C3] rounded-xl px-4 py-3 text-[#2A2621] font-light focus:outline-none focus:border-[#8C7A6B]" />
+              <label className="block text-gold-light/70 text-[10px] uppercase tracking-widest font-semibold mb-2">Min Height (cm)</label>
+              <input type="number" value={form.min_height_cm} onChange={e => setForm({...form, min_height_cm: Number(e.target.value)})} className="w-full bg-maroon border border-gold/30 rounded-xl px-4 py-3 text-cream font-light focus:outline-none focus:border-gold/30" />
             </div>
           </div>
           <div className="pt-6">
-            <button disabled={loading} type="submit" className="bg-[#2A2621] text-white px-8 py-3 rounded-xl shadow-md hover:bg-[#1A1815] transition-all font-serif tracking-widest uppercase text-xs flex items-center justify-center gap-2">
+            <button disabled={loading} type="submit" className="bg-[#2A2621] text-white px-8 py-3 rounded-xl shadow-md hover:bg-[#1A1815] transition-all font-display tracking-widest uppercase text-xs flex items-center justify-center gap-2">
               {loading ? "Saving..." : "Save Preferences"}
             </button>
           </div>
@@ -365,25 +365,25 @@ function PrivacySection({ isPaused, onSave }: { isPaused: boolean, onSave: () =>
   };
 
   return (
-    <div className="bg-white rounded-[2rem] p-10 border border-[#E6D5C3]/60 shadow-sm relative overflow-hidden">
+    <div className="bg-maroon rounded-[2rem] p-10 border border-gold/30 shadow-sm relative overflow-hidden">
       <div className="relative z-10">
-        <div className="mb-10 border-b border-[#E6D5C3]/40 pb-6">
-          <h3 className="font-serif text-3xl text-[#2A2621] tracking-wide mb-2">Privacy</h3>
-          <p className="text-[#8C7A6B] font-light text-sm">Control your visibility on Vivah.</p>
+        <div className="mb-10 border-b border-gold/30 pb-6">
+          <h3 className="font-display text-3xl text-cream tracking-wide mb-2">Privacy</h3>
+          <p className="text-gold-light/70 font-light text-sm">Control your visibility on Vivah.</p>
         </div>
         <div className="space-y-6">
-          <div className="flex items-center justify-between p-6 border border-[#E6D5C3] rounded-xl bg-[#FBF9F6]">
+          <div className="flex items-center justify-between p-6 border border-gold/30 rounded-xl bg-maroon">
             <div>
-              <h4 className="font-serif text-lg text-[#2A2621]">Hide Profile (Incognito)</h4>
-              <p className="text-[#8C7A6B] text-xs font-light mt-1">Your profile will be hidden from matches, but you can still message accepted connections.</p>
+              <h4 className="font-display text-lg text-cream">Hide Profile (Incognito)</h4>
+              <p className="text-gold-light/70 text-xs font-light mt-1">Your profile will be hidden from matches, but you can still message accepted connections.</p>
             </div>
             <button onClick={() => setPaused(!paused)} className={`w-14 h-8 rounded-full transition-colors flex items-center px-1 ${paused ? 'bg-[#2A2621]' : 'bg-[#E6D5C3]'}`}>
-              <motion.div animate={{ x: paused ? 24 : 0 }} className="w-6 h-6 bg-white rounded-full shadow-sm" />
+              <motion.div animate={{ x: paused ? 24 : 0 }} className="w-6 h-6 bg-maroon rounded-full shadow-sm" />
             </button>
           </div>
           
           <div className="pt-6">
-            <button disabled={loading} onClick={handleSubmit} className="bg-[#2A2621] text-white px-8 py-3 rounded-xl shadow-md hover:bg-[#1A1815] transition-all font-serif tracking-widest uppercase text-xs flex items-center justify-center gap-2">
+            <button disabled={loading} onClick={handleSubmit} className="bg-[#2A2621] text-white px-8 py-3 rounded-xl shadow-md hover:bg-[#1A1815] transition-all font-display tracking-widest uppercase text-xs flex items-center justify-center gap-2">
               {loading ? "Saving..." : "Save Privacy"}
             </button>
           </div>
@@ -416,34 +416,34 @@ function NotificationsSection({ data, onSave }: { data: any, onSave: () => void 
   };
 
   const Toggle = ({ label, desc, field }: { label: string, desc: string, field: keyof typeof form }) => (
-    <div className="flex items-center justify-between p-4 border border-[#E6D5C3]/40 rounded-xl hover:bg-[#FDF5E6]/30 transition-colors">
+    <div className="flex items-center justify-between p-4 border border-gold/30 rounded-xl hover:bg-maroon/20 transition-colors">
       <div>
-        <h4 className="font-serif text-[#2A2621]">{label}</h4>
-        <p className="text-[#8C7A6B] text-[10px] font-light mt-0.5 uppercase tracking-widest">{desc}</p>
+        <h4 className="font-display text-cream">{label}</h4>
+        <p className="text-gold-light/70 text-[10px] font-light mt-0.5 uppercase tracking-widest">{desc}</p>
       </div>
       <button 
         type="button"
         onClick={() => setForm({ ...form, [field]: !form[field] })} 
         className={`w-12 h-6 rounded-full transition-colors flex items-center px-1 ${form[field] ? 'bg-[#2A2621]' : 'bg-[#E6D5C3]'}`}
       >
-        <motion.div animate={{ x: form[field] ? 24 : 0 }} className="w-4 h-4 bg-white rounded-full shadow-sm" />
+        <motion.div animate={{ x: form[field] ? 24 : 0 }} className="w-4 h-4 bg-maroon rounded-full shadow-sm" />
       </button>
     </div>
   );
 
   return (
-    <div className="bg-white rounded-[2rem] p-10 border border-[#E6D5C3]/60 shadow-sm relative overflow-hidden">
+    <div className="bg-maroon rounded-[2rem] p-10 border border-gold/30 shadow-sm relative overflow-hidden">
       <div className="absolute inset-0 opacity-[0.02] mix-blend-multiply pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }}></div>
       <div className="relative z-10">
-        <div className="mb-10 border-b border-[#E6D5C3]/40 pb-6">
-          <h3 className="font-serif text-3xl text-[#2A2621] tracking-wide mb-2">Notifications</h3>
-          <p className="text-[#8C7A6B] font-light text-sm">Fine-tune how and when we reach you.</p>
+        <div className="mb-10 border-b border-gold/30 pb-6">
+          <h3 className="font-display text-3xl text-cream tracking-wide mb-2">Notifications</h3>
+          <p className="text-gold-light/70 font-light text-sm">Fine-tune how and when we reach you.</p>
         </div>
         
         <form onSubmit={handleSubmit} className="space-y-8">
           
           <div>
-            <h4 className="text-[#8C7A6B] text-[10px] uppercase tracking-[0.2em] font-semibold mb-4">Delivery Channels</h4>
+            <h4 className="text-gold-light/70 text-[10px] uppercase tracking-[0.2em] font-semibold mb-4">Delivery Channels</h4>
             <div className="space-y-3">
               <Toggle label="In-App Notifications" desc="The bell icon and toasts while browsing" field="in_app_enabled" />
               <Toggle label="Email Notifications" desc="Receive updates at your registered email" field="email_enabled" />
@@ -452,7 +452,7 @@ function NotificationsSection({ data, onSave }: { data: any, onSave: () => void 
           </div>
 
           <div>
-            <h4 className="text-[#8C7A6B] text-[10px] uppercase tracking-[0.2em] font-semibold mb-4">Event Types</h4>
+            <h4 className="text-gold-light/70 text-[10px] uppercase tracking-[0.2em] font-semibold mb-4">Event Types</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <Toggle label="Messages" desc="When someone writes to you" field="messages_enabled" />
               <Toggle label="Interests" desc="New matches and accepted requests" field="interests_enabled" />
@@ -462,8 +462,8 @@ function NotificationsSection({ data, onSave }: { data: any, onSave: () => void 
             </div>
           </div>
 
-          <div className="pt-6 border-t border-[#E6D5C3]/40">
-            <button disabled={loading} type="submit" className="bg-[#2A2621] text-white px-8 py-3 rounded-xl shadow-md hover:bg-[#1A1815] transition-all font-serif tracking-widest uppercase text-xs flex items-center justify-center gap-2">
+          <div className="pt-6 border-t border-gold/30">
+            <button disabled={loading} type="submit" className="bg-[#2A2621] text-white px-8 py-3 rounded-xl shadow-md hover:bg-[#1A1815] transition-all font-display tracking-widest uppercase text-xs flex items-center justify-center gap-2">
               {loading ? "Saving..." : "Save Preferences"}
             </button>
           </div>
@@ -475,14 +475,14 @@ function NotificationsSection({ data, onSave }: { data: any, onSave: () => void 
 
 function SecuritySection({ onSave }: { onSave: () => void }) {
   return (
-    <div className="bg-white rounded-[2rem] p-10 border border-[#E6D5C3]/60 shadow-sm relative overflow-hidden">
+    <div className="bg-maroon rounded-[2rem] p-10 border border-gold/30 shadow-sm relative overflow-hidden">
       <div className="relative z-10">
-        <div className="mb-10 border-b border-[#E6D5C3]/40 pb-6">
-          <h3 className="font-serif text-3xl text-[#2A2621] tracking-wide mb-2">Security</h3>
-          <p className="text-[#8C7A6B] font-light text-sm">Protect your account.</p>
+        <div className="mb-10 border-b border-gold/30 pb-6">
+          <h3 className="font-display text-3xl text-cream tracking-wide mb-2">Security</h3>
+          <p className="text-gold-light/70 font-light text-sm">Protect your account.</p>
         </div>
-        <div className="space-y-4 text-center py-20 text-[#8C7A6B] font-light">
-          <ShieldCheck className="mx-auto text-[#E6D5C3] mb-4" size={40} />
+        <div className="space-y-4 text-center py-20 text-gold-light/70 font-light">
+          <ShieldCheck className="mx-auto text-gold-light/60 mb-4" size={40} />
           <p>Password reset and session management are handled via Supabase Auth email magic links securely.</p>
         </div>
       </div>
@@ -493,27 +493,27 @@ function SecuritySection({ onSave }: { onSave: () => void }) {
 function MembershipSection({ membership }: { membership: any }) {
   const isActive = membership?.is_active && (membership?.tier === "premium" || membership?.tier === "elite");
   return (
-    <div className="bg-white rounded-[2rem] p-10 border border-[#E6D5C3]/60 shadow-sm relative overflow-hidden">
+    <div className="bg-maroon rounded-[2rem] p-10 border border-gold/30 shadow-sm relative overflow-hidden">
       <div className="relative z-10">
-        <div className="mb-10 border-b border-[#E6D5C3]/40 pb-6">
-          <h3 className="font-serif text-3xl text-[#2A2621] tracking-wide mb-2">Membership</h3>
-          <p className="text-[#8C7A6B] font-light text-sm">Manage your premium access.</p>
+        <div className="mb-10 border-b border-gold/30 pb-6">
+          <h3 className="font-display text-3xl text-cream tracking-wide mb-2">Membership</h3>
+          <p className="text-gold-light/70 font-light text-sm">Manage your premium access.</p>
         </div>
         {isActive ? (
-          <div className="bg-gradient-to-br from-[#FDF5E6] to-[#FBF9F6] border border-[#E6D5C3] rounded-[1.5rem] p-8 relative overflow-hidden">
-            <div className="absolute top-4 right-4"><Crown className="text-[#8C7A6B] opacity-50" size={60} /></div>
-            <h4 className="font-serif text-2xl text-[#2A2621] mb-2">Lifetime Premium</h4>
-            <p className="text-[#8C7A6B] text-xs tracking-widest uppercase font-semibold mb-8">Active Member</p>
+          <div className="bg-gradient-to-br from-maroon/60 to-maroon border border-gold/30 rounded-[1.5rem] p-8 relative overflow-hidden">
+            <div className="absolute top-4 right-4"><Crown className="text-gold-light/70 opacity-50" size={60} /></div>
+            <h4 className="font-display text-2xl text-cream mb-2">Lifetime Premium</h4>
+            <p className="text-gold-light/70 text-xs tracking-widest uppercase font-semibold mb-8">Active Member</p>
             <div className="flex gap-4">
-              <button className="bg-[#2A2621] text-white px-6 py-2.5 rounded-lg text-xs font-serif tracking-widest uppercase shadow-md flex items-center gap-2"><FileDown size={14}/> Receipt</button>
+              <button className="bg-[#2A2621] text-white px-6 py-2.5 rounded-lg text-xs font-display tracking-widest uppercase shadow-md flex items-center gap-2"><FileDown size={14}/> Receipt</button>
             </div>
           </div>
         ) : (
-          <div className="bg-[#FBF9F6] border border-[#E6D5C3] rounded-[1.5rem] p-8 text-center">
-            <Crown className="mx-auto text-[#E6D5C3] mb-4" size={40} />
-            <h4 className="font-serif text-xl text-[#2A2621] mb-2">Free Account</h4>
-            <p className="text-[#8C7A6B] font-light text-sm mb-6">Upgrade to unlock complete profiles and messaging.</p>
-            <a href="/premium" className="inline-block bg-[#2A2621] text-white px-8 py-3 rounded-xl font-serif text-xs uppercase tracking-widest shadow-md">Upgrade Now</a>
+          <div className="bg-maroon border border-gold/30 rounded-[1.5rem] p-8 text-center">
+            <Crown className="mx-auto text-gold-light/60 mb-4" size={40} />
+            <h4 className="font-display text-xl text-cream mb-2">Free Account</h4>
+            <p className="text-gold-light/70 font-light text-sm mb-6">Upgrade to unlock complete profiles and messaging.</p>
+            <a href="/premium" className="inline-block bg-[#2A2621] text-white px-8 py-3 rounded-xl font-display text-xs uppercase tracking-widest shadow-md">Upgrade Now</a>
           </div>
         )}
       </div>
@@ -523,19 +523,19 @@ function MembershipSection({ membership }: { membership: any }) {
 
 function VerificationSection({ status }: { status: string }) {
   return (
-    <div className="bg-white rounded-[2rem] p-10 border border-[#E6D5C3]/60 shadow-sm relative overflow-hidden">
+    <div className="bg-maroon rounded-[2rem] p-10 border border-gold/30 shadow-sm relative overflow-hidden">
       <div className="relative z-10">
-        <div className="mb-10 border-b border-[#E6D5C3]/40 pb-6">
-          <h3 className="font-serif text-3xl text-[#2A2621] tracking-wide mb-2">Trust & Verification</h3>
-          <p className="text-[#8C7A6B] font-light text-sm">Verify your identity to stand out.</p>
+        <div className="mb-10 border-b border-gold/30 pb-6">
+          <h3 className="font-display text-3xl text-cream tracking-wide mb-2">Trust & Verification</h3>
+          <p className="text-gold-light/70 font-light text-sm">Verify your identity to stand out.</p>
         </div>
-        <div className="flex items-center gap-4 bg-[#FBF9F6] border border-[#E6D5C3] rounded-2xl p-6">
-          <div className={`w-12 h-12 rounded-full flex items-center justify-center ${status === 'verified' ? 'bg-green-100 text-green-700 border border-green-200' : 'bg-[#E6D5C3]/20 text-[#8C7A6B]'}`}>
+        <div className="flex items-center gap-4 bg-maroon border border-gold/30 rounded-2xl p-6">
+          <div className={`w-12 h-12 rounded-full flex items-center justify-center ${status === 'verified' ? 'bg-green-100 text-green-700 border border-green-200' : 'bg-[#E6D5C3]/20 text-gold-light/70'}`}>
             {status === 'verified' ? <CheckCircle size={20} /> : <AlertTriangle size={20} />}
           </div>
           <div>
-            <h4 className="font-serif text-lg text-[#2A2621]">Status: <span className="capitalize">{status || "Unverified"}</span></h4>
-            <p className="text-[#8C7A6B] text-sm font-light mt-1">Verified profiles get 3x more interest requests.</p>
+            <h4 className="font-display text-lg text-cream">Status: <span className="capitalize">{status || "Unverified"}</span></h4>
+            <p className="text-gold-light/70 text-sm font-light mt-1">Verified profiles get 3x more interest requests.</p>
           </div>
         </div>
       </div>
@@ -553,28 +553,28 @@ function AccountSection() {
   };
 
   return (
-    <div className="bg-white rounded-[2rem] p-10 border border-red-100 shadow-sm relative overflow-hidden">
+    <div className="bg-maroon rounded-[2rem] p-10 border border-red-100 shadow-sm relative overflow-hidden">
       <div className="relative z-10">
         <div className="mb-10 border-b border-red-100 pb-6">
-          <h3 className="font-serif text-3xl text-red-900 tracking-wide mb-2">Danger Zone</h3>
+          <h3 className="font-display text-3xl text-red-900 tracking-wide mb-2">Danger Zone</h3>
           <p className="text-red-700/60 font-light text-sm">Irreversible account actions.</p>
         </div>
         <div className="space-y-6">
           <div className="flex items-center justify-between">
             <div>
-              <h4 className="font-serif text-lg text-[#2A2621]">Deactivate Account</h4>
-              <p className="text-[#8C7A6B] text-xs font-light mt-1">Temporarily hide your profile and pause interactions.</p>
+              <h4 className="font-display text-lg text-cream">Deactivate Account</h4>
+              <p className="text-gold-light/70 text-xs font-light mt-1">Temporarily hide your profile and pause interactions.</p>
             </div>
-            <button onClick={handleDeactivate} className="bg-transparent border border-[#2A2621] text-[#2A2621] hover:bg-[#2A2621] hover:text-white px-6 py-2.5 rounded-lg text-xs font-serif tracking-widest uppercase transition-colors">
+            <button onClick={handleDeactivate} className="bg-transparent border border-[#2A2621] text-[#2A2621] hover:bg-[#2A2621] hover:text-white px-6 py-2.5 rounded-lg text-xs font-display tracking-widest uppercase transition-colors">
               Deactivate
             </button>
           </div>
           <div className="flex items-center justify-between pt-6 border-t border-red-50">
             <div>
-              <h4 className="font-serif text-lg text-red-600">Delete Account</h4>
+              <h4 className="font-display text-lg text-red-600">Delete Account</h4>
               <p className="text-red-900/60 text-xs font-light mt-1">Permanently erase all data, messages, and photos.</p>
             </div>
-            <button onClick={() => alert("Contact support to request permanent deletion.")} className="bg-red-50 border border-red-200 text-red-600 hover:bg-red-600 hover:text-white px-6 py-2.5 rounded-lg text-xs font-serif tracking-widest uppercase transition-colors">
+            <button onClick={() => alert("Contact support to request permanent deletion.")} className="bg-red-50 border border-red-200 text-red-600 hover:bg-red-600 hover:text-white px-6 py-2.5 rounded-lg text-xs font-display tracking-widest uppercase transition-colors">
               Delete
             </button>
           </div>

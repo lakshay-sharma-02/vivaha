@@ -28,7 +28,7 @@ import { formatDistanceToNow } from "date-fns";
 const SunlightRays = () => (
   <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden flex justify-center items-start fixed">
     <motion.div 
-      className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] bg-gradient-radial from-[#FDF5E6]/40 via-[#FDF5E6]/5 to-transparent blur-[80px]"
+      className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] bg-gradient-radial from-maroon/40 via-maroon/5 to-transparent blur-[80px]"
       animate={{ opacity: [0.6, 0.8, 0.6], scale: [1, 1.05, 1] }}
       transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
     />
@@ -37,8 +37,8 @@ const SunlightRays = () => (
 
 const AbstractArch = () => (
   <div className="absolute top-0 right-0 w-[800px] h-[800px] pointer-events-none z-0 opacity-[0.05] flex justify-end transform translate-x-1/4 -translate-y-1/4 fixed">
-    <div className="w-full h-full border-[1.5px] border-[#8C7A6B] rounded-full relative">
-      <div className="absolute inset-4 border border-[#8C7A6B]/50 rounded-full" />
+    <div className="w-full h-full border-[1.5px] border-gold-light/70 rounded-full relative">
+      <div className="absolute inset-4 border border-gold-light/70/50 rounded-full" />
     </div>
   </div>
 );
@@ -58,12 +58,12 @@ function ToastContainer({ toasts }: { toasts: Toast[] }) {
             exit={{ opacity: 0, scale: 0.9 }}
             className={`px-6 py-4 rounded-xl shadow-lg border backdrop-blur-md flex items-center gap-3 ${
               t.type === 'success' 
-              ? 'bg-[#FBF9F6]/90 border-[#E6D5C3] text-[#2A2621]' 
+              ? 'bg-maroon/90 border-gold/30 text-cream' 
               : 'bg-white/90 border-red-200 text-red-800'
             }`}
           >
-            {t.type === 'success' ? <Check size={18} className="text-[#8C7A6B]" /> : <X size={18} />}
-            <p className="font-serif text-sm tracking-wide">{t.message}</p>
+            {t.type === 'success' ? <Check size={18} className="text-gold-light/70" /> : <X size={18} />}
+            <p className="font-display text-sm tracking-wide">{t.message}</p>
           </motion.div>
         ))}
       </AnimatePresence>
@@ -195,15 +195,15 @@ export default function ClientInterests({
       <div className="relative z-20 max-w-5xl mx-auto w-full flex-1 flex flex-col">
         {/* HEADER */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="mb-12">
-          <h1 className="font-serif text-4xl text-[#2A2621] tracking-wide mb-2">My Interests</h1>
-          <p className="text-[#8C7A6B] text-sm tracking-wide font-light">Manage every meaningful connection from one place.</p>
+          <h1 className="font-display text-4xl text-cream tracking-wide mb-2">My Interests</h1>
+          <p className="text-gold-light/70 text-sm tracking-wide font-light">Manage every meaningful connection from one place.</p>
         </motion.div>
 
         {/* TABS & CONTROLS */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
           
           {/* Tabs */}
-          <div className="flex bg-[#FBF9F6] border border-[#E6D5C3]/60 p-1.5 rounded-2xl shadow-inner w-full md:w-auto">
+          <div className="flex bg-maroon border border-gold/30 p-1.5 rounded-2xl shadow-inner w-full md:w-auto">
             {[
               { id: "received", label: "Received", count: lists.received.length },
               { id: "sent", label: "Sent", count: lists.sent.length },
@@ -216,18 +216,18 @@ export default function ClientInterests({
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id as any)}
                   className={`relative flex-1 md:flex-none px-6 py-2.5 rounded-xl text-xs uppercase tracking-widest font-semibold transition-colors flex items-center justify-center gap-2 ${
-                    isActive ? "text-[#2A2621]" : "text-[#A3998D] hover:text-[#8C7A6B]"
+                    isActive ? "text-cream" : "text-cream/50 hover:text-gold-light/70"
                   }`}
                 >
                   {isActive && (
                     <motion.div 
                       layoutId="tab-indicator"
-                      className="absolute inset-0 bg-white border border-[#E6D5C3] shadow-sm rounded-xl -z-10"
+                      className="absolute inset-0 bg-gold/10 border border-gold/30 shadow-sm rounded-xl -z-10"
                       transition={{ type: "spring", stiffness: 400, damping: 30 }}
                     />
                   )}
                   {tab.label}
-                  <span className={`px-1.5 py-0.5 rounded-md text-[9px] ${isActive ? "bg-[#FDF5E6] text-[#8C7A6B]" : "bg-transparent text-[#A3998D]"}`}>
+                  <span className={`px-1.5 py-0.5 rounded-md text-[9px] ${isActive ? "bg-maroon/60 text-gold-light/70" : "bg-transparent text-cream/50"}`}>
                     {tab.count}
                   </span>
                 </button>
@@ -238,20 +238,20 @@ export default function ClientInterests({
           {/* Search & Filter */}
           <div className="flex items-center gap-3 w-full md:w-auto">
             <div className="relative flex-1 md:w-64">
-              <Search size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#A3998D]" strokeWidth={1.5} />
+              <Search size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-cream/50" strokeWidth={1.5} />
               <input 
                 type="text" 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search name, city..." 
-                className="w-full bg-[#FBF9F6] border border-[#E6D5C3]/60 rounded-xl py-3 pl-10 pr-4 text-sm font-light text-[#2A2621] placeholder-[#A3998D] focus:outline-none focus:border-[#8C7A6B] focus:bg-white transition-all shadow-inner"
+                className="w-full bg-maroon border border-gold/30 rounded-xl py-3 pl-10 pr-4 text-sm font-light text-cream placeholder-cream/50 focus:outline-none focus:border-gold-light/70 focus:bg-maroon transition-all shadow-inner"
               />
             </div>
             
             <select 
               value={filterType}
               onChange={(e) => setFilterType(e.target.value as any)}
-              className="bg-[#FBF9F6] border border-[#E6D5C3]/60 rounded-xl py-3 px-4 text-xs tracking-wide text-[#2A2621] focus:outline-none focus:border-[#8C7A6B] cursor-pointer"
+              className="bg-maroon border border-gold/30 rounded-xl py-3 px-4 text-xs tracking-wide text-cream focus:outline-none focus:border-gold-light/70 cursor-pointer"
             >
               <option value="newest">Newest First</option>
               <option value="oldest">Oldest First</option>
@@ -271,16 +271,16 @@ export default function ClientInterests({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                className="w-full h-full min-h-[400px] flex flex-col items-center justify-center text-center p-10 bg-[#FBF9F6]/40 border border-[#E6D5C3]/30 rounded-[2rem] border-dashed"
+                className="w-full h-full min-h-[400px] flex flex-col items-center justify-center text-center p-10 bg-maroon/40 border border-gold/30 rounded-[2rem] border-dashed"
               >
-                <div className="w-24 h-24 mx-auto mb-8 rounded-full bg-gradient-to-br from-[#FDF5E6] to-[#FBF9F6] border border-[#E6D5C3]/50 flex items-center justify-center shadow-inner">
-                  {activeTab === 'received' && <Inbox size={32} className="text-[#8C7A6B]" strokeWidth={1} />}
-                  {activeTab === 'sent' && <Send size={32} className="text-[#8C7A6B]" strokeWidth={1} />}
-                  {activeTab === 'accepted' && <UserCheck size={32} className="text-[#8C7A6B]" strokeWidth={1} />}
-                  {activeTab === 'declined' && <HeartCrack size={32} className="text-[#8C7A6B]" strokeWidth={1} />}
+                <div className="w-24 h-24 mx-auto mb-8 rounded-full bg-gradient-to-br from-maroon/60 to-maroon border border-gold/30 flex items-center justify-center shadow-inner">
+                  {activeTab === 'received' && <Inbox size={32} className="text-gold-light/70" strokeWidth={1} />}
+                  {activeTab === 'sent' && <Send size={32} className="text-gold-light/70" strokeWidth={1} />}
+                  {activeTab === 'accepted' && <UserCheck size={32} className="text-gold-light/70" strokeWidth={1} />}
+                  {activeTab === 'declined' && <HeartCrack size={32} className="text-gold-light/70" strokeWidth={1} />}
                 </div>
-                <h3 className="font-serif text-2xl text-[#2A2621] mb-2">No {activeTab} interests yet.</h3>
-                <p className="text-[#8C7A6B] font-light max-w-sm">
+                <h3 className="font-display text-2xl text-cream mb-2">No {activeTab} interests yet.</h3>
+                <p className="text-gold-light/70 font-light max-w-sm">
                   {activeTab === 'received' && "When someone expresses interest in your profile, it will elegantly appear here."}
                   {activeTab === 'sent' && "Profiles you express interest in will be listed here while awaiting their response."}
                   {activeTab === 'accepted' && "Meaningful connections begin with mutual interest. Your accepted matches will appear here."}
@@ -298,29 +298,29 @@ export default function ClientInterests({
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, scale: 0.95 }}
                       transition={{ duration: 0.4, delay: index * 0.05 }}
-                      className="bg-white rounded-2xl p-5 flex flex-col md:flex-row items-center justify-between border border-[#E6D5C3]/60 hover:shadow-[0_15px_40px_-15px_rgba(230,213,195,0.7)] hover:border-[#D4C4B7] transition-all duration-500 group"
+                      className="bg-maroon rounded-2xl p-5 flex flex-col md:flex-row items-center justify-between border border-gold/30 hover:shadow-[0_15px_40px_-15px_rgba(180,130,60,0.3)] hover:border-gold/40 transition-all duration-500 group"
                     >
                       {/* Left: Profile Info */}
                       <div className="flex items-center gap-6 w-full md:w-auto mb-6 md:mb-0">
                         <Link href={`/matches/${item.profile_id}`} className="relative shrink-0 block">
-                          <div className="w-24 h-24 rounded-full overflow-hidden border border-[#E6D5C3]/60 bg-[#F0EBE1] group-hover:shadow-md transition-all">
+                          <div className="w-24 h-24 rounded-full overflow-hidden border border-gold/30 bg-maroon/40 group-hover:shadow-md transition-all">
                             <Image src={item.image} alt={item.name} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
                           </div>
-                          <div className="absolute bottom-0 right-0 bg-white/90 backdrop-blur-sm px-2 py-0.5 rounded-md flex items-center gap-1 border border-[#E6D5C3] shadow-sm">
-                            <Sparkles size={10} className="text-[#8C7A6B]" />
-                            <span className="text-[9px] font-bold text-[#2A2621]">{item.compatibility}%</span>
+                          <div className="absolute bottom-0 right-0 bg-maroon/90 backdrop-blur-sm px-2 py-0.5 rounded-md flex items-center gap-1 border border-gold/30 shadow-sm">
+                            <Sparkles size={10} className="text-gold-light/70" />
+                            <span className="text-[9px] font-bold text-cream">{item.compatibility}%</span>
                           </div>
                         </Link>
                         
                         <div>
-                          <h4 className="font-serif text-2xl text-[#2A2621] tracking-wide flex items-center gap-2 mb-1">
+                          <h4 className="font-display text-2xl text-cream tracking-wide flex items-center gap-2 mb-1">
                             {item.name}, {item.age}
-                            {item.verified && <ShieldCheck size={16} className="text-[#8C7A6B]" strokeWidth={1.5} />}
+                            {item.verified && <ShieldCheck size={16} className="text-gold-light/70" strokeWidth={1.5} />}
                           </h4>
-                          <p className="text-[#8C7A6B] text-sm font-light mb-2 flex items-center gap-2">
-                            {item.profession} <span className="w-1 h-1 rounded-full bg-[#E6D5C3]"></span> {item.city}
+                          <p className="text-gold-light/70 text-sm font-light mb-2 flex items-center gap-2">
+                            {item.profession} <span className="w-1 h-1 rounded-full bg-gold/30"></span> {item.city}
                           </p>
-                          <p className="text-[#A3998D] text-[10px] uppercase tracking-widest flex items-center gap-1 font-semibold">
+                          <p className="text-cream/50 text-[10px] uppercase tracking-widest flex items-center gap-1 font-semibold">
                             <Clock size={12} /> 
                             {activeTab === 'received' && `Received ${formatDistanceToNow(new Date(item.created_at), { addSuffix: true })}`}
                             {activeTab === 'sent' && `Sent ${formatDistanceToNow(new Date(item.created_at), { addSuffix: true })}`}
@@ -332,7 +332,7 @@ export default function ClientInterests({
                       {/* Right: Actions */}
                       <div className="flex flex-wrap items-center gap-3 w-full md:w-auto justify-end">
                         
-                        <Link href={`/matches/${item.profile_id}`} className="flex-1 md:flex-none text-center bg-[#FBF9F6] border border-[#E6D5C3] text-[#8C7A6B] px-5 py-3 rounded-xl hover:bg-white hover:text-[#2A2621] transition-colors text-[10px] uppercase tracking-widest font-bold flex items-center justify-center gap-2">
+                        <Link href={`/matches/${item.profile_id}`} className="flex-1 md:flex-none text-center bg-maroon border border-gold/30 text-gold-light/70 px-5 py-3 rounded-xl hover:bg-gold/10 hover:text-cream transition-colors text-[10px] uppercase tracking-widest font-bold flex items-center justify-center gap-2">
                           <Eye size={14} /> Profile
                         </Link>
 
@@ -340,13 +340,13 @@ export default function ClientInterests({
                           <>
                             <button 
                               onClick={() => handleAction(item, "rejected")}
-                              className="bg-white border border-[#E6D5C3] text-[#A3998D] px-5 py-3 rounded-xl hover:bg-red-50 hover:text-red-700 hover:border-red-200 transition-colors text-[10px] uppercase tracking-widest font-bold flex items-center gap-2"
+                              className="bg-maroon border border-gold/30 text-cream/50 px-5 py-3 rounded-xl hover:bg-red-50 hover:text-red-700 hover:border-red-200 transition-colors text-[10px] uppercase tracking-widest font-bold flex items-center gap-2"
                             >
                               <X size={14} /> Decline
                             </button>
                             <button 
                               onClick={() => handleAction(item, "accepted")}
-                              className="bg-[#2A2621] text-white px-6 py-3 rounded-xl hover:bg-[#1A1815] transition-all shadow-md hover:shadow-lg text-[10px] uppercase tracking-widest font-bold flex items-center gap-2"
+                              className="bg-cream text-maroon-deep px-6 py-3 rounded-xl hover:bg-gold-light transition-all shadow-md hover:shadow-lg text-[10px] uppercase tracking-widest font-bold flex items-center gap-2"
                             >
                               <Check size={14} /> Accept
                             </button>
@@ -356,7 +356,7 @@ export default function ClientInterests({
                         {activeTab === "sent" && (
                           <button 
                             onClick={() => handleAction(item, "withdrawn")}
-                            className="bg-white border border-[#E6D5C3] text-[#A3998D] px-5 py-3 rounded-xl hover:bg-red-50 hover:text-red-700 hover:border-red-200 transition-colors text-[10px] uppercase tracking-widest font-bold flex items-center gap-2"
+                            className="bg-maroon border border-gold/30 text-cream/50 px-5 py-3 rounded-xl hover:bg-red-50 hover:text-red-700 hover:border-red-200 transition-colors text-[10px] uppercase tracking-widest font-bold flex items-center gap-2"
                           >
                             <Undo2 size={14} /> Withdraw
                           </button>
@@ -365,14 +365,14 @@ export default function ClientInterests({
                         {activeTab === "accepted" && (
                           <Link 
                             href={`/dashboard/messages`}
-                            className="bg-[#2A2621] text-white px-6 py-3 rounded-xl hover:bg-[#1A1815] transition-all shadow-md hover:shadow-lg text-[10px] uppercase tracking-widest font-bold flex items-center gap-2"
+                            className="bg-cream text-maroon-deep px-6 py-3 rounded-xl hover:bg-gold-light transition-all shadow-md hover:shadow-lg text-[10px] uppercase tracking-widest font-bold flex items-center gap-2"
                           >
                             <MessageCircle size={14} /> Message
                           </Link>
                         )}
 
                         {activeTab === "declined" && (
-                          <div className="bg-[#FBF9F6] border border-[#E6D5C3] text-[#A3998D] px-5 py-3 rounded-xl text-[10px] uppercase tracking-widest font-bold flex items-center gap-2 cursor-not-allowed opacity-70">
+                          <div className="bg-maroon border border-gold/30 text-cream/50 px-5 py-3 rounded-xl text-[10px] uppercase tracking-widest font-bold flex items-center gap-2 cursor-not-allowed opacity-70">
                             <Ban size={14} /> Declined
                           </div>
                         )}

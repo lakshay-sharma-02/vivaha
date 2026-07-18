@@ -25,17 +25,17 @@ const FILTERS = ["Age", "Religion", "Community", "City", "Profession", "Educatio
 const SunlightRays = () => (
   <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden flex justify-center items-start">
     <motion.div 
-      className="absolute top-[-10%] w-[1200px] h-[800px] bg-gradient-radial from-[#FDF5E6]/40 via-[#FDF5E6]/5 to-transparent blur-[80px]"
+      className="absolute top-[-10%] w-[1200px] h-[800px] bg-gradient-radial from-gold/40 via-gold/5 to-transparent blur-[80px]"
       animate={{ opacity: [0.6, 0.8, 0.6], scale: [1, 1.05, 1] }}
       transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
     />
     <motion.div 
-      className="absolute top-[-20%] left-[40%] w-[400px] h-[1000px] bg-gradient-to-b from-[#FFF8E7]/30 to-transparent blur-[60px] origin-top transform rotate-12"
+      className="absolute top-[-20%] left-[40%] w-[400px] h-[1000px] bg-gradient-to-b from-gold/5 to-transparent blur-[60px] origin-top transform rotate-12"
       animate={{ opacity: [0.2, 0.4, 0.2], rotate: [12, 15, 12] }}
       transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
     />
     <motion.div 
-      className="absolute top-[-20%] right-[40%] w-[300px] h-[900px] bg-gradient-to-b from-[#FFF8E7]/20 to-transparent blur-[60px] origin-top transform -rotate-15"
+      className="absolute top-[-20%] right-[40%] w-[300px] h-[900px] bg-gradient-to-b from-gold/5 to-transparent blur-[60px] origin-top transform -rotate-15"
       animate={{ opacity: [0.1, 0.3, 0.1], rotate: [-15, -12, -15] }}
       transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 2 }}
     />
@@ -80,7 +80,7 @@ const FloatingParticles = () => {
               transition={{ duration: p.duration, delay: p.delay, repeat: Infinity, ease: "linear" }}
             >
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2C8 2 2 6 2 12C2 18 8 22 12 22C16 22 22 18 22 12C22 6 16 2 12 2Z" fill="#FDF5E6" stroke="#E6D5C3" strokeWidth="0.5" />
+                <path d="M12 2C8 2 2 6 2 12C2 18 8 22 12 22C16 22 22 18 22 12C22 6 16 2 12 2Z" fill="#f7ecd3" stroke="#d4af37" strokeWidth="0.5" />
               </svg>
             </motion.div>
           );
@@ -98,7 +98,7 @@ const FloatingParticles = () => {
           return (
             <motion.div
               key={p.id}
-              className="absolute rounded-full bg-[#E6D5C3] opacity-20 blur-[1px]"
+              className="absolute rounded-full bg-gold/30 opacity-20 blur-[1px]"
               style={{ left: p.left, top: p.top, width: p.size, height: p.size }}
               animate={{ y: ["0vh", "120vh"], x: [0, p.xOffset / 2, p.xOffset] }}
               transition={{ duration: p.duration, delay: p.delay, repeat: Infinity, ease: "linear" }}
@@ -113,8 +113,8 @@ const FloatingParticles = () => {
 // Extremely abstract wedding arch behind the hero
 const AbstractArch = () => (
   <div className="absolute top-10 left-1/2 -translate-x-1/2 w-full max-w-[900px] h-[900px] pointer-events-none z-0 opacity-10 flex justify-center">
-    <div className="w-full h-full border-[1.5px] border-[#8C7A6B] rounded-t-[400px] border-b-0 relative">
-      <div className="absolute inset-3 border border-[#8C7A6B]/50 rounded-t-[380px] border-b-0" />
+    <div className="w-full h-full border-[1.5px] border-gold-light/70 rounded-t-[400px] border-b-0 relative">
+      <div className="absolute inset-3 border border-gold-light/70 rounded-t-[380px] border-b-0" />
     </div>
   </div>
 );
@@ -125,8 +125,8 @@ const SoftCurtains = () => (
       <path d="M0 0 H400 Q200 400 100 800 H0 Z" fill="url(#curtain-grad-left)" />
       <defs>
         <linearGradient id="curtain-grad-left" x1="0" y1="0" x2="400" y2="800">
-          <stop stopColor="#8C7A6B" stopOpacity="0.4" />
-          <stop offset="1" stopColor="#8C7A6B" stopOpacity="0" />
+          <stop stopColor="#f3d889" stopOpacity="0.4" />
+          <stop offset="1" stopColor="#f3d889" stopOpacity="0" />
         </linearGradient>
       </defs>
     </motion.svg>
@@ -134,8 +134,8 @@ const SoftCurtains = () => (
       <path d="M0 0 H400 Q200 400 100 800 H0 Z" fill="url(#curtain-grad-right)" />
       <defs>
         <linearGradient id="curtain-grad-right" x1="0" y1="0" x2="400" y2="800">
-          <stop stopColor="#8C7A6B" stopOpacity="0.4" />
-          <stop offset="1" stopColor="#8C7A6B" stopOpacity="0" />
+          <stop stopColor="#f3d889" stopOpacity="0.4" />
+          <stop offset="1" stopColor="#f3d889" stopOpacity="0" />
         </linearGradient>
       </defs>
     </motion.svg>
@@ -170,7 +170,7 @@ export default function BrowseMatchesPage() {
   const displayedMatches = matches.filter(match => match.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
   return (
-    <div className="min-h-screen bg-[#F7F5EF] text-[#2A2621] font-sans selection:bg-[#E5D9CC]/50 relative overflow-x-hidden">
+    <div className="min-h-screen bg-maroon-deep text-cream font-body selection:bg-gold/50 relative overflow-x-hidden">
       
       {/* BACKGROUND: Pure base + paper texture only */}
       <div className="fixed inset-0 pointer-events-none z-0">
@@ -200,21 +200,21 @@ export default function BrowseMatchesPage() {
       </div>
 
       {/* 1. Header (Clean & Minimal) */}
-      <header className="sticky top-0 z-50 bg-[#F7F5EF]/60 backdrop-blur-3xl px-10 py-6 flex justify-between items-center transition-all border-b border-[#E6D5C3]/40">
+      <header className="sticky top-0 z-50 bg-maroon-deep/60 backdrop-blur-3xl px-10 py-6 flex justify-between items-center transition-all border-b border-gold/30">
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1 }} className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full border border-[#8C7A6B] flex items-center justify-center relative">
-            <span className="font-serif text-[#8C7A6B] text-lg leading-none pt-1">V</span>
+          <div className="w-8 h-8 rounded-full border border-gold-light/70 flex items-center justify-center relative">
+            <span className="font-display text-gold-light/70 text-lg leading-none pt-1">V</span>
           </div>
-          <span className="font-serif text-xl tracking-[0.2em] uppercase text-[#8C7A6B]">Vivah</span>
+          <span className="font-display text-xl tracking-[0.2em] uppercase text-gold-light/70">Vivah</span>
         </motion.div>
         
         <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1, delay: 0.2 }} className="flex items-center gap-8">
-          <button className="group flex items-center gap-2 bg-[#FDF5E6]/80 border border-[#E6D5C3] text-[#8C7A6B] px-6 py-2.5 rounded-full text-[11px] font-semibold tracking-[0.15em] uppercase hover:bg-white hover:text-[#2A2621] hover:border-[#D4C4B7] hover:shadow-lg transition-all duration-300">
+          <button className="group flex items-center gap-2 bg-maroon border-gold/30 text-gold-light/70 px-6 py-2.5 rounded-full text-[11px] font-semibold tracking-[0.15em] uppercase hover:bg-maroon-deep hover:text-cream hover:border-gold/40 hover:shadow-lg transition-all duration-300">
             <Crown size={14} className="transition-colors" />
             <span className="hidden sm:inline transition-colors">Premium</span>
           </button>
           <NotificationBell />
-          <button className="w-10 h-10 rounded-full border border-[#E6D5C3] bg-white flex items-center justify-center text-[#A3998D] hover:text-[#2A2621] hover:shadow-md transition-all duration-300">
+          <button className="w-10 h-10 rounded-full border border-gold/30 bg-maroon flex items-center justify-center text-cream/50 hover:text-cream hover:shadow-md transition-all duration-300">
             <User size={18} strokeWidth={1.5} />
           </button>
         </motion.div>
@@ -228,17 +228,17 @@ export default function BrowseMatchesPage() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.2, ease: "easeOut" }}
-              className="font-serif text-[4rem] md:text-[5.5rem] text-[#2A2621] tracking-normal leading-[1.1] mb-8"
+              className="font-display text-[4rem] md:text-[5.5rem] text-cream tracking-normal leading-[1.1] mb-8"
             >
               Discover Meaningful<br/>
-              <span className="italic font-light text-[#8C7A6B] tracking-wide">Connections</span>
+              <span className="italic font-light text-gold-light/70 tracking-wide">Connections</span>
             </motion.h1>
             
             <motion.p 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.5 }}
-              className="text-[#8C7A6B] text-[13px] font-medium tracking-[0.3em] uppercase max-w-xl mx-auto leading-relaxed"
+              className="text-gold-light/70 text-[13px] font-medium tracking-[0.3em] uppercase max-w-xl mx-auto leading-relaxed"
             >
               Curated introductions meticulously<br/>tailored for your timeless journey.
             </motion.p>
@@ -254,19 +254,19 @@ export default function BrowseMatchesPage() {
             className="max-w-[900px] mx-auto relative"
           >
             {/* The Container */}
-            <div className="bg-[#FBF9F6] rounded-[2rem] p-8 shadow-[0_20px_50px_-15px_rgba(230,213,195,0.6),inset_0_2px_10px_rgba(255,255,255,1)] border border-[#E6D5C3]/80 relative overflow-hidden flex flex-col items-center">
+            <div className="bg-maroon rounded-[2rem] p-8 shadow-[0_20px_50px_-15px_rgba(212,175,55,0.15),inset_0_2px_10px_rgba(247,236,211,0.3)] border border-gold/30 relative overflow-hidden flex flex-col items-center">
               {/* Subtle Paper Texture */}
               <div className="absolute inset-0 opacity-[0.02] mix-blend-multiply pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }}></div>
               
               {/* Search Bar */}
               <div className="relative w-full max-w-[600px] mb-8 z-10">
                 <div className="absolute inset-y-0 left-6 flex items-center pointer-events-none">
-                  <Search className="text-[#A3998D]" size={20} strokeWidth={1.5} />
+                  <Search className="text-cream/50" size={20} strokeWidth={1.5} />
                 </div>
                 <input
                   type="text"
                   placeholder="Search by name, city, or profession..."
-                  className="w-full bg-white border border-[#E6D5C3]/60 rounded-full py-4 pl-14 pr-6 text-lg focus:outline-none focus:ring-1 focus:ring-[#8C7A6B] placeholder-[#A3998D] text-[#2A2621] shadow-sm font-light transition-all"
+                  className="w-full bg-maroon-deep border border-gold/30 rounded-full py-4 pl-14 pr-6 text-lg focus:outline-none focus:ring-1 focus:ring-gold-light/70 placeholder-cream/50 text-cream shadow-sm font-light transition-all"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -284,13 +284,13 @@ export default function BrowseMatchesPage() {
                       onClick={() => setActiveFilters(prev => isActive ? prev.filter(f => f !== filter) : [...prev, filter])}
                       className={`relative overflow-hidden px-6 py-2 rounded-full text-[13px] tracking-wide transition-all duration-300 border-[0.5px] ${
                         isActive 
-                        ? "border-[#8C7A6B] bg-[#2A2621] text-white shadow-md"
-                        : "border-[#E6D5C3] bg-[#FDF5E6]/50 text-[#8C7A6B] hover:border-[#D4C4B7] hover:text-[#2A2621] hover:shadow-sm"
+                        ? "border-gold-light/70 bg-cream text-ink shadow-md"
+                        : "border-gold/30 bg-maroon/50 text-gold-light/70 hover:border-gold/40 hover:text-cream hover:shadow-sm"
                       }`}
                     >
                       {/* Champagne Glow on Hover (only if not active) */}
                       {!isActive && (
-                        <div className="absolute inset-0 bg-gradient-to-r from-[#F4E9D8]/0 via-[#FDF5E6] to-[#F4E9D8]/0 opacity-0 hover:opacity-100 transition-opacity duration-500 -z-10" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-gold/0 via-gold/20 to-gold/0 opacity-0 hover:opacity-100 transition-opacity duration-500 -z-10" />
                       )}
                       <span className="relative z-10 font-medium">{filter}</span>
                     </motion.button>
@@ -302,10 +302,10 @@ export default function BrowseMatchesPage() {
         </section>
 
         {/* PROFILE GRID */}
-        <section className="max-w-[1400px] mx-auto px-8 relative z-40 bg-[#F7F5EF]">
+        <section className="max-w-[1400px] mx-auto px-8 relative z-40 bg-maroon-deep">
           {isLoading ? (
             <div className="flex justify-center items-center py-20">
-              <div className="w-10 h-10 border-2 border-[#E6D5C3] border-t-[#8C7A6B] rounded-full animate-spin"></div>
+              <div className="w-10 h-10 border-2 border-gold/30 border-t-gold-light/70 rounded-full animate-spin"></div>
             </div>
           ) : displayedMatches.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
@@ -335,39 +335,39 @@ export default function BrowseMatchesPage() {
 function MatchCard({ match, onUnlock }: { match: any; onUnlock: () => void }) {
   return (
     <motion.div
-      className="group relative bg-[#FBF9F6] rounded-2xl shadow-sm border border-[#E6D5C3]/80 hover:shadow-[0_20px_40px_-15px_rgba(140,122,107,0.15)] hover:border-[#D4C4B7] transition-all duration-700 cursor-pointer overflow-hidden flex flex-col"
+      className="group relative bg-maroon rounded-2xl shadow-sm border border-gold/30 hover:shadow-[0_20px_40px_-15px_rgba(243,216,137,0.15)] hover:border-gold/40 transition-all duration-700 cursor-pointer overflow-hidden flex flex-col"
       whileHover={{ y: -8 }}
     >
       <div className="absolute inset-0 opacity-[0.02] mix-blend-multiply pointer-events-none z-10" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }}></div>
 
       {/* Image Section */}
-      <div className="relative h-[380px] overflow-hidden bg-[#F0EBE1] m-2 rounded-xl">
+      <div className="relative h-[380px] overflow-hidden bg-maroon-deep m-2 rounded-xl">
         <Image src={match.image || "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800&auto=format&fit=crop"} alt={match.name} fill className="object-cover object-center blur-[4px] scale-105 group-hover:scale-110 group-hover:blur-[2px] transition-all duration-1000 ease-out" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#2A2621]/60 via-transparent to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent pointer-events-none" />
         
         {/* Compatibility Ring */}
-        <div className="absolute top-4 left-4 z-20 flex items-center gap-2 bg-[#FBF9F6]/90 backdrop-blur-md px-3.5 py-1.5 rounded-full shadow-sm border border-[#E6D5C3]">
+        <div className="absolute top-4 left-4 z-20 flex items-center gap-2 bg-maroon/90 backdrop-blur-md px-3.5 py-1.5 rounded-full shadow-sm border border-gold/30">
           <div className="relative w-6 h-6 flex items-center justify-center">
             <svg viewBox="0 0 36 36" className="w-full h-full -rotate-90">
-              <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#E6D5C3" strokeWidth="2.5" />
+              <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#d4af37" strokeWidth="2.5" />
               <motion.path
                 d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                fill="none" stroke="#8C7A6B" strokeWidth="2.5" strokeDasharray={`${match.compatibility}, 100`}
+                fill="none" stroke="#f3d889" strokeWidth="2.5" strokeDasharray={`${match.compatibility}, 100`}
                 initial={{ pathLength: 0 }} whileInView={{ pathLength: match.compatibility / 100 }} transition={{ duration: 1.5, ease: "easeOut" }}
               />
             </svg>
-            <span className="absolute text-[8px] font-serif font-bold text-[#2A2621]">{match.compatibility}%</span>
+            <span className="absolute text-[8px] font-display font-bold text-cream">{match.compatibility}%</span>
           </div>
-          <span className="text-[9px] font-semibold text-[#8C7A6B] tracking-[0.2em] uppercase">Match</span>
+          <span className="text-[9px] font-semibold text-gold-light/70 tracking-[0.2em] uppercase">Match</span>
         </div>
 
         {/* Typography inside Image */}
         <div className="absolute bottom-0 left-0 w-full p-5 z-20 text-white">
-          <h2 className="font-serif text-2xl font-light tracking-wide flex items-center gap-2 drop-shadow-md">
+          <h2 className="font-display text-2xl font-light tracking-wide flex items-center gap-2 drop-shadow-md">
             {match.name.split(' ')[0]}, {match.age}
-            {match.verified && <CheckCircle size={16} className="text-[#FDF5E6]" fill="none" strokeWidth={1.5} />}
+            {match.verified && <CheckCircle size={16} className="text-cream" fill="none" strokeWidth={1.5} />}
           </h2>
-          <div className="flex items-center gap-3 mt-1.5 text-[#FDF5E6] text-xs font-light tracking-wider opacity-90">
+          <div className="flex items-center gap-3 mt-1.5 text-cream text-xs font-light tracking-wider opacity-90">
             <span>{match.profession}</span>
             <span className="w-1 h-1 rounded-full bg-white/40"></span>
             <span>{match.location}</span>
@@ -376,10 +376,10 @@ function MatchCard({ match, onUnlock }: { match: any; onUnlock: () => void }) {
       </div>
 
       {/* Button Section */}
-      <div className="px-5 pb-5 pt-4 space-y-2.5 relative z-20 bg-[#FBF9F6]">
+      <div className="px-5 pb-5 pt-4 space-y-2.5 relative z-20 bg-maroon">
         <button onClick={(e) => { e.stopPropagation(); onUnlock(); }} className="w-full flex items-center justify-center gap-2 bg-[#2A2621] text-white py-3.5 rounded-lg shadow-sm hover:bg-[#1A1815] transition-colors duration-300">
-          <Lock size={14} className="text-[#E6D5C3]" strokeWidth={1.5} />
-          <span className="font-serif tracking-widest text-[11px] uppercase">View Full Profile</span>
+          <Lock size={14} className="text-gold/30" strokeWidth={1.5} />
+          <span className="font-display tracking-widest text-[11px] uppercase">View Full Profile</span>
         </button>
         <SendInterestButton matchId={match.id} onUnlock={onUnlock} />
       </div>
@@ -416,17 +416,17 @@ function SendInterestButton({ matchId, onUnlock }: { matchId: string; onUnlock: 
     <button 
       onClick={handleSend}
       disabled={isSending || sent}
-      className={`w-full flex items-center justify-center gap-2 border py-3.5 rounded-lg transition-all duration-300 ${sent ? 'bg-[#FDF5E6] border-[#D4C4B7] text-[#8C7A6B]' : 'bg-transparent text-[#2A2621] border-[#E6D5C3] hover:bg-white hover:border-[#D4C4B7]'}`}
+      className={`w-full flex items-center justify-center gap-2 border py-3.5 rounded-lg transition-all duration-300 ${sent ? 'bg-maroon border-gold/40 text-gold-light/70' : 'bg-transparent text-cream border-gold/30 hover:bg-maroon-deep hover:border-gold/40'}`}
     >
       {sent ? (
         <>
-          <CheckCircle size={14} className="text-[#8C7A6B]" strokeWidth={1.5} />
-          <span className="font-serif tracking-widest text-[11px] uppercase text-[#8C7A6B]">Interest Sent</span>
+          <CheckCircle size={14} className="text-gold-light/70" strokeWidth={1.5} />
+          <span className="font-display tracking-widest text-[11px] uppercase text-gold-light/70">Interest Sent</span>
         </>
       ) : (
         <>
-          <Lock size={14} className="text-[#8C7A6B]" strokeWidth={1.5} />
-          <span className="font-serif tracking-widest text-[11px] uppercase">{isSending ? 'Sending...' : 'Send Interest'}</span>
+          <Lock size={14} className="text-gold-light/70" strokeWidth={1.5} />
+          <span className="font-display tracking-widest text-[11px] uppercase">{isSending ? 'Sending...' : 'Send Interest'}</span>
         </>
       )}
     </button>
@@ -438,12 +438,12 @@ function SendInterestButton({ matchId, onUnlock }: { matchId: string; onUnlock: 
 // ------------------------------------------------
 function EmptyState() {
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center justify-center py-24 text-center bg-[#FBF9F6] rounded-[2rem] border border-[#E6D5C3]/50">
-      <div className="w-32 h-48 mb-8 relative border border-[#E6D5C3] rounded-t-full flex items-center justify-center bg-white shadow-sm">
-        <Crown className="text-[#E6D5C3] w-12 h-12" strokeWidth={1} />
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center justify-center py-24 text-center bg-maroon rounded-[2rem] border border-gold/30">
+      <div className="w-32 h-48 mb-8 relative border border-gold/30 rounded-t-full flex items-center justify-center bg-maroon shadow-sm">
+        <Crown className="text-gold/30 w-12 h-12" strokeWidth={1} />
       </div>
-      <h3 className="font-serif text-2xl text-[#2A2621] mb-3 tracking-wide">Awaiting New Connections</h3>
-      <p className="text-[#8C7A6B] max-w-sm mx-auto font-light text-sm leading-relaxed">
+      <h3 className="font-display text-2xl text-cream mb-3 tracking-wide">Awaiting New Connections</h3>
+      <p className="text-gold-light/70 max-w-sm mx-auto font-light text-sm leading-relaxed">
         The estate is quiet for now. Try adjusting your preferences or check back later as we curate new introductions.
       </p>
     </motion.div>
@@ -456,34 +456,34 @@ function EmptyState() {
 function PremiumModal({ onClose }: { onClose: () => void }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
-      <motion.div className="absolute inset-0 bg-[#F7F5EF]/90 backdrop-blur-md" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }} onClick={onClose} />
+      <motion.div className="absolute inset-0 bg-maroon-deep/90 backdrop-blur-md" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }} onClick={onClose} />
       <motion.div
-        className="relative w-full max-w-lg bg-[#FBF9F6] rounded-[1.5rem] shadow-2xl border border-[#E6D5C3] overflow-hidden"
+        className="relative w-full max-w-lg bg-maroon rounded-[1.5rem] shadow-2xl border border-gold/30 overflow-hidden"
         initial={{ opacity: 0, scale: 0.95, y: 30 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }}
         transition={{ type: "spring", damping: 30, stiffness: 300 }}
       >
-        <button onClick={onClose} className="absolute top-5 right-5 text-[#A3998D] hover:text-[#2A2621] transition-colors z-30">
+        <button onClick={onClose} className="absolute top-5 right-5 text-cream/50 hover:text-cream transition-colors z-30">
           <X size={20} strokeWidth={1.5} />
         </button>
 
-        <div className="pt-14 pb-10 px-10 text-center border-b border-[#F4E9D8] relative overflow-hidden bg-white">
+        <div className="pt-14 pb-10 px-10 text-center border-b border-gold/30 relative overflow-hidden bg-maroon">
           <div className="absolute inset-0 opacity-[0.02] mix-blend-multiply pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }}></div>
-          <div className="w-14 h-14 mx-auto border border-[#E6D5C3] bg-[#FBF9F6] rounded-full flex items-center justify-center shadow-sm mb-6 relative z-20">
-            <Crown size={20} className="text-[#8C7A6B]" strokeWidth={1.5} />
+          <div className="w-14 h-14 mx-auto border border-gold/30 bg-maroon rounded-full flex items-center justify-center shadow-sm mb-6 relative z-20">
+            <Crown size={20} className="text-gold-light/70" strokeWidth={1.5} />
           </div>
-          <h2 className="font-serif text-3xl text-[#2A2621] mb-3 relative z-20 tracking-wide">Your Journey Begins Here</h2>
-          <p className="text-[#8C7A6B] text-sm leading-relaxed relative z-20 font-light max-w-xs mx-auto">
+          <h2 className="font-display text-3xl text-cream mb-3 relative z-20 tracking-wide">Your Journey Begins Here</h2>
+          <p className="text-gold-light/70 text-sm leading-relaxed relative z-20 font-light max-w-xs mx-auto">
             Unlock verified profiles, send unlimited interests, and discover your perfect life partner.
           </p>
         </div>
 
-        <div className="p-10 bg-[#FBF9F6] relative z-20">
-          <div className="flex justify-between items-center mb-8 bg-white p-5 rounded-xl border border-[#E6D5C3]/50 shadow-sm">
+        <div className="p-10 bg-maroon relative z-20">
+          <div className="flex justify-between items-center mb-8 bg-maroon-deep p-5 rounded-xl border border-gold/30 shadow-sm">
             <div>
-              <p className="text-[#2A2621] font-serif text-lg tracking-wide">Lifetime Premium</p>
-              <p className="text-[#8C7A6B] text-[10px] uppercase tracking-widest mt-1">One-time investment</p>
+              <p className="text-cream font-display text-lg tracking-wide">Lifetime Premium</p>
+              <p className="text-gold-light/70 text-[10px] uppercase tracking-widest mt-1">One-time investment</p>
             </div>
-            <p className="font-serif text-2xl text-[#2A2621]">₹5,000</p>
+            <p className="font-display text-2xl text-cream">₹5,000</p>
           </div>
 
           <ul className="space-y-4 mb-10">
@@ -495,17 +495,17 @@ function PremiumModal({ onClose }: { onClose: () => void }) {
               "Verified trust badge on your profile"
             ].map((benefit, idx) => (
               <li key={idx} className="flex items-start gap-3">
-                <CheckCircle size={16} className="text-[#8C7A6B] shrink-0 mt-0.5" strokeWidth={1.5} />
-                <span className="text-[#2A2621] font-light text-[13px] tracking-wide">{benefit}</span>
+                <CheckCircle size={16} className="text-gold-light/70 shrink-0 mt-0.5" strokeWidth={1.5} />
+                <span className="text-cream font-light text-[13px] tracking-wide">{benefit}</span>
               </li>
             ))}
           </ul>
 
           <div className="space-y-3">
-            <button className="w-full bg-[#2A2621] text-white py-4 rounded-xl shadow-md hover:bg-[#1A1815] transition-all duration-300 font-serif tracking-widest uppercase text-xs">
+            <button className="w-full bg-[#2A2621] text-white py-4 rounded-xl shadow-md hover:bg-[#1A1815] transition-all duration-300 font-display tracking-widest uppercase text-xs">
               Become a Lifetime Member
             </button>
-            <button onClick={onClose} className="w-full text-[#8C7A6B] hover:text-[#2A2621] py-3 text-[10px] uppercase tracking-[0.2em] font-medium transition-colors">
+            <button onClick={onClose} className="w-full text-gold-light/70 hover:text-cream py-3 text-[10px] uppercase tracking-[0.2em] font-medium transition-colors">
               Maybe Later
             </button>
           </div>

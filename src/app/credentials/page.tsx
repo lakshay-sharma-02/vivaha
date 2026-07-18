@@ -105,7 +105,7 @@ export default function CredentialsPage() {
     setFile: (f: File | null) => void,
     label: string 
   }) => (
-    <div className="relative w-full h-64 border-[1px] border-dashed border-[#8C7A6B]/40 hover:border-[#2A2621] transition-colors flex flex-col items-center justify-center bg-transparent group cursor-pointer">
+    <div className="relative w-full h-64 border-[1px] border-dashed border-cream/30 hover:border-cream transition-colors flex flex-col items-center justify-center bg-transparent group cursor-pointer">
       <input 
         type="file" 
         accept="image/*"
@@ -118,20 +118,20 @@ export default function CredentialsPage() {
       />
       {file ? (
         <div className="text-center">
-          <p className="text-xs text-[#2A2621] font-bold uppercase tracking-widest">{file.name}</p>
-          <p className="text-[10px] text-[#8C7A6B] mt-2">Click to replace</p>
+          <p className="text-xs text-cream font-bold uppercase tracking-widest">{file.name}</p>
+          <p className="text-[10px] text-gold-light/70 mt-2">Click to replace</p>
         </div>
       ) : (
         <div className="text-center group-hover:scale-105 transition-transform duration-500">
-          <div className="w-8 h-[1px] bg-[#2A2621]/30 mx-auto mb-4" />
-          <p className="text-[10px] font-bold text-[#8C7A6B] uppercase tracking-[0.2em]">{label}</p>
+          <div className="w-8 h-[1px] bg-cream/30 mx-auto mb-4" />
+          <p className="text-[10px] font-bold text-gold-light/70 uppercase tracking-[0.2em]">{label}</p>
         </div>
       )}
     </div>
   );
 
   return (
-    <main className="w-full min-h-screen grid grid-cols-1 md:grid-cols-2 bg-[#FDFBF7]">
+    <main className="w-full min-h-screen grid grid-cols-1 md:grid-cols-2 bg-maroon-deep">
       
       {/* ENVIRONMENT: The Architecture */}
       <div className="relative w-full h-[35vh] md:h-screen">
@@ -146,16 +146,16 @@ export default function CredentialsPage() {
       </div>
 
       {/* ARCHITECTURAL SURFACE: The Document Canvas */}
-      <div className="w-full min-h-[65vh] md:h-screen flex flex-col px-6 py-12 md:p-12 lg:p-24 bg-[#FDFBF7] relative shadow-[-20px_0_40px_rgba(0,0,0,0.05)] overflow-y-auto">
+      <div className="w-full min-h-[65vh] md:h-screen flex flex-col px-6 py-12 md:p-12 lg:p-24 bg-maroon-deep relative shadow-[-20px_0_40px_rgba(0,0,0,0.05)] overflow-y-auto">
         <div className="w-full max-w-md mx-auto flex flex-col min-h-full justify-center">
           
           {/* Header */}
           <div className="mb-16">
-            <div className="w-8 h-[1px] bg-[#8C7A6B]/30 mb-6" />
-            <h1 className="text-2xl md:text-3xl text-[#2A2621] font-display tracking-tight leading-tight">
+            <div className="w-8 h-[1px] bg-gold/40 mb-6" />
+            <h1 className="text-2xl md:text-3xl text-cream font-display tracking-tight leading-tight">
               {STEPS[currentStep - 1].title}
             </h1>
-            <p className="text-xs text-[#8C7A6B] font-medium tracking-widest uppercase mt-4">
+            <p className="text-xs text-gold-light/70 font-medium tracking-widest uppercase mt-4">
               {STEPS[currentStep - 1].desc}
             </p>
           </div>
@@ -191,9 +191,9 @@ export default function CredentialsPage() {
           </div>
 
           {/* Navigation & Submit */}
-          <div className="pt-12 mt-8 border-t border-[#8C7A6B]/20">
+          <div className="pt-12 mt-8 border-t border-gold/30">
             {serverError && (
-              <div className="mb-6 text-[10px] text-red-900/80 font-bold uppercase tracking-widest bg-red-50/50 p-3 rounded-sm border border-red-900/10 text-center">
+              <div className="mb-6 text-[10px] text-cream/80 font-bold uppercase tracking-widest bg-red/20 p-3 rounded-sm border border-red/30 text-center">
                 {serverError}
               </div>
             )}
@@ -202,7 +202,7 @@ export default function CredentialsPage() {
               <button 
                 type="button" 
                 onClick={prevStep}
-                className={`text-[10px] font-bold uppercase tracking-[0.2em] transition-colors ${currentStep === 1 ? 'text-transparent cursor-default' : 'text-[#8C7A6B] hover:text-[#2A2621]'}`}
+                className={`text-[10px] font-bold uppercase tracking-[0.2em] transition-colors ${currentStep === 1 ? 'text-transparent cursor-default' : 'text-gold-light/70 hover:text-cream'}`}
                 disabled={currentStep === 1}
               >
                 ← Back
@@ -213,24 +213,24 @@ export default function CredentialsPage() {
                   type="button"
                   onClick={nextStep}
                   disabled={!portraitFile}
-                  className="group flex items-center gap-4 text-xs font-bold text-[#2A2621] uppercase tracking-[0.2em] transition-all duration-300 disabled:opacity-30"
+                  className="group flex items-center gap-4 text-xs font-bold text-cream uppercase tracking-[0.2em] transition-all duration-300 disabled:opacity-30"
                 >
-                  <span className="border-b border-[#2A2621]/30 pb-1 group-hover:border-[#2A2621] transition-colors">
+                  <span className="border-b border-cream/30 pb-1 group-hover:border-cream transition-colors">
                     Continue
                   </span>
-                  <span className="w-8 h-[1px] bg-[#2A2621]/30 group-hover:bg-[#2A2621] group-hover:w-12 transition-all duration-500" />
+                  <span className="w-8 h-[1px] bg-cream/30 group-hover:bg-cream group-hover:w-12 transition-all duration-500" />
                 </button>
               ) : (
                 <button 
                   type="button"
                   onClick={handleComplete}
                   disabled={!idFile || isSubmitting}
-                  className="group flex items-center gap-4 text-xs font-bold text-[#2A2621] uppercase tracking-[0.2em] transition-all duration-300 disabled:opacity-30"
+                  className="group flex items-center gap-4 text-xs font-bold text-cream uppercase tracking-[0.2em] transition-all duration-300 disabled:opacity-30"
                 >
-                  <span className="border-b border-[#2A2621]/30 pb-1 group-hover:border-[#2A2621] transition-colors">
+                  <span className="border-b border-cream/30 pb-1 group-hover:border-cream transition-colors">
                     {isSubmitting ? 'Securing...' : 'Enter Estate'}
                   </span>
-                  <span className="w-8 h-[1px] bg-[#2A2621]/30 group-hover:bg-[#2A2621] group-hover:w-12 transition-all duration-500" />
+                  <span className="w-8 h-[1px] bg-cream/30 group-hover:bg-cream group-hover:w-12 transition-all duration-500" />
                 </button>
               )}
             </div>
@@ -238,7 +238,7 @@ export default function CredentialsPage() {
             {/* Step Indicators */}
             <div className="flex justify-center gap-2 mt-12">
               {[1, 2].map(step => (
-                <div key={step} className={`h-[2px] transition-all duration-500 ${step === currentStep ? 'w-6 bg-[#2A2621]' : 'w-2 bg-[#8C7A6B]/20'}`} />
+                <div key={step} className={`h-[2px] transition-all duration-500 ${step === currentStep ? 'w-6 bg-cream' : 'w-2 bg-gold-light/70/20'}`} />
               ))}
             </div>
           </div>

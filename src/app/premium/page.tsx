@@ -24,12 +24,12 @@ import { useRouter } from "next/navigation";
 const SunlightRays = () => (
   <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden flex justify-center items-start fixed">
     <motion.div 
-      className="absolute top-[-10%] w-[1200px] h-[800px] bg-gradient-radial from-[#FDF5E6]/40 via-[#FDF5E6]/5 to-transparent blur-[80px]"
+      className="absolute top-[-10%] w-[1200px] h-[800px] bg-gradient-radial from-gold/40 via-gold/5 to-transparent blur-[80px]"
       animate={{ opacity: [0.6, 0.8, 0.6], scale: [1, 1.05, 1] }}
       transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
     />
     <motion.div 
-      className="absolute top-[-20%] left-[40%] w-[400px] h-[1000px] bg-gradient-to-b from-[#FFF8E7]/30 to-transparent blur-[60px] origin-top transform rotate-12"
+      className="absolute top-[-20%] left-[40%] w-[400px] h-[1000px] bg-gradient-to-b from-gold/5 to-transparent blur-[60px] origin-top transform rotate-12"
       animate={{ opacity: [0.2, 0.4, 0.2], rotate: [12, 15, 12] }}
       transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
     />
@@ -73,7 +73,7 @@ const FloatingParticles = () => {
               transition={{ duration: p.duration, delay: p.delay, repeat: Infinity, ease: "linear" }}
             >
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2C8 2 2 6 2 12C2 18 8 22 12 22C16 22 22 18 22 12C22 6 16 2 12 2Z" fill="#FDF5E6" stroke="#E6D5C3" strokeWidth="0.5" />
+                <path d="M12 2C8 2 2 6 2 12C2 18 8 22 12 22C16 22 22 18 22 12C22 6 16 2 12 2Z" fill="#f7ecd3" stroke="#d4af37" strokeWidth="0.5" />
               </svg>
             </motion.div>
           );
@@ -91,7 +91,7 @@ const FloatingParticles = () => {
           return (
             <motion.div
               key={p.id}
-              className="absolute rounded-full bg-[#E6D5C3] opacity-20 blur-[1px]"
+              className="absolute rounded-full bg-gold/30 opacity-20 blur-[1px]"
               style={{ left: p.left, top: p.top, width: p.size, height: p.size }}
               animate={{ y: ["0vh", "120vh"], x: [0, p.xOffset / 2, p.xOffset] }}
               transition={{ duration: p.duration, delay: p.delay, repeat: Infinity, ease: "linear" }}
@@ -105,8 +105,8 @@ const FloatingParticles = () => {
 
 const AbstractArch = () => (
   <div className="absolute top-10 left-1/2 -translate-x-1/2 w-full max-w-[1200px] h-[1200px] pointer-events-none z-0 opacity-10 flex justify-center fixed">
-    <div className="w-full h-full border-[1.5px] border-[#8C7A6B] rounded-t-[600px] border-b-0 relative">
-      <div className="absolute inset-3 border border-[#8C7A6B]/50 rounded-t-[580px] border-b-0" />
+    <div className="w-full h-full border-[1.5px] border-gold-light/70 rounded-t-[600px] border-b-0 relative">
+      <div className="absolute inset-3 border border-gold-light/70 rounded-t-[580px] border-b-0" />
     </div>
   </div>
 );
@@ -115,22 +115,22 @@ const AbstractArch = () => (
 
 const FEATURES = [
   {
-    icon: <Shield size={24} className="text-[#8C7A6B]" strokeWidth={1.5} />,
+    icon: <Shield size={24} className="text-gold-light/70" strokeWidth={1.5} />,
     title: "Verified Members Only",
     desc: "Every profile undergoes rigorous verification. Engage only with authentic individuals who are equally committed.",
   },
   {
-    icon: <MessageCircle size={24} className="text-[#8C7A6B]" strokeWidth={1.5} />,
+    icon: <MessageCircle size={24} className="text-gold-light/70" strokeWidth={1.5} />,
     title: "Meaningful Conversations",
     desc: "Send and receive unlimited messages. We believe true connection starts with a conversation, unhindered by paywalls.",
   },
   {
-    icon: <Eye size={24} className="text-[#8C7A6B]" strokeWidth={1.5} />,
+    icon: <Eye size={24} className="text-gold-light/70" strokeWidth={1.5} />,
     title: "Complete Profiles",
     desc: "Discover every nuance. Unlock full biographies, lifestyle choices, family details, and uncensored image galleries.",
   },
   {
-    icon: <Lock size={24} className="text-[#8C7A6B]" strokeWidth={1.5} />,
+    icon: <Lock size={24} className="text-gold-light/70" strokeWidth={1.5} />,
     title: "Privacy First",
     desc: "Control who sees your photos and information. The estate remains a private space dedicated to respect and confidentiality.",
   }
@@ -248,7 +248,7 @@ export default function PremiumMembershipPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F7F5EF] text-[#2A2621] font-sans selection:bg-[#E5D9CC]/50 relative overflow-x-hidden">
+    <div className="min-h-screen bg-maroon-deep text-cream font-body selection:bg-gold/50 relative overflow-x-hidden">
       <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
       
       {/* Background Texture & Elements */}
@@ -271,16 +271,16 @@ export default function PremiumMembershipPage() {
       </div>
 
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-[#F7F5EF]/60 backdrop-blur-3xl px-10 py-6 flex justify-between items-center transition-all border-b border-[#E6D5C3]/40">
+      <header className="sticky top-0 z-50 bg-maroon-deep/60 backdrop-blur-3xl px-10 py-6 flex justify-between items-center transition-all border-b border-gold/30">
         <div className="flex items-center gap-6">
-          <Link href="/matches" className="flex items-center justify-center w-10 h-10 rounded-full border border-[#E6D5C3] bg-white text-[#8C7A6B] hover:text-[#2A2621] hover:shadow-md transition-all duration-300 group">
+          <Link href="/matches" className="flex items-center justify-center w-10 h-10 rounded-full border border-gold/30 bg-maroon text-gold-light/70 hover:text-cream hover:shadow-md transition-all duration-300 group">
             <ChevronLeft size={18} className="group-hover:-translate-x-0.5 transition-transform" />
           </Link>
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full border border-[#8C7A6B] flex items-center justify-center relative">
-              <span className="font-serif text-[#8C7A6B] text-lg leading-none pt-1">V</span>
+            <div className="w-8 h-8 rounded-full border border-gold-light/70 flex items-center justify-center relative">
+              <span className="font-display text-gold-light/70 text-lg leading-none pt-1">V</span>
             </div>
-            <span className="font-serif text-xl tracking-[0.2em] uppercase text-[#8C7A6B] hidden sm:block">Vivah</span>
+            <span className="font-display text-xl tracking-[0.2em] uppercase text-gold-light/70 hidden sm:block">Vivah</span>
           </div>
         </div>
       </header>
@@ -295,16 +295,16 @@ export default function PremiumMembershipPage() {
             transition={{ duration: 1.2, ease: "easeOut" }}
             className="w-full max-w-3xl mx-auto"
           >
-            <div className="w-16 h-16 mx-auto border border-[#E6D5C3] bg-[#FBF9F6] rounded-full flex items-center justify-center shadow-sm mb-8 relative">
+            <div className="w-16 h-16 mx-auto border border-gold/30 bg-maroon rounded-full flex items-center justify-center shadow-sm mb-8 relative">
               <div className="absolute inset-0 opacity-[0.02] mix-blend-multiply rounded-full" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }}></div>
-              <Crown size={24} className="text-[#8C7A6B]" strokeWidth={1.5} />
+              <Crown size={24} className="text-gold-light/70" strokeWidth={1.5} />
             </div>
 
-            <h1 className="font-serif text-[4rem] md:text-[5rem] text-[#2A2621] leading-tight mb-8 drop-shadow-md">
-              Begin Your <span className="italic font-light text-[#8C7A6B]">Forever.</span>
+            <h1 className="font-display text-[4rem] md:text-[5rem] text-cream leading-tight mb-8 drop-shadow-md">
+              Begin Your <span className="italic font-light text-gold-light/70">Forever.</span>
             </h1>
             
-            <p className="text-[#8C7A6B] text-base md:text-lg font-light leading-relaxed mb-12 max-w-xl mx-auto tracking-wide">
+            <p className="text-gold-light/70 text-base md:text-lg font-light leading-relaxed mb-12 max-w-xl mx-auto tracking-wide">
               We believe meaningful relationships deserve privacy, authenticity, and commitment. Enter an exclusive estate curated for those seeking a lifelong connection.
             </p>
 
@@ -313,7 +313,7 @@ export default function PremiumMembershipPage() {
               whileTap={{ y: 0 }}
               onClick={handlePayment}
               disabled={isProcessing}
-              className="bg-[#2A2621] text-white px-10 py-5 rounded-xl shadow-[0_20px_40px_-10px_rgba(42,38,33,0.3)] hover:shadow-[0_25px_50px_-12px_rgba(42,38,33,0.5)] hover:bg-[#1A1815] transition-all duration-500 font-serif tracking-widest uppercase text-sm flex flex-col items-center justify-center gap-1 mx-auto relative overflow-hidden group disabled:opacity-70 disabled:cursor-not-allowed"
+              className="bg-[#2A2621] text-white px-10 py-5 rounded-xl shadow-[0_20px_40px_-10px_rgba(212,175,55,0.2)] hover:shadow-[0_25px_50px_-12px_rgba(212,175,55,0.35)] hover:bg-[#1A1815] transition-all duration-500 font-display tracking-widest uppercase text-sm flex flex-col items-center justify-center gap-1 mx-auto relative overflow-hidden group disabled:opacity-70 disabled:cursor-not-allowed"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-shimmer" />
               <span>{isProcessing ? "Processing..." : "Become a Lifetime Member"}</span>
@@ -336,10 +336,10 @@ export default function PremiumMembershipPage() {
               >
                 {/* Visual Side */}
                 <div className="w-full md:w-1/2">
-                  <div className="relative aspect-[4/3] rounded-[2rem] bg-[#FBF9F6] border border-[#E6D5C3]/60 shadow-[0_20px_50px_-15px_rgba(230,213,195,0.5)] overflow-hidden flex items-center justify-center">
+                  <div className="relative aspect-[4/3] rounded-[2rem] bg-maroon border border-gold/30 shadow-[0_20px_50px_-15px_rgba(212,175,55,0.15)] overflow-hidden flex items-center justify-center">
                     <div className="absolute inset-0 opacity-[0.02] mix-blend-multiply" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }}></div>
-                    <div className="absolute inset-4 border border-[#FDF5E6]/50 rounded-[1.5rem]" />
-                    <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#FDF5E6] to-[#FBF9F6] shadow-inner border border-[#E6D5C3]/30 flex items-center justify-center">
+                    <div className="absolute inset-4 border border-cream/30 rounded-[1.5rem]" />
+                    <div className="w-24 h-24 rounded-full bg-gradient-to-br from-maroon to-maroon-deep shadow-inner border border-gold/30 flex items-center justify-center">
                       {feature.icon}
                     </div>
                   </div>
@@ -347,8 +347,8 @@ export default function PremiumMembershipPage() {
 
                 {/* Text Side */}
                 <div className="w-full md:w-1/2 text-center md:text-left">
-                  <h3 className="font-serif text-3xl md:text-4xl text-[#2A2621] mb-6 tracking-wide">{feature.title}</h3>
-                  <p className="text-[#8C7A6B] font-light leading-relaxed text-lg max-w-md mx-auto md:mx-0">
+                  <h3 className="font-display text-3xl md:text-4xl text-cream mb-6 tracking-wide">{feature.title}</h3>
+                  <p className="text-gold-light/70 font-light leading-relaxed text-lg max-w-md mx-auto md:mx-0">
                     {feature.desc}
                   </p>
                 </div>
@@ -360,7 +360,7 @@ export default function PremiumMembershipPage() {
         {/* TRUST NUMBERS */}
         <section className="py-24 relative">
           <div className="max-w-5xl mx-auto px-6">
-            <div className="bg-[#FBF9F6] rounded-[3rem] p-16 border border-[#E6D5C3]/60 shadow-sm relative overflow-hidden">
+            <div className="bg-maroon rounded-[3rem] p-16 border border-gold/30 shadow-sm relative overflow-hidden">
               <div className="absolute inset-0 opacity-[0.02] mix-blend-multiply" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }}></div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-12 relative z-10">
                 {[
@@ -377,8 +377,8 @@ export default function PremiumMembershipPage() {
                     transition={{ duration: 0.8, delay: idx * 0.1 }}
                     className="text-center"
                   >
-                    <p className="font-serif text-4xl text-[#2A2621] mb-3">{stat.num}</p>
-                    <p className="text-[#8C7A6B] text-[10px] uppercase tracking-widest font-semibold">{stat.label}</p>
+                    <p className="font-display text-4xl text-cream mb-3">{stat.num}</p>
+                    <p className="text-gold-light/70 text-[10px] uppercase tracking-widest font-semibold">{stat.label}</p>
                   </motion.div>
                 ))}
               </div>
@@ -395,19 +395,19 @@ export default function PremiumMembershipPage() {
             transition={{ duration: 1 }}
             className="text-center mb-16"
           >
-            <h2 className="font-serif text-4xl text-[#2A2621] tracking-wide mb-4">An Exclusive Experience</h2>
-            <p className="text-[#8C7A6B] font-light">Elevate your journey with uncompromising quality.</p>
+            <h2 className="font-display text-4xl text-cream tracking-wide mb-4">An Exclusive Experience</h2>
+            <p className="text-gold-light/70 font-light">Elevate your journey with uncompromising quality.</p>
           </motion.div>
 
-          <div className="bg-[#FBF9F6] rounded-[2rem] border border-[#E6D5C3]/60 shadow-[0_30px_60px_-15px_rgba(230,213,195,0.4)] overflow-hidden relative">
+          <div className="bg-maroon rounded-[2rem] border border-gold/30 shadow-[0_30px_60px_-15px_rgba(212,175,55,0.15)] overflow-hidden relative">
             <div className="absolute inset-0 opacity-[0.02] mix-blend-multiply" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }}></div>
             
             {/* Header */}
-            <div className="grid grid-cols-3 bg-[#FDF5E6]/80 border-b border-[#E6D5C3]/60 p-6 relative z-10 backdrop-blur-sm">
-              <div className="font-serif text-[#8C7A6B] flex items-center">Features</div>
-              <div className="text-center font-serif text-[#8C7A6B]">Guest</div>
-              <div className="text-center font-serif text-[#2A2621] text-lg flex flex-col items-center justify-center">
-                <Crown size={16} className="mb-1 text-[#8C7A6B]" />
+            <div className="grid grid-cols-3 bg-gold/5 border-b border-gold/30 p-6 relative z-10 backdrop-blur-sm">
+              <div className="font-display text-gold-light/70 flex items-center">Features</div>
+              <div className="text-center font-display text-gold-light/70">Guest</div>
+              <div className="text-center font-display text-cream text-lg flex flex-col items-center justify-center">
+                <Crown size={16} className="mb-1 text-gold-light/70" />
                 Lifetime
               </div>
             </div>
@@ -415,13 +415,13 @@ export default function PremiumMembershipPage() {
             {/* Rows */}
             <div className="relative z-10">
               {COMPARISON.map((row, idx) => (
-                <div key={idx} className={`grid grid-cols-3 p-6 border-b border-[#E6D5C3]/30 hover:bg-[#FDF5E6]/30 transition-colors ${idx === COMPARISON.length - 1 ? 'border-none' : ''}`}>
-                  <div className="text-[#2A2621] font-light text-sm flex items-center">{row.feature}</div>
+                <div key={idx} className={`grid grid-cols-3 p-6 border-b border-gold/30 hover:bg-gold/5 transition-colors ${idx === COMPARISON.length - 1 ? 'border-none' : ''}`}>
+                  <div className="text-cream font-light text-sm flex items-center">{row.feature}</div>
                   <div className="flex justify-center items-center">
-                    {row.free ? <CheckCircle size={18} className="text-[#A3998D]" strokeWidth={1.5} /> : <div className="w-1.5 h-1.5 rounded-full bg-[#E6D5C3]" />}
+                    {row.free ? <CheckCircle size={18} className="text-cream/50" strokeWidth={1.5} /> : <div className="w-1.5 h-1.5 rounded-full bg-gold/30" />}
                   </div>
                   <div className="flex justify-center items-center">
-                    {row.premium ? <CheckCircle size={20} className="text-[#2A2621]" strokeWidth={2} /> : <XCircle size={18} className="text-[#E6D5C3]" />}
+                    {row.premium ? <CheckCircle size={20} className="text-cream" strokeWidth={2} /> : <XCircle size={18} className="text-gold/30" />}
                   </div>
                 </div>
               ))}
@@ -450,15 +450,15 @@ export default function PremiumMembershipPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 1, delay: idx * 0.2 }}
-                className="bg-transparent border border-[#E6D5C3] rounded-[2rem] p-12 relative group hover:bg-[#FBF9F6] transition-colors duration-500"
+                className="bg-transparent border border-gold/30 rounded-[2rem] p-12 relative group hover:bg-maroon transition-colors duration-500"
               >
-                <div className="absolute -top-6 left-10 text-[6rem] font-serif text-[#E6D5C3] opacity-30 leading-none group-hover:text-[#D4C4B7] transition-colors">"</div>
-                <p className="font-serif text-[#2A2621] text-xl leading-relaxed mb-8 relative z-10 italic">
+                <div className="absolute -top-6 left-10 text-[6rem] font-display text-gold/30 opacity-30 leading-none group-hover:text-gold/40 transition-colors">"</div>
+                <p className="font-display text-cream text-xl leading-relaxed mb-8 relative z-10 italic">
                   {testimonial.quote}
                 </p>
                 <div className="relative z-10">
-                  <p className="text-[#2A2621] text-sm uppercase tracking-widest font-semibold">{testimonial.author}</p>
-                  <p className="text-[#8C7A6B] text-xs uppercase tracking-wider mt-1">{testimonial.city}</p>
+                  <p className="text-cream text-sm uppercase tracking-widest font-semibold">{testimonial.author}</p>
+                  <p className="text-gold-light/70 text-xs uppercase tracking-wider mt-1">{testimonial.city}</p>
                 </div>
               </motion.div>
             ))}
@@ -473,7 +473,7 @@ export default function PremiumMembershipPage() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="font-serif text-3xl text-[#2A2621] tracking-wide">Common Inquiries</h2>
+            <h2 className="font-display text-3xl text-cream tracking-wide">Common Inquiries</h2>
           </motion.div>
           
           <div className="space-y-4">
@@ -490,7 +490,7 @@ export default function PremiumMembershipPage() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 1 }}
-            className="w-full max-w-4xl bg-gradient-to-b from-[#FBF9F6] to-[#F7F5EF] border border-[#E6D5C3] rounded-[3rem] p-16 md:p-24 shadow-[0_20px_60px_-15px_rgba(230,213,195,0.6)] relative overflow-hidden"
+            className="w-full max-w-4xl bg-gradient-to-b from-maroon to-maroon-deep border border-gold/30 rounded-[3rem] p-16 md:p-24 shadow-[0_20px_60px_-15px_rgba(212,175,55,0.2)] relative overflow-hidden"
           >
             <div className="absolute inset-0 opacity-[0.02] mix-blend-multiply" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }}></div>
             
@@ -499,11 +499,11 @@ export default function PremiumMembershipPage() {
             </div>
             
             <div className="relative z-10">
-              <h2 className="font-serif text-[3rem] md:text-[4rem] text-[#2A2621] leading-tight mb-8">
-                Your story deserves<br/><span className="italic font-light text-[#8C7A6B]">the right beginning.</span>
+              <h2 className="font-display text-[3rem] md:text-[4rem] text-cream leading-tight mb-8">
+                Your story deserves<br/><span className="italic font-light text-gold-light/70">the right beginning.</span>
               </h2>
               
-              <button onClick={handlePayment} disabled={isProcessing} className="bg-[#2A2621] text-white px-12 py-5 rounded-xl shadow-[0_20px_40px_-10px_rgba(42,38,33,0.3)] hover:shadow-[0_25px_50px_-12px_rgba(42,38,33,0.5)] hover:bg-[#1A1815] transition-all duration-500 font-serif tracking-widest uppercase text-sm disabled:opacity-70">
+              <button onClick={handlePayment} disabled={isProcessing} className="bg-[#2A2621] text-white px-12 py-5 rounded-xl shadow-[0_20px_40px_-10px_rgba(212,175,55,0.2)] hover:shadow-[0_25px_50px_-12px_rgba(212,175,55,0.35)] hover:bg-[#1A1815] transition-all duration-500 font-display tracking-widest uppercase text-sm disabled:opacity-70">
                 {isProcessing ? "Processing..." : "Unlock Lifetime Access"}
               </button>
             </div>
@@ -522,16 +522,16 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="border border-[#E6D5C3] rounded-2xl bg-[#FBF9F6] overflow-hidden transition-all duration-300">
+    <div className="border border-gold/30 rounded-2xl bg-maroon overflow-hidden transition-all duration-300">
       <button 
         onClick={() => setIsOpen(!isOpen)} 
         className="w-full flex items-center justify-between p-6 text-left"
       >
-        <span className="font-serif text-lg text-[#2A2621]">{question}</span>
+        <span className="font-display text-lg text-cream">{question}</span>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.3 }}
-          className="text-[#8C7A6B]"
+          className="text-gold-light/70"
         >
           <ChevronDown size={20} strokeWidth={1.5} />
         </motion.div>
@@ -544,7 +544,7 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="px-6 pb-6 pt-2 text-[#8C7A6B] font-light leading-relaxed">
+            <div className="px-6 pb-6 pt-2 text-gold-light/70 font-light leading-relaxed">
               {answer}
             </div>
           </motion.div>
